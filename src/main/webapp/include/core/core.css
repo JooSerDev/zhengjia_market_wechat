@@ -1,0 +1,7 @@
+.table_bar {
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    border-top: 1px solid #9b9b9b;
+}

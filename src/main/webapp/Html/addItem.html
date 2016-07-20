@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>main</title>
+<link rel="stylesheet" href="../include/core/icono.min.css">
+<link rel="stylesheet" href="../include/iScroll/scrollbar.css">
+<link rel="stylesheet" href="../include/core/myLess.css">
+<link rel="stylesheet" href="../include/swiper/swiper-3.3.1.min.css">
+</head>
+<body>
+
+	<div class="container">
+
+		<div class="row margin">
+			<div class="itemType">
+				<div class="label">宝贝类别</div>
+				<div class="selecter">
+					<select id="itemType" class="">
+						<option value="1">母婴用品</option>
+					</select>
+				</div>
+			</div>
+		</div>
+		
+		<div class="row margin">
+			<textarea rows="3" placeholder="宝贝介绍"></textarea>
+		</div>
+
+		<div class="row margin">
+			<div class="item-img">
+				<img
+					src="http://img3.douban.com/view/photo/photo/public/p2152117150.jpg">
+			</div>
+
+			<div class="camera" onclick="evens.onCameraClick()"></div>
+		</div>
+		
+		<div class="row margin">
+			<button class="btn btn-block" onclick="evens.onSubmitClick()">提交申请</button>
+		</div>
+
+	</div>
+
+	<script src="../include/iScroll/iscroll.js"></script>
+	<script src="../include/jquery/jquery.min.js"></script>
+	<script src="../include/swiper/swiper-3.3.1.jquery.min.js"></script>
+	<script src="../include/core/core.js"></script>
+
+	<script>
+		var evens = {};
+
+		$(function() {
+			evens.onCameraClick = function() {
+				alert(123);
+			}
+		});
+	</script>
+
+</body>
+</html>

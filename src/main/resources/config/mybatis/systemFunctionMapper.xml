@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joosure.server.mvc.wechat.dao.database.SystemFunctionDao">
+
+	<insert id="saveCheckCode">
+		insert into system_check_code (mobile,code,timestamp)
+		values
+		(#{mobile},#{code},#{timestamp});
+	</insert>
+
+	<select id="getCheckCodeInTime" resultType="com.joosure.server.mvc.wechat.entity.pojo.CheckCode">
+		select * from
+		system_check_code where mobile = #{mobile} and code = #{code} and
+		timestamp > #{timestamp};
+	</select>
+
+
+</mapper>

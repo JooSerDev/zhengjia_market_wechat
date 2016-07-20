@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joosure.server.mvc.wechat.dao.database.UserDao">
+
+	<!-- 基本用户信息相关-开始 -->
+	<insert id="saveUser" keyColumn="userId" keyProperty="userId"
+		useGeneratedKeys="true">
+		insert into user_user
+		(openid,nickname,mobile,headImgUrl,state,createTime,lastModifyTime)
+		values
+		(#{openid},#{nickname},#{mobile},#{headImgUrl},#{state},#{createTime},#{lastModifyTime});
+	</insert>
+
+	<update id="updateUser">
+		update user_user set openid= #{openid}, nickname=
+		#{nickname}, mobile= #{mobile}, headImgUrl= #{headImgUrl}, state=
+		#{state}, lastModifyTime= #{lastModifyTime} where userId= #{userId};
+	</update>
+
+	<select id="getUserById" resultType="com.joosure.server.mvc.wechat.entity.pojo.User">
+		select * from user_user
+		where userId= #{userId};
+	</select>
+
+	<select id="getUserByOpenid" resultType="com.joosure.server.mvc.wechat.entity.pojo.User">
+		select * from user_user
+		where openid= #{openid};
+	</select>
+
+	<!-- 基本用户信息相关-结束 -->
+
+	<!-- 微信用户信息相关-开始 -->
+	<insert id="saveUserWechatInfo">
+		insert into user_wechat
+		(openid,nickname,sex,province,city,country,headimgurl,unionid,createTime,lastUpdateTime)
+		values
+		(#{openid},#{nickname},#{sex},#{province},#{city},#{country},#{headimgurl},#{unionid},#{createTime},#{lastUpdateTime});
+	</insert>
+
+	<update id="updateUserWechatInfo">
+		update user_wechat set nickname= #{nickname}, sex=
+		#{sex}, province= #{province}, city= #{city}, country= #{country},
+		headimgurl= #{headimgurl}, unionid=
+		#{unionid}, lastUpdateTime=
+		#{lastUpdateTime} where openid= #{openid};
+	</update>
+
+	<select id="getUserWechatInfoByOpenid"
+		resultType="com.joosure.server.mvc.wechat.entity.pojo.UserWechatInfo">
+		select * from user_wechat where openid= #{openid};
+	</select>
+
+	<!-- 微信用户信息相关-结束 -->
+
+</mapper>

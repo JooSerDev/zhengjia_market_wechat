@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joosure.server.mvc.wechat.dao.database.ItemDao">
+
+	<insert id="saveItem" keyColumn="itemId" useGeneratedKeys="true"
+		keyProperty="itemId">
+		insert into item_item
+		(name,description,itemType,ownerId,ownerNickname,itemImgNum,itemImgIds,itemImgUrls,likeNum,unlikeNum,markNum,isRecommended,recommendedTime,approvalStatus,lockStatus,status,createTime,lastModifyTime,refreshTime)
+		values
+		(#{name},#{description},#{itemType},#{ownerId},#{ownerNickname},#{itemImgNum},#{itemImgIds},#{itemImgUrls},#{likeNum},#{unlikeNum},#{markNum},#{isRecommended},#{recommendedTime},#{approvalStatus},#{lockStatus},#{status},#{createTime},#{lastModifyTime},#{refreshTime});
+	</insert>
+
+	<select id="getItemTypes" resultType="com.joosure.server.mvc.wechat.entity.pojo.ItemType">
+		select * from
+		item_item_type order by sort;
+	</select>
+
+</mapper>

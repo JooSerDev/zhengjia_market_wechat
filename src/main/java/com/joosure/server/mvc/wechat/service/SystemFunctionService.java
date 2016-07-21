@@ -23,31 +23,35 @@ public class SystemFunctionService {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private SystemLogStorageService logService;
 
 	@Autowired
 	private SystemFunctionDao systemFunctionDao;
 
 	/**
-	 * 发送验证码
+	 * 发送验证码<br>
+	 * bugs : <br>
+	 * 1.需要添加防刷
 	 * 
 	 * @param mobile
 	 * @return
 	 */
 	public BaseResult sendCheckCode(String mobile, String eo) {
 
-		BaseResult result = new BaseResult(1001);
+		BaseResult result = new BaseResult("1001");
 		result.setErrMsg("未知错误");
 
 		try {
 			UserInfo userInfo = userService.getUserInfoByEO(eo);
 			if (userInfo == null) {
-				result.setErrCode(1002);
+				result.setErrCode("1002");
 				result.setErrMsg("发送短信鉴权失败");
 				return result;
 			}
 
 		} catch (Exception e) {
-			result.setErrCode(1002);
+			result.setErrCode("1002");
 			result.setErrMsg("发送短信鉴权失败");
 			return result;
 		}
@@ -58,13 +62,21 @@ public class SystemFunctionService {
 			checkCode.setMobile(mobile);
 			checkCode.setTimestamp(System.currentTimeMillis());
 
-			System.out.println(checkCode.getCode());
+			String content = "手机验证码是：" + checkCode.getCode();
 
-			systemFunctionDao.saveCheckCode(checkCode);
+			// 此处发送短信
+			if (sendSMS(mobile, content)) {
+				systemFunctionDao.deleteCheckCodeByMobile(mobile);
+				systemFunctionDao.saveCheckCode(checkCode);
+				result.setErrCode("0");
+				result.setErrMsg("发送成功");
+			} else {
+				result.setErrCode("1003");
+				result.setErrMsg("发送短信失败");
+			}
 
-			result.setErrCode(0);
 		} else {
-			result.setErrCode(2001);
+			result.setErrCode("2001");
 			result.setErrMsg("手机号格式错误");
 		}
 
@@ -81,7 +93,7 @@ public class SystemFunctionService {
 	public BaseResult validCheckCode(String mobile, String code) {
 		long timeout = 5 * 60 * 1000;
 
-		BaseResult result = new BaseResult(1001);
+		BaseResult result = new BaseResult("1001");
 		result.setErrMsg("未知错误");
 		if (StringUtil.isMobile(mobile)) {
 			long timestamp = System.currentTimeMillis();
@@ -89,14 +101,15 @@ public class SystemFunctionService {
 
 			CheckCode checkCode = systemFunctionDao.getCheckCodeInTime(mobile, code, timestamp);
 			if (checkCode != null) {
-				result.setErrCode(0);
+				systemFunctionDao.deleteCheckCodeByMobile(mobile);
+				result.setErrCode("0");
 			} else {
-				result.setErrCode(2002);
+				result.setErrCode("2002");
 				result.setErrMsg("无效验证码");
 			}
 
 		} else {
-			result.setErrCode(2001);
+			result.setErrCode("2001");
 			result.setErrMsg("手机号格式错误");
 		}
 
@@ -118,6 +131,18 @@ public class SystemFunctionService {
 			sb.append(base.charAt(number));
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * 发送短信
+	 * 
+	 * @param mobile
+	 * @param content
+	 * @return
+	 */
+	private boolean sendSMS(String mobile, String content) {
+		logService.smsLogger(mobile, content);
+		return true;
 	}
 
 }

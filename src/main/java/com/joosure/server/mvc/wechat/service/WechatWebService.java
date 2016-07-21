@@ -20,6 +20,7 @@ import com.joosure.server.mvc.wechat.entity.domain.Redirecter;
 import com.joosure.server.mvc.wechat.entity.domain.TableURLs;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.HomePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
@@ -133,6 +134,45 @@ public class WechatWebService {
 		}
 
 		return mePageInfo;
+	}
+
+	/**
+	 * 前往register页面
+	 * 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public BasePageInfo registerPage(HttpServletRequest request) throws Exception {
+		BasePageInfo pageInfo = null;
+		try {
+			String encodeOpenid = request.getParameter("eo");
+			String decodeOpenid = EncryptUtil.decryptAES(encodeOpenid, WechatConstant.ENCODE_KEY_OPENID);
+			String[] decodeOpenidInfo = decodeOpenid.split(";");
+			if (decodeOpenidInfo.length == 2 && StringUtil.isNumber(decodeOpenidInfo[1])) {
+				pageInfo = new BasePageInfo();
+
+				String openid = decodeOpenidInfo[0];
+				UserInfo userInfo = userService.getUserInfoByOpenid(openid);
+				if (userInfo != null) {
+					pageInfo.setUserInfo(userInfo);
+					String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
+					JsApiParam jsApiParam = JsApiManager.signature(url);
+					pageInfo.setJsApiParam(jsApiParam);
+
+				} else {
+					throw new OAuthException();
+				}
+
+			} else {
+				throw new OAuthException();
+			}
+
+		} catch (Exception e) {
+			throw new Exception("WechatWebService.addItemPage decode encodeOpenid exception," + e.getMessage());
+		}
+
+		return pageInfo;
 	}
 
 	/**

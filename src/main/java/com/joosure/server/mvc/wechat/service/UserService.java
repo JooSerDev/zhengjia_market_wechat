@@ -1,11 +1,14 @@
 package com.joosure.server.mvc.wechat.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.sword.wechat4j.oauth.OAuthException;
 
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.UserDao;
+import com.joosure.server.mvc.wechat.entity.domain.BaseResult;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.entity.pojo.UserWechatInfo;
@@ -20,13 +23,50 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 
-	public boolean register(String mobile, String code, String eo) {
-		return false;
+	/**
+	 * 注册
+	 * 
+	 * @param mobile
+	 * @param code
+	 * @param eo
+	 * @return
+	 * @throws Exception
+	 */
+	public BaseResult register(String mobile, String code, String eo) throws Exception {
+		BaseResult result = new BaseResult("1001");
+		User user = getUserByMobile(mobile);
+		if (user == null) {
+			String openid = decodeEO(eo);
+			user = userDao.getUserByOpenid(openid);
+			if (user != null) {
+				BaseResult baseResult = systemFunctionService.validCheckCode(mobile, code);
+				if (baseResult.getErrCode().equals("0")) {
+					user.setMobile(mobile);
+					user.setLastModifyTime(new Date());
+					userDao.updateUser(user);
+					result.setErrCode("0");
+					result.setErrMsg("注册成功");
+				} else {
+					result = baseResult;
+				}
+			} else {
+				result.setErrCode("2002");
+				result.setErrMsg("用户鉴权失败");
+			}
+		} else {
+			result.setErrCode("2001");
+			result.setErrMsg("手机号码已经注册");
+		}
+		return result;
 	}
 
+	/**
+	 * 
+	 * @param mobile
+	 * @return
+	 */
 	public User getUserByMobile(String mobile) {
-		
-		return null;
+		return userDao.getUserByMobile(mobile);
 	}
 
 	/**

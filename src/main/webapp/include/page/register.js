@@ -7,13 +7,12 @@ jsapiparam.signature = document.getElementById("signature").value;
 jsapiparam.isWxJsApiReady = false;
 
 wx.config({
-	debug : false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-	appId : jsapiparam.appid, // 必填，公众号的唯一标识
-	timestamp : jsapiparam.timeStamp, // 必填，生成签名的时间戳
-	nonceStr : jsapiparam.nonceStr, // 必填，生成签名的随机串
-	signature : jsapiparam.signature,// 必填，签名，见附录1
+	debug : true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	appId : jsapiparam.appid,
+	timestamp : jsapiparam.timeStamp,
+	nonceStr : jsapiparam.nonceStr,
+	signature : jsapiparam.signature,
 	jsApiList : [ "hideOptionMenu" ]
-// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 });
 
 wx.ready(function() {
@@ -22,7 +21,9 @@ wx.ready(function() {
 });
 
 wx.error(function(res) {
-	console.log(res);
+	for (x in res) {
+		alert(x);
+	}
 });
 
 var evens = {};
@@ -31,66 +32,98 @@ var countdown = 0;
 
 $(function() {
 
+	evens.ev1 = null;
+
 	evens.onSendCheckCodeClick = function() {
+		if (evens.ev1 == null) {
+			evens.ev1 = new Date().getTime();
+		} else {
+			var ev2 = new Date().getTime();
+			if (ev2 - evens.ev1 < 500) {
+				evens.ev1 = ev2;
+				return;
+			} else {
+				evens.ev1 = ev2;
+			}
+		}
+
 		if (countdown <= 0) {
 			var eo = $("#eo").val();
-			
+			var mobile = $("#mobile").val();
+
+			if (mobile == "") {
+				alert("手机号码不能为空");
+			}
+
 			$.ajax({
-				url : "saveItem?_t=" + time,
+				url : "../sendCheckCode",
 				data : {
-					itemType : itemType,
-					itemDesc : itemDesc,
-					imgs : url,
 					eo : eo,
-					itemName : itemName
+					mobile : mobile
 				},
 				type : "POST",
 				success : function(data) {
 					if (data.errCode == "0") {
+						countdown = 60;
+						countdownInterval = setInterval(function() {
+							setCountdown();
+						}, 1000);
 						alert(data.errMsg);
 					} else {
-						alert("save fail");
+						alert(data.errMsg);
 					}
 				}
 			});
-			
-			countdown = 60;
-			countdownInterval = setInterval(() => {
-				setCountdown();
-			}, 1000);
+
 		}
 	}
 
 	evens.onSubmitClick = function() {
+		if (evens.ev1 == null) {
+			evens.ev1 = new Date().getTime();
+		} else {
+			var ev2 = new Date().getTime();
+			if (ev2 - evens.ev1 < 500) {
+				evens.ev1 = ev2;
+				return;
+			} else {
+				evens.ev1 = ev2;
+			}
+		}
+
 		var eo = $("#eo").val();
+		var checkCode = $("#checkCode").val();
+		var mobile = $("#mobile").val();
+
+		if (mobile == "") {
+			alert("手机号码不能为空");
+		}
 
 		if (!eo || eo == null || eo == "") {
 			alert("未授权使用者");
 			return;
 		}
 
-		if (itemName == "") {
-			alert("名称为空");
+		if (checkCode == "") {
+			alert("验证码不能为空");
 			return;
 		}
 
 		var time = new Date().getTime();
 
 		$.ajax({
-			url : "saveItem?_t=" + time,
+			url : "registe?_t=" + time,
 			data : {
-				itemType : itemType,
-				itemDesc : itemDesc,
-				imgs : url,
+				checkCode : checkCode,
 				eo : eo,
-				itemName : itemName
+				mobile : mobile
 			},
 			type : "POST",
 			success : function(data) {
 				if (data.errCode == "0") {
 					alert(data.errMsg);
 				} else {
-					alert("save fail");
+					alert("register fail");
 				}
 			}
 		});
@@ -104,7 +137,7 @@ var setCountdown = function() {
 	countdown--;
 	if (countdown >= 0) {
 		text = countdown + " s";
-	}else{ 
+	} else {
 		clearInterval(countdownInterval);
 	}
 	$(".countdown").html(text);

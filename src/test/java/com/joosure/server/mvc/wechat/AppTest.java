@@ -11,7 +11,7 @@ public class AppTest {
 	public static void main(String[] args) throws Exception {
 //		System.out.println(makeSNSAPIurl());
 		String redirectURL = "http://www.joosure.com/wechatTest/wechat/me";
-		String[] urls = redirectURL.split("\\?");
+		String[] urls = redirectURL.split("/");
 		System.out.println(urls.length);
 	}
 

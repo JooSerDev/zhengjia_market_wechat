@@ -5,9 +5,9 @@
 	<insert id="saveItem" keyColumn="itemId" useGeneratedKeys="true"
 		keyProperty="itemId">
 		insert into item_item
-		(name,description,itemType,ownerId,ownerNickname,itemImgNum,itemImgIds,itemImgUrls,likeNum,unlikeNum,markNum,isRecommended,recommendedTime,approvalStatus,lockStatus,status,createTime,lastModifyTime,refreshTime)
+		(name,description,itemType,ownerId,ownerNickname,itemImgNum,itemImgIds,itemImgUrls,itemCenterImgUrls,likeNum,unlikeNum,markNum,isRecommended,recommendedTime,approvalStatus,lockStatus,status,createTime,lastModifyTime,refreshTime)
 		values
-		(#{name},#{description},#{itemType},#{ownerId},#{ownerNickname},#{itemImgNum},#{itemImgIds},#{itemImgUrls},#{likeNum},#{unlikeNum},#{markNum},#{isRecommended},#{recommendedTime},#{approvalStatus},#{lockStatus},#{status},#{createTime},#{lastModifyTime},#{refreshTime});
+		(#{name},#{description},#{itemType},#{ownerId},#{ownerNickname},#{itemImgNum},#{itemImgIds},#{itemImgUrls},#{itemCenterImgUrls},#{likeNum},#{unlikeNum},#{markNum},#{isRecommended},#{recommendedTime},#{approvalStatus},#{lockStatus},#{status},#{createTime},#{lastModifyTime},#{refreshTime});
 	</insert>
 
 	<select id="getItemTypes" resultType="com.joosure.server.mvc.wechat.entity.pojo.ItemType">

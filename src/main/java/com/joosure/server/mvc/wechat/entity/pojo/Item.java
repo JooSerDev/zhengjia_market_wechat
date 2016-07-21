@@ -6,6 +6,7 @@ public class Item {
 
 	public static final String LOCK_NORMAL = "normal";
 	public static final String LOCK_DISPLAY = "display";
+	public static final String LOCK_EXCHANGED = "exchanged";
 
 	public static final String STATUS_YES = "yes";
 	public static final String STATUS_NO = "no";
@@ -20,6 +21,7 @@ public class Item {
 	private Integer itemImgNum;
 	private String itemImgIds;
 	private String itemImgUrls;
+	private String itemCenterImgUrls;
 
 	private Integer likeNum;
 	private Integer unlikeNum;
@@ -28,8 +30,8 @@ public class Item {
 	private Integer isRecommended; // 0-未被推荐 1-小编推荐a
 	private Date recommendedTime;
 
-	private String approvalStatus;
-	private String lockStatus;
+	private String approvalStatus; // 审批情况
+	private String lockStatus;// 锁定情况，有交换意向或已经交易就会锁定
 
 	private Integer status; // 0-正常 1-下线
 	private Date createTime;
@@ -194,6 +196,14 @@ public class Item {
 
 	public void setApprovalStatus(String approvalStatus) {
 		this.approvalStatus = approvalStatus;
+	}
+
+	public String getItemCenterImgUrls() {
+		return itemCenterImgUrls;
+	}
+
+	public void setItemCenterImgUrls(String itemCenterImgUrls) {
+		this.itemCenterImgUrls = itemCenterImgUrls;
 	}
 
 }

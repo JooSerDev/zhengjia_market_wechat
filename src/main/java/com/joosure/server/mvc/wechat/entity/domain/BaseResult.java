@@ -2,18 +2,18 @@ package com.joosure.server.mvc.wechat.entity.domain;
 
 public class BaseResult {
 
-	private Integer errCode;
-	private String errMsg;
+	protected String errCode;
+	protected String errMsg;
 
-	public BaseResult(Integer errCode) {
+	public BaseResult(String errCode) {
 		this.errCode = errCode;
 	}
 
-	public Integer getErrCode() {
+	public String getErrCode() {
 		return errCode;
 	}
 
-	public void setErrCode(Integer errCode) {
+	public void setErrCode(String errCode) {
 		this.errCode = errCode;
 	}
 

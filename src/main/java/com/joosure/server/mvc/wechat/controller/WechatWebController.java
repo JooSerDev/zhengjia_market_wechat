@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.sword.wechat4j.oauth.OAuthException;
 
+import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.entity.domain.AjaxResult;
 import com.joosure.server.mvc.wechat.entity.domain.BaseResult;
 import com.joosure.server.mvc.wechat.entity.domain.Redirecter;
@@ -23,6 +24,7 @@ import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
 import com.joosure.server.mvc.wechat.service.ItemService;
 import com.joosure.server.mvc.wechat.service.SystemFunctionService;
 import com.joosure.server.mvc.wechat.service.SystemLogStorageService;
+import com.joosure.server.mvc.wechat.service.UserService;
 import com.joosure.server.mvc.wechat.service.WechatNativeService;
 import com.joosure.server.mvc.wechat.service.WechatWebService;
 import com.shawn.server.core.http.RequestHandler;
@@ -53,6 +55,8 @@ public class WechatWebController {
 	private ItemService itemService;
 	@Autowired
 	private SystemFunctionService systemFunctionService;
+	@Autowired
+	private UserService userService;
 
 	/**
 	 * 多重跳转路由
@@ -92,12 +96,18 @@ public class WechatWebController {
 			if (StringUtil.isBlank(mobile) || StringUtil.isBlank(eo)) {
 				ar.setErrCode("9002");
 			} else {
-				BaseResult baseResult = systemFunctionService.sendCheckCode(mobile, eo);
-				ar.setErrCode(baseResult.getErrCode() + "");
-				ar.setErrMsg(baseResult.getErrMsg());
+				if (userService.getUserByMobile(mobile) != null) {
+					ar.setErrCode("9003");
+					ar.setErrMsg("该号码已经被注册");
+				} else {
+					BaseResult baseResult = systemFunctionService.sendCheckCode(mobile, eo);
+					ar.setErrCode(baseResult.getErrCode() + "");
+					ar.setErrMsg(baseResult.getErrMsg());
+				}
 			}
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			ar.setErrCode("9001");
 		}
 
@@ -142,7 +152,7 @@ public class WechatWebController {
 			model.addAttribute("user", pageInfo.getUserInfo().getUser());
 			model.addAttribute("jsapi", pageInfo.getJsApiParam());
 
-			String redirectUrl = registeredValidAndRedirect(pageInfo.getUserInfo());
+			String redirectUrl = registeredValidAndRedirect(pageInfo.getUserInfo(), request);
 			if (redirectUrl != null) {
 				return redirectUrl;
 			}
@@ -154,16 +164,48 @@ public class WechatWebController {
 		return "me";
 	}
 
+	/**
+	 * 注册页面
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/me/register")
-	public void register(HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String register(HttpServletRequest request, HttpServletResponse response, Model model) {
+		try {
+			BasePageInfo pageInfo = wechatWebService.registerPage(request);
+			model.addAttribute("eo", pageInfo.getUserInfo().getEncodeOpenid());
+			model.addAttribute("user", pageInfo.getUserInfo().getUser());
+			model.addAttribute("jsapi", pageInfo.getJsApiParam());
+
+			pageLogger(request, "/wechat/register", pageInfo);
+		} catch (Exception e) {
+			return errorPageRouter(e, "WechatWebController.register");
+		}
+		return "user/register";
+	}
+
+	/**
+	 * 注册 － ajax
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping("/me/registe")
+	public void registe(HttpServletRequest request, HttpServletResponse response, Model model) {
 		AjaxResult ar = new AjaxResult();
 		try {
 			String eo = request.getParameter("eo");
 			String mobile = request.getParameter("mobile");
 			String code = request.getParameter("checkCode");
-
-			ar.setErrCode("0");
+			BaseResult br = userService.register(mobile, code, eo);
+			ar.setErrCode(br.getErrCode());
+			ar.setErrMsg(br.getErrMsg());
 		} catch (Exception e) {
+			e.printStackTrace();
 			ar.setErrCode("1001");
 		}
 
@@ -186,7 +228,7 @@ public class WechatWebController {
 			model.addAttribute("jsapi", addItemPageInfo.getJsApiParam());
 			model.addAttribute("itemTypes", addItemPageInfo.getItemTypes());
 
-			String redirectUrl = registeredValidAndRedirect(addItemPageInfo.getUserInfo());
+			String redirectUrl = registeredValidAndRedirect(addItemPageInfo.getUserInfo(), request);
 			if (redirectUrl != null) {
 				return redirectUrl;
 			}
@@ -318,14 +360,17 @@ public class WechatWebController {
 	 * 
 	 * @param userInfo
 	 * @return
+	 * @throws Exception
 	 */
-	private String registeredValidAndRedirect(UserInfo userInfo) {
+	private String registeredValidAndRedirect(UserInfo userInfo, HttpServletRequest request) throws Exception {
 		if (userInfo == null) {
 			return "error/403";
 		}
 
 		if (userInfo.getUser().getMobile() == null || userInfo.getUser().getMobile().trim().equals("")) {
-			return "user/register";
+			String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+					+ request.getContextPath() + WechatConstant.SCHEMA_MARKET + "/";
+			return "redirect:" + basePath + "me/register";
 		}
 
 		return null;

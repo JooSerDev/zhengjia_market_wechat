@@ -48,9 +48,9 @@ public class WechatNativeService {
 			urlList = new ArrayList<>();
 			for (int i = 0; i < mediaIdArray.length; i++) {
 				String mediaId = mediaIdArray[i];
-				String url = downloadItemImgByMediaId(mediaId, request);
-				if (url != null) {
-					urlList.add(url);
+				String[] url = downloadItemImgByMediaId(mediaId, request);
+				if (url != null && url.length == 2) {
+					urlList.add(url[1]);
 				}
 			}
 		}
@@ -64,8 +64,8 @@ public class WechatNativeService {
 	 * @param request
 	 * @return
 	 */
-	private String downloadItemImgByMediaId(String mediaId, HttpServletRequest request) {
-		String url = null;
+	private String[] downloadItemImgByMediaId(String mediaId, HttpServletRequest request) {
+		String[] url = null;
 		try {
 			MediaFileUtil mfu = new MediaFileUtil(mediaId, getAccessToken());
 			byte[] fileData = mfu.download();

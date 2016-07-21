@@ -3,7 +3,7 @@
 <head lang="zh">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>main</title>
+<title>my items</title>
 <link rel="stylesheet" href="../include/core/icono.min.css">
 <link rel="stylesheet" href="../include/iScroll/scrollbar.css">
 <link rel="stylesheet" href="../include/core/myLess.css">
@@ -11,37 +11,26 @@
 </head>
 <body>
 
-	<div class="container">
-
-		<div class="row margin">
-			<div class="itemType">
-				<div class="label">宝贝类别</div>
-				<div class="selecter">
-					<select id="itemType" class="">
-						<option value="1">母婴用品</option>
-					</select>
+	<!-- scroller start -->
+	<div class="container full" id="wrapper">
+		<div class="scroller" id="scroller">
+			<div class="row margin">
+				<div class="item-list">
+					<div class="col-50">
+						<div style="height: 300px; border: 1px solid black;"></div>
+					</div>
+					<div class="col-50">
+						<div style="height: 200px; border: 1px solid black;"></div>
+					</div>
+					<div class="col-50">
+						<div style="height: 500px; border: 1px solid black;"></div>
+					</div>
 				</div>
 			</div>
-		</div>
-		
-		<div class="row margin">
-			<textarea rows="3" placeholder="宝贝介绍"></textarea>
-		</div>
 
-		<div class="row margin">
-			<div class="item-img">
-				<img
-					src="http://img3.douban.com/view/photo/photo/public/p2152117150.jpg">
-			</div>
-
-			<div class="camera" onclick="evens.onCameraClick()"></div>
 		</div>
-		
-		<div class="row margin">
-			<button class="btn btn-block" onclick="evens.onSubmitClick()">提交申请</button>
-		</div>
-
 	</div>
+	<!-- scroller end -->
 
 	<script src="../include/iScroll/iscroll.js"></script>
 	<script src="../include/jquery/jquery.min.js"></script>

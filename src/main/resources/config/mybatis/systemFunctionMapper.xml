@@ -8,6 +8,11 @@
 		(#{mobile},#{code},#{timestamp});
 	</insert>
 
+	<delete id="deleteCheckCodeByMobile">
+		delete from system_check_code where mobile =
+		#{mobile};
+	</delete>
+
 	<select id="getCheckCodeInTime" resultType="com.joosure.server.mvc.wechat.entity.pojo.CheckCode">
 		select * from
 		system_check_code where mobile = #{mobile} and code = #{code} and

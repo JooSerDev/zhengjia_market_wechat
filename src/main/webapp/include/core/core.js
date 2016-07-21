@@ -19,6 +19,8 @@ Core.iScroll = {
 				'wrapper',
 				{
 					scrollbarClass : 'myScrollbar',
+					preventDefault : false,
+					click : true,
 					useTransition : false,
 					topOffset : Core.iScroll.pullDownOffset,
 					onRefresh : function() {

@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.joosure.server.mvc.wechat.constant.StorageConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
@@ -36,6 +37,30 @@ public class ItemService {
 		UserInfo userInfo = getUserInfoByEo(eo);
 		if (userInfo != null) {
 			String[] imgUrls = imgs.split(";");
+			String centerImgUrls = "";
+
+			if (imgs != null && !StringUtil.isBlank(imgs)) {
+				for (int i = 0; i < imgUrls.length; i++) {
+					String[] parts = imgUrls[i].split("/");
+					if (parts.length > 4) {
+						String centerImgUrl = "";
+						for (int j = 0; j < parts.length; j++) {
+							if (j == parts.length - 4) {
+								centerImgUrl = centerImgUrl + StorageConstant.ITEM_IMG_FILE_PATH + "/";
+							} else if (j == parts.length - 1) {
+								centerImgUrl = centerImgUrl + parts[j];
+							} else {
+								centerImgUrl = centerImgUrl + parts[j] + "/";
+							}
+						}
+						if (!centerImgUrl.trim().equals("")) {
+							centerImgUrls = centerImgUrls + centerImgUrl + ";";
+						}
+
+					}
+				}
+			}
+
 			Date nowDate = new Date();
 
 			Item item = new Item();
@@ -43,7 +68,8 @@ public class ItemService {
 			item.setDescription(itemDesc);
 			item.setItemType(itemType);
 			item.setItemImgNum(imgUrls.length);
-			item.setItemImgUrls(imgs);
+			item.setItemImgUrls(centerImgUrls);
+			item.setItemCenterImgUrls(imgs);
 			item.setOwnerId(userInfo.getUser().getUserId());
 			item.setOwnerNickname(userInfo.getUser().getNickname());
 			item.setCreateTime(nowDate);

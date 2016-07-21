@@ -126,7 +126,11 @@ var m = Math,
 
 			// Events
 			onRefresh: null,
-			onBeforeScrollStart: function (e) { e.preventDefault(); },
+			onBeforeScrollStart: function (e) { 
+				var nodeType = e.explicitOriginalTarget?e.explicitOriginalTarget.nodeName.toLowerCase():(e.target?e.target.nodeName.toLowerCase():'');
+				if(nodeType !='select' && nodeType !='option' && nodeType !='input' && nodeType!='textarea' && nodeType!='button')
+					e.preventDefault(); 
+			},
 			onScrollStart: null,
 			onBeforeScrollMove: null,
 			onScrollMove: null,
@@ -631,7 +635,12 @@ iScroll.prototype = {
 		if (resetX == that.x && resetY == that.y) {
 			if (that.moved) {
 				that.moved = false;
-				if (that.options.onScrollEnd) that.options.onScrollEnd.call(that);		// Execute custom code on scroll end
+				if (that.options.onScrollEnd) that.options.onScrollEnd.call(that);		// Execute
+																						// custom
+																						// code
+																						// on
+																						// scroll
+																						// end
 			}
 
 			if (that.hScrollbar && that.options.hideScrollbar) {
@@ -712,10 +721,10 @@ iScroll.prototype = {
 
 
 	/**
-	*
-	* Utilities
-	*
-	*/
+	 * 
+	 * Utilities
+	 * 
+	 */
 	_startAni: function () {
 		var that = this,
 			startX = that.x, startY = that.y,
@@ -753,7 +762,12 @@ iScroll.prototype = {
 			if (now >= startTime + step.time) {
 				that._pos(step.x, step.y);
 				that.animating = false;
-				if (that.options.onAnimationEnd) that.options.onAnimationEnd.call(that);			// Execute custom code on animation end
+				if (that.options.onAnimationEnd) that.options.onAnimationEnd.call(that);			// Execute
+																									// custom
+																									// code
+																									// on
+																									// animation
+																									// end
 				that._startAni();
 				return;
 			}
@@ -868,10 +882,10 @@ iScroll.prototype = {
 
 
 	/**
-	*
-	* Public methods
-	*
-	*/
+	 * 
+	 * Public methods
+	 * 
+	 */
 	destroy: function () {
 		var that = this;
 
@@ -1042,7 +1056,8 @@ iScroll.prototype = {
 		this._resetPos(0);
 		this.enabled = false;
 
-		// If disabled after touchstart we make sure that there are no left over events
+		// If disabled after touchstart we make sure that there are no left over
+		// events
 		this._unbind(MOVE_EV, window);
 		this._unbind(END_EV, window);
 		this._unbind(CANCEL_EV, window);

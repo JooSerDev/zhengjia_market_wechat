@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
+import com.shawn.server.core.util.ImageCropUtil;
 import com.shawn.server.core.util.StringUtil;
 
 @Service
@@ -85,10 +86,12 @@ public class ObjectStorageService {
 	 * @param request
 	 * @return
 	 */
-	public String putItemImg(byte[] fileData, HttpServletRequest request) {
+	public String[] putItemImg(byte[] fileData, HttpServletRequest request) {
 		File imgFile = null;
 		String StoragePath = request.getServletContext().getRealPath("/");
-		String pathFileURI = StorageConstant.ITEM_IMG_FILE_PATH + getFileDatePath();
+		String datePath = getFileDatePath();
+		;
+		String pathFileURI = StorageConstant.ITEM_IMG_FILE_PATH + datePath;
 		File pathFile = new File(StoragePath + pathFileURI);
 		if (!pathFile.exists() || !pathFile.isDirectory()) {
 			pathFile.mkdirs();
@@ -105,8 +108,27 @@ public class ObjectStorageService {
 		}
 
 		if (imgFile != null) {
-			return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-					+ request.getContextPath() + pathFileURI + "/" + imgFile.getName();
+
+			String sourcePath = imgFile.getPath();
+			String sourceName = imgFile.getName();
+
+			String centerPathFileURI = StorageConstant.ITEM_IMG_CENTER_SQUARE_FILE_PATH + datePath;
+			
+			File pathCenterFile = new File(StoragePath + centerPathFileURI);
+			if (!pathCenterFile.exists() || !pathCenterFile.isDirectory()) {
+				pathCenterFile.mkdirs();
+			}
+			
+			String descPath = StoragePath + centerPathFileURI + "/" + sourceName;
+
+			ImageCropUtil.ImageCropCenterSquare(sourcePath, descPath, StorageConstant.ITEM_IMG_RESIZE,
+					StorageConstant.ITEM_IMG_RESIZE);
+
+			String baseHttpUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+					+ request.getContextPath();
+
+			return new String[] { baseHttpUrl + pathFileURI + "/" + imgFile.getName(),
+					baseHttpUrl + centerPathFileURI + "/" + imgFile.getName() };
 		}
 
 		return null;

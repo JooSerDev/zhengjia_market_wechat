@@ -27,6 +27,11 @@
 		where openid= #{openid};
 	</select>
 
+	<select id="getUserByMobile" resultType="com.joosure.server.mvc.wechat.entity.pojo.User">
+		select * from user_user
+		where mobile= #{mobile} limit 1;
+	</select>
+
 	<!-- 基本用户信息相关-结束 -->
 
 	<!-- 微信用户信息相关-开始 -->

@@ -16,6 +16,7 @@ public class SystemLogStorageService {
 	private static final Logger DefaultLogger = LoggerFactory.getLogger("DefaultLogger");
 	private static final Logger SystemExceptionLogger = LoggerFactory.getLogger("SystemException");
 	private static final Logger PageAccessLogger = LoggerFactory.getLogger("PageAccessLogger");
+	private static final Logger SmsLogger = LoggerFactory.getLogger("SmsLogger");
 
 	public void info(String msg) {
 		DefaultLogger.info(msg);
@@ -41,6 +42,11 @@ public class SystemLogStorageService {
 	public void pageLogger(String URI, String ip, int userId) {
 		String log = URI + "#*#" + ip + "#*#" + userId;
 		PageAccessLogger.info(log);
+	}
+
+	public void smsLogger(String mobile, String content) {
+		String log = mobile + "#*#" + content;
+		SmsLogger.info(log);
 	}
 
 }

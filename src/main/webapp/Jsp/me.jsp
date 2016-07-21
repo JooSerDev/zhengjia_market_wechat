@@ -35,6 +35,15 @@
 					</div>
 				</a>
 			</div>
+			
+			<div class="row margin">
+				<a href="item/myItems?eo=${eo}">
+					<div class="list-item">
+						<div class="pull-left">我的宝贝</div>
+						<div class="pull-right">2</div>
+					</div>
+				</a>
+			</div>
 
 			<div class="row margin">
 				<a href="tel:13268112212"> 我电话 </a>

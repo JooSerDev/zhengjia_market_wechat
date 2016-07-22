@@ -2,6 +2,8 @@ package com.joosure.server.mvc.wechat.entity.pojo;
 
 import java.util.Date;
 
+import com.shawn.server.core.util.DateUtil;
+
 public class Item {
 
 	public static final String LOCK_NORMAL = "normal";
@@ -204,6 +206,29 @@ public class Item {
 
 	public void setItemCenterImgUrls(String itemCenterImgUrls) {
 		this.itemCenterImgUrls = itemCenterImgUrls;
+	}
+
+	public String getFirstItemImgUrl() {
+		if (itemImgUrls != null) {
+			String[] urls = itemImgUrls.split(";");
+			return urls[0];
+		}
+		return null;
+	}
+
+	public String getFirstItemCenterImgUrl() {
+		if (itemCenterImgUrls != null) {
+			String[] urls = itemCenterImgUrls.split(";");
+			return urls[0];
+		}
+		return null;
+	}
+
+	public String getDisplayTime() {
+		if (refreshTime != null) {
+			return DateUtil.defaultFormat(refreshTime);
+		}
+		return null;
 	}
 
 }

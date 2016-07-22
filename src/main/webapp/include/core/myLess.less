@@ -283,6 +283,7 @@ a, a:hover {
 
 #scroller {
   width: 100%;
+  min-height: 100%;
 }
 
 .swiper-container {
@@ -349,7 +350,7 @@ a, a:hover {
   }
 }
 
-.pull-down-text {
+.pull-down-text,.pull-up-text {
   margin: 0 auto;
   text-align: center;
   font-size: @font-12;
@@ -357,7 +358,7 @@ a, a:hover {
   padding-bottom: 15px;
 }
 
-.pull-down {
+.pull-down,.pull-up {
 
   margin: 0 auto;
   width: 50px;
@@ -369,7 +370,7 @@ a, a:hover {
   > div {
     background-color: @color-loading;
     height: 100%;
-    width: 6px;
+    width: 3px;
     display: inline-block;
 
     -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
@@ -511,13 +512,3 @@ a, a:hover {
 
   }
 }
-
-
-
-
-
-
-
-
-
-

@@ -261,6 +261,7 @@ public class WechatWebController {
 
 			model.addAttribute("jsapi", pageInfo.getJsApiParam());
 			model.addAttribute("items", pageInfo.getItems());
+			model.addAttribute("nextPage", pageInfo.getItems().size() == WechatConstant.PAGE_SIZE_MY_ITEM ? 1 : 0);
 
 			String redirectUrl = registeredValidAndRedirect(pageInfo.getUserInfo(), request);
 			if (redirectUrl != null) {
@@ -272,6 +273,27 @@ public class WechatWebController {
 			return errorPageRouter(e, "WechatWebController.myItem");
 		}
 		return "item/myItems";
+	}
+
+	@RequestMapping("/item/loadMyItems")
+	public void loadMyItems(HttpServletRequest request, HttpServletResponse response, Model model) {
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			if (StringUtil.isBlank(eo)) {
+				throw new OAuthException();
+			}
+			
+			String page = request.getParameter("page");
+			
+			ar.setErrCode("0");
+		} catch (Exception e) {
+			e.printStackTrace();
+			ar.setErrCode("1001");
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
 	}
 
 	/**

@@ -6,13 +6,32 @@ var Core = {};
 // IScroll
 Core.iScroll = {
 	myScroll : {},
+	isLoaded : false,
+	isNextPage : true,
+	screenHeight : 0,
 	pullDownBar : undefined,
+	pullUpBar : undefined,
 	pullDownOffset : 0,
+	pullUpOffset : 0,
 	loadIScroll : function() {
 		Core.iScroll.pullDownBar = document.getElementById("pull_down_bar");
+		Core.iScroll.pullUpBar = document.getElementById("pull_up_bar");
 		if (Core.iScroll.pullDownBar != undefined
 				&& Core.iScroll.pullDownBar != null) {
 			Core.iScroll.pullDownOffset = Core.iScroll.pullDownBar.offsetHeight;
+		}
+
+		if (Core.iScroll.pullUpBar != undefined
+				&& Core.iScroll.pullUpBar != null) {
+			Core.iScroll.pullUpOffset = Core.iScroll.pullUpBar.offsetHeight;
+		}
+
+		Core.iScroll.screenHeight = document.getElementById("wrapper").offsetHeight;
+		var scrollerH = document.getElementById("scroller").offsetHeight;
+
+		if (Core.iScroll.screenHeight >= scrollerH && !Core.iScroll.isNextPage) {
+			Core.iScroll.pullUpBar.style.display = "none";
+			Core.iScroll.isNextPage = false;
 		}
 
 		Core.iScroll.myScroll = new iScroll(
@@ -33,6 +52,17 @@ Core.iScroll = {
 										.querySelector('.pull-down-text').innerHTML = '下拉刷新...';
 							}
 						}
+
+						if (Core.iScroll.pullUpBar != undefined
+								&& Core.iScroll.pullUpBar != null) {
+							if (Core.iScroll.pullUpBar.className
+									.match('loading')) {
+								Core.iScroll.pullUpBar.className = '';
+								Core.iScroll.pullUpBar
+										.querySelector('.pull-up-text').innerHTML = '加载更多...';
+							}
+						}
+
 					},
 					onScrollMove : function() {
 						if (Core.iScroll.pullDownBar != undefined
@@ -53,6 +83,26 @@ Core.iScroll = {
 								this.minScrollY = -Core.iScroll.pullDownOffset;
 							}
 						}
+
+						if (Core.iScroll.pullUpBar != undefined
+								&& Core.iScroll.pullUpBar != null
+								&& Core.iScroll.isNextPage) {
+							if (this.y < (this.maxScrollY - 5)
+									&& !Core.iScroll.pullUpBar.className
+											.match('flip')) {
+								Core.iScroll.pullUpBar.className = 'flip';
+								Core.iScroll.pullUpBar
+										.querySelector('.pull-up-text').innerHTML = '你敢松手试试';
+								this.maxScrollY = this.maxScrollY;
+							} else if (this.y > (this.maxScrollY - 5)
+									&& Core.iScroll.pullUpBar.className
+											.match('flip')) {
+								Core.iScroll.pullUpBar.className = '';
+								Core.iScroll.pullUpBar
+										.querySelector('.pull-up-text').innerHTML = '加载更多...';
+								this.maxScrollY = -Core.iScroll.pullUpOffset;
+							}
+						}
 					},
 					onScrollEnd : function() {
 						if (Core.iScroll.pullDownBar != undefined
@@ -62,19 +112,36 @@ Core.iScroll = {
 								Core.iScroll.pullDownBar.className = 'loading';
 								Core.iScroll.pullDownBar
 										.querySelector('.pull-down-text').innerHTML = '加载中...';
-								Core.iScroll.pullDownAction(); // Execute
-								// custom
-								// function
-								// (ajax call?)
+								Core.iScroll.pullDownAction();
 							}
 						}
+
+						if (Core.iScroll.pullUpBar != undefined
+								&& Core.iScroll.pullUpBar != null
+								&& Core.iScroll.isNextPage) {
+
+							if (Core.iScroll.pullUpBar.className.match('flip')) {
+								Core.iScroll.pullUpBar.className = 'loading';
+								Core.iScroll.pullUpBar
+										.querySelector('.pull-up-text').innerHTML = '加载中...';
+								Core.iScroll.pullUpAction();
+							}
+
+						}
+
 					}
 				});
+		Core.iScroll.isLoaded = true;
 	},
 	pullDownAction : function() {
 		setTimeout(function() {
 			Core.iScroll.myScroll.refresh();
-		}, 1000);
+		}, 400);
+	},
+	pullUpAction : function() {
+		setTimeout(function() {
+			Core.iScroll.myScroll.refresh();
+		}, 400);
 	}
 };
 

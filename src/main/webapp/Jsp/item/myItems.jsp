@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 %>
@@ -21,7 +22,31 @@
 	<div class="full" id="wrapper">
 		<div class="scroller" id="scroller">
 			<div class="row margin">
-				<div class="item-list"></div>
+				<div class="item-list">
+					<c:forEach items="${items}" var="item">
+						<div class="item">
+							<div class="item-body">
+								<div class="item-pic">
+									<img src="${item.firstItemCenterImgUrl}">
+								</div>
+								<div class="item-name">${item.name}</div>
+								<div class="item-desc">${item.description}</div>
+								<div class="item-createtime">${item.displayTime}</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+
+			<div class="row" id="pull_up_bar">
+				<div class="pull-up">
+					<div class="rect1"></div>
+					<div class="rect2"></div>
+					<div class="rect3"></div>
+					<div class="rect4"></div>
+					<div class="rect5"></div>
+				</div>
+				<div class="pull-up-text">加载更多</div>
 			</div>
 
 		</div>
@@ -41,6 +66,8 @@
 	</div>
 	</template>
 
+	<input type="hidden" id="nextPage" value="${nextPage}">
+
 	<input type="hidden" id="appid" value="${jsapi.appid}">
 	<input type="hidden" id="nonceStr" value="${jsapi.nonceStr}">
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
@@ -51,35 +78,7 @@
 	<script src="<%=path%>/include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-
-	<script>
-		var testData = {
-			imgUrl : "http://www.joosure.com:80/wechatTest/item_img_center_square/20166/21/fLvylh5ZXYC8jS4khLEn8c7yLxMJ0Nmh.jpg",
-			name : "item name",
-			desc : "item desc single line",
-			createtime : "2016-07-22"
-		}
-
-		var evens = {};
-
-		$(function() {
-			loadTestData();
-		});
-
-		var loadTestData = function() {
-
-			var html = $("#item_template").html();
-			for (var i = 0; i < 10; i++) {
-				var temp = new String(html);
-				temp = Core.HtmlReplace(temp, testData);
-				$(".item-list").append(temp);
-			}
-			setTimeout(function() {
-				Core.iScroll.myScroll.refresh();
-			}, 1000);
-
-		}
-	</script>
+	<script src="<%=path%>/include/page/myItems.js"></script>
 
 </body>
 </html>

@@ -21,6 +21,7 @@ import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.HomePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.MyItemPageInfo;
 import com.joosure.server.mvc.wechat.service.ItemService;
 import com.joosure.server.mvc.wechat.service.SystemFunctionService;
 import com.joosure.server.mvc.wechat.service.SystemLogStorageService;
@@ -238,6 +239,39 @@ public class WechatWebController {
 			return errorPageRouter(e, "WechatWebController.addItem");
 		}
 		return "item/addItem";
+	}
+
+	/**
+	 * 我的宝贝页面
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/item/myItems")
+	public String myItem(HttpServletRequest request, HttpServletResponse response, Model model) {
+		try {
+			String eo = request.getParameter("eo");
+			if (StringUtil.isBlank(eo)) {
+				throw new OAuthException();
+			}
+
+			MyItemPageInfo pageInfo = wechatWebService.myItemPage(eo, request);
+
+			model.addAttribute("jsapi", pageInfo.getJsApiParam());
+			model.addAttribute("items", pageInfo.getItems());
+
+			String redirectUrl = registeredValidAndRedirect(pageInfo.getUserInfo(), request);
+			if (redirectUrl != null) {
+				return redirectUrl;
+			}
+
+			pageLogger(request, "/wechat/item/myItem", pageInfo);
+		} catch (Exception e) {
+			return errorPageRouter(e, "WechatWebController.myItem");
+		}
+		return "item/myItems";
 	}
 
 	/**

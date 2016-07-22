@@ -8,4 +8,6 @@ public class WechatConstant {
 
 	public static final String ENCODE_KEY_OPENID = "1SAdf3Bg";
 
+	public static final int PAGE_SIZE_MY_ITEM = 10;
+
 }

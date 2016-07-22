@@ -18,16 +18,28 @@
 <body>
 
 	<!-- scroller start -->
-	<div class="container full" id="wrapper">
+	<div class="full" id="wrapper">
 		<div class="scroller" id="scroller">
-			
 			<div class="row margin">
-				<div></div>
+				<div class="item-list"></div>
 			</div>
-			
+
 		</div>
 	</div>
 	<!-- scroller end -->
+
+	<template id="item_template">
+	<div class="item">
+		<div class="item-body">
+			<div class="item-pic">
+				<img src="{imgUrl}">
+			</div>
+			<div class="item-name">{name}</div>
+			<div class="item-desc">{desc}</div>
+			<div class="item-createtime">{createtime}</div>
+		</div>
+	</div>
+	</template>
 
 	<input type="hidden" id="appid" value="${jsapi.appid}">
 	<input type="hidden" id="nonceStr" value="${jsapi.nonceStr}">
@@ -41,9 +53,32 @@
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
 	<script>
+		var testData = {
+			imgUrl : "http://www.joosure.com:80/wechatTest/item_img_center_square/20166/21/fLvylh5ZXYC8jS4khLEn8c7yLxMJ0Nmh.jpg",
+			name : "item name",
+			desc : "item desc single line",
+			createtime : "2016-07-22"
+		}
+
+		var evens = {};
+
 		$(function() {
-			Core.mySwiper.loadSwiper();
+			loadTestData();
 		});
+
+		var loadTestData = function() {
+
+			var html = $("#item_template").html();
+			for (var i = 0; i < 10; i++) {
+				var temp = new String(html);
+				temp = Core.HtmlReplace(temp, testData);
+				$(".item-list").append(temp);
+			}
+			setTimeout(function() {
+				Core.iScroll.myScroll.refresh();
+			}, 1000);
+
+		}
 	</script>
 
 </body>

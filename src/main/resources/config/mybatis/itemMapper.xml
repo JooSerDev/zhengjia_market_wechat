@@ -10,6 +10,17 @@
 		(#{name},#{description},#{itemType},#{ownerId},#{ownerNickname},#{itemImgNum},#{itemImgIds},#{itemImgUrls},#{itemCenterImgUrls},#{likeNum},#{unlikeNum},#{markNum},#{isRecommended},#{recommendedTime},#{approvalStatus},#{lockStatus},#{status},#{createTime},#{lastModifyTime},#{refreshTime});
 	</insert>
 
+	<select id="getItemsByOwnerId" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
+		select * from
+		item_item where ownerId = #{ownerId} order by refreshTime desc;
+	</select>
+
+	<select id="getItemsByOwnerIdPages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
+		select * from
+		item_item where ownerId = #{ownerId}
+		order by refreshTime desc limit #{startRow},#{limitSize};
+	</select>
+
 	<select id="getItemTypes" resultType="com.joosure.server.mvc.wechat.entity.pojo.ItemType">
 		select * from
 		item_item_type order by sort;

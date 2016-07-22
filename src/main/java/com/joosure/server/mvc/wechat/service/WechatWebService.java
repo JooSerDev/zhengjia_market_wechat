@@ -16,6 +16,7 @@ import org.sword.wechat4j.oauth.protocol.get_userinfo.GetUserinfoResponse;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
 import com.joosure.server.mvc.wechat.dao.database.UserDao;
+import com.joosure.server.mvc.wechat.entity.domain.Pages;
 import com.joosure.server.mvc.wechat.entity.domain.Redirecter;
 import com.joosure.server.mvc.wechat.entity.domain.TableURLs;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
@@ -23,6 +24,7 @@ import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.HomePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.MyItemPageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.entity.pojo.UserWechatInfo;
 import com.shawn.server.core.util.EncryptUtil;
@@ -208,6 +210,35 @@ public class WechatWebService {
 			throw new Exception("WechatWebService.addItemPage decode encodeOpenid exception," + e.getMessage());
 		}
 		return addItemPageInfo;
+	}
+
+	/**
+	 * 我的宝贝页面
+	 * 
+	 * @param encodeOpenid
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public MyItemPageInfo myItemPage(String encodeOpenid, HttpServletRequest request) throws Exception {
+		UserInfo userInfo = userService.getUserInfoByEO(encodeOpenid);
+		if (userInfo != null) {
+			MyItemPageInfo myItemPageInfo = new MyItemPageInfo();
+
+			String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
+			JsApiParam jsApiParam = JsApiManager.signature(url);
+
+			Pages pages = new Pages(1, WechatConstant.PAGE_SIZE_MY_ITEM);
+
+			myItemPageInfo.setJsApiParam(jsApiParam);
+			myItemPageInfo.setUserInfo(userInfo);
+			myItemPageInfo.setItems(itemDao.getItemsByOwnerIdPages(userInfo.getUser().getUserId(), pages.getPageRow(),
+					pages.getPageSize()));
+
+			return myItemPageInfo;
+		} else {
+			throw new OAuthException();
+		}
 	}
 
 	/**

@@ -290,7 +290,7 @@ a:hover {
   bottom: 0;
 }
 #scroller {
-  height: 100%;
+  width: 100%;
 }
 .swiper-container {
   width: 100%;
@@ -508,4 +508,18 @@ a:hover {
   height: 0;
   overflow: hidden;
   content: ".";
+}
+.item-list > .item {
+  width: 50%;
+  float: left;
+  min-height: 1px;
+}
+.item-list > .item > .item-body {
+  padding: 10px;
+}
+.item-list > .item > .item-body > .item-pic {
+  width: 100%;
+}
+.item-list > .item > .item-body > .item-pic > img {
+  width: 100%;
 }

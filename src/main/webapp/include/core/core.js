@@ -124,6 +124,14 @@ Core.getQueryString = function(name) {
 	return null;
 }
 
+Core.HtmlReplace = function(html, obj) {
+	for ( var k in obj) {
+		var regexp = eval("/\{" + k + "\}/ig");
+		html = html.replace(regexp, obj[k]);
+	}
+	return html;
+}
+
 document.addEventListener('touchmove', function(e) {
 	e.preventDefault();
 }, false);

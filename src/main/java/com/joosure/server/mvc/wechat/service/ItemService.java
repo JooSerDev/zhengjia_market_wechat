@@ -1,6 +1,7 @@
 package com.joosure.server.mvc.wechat.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
+import com.joosure.server.mvc.wechat.entity.domain.Pages;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.shawn.server.core.util.EncryptUtil;
@@ -89,6 +91,26 @@ public class ItemService {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 分页加载我的宝贝
+	 * 
+	 * @param eo
+	 * @param pageNum
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Item> loadMyItems(String eo, int pageNum) throws Exception {
+		UserInfo userInfo = getUserInfoByEo(eo);
+		if (userInfo != null) {
+			Pages pages = new Pages(pageNum);
+			List<Item> items = itemDao.getItemsByOwnerIdPages(userInfo.getUser().getUserId(), pages.getPageRow(),
+					pages.getPageSize());
+			return items;
+		}
+
+		return null;
 	}
 
 	/**

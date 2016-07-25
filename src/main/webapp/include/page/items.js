@@ -76,7 +76,7 @@ var loadNextPage = function() {
 
 		$
 				.ajax({
-					url : "loadMyItems",
+					url : "loadItems",
 					data : {
 						eo : eo,
 						page : pageNum

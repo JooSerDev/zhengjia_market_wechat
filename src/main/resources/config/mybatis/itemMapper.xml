@@ -18,7 +18,14 @@
 	<select id="getItemsByOwnerIdPages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
 		item_item where ownerId = #{ownerId}
-		order by refreshTime desc limit #{startRow},#{limitSize};
+		order by refreshTime desc limit
+		#{startRow},#{limitSize};
+	</select>
+
+	<select id="getMarketItemsPages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
+		select * from
+		item_item where approvalStatus = 'yes' order by refreshTime desc limit
+		#{startRow},#{limitSize};
 	</select>
 
 	<select id="getItemTypes" resultType="com.joosure.server.mvc.wechat.entity.pojo.ItemType">

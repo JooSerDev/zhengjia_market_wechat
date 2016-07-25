@@ -132,6 +132,7 @@ Core.iScroll = {
 					}
 				});
 		Core.iScroll.isLoaded = true;
+		Core.iScroll.onLoaded();
 	},
 	pullDownAction : function() {
 		setTimeout(function() {
@@ -142,6 +143,8 @@ Core.iScroll = {
 		setTimeout(function() {
 			Core.iScroll.myScroll.refresh();
 		}, 400);
+	},
+	onLoaded : function(){
 	}
 };
 

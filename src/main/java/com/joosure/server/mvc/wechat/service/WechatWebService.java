@@ -23,8 +23,9 @@ import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.HomePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
-import com.joosure.server.mvc.wechat.entity.domain.page.MyItemPageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.entity.pojo.UserWechatInfo;
 import com.shawn.server.core.util.EncryptUtil;
@@ -220,10 +221,10 @@ public class WechatWebService {
 	 * @return
 	 * @throws Exception
 	 */
-	public MyItemPageInfo myItemPage(String encodeOpenid, HttpServletRequest request) throws Exception {
+	public MyItemsPageInfo myItemsPage(String encodeOpenid, HttpServletRequest request) throws Exception {
 		UserInfo userInfo = userService.getUserInfoByEO(encodeOpenid);
 		if (userInfo != null) {
-			MyItemPageInfo myItemPageInfo = new MyItemPageInfo();
+			MyItemsPageInfo myItemPageInfo = new MyItemsPageInfo();
 
 			String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
 			JsApiParam jsApiParam = JsApiManager.signature(url);
@@ -236,6 +237,33 @@ public class WechatWebService {
 					pages.getPageSize()));
 
 			return myItemPageInfo;
+		} else {
+			throw new OAuthException();
+		}
+	}
+
+	/**
+	 * 集市宝贝列表
+	 * 
+	 * @param encodeOpenid
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public ItemsPageInfo itemsPage(String encodeOpenid, HttpServletRequest request) throws Exception {
+		UserInfo userInfo = userService.getUserInfoByEO(encodeOpenid);
+		if (userInfo != null) {
+			ItemsPageInfo pageInfo = new ItemsPageInfo();
+
+			String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
+			JsApiParam jsApiParam = JsApiManager.signature(url);
+
+			Pages pages = new Pages(1, WechatConstant.PAGE_SIZE_MY_ITEM);
+			pageInfo.setJsApiParam(jsApiParam);
+			pageInfo.setUserInfo(userInfo);
+			pageInfo.setItems(itemDao.getMarketItemsPages(pages.getPageRow(), pages.getPageSize()));
+
+			return pageInfo;
 		} else {
 			throw new OAuthException();
 		}

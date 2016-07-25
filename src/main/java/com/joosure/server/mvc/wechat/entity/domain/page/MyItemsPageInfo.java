@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 
-public class MyItemPageInfo extends BasePageInfo {
+public class MyItemsPageInfo extends BasePageInfo {
 
 	private List<Item> items;
 

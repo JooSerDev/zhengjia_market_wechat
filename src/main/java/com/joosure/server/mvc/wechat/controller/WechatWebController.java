@@ -20,8 +20,10 @@ import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.HomePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
-import com.joosure.server.mvc.wechat.entity.domain.page.MyItemPageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
+import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.service.ItemService;
 import com.joosure.server.mvc.wechat.service.SystemFunctionService;
 import com.joosure.server.mvc.wechat.service.SystemLogStorageService;
@@ -250,14 +252,14 @@ public class WechatWebController {
 	 * @return
 	 */
 	@RequestMapping("/item/myItems")
-	public String myItem(HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String myItems(HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
 			String eo = request.getParameter("eo");
 			if (StringUtil.isBlank(eo)) {
 				throw new OAuthException();
 			}
 
-			MyItemPageInfo pageInfo = wechatWebService.myItemPage(eo, request);
+			MyItemsPageInfo pageInfo = wechatWebService.myItemsPage(eo, request);
 
 			model.addAttribute("jsapi", pageInfo.getJsApiParam());
 			model.addAttribute("items", pageInfo.getItems());
@@ -275,6 +277,35 @@ public class WechatWebController {
 		return "item/myItems";
 	}
 
+	/**
+	 * 市集入口，宝贝列表页面
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/item/items")
+	public String items(HttpServletRequest request, HttpServletResponse response, Model model) {
+		try {
+			String eo = request.getParameter("eo");
+			if (StringUtil.isBlank(eo)) {
+				throw new OAuthException();
+			}
+
+			ItemsPageInfo pageInfo = wechatWebService.itemsPage(eo, request);
+
+			model.addAttribute("jsapi", pageInfo.getJsApiParam());
+			model.addAttribute("items", pageInfo.getItems());
+			model.addAttribute("nextPage", pageInfo.getItems().size() == WechatConstant.PAGE_SIZE_MY_ITEM ? 1 : 0);
+
+			pageLogger(request, "/wechat/item/items", pageInfo);
+		} catch (Exception e) {
+			return errorPageRouter(e, "WechatWebController.items");
+		}
+		return "item/items";
+	}
+
 	@RequestMapping("/item/loadMyItems")
 	public void loadMyItems(HttpServletRequest request, HttpServletResponse response, Model model) {
 		AjaxResult ar = new AjaxResult();
@@ -283,13 +314,26 @@ public class WechatWebController {
 			if (StringUtil.isBlank(eo)) {
 				throw new OAuthException();
 			}
-			
+
 			String page = request.getParameter("page");
-			
+			int pageNum = 2;
+			try {
+				pageNum = Integer.parseInt(page);
+			} catch (Exception e) {
+				throw new NumberFormatException("can not format the page number");
+			}
+
+			List<Item> items = itemService.loadMyItems(eo, pageNum);
+			ar.putData("myItems", items);
 			ar.setErrCode("0");
 		} catch (Exception e) {
+			if (e instanceof NumberFormatException) {
+				ar.setErrCode("1002");
+				ar.setErrMsg("服务器内部错误");
+			} else {
+				ar.setErrCode("1001");
+			}
 			e.printStackTrace();
-			ar.setErrCode("1001");
 		}
 
 		String json = JsonUtil.Object2JsonStr(ar);

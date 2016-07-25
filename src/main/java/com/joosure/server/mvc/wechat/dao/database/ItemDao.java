@@ -16,6 +16,8 @@ public interface ItemDao {
 	public List<Item> getItemsByOwnerIdPages(@Param("ownerId") int ownerId, @Param("startRow") int startRow,
 			@Param("limitSize") int limitSize);
 
+	public List<Item> getMarketItemsPages(@Param("startRow") int startRow, @Param("limitSize") int limitSize);
+
 	public List<ItemType> getItemTypes();
 
 }

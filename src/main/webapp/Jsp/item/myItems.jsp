@@ -25,14 +25,16 @@
 				<div class="item-list">
 					<c:forEach items="${items}" var="item">
 						<div class="item">
-							<div class="item-body">
-								<div class="item-pic">
-									<img src="${item.firstItemCenterImgUrl}">
+							<a href="item/item?ii=${item.itemId}">
+								<div class="item-body">
+									<div class="item-pic">
+										<img src="${item.firstItemCenterImgUrl}">
+									</div>
+									<div class="item-name">${item.name}</div>
+									<div class="item-desc">${item.description}</div>
+									<div class="item-createtime">${item.displayTime}</div>
 								</div>
-								<div class="item-name">${item.name}</div>
-								<div class="item-desc">${item.description}</div>
-								<div class="item-createtime">${item.displayTime}</div>
-							</div>
+							</a>
 						</div>
 					</c:forEach>
 				</div>
@@ -55,14 +57,16 @@
 
 	<template id="item_template">
 	<div class="item">
-		<div class="item-body">
-			<div class="item-pic">
-				<img src="{imgUrl}">
+		<a href="item/item?ii={itemId}">
+			<div class="item-body">
+				<div class="item-pic">
+					<img src="{imgUrl}">
+				</div>
+				<div class="item-name">{name}</div>
+				<div class="item-desc">{desc}</div>
+				<div class="item-createtime">{createtime}</div>
 			</div>
-			<div class="item-name">{name}</div>
-			<div class="item-desc">{desc}</div>
-			<div class="item-createtime">{createtime}</div>
-		</div>
+		</a>
 	</div>
 	</template>
 

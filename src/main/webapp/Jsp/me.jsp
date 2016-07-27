@@ -35,7 +35,7 @@
 					</div>
 				</a>
 			</div>
-			
+
 			<div class="row margin">
 				<a href="item/myItems?eo=${eo}">
 					<div class="list-item">
@@ -56,6 +56,7 @@
 
 	<div class="table_bar clearfix">
 		<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">
+		<input type="hidden" id="marketUrl" value="${tableUrls.marketUrl }">
 		<input type="hidden" id="meUrl" value="${tableUrls.meUrl }">
 
 		<div class="col-25 text-center" id="table_bar_home">
@@ -66,12 +67,12 @@
 				<div class="label">首页</div>
 			</div>
 		</div>
-		<div class="col-25 text-center">
+		<div class="col-25 text-center" id="table_bar_market">
 			<div class="table_bar_btn">
 				<div class="logo">
 					<div class="icono-market"></div>
 				</div>
-				<div class="label">商店</div>
+				<div class="label">集市</div>
 			</div>
 		</div>
 		<div class="col-25 text-center">
@@ -98,6 +99,12 @@
 	<script src="<%=path%>/include/core/core.js"></script>
 
 	<script>
+		document.addEventListener('touchmove', function(e) {
+			e.preventDefault();
+		}, false);
+		document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll,
+				false);
+
 		$(function() {
 			Core.tableBar.init(3);
 		});

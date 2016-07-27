@@ -3,15 +3,16 @@ package com.joosure.server.mvc.wechat;
 import java.lang.reflect.Field;
 
 import com.joosure.server.mvc.wechat.entity.pojo.CheckCode;
+import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 
 @SuppressWarnings("rawtypes")
 public class SqlBuilder {
 
 	static String[] Jobs = { "insert", "update" };
-	static String job = Jobs[0];
-	static String table = "system_check_code";
-	static Class clazz = CheckCode.class;
+	static String job = Jobs[1];
+	static String table = "item_item";
+	static Class clazz = Item.class;
 
 	public static void main(String[] args) {
 		StringBuffer sb = new StringBuffer(job);

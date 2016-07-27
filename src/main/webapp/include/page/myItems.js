@@ -1,3 +1,8 @@
+document.addEventListener('touchmove', function(e) {
+	e.preventDefault();
+}, false);
+document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll, false);
+
 var jsapiparam = {};
 jsapiparam.appid = document.getElementById("appid").value;
 jsapiparam.nonceStr = document.getElementById("nonceStr").value;

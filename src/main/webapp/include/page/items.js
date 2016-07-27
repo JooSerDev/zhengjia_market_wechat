@@ -1,3 +1,8 @@
+document.addEventListener('touchmove', function(e) {
+	e.preventDefault();
+}, false);
+document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll, false);
+
 var jsapiparam = {};
 jsapiparam.appid = document.getElementById("appid").value;
 jsapiparam.nonceStr = document.getElementById("nonceStr").value;
@@ -52,6 +57,7 @@ Core.iScroll.onLoaded = function() {
 		Core.iScroll.pullUpBar.style.display = "none";
 		Core.iScroll.isNextPage = false;
 		page.nextPage = false;
+		
 	}
 }
 
@@ -59,12 +65,15 @@ $(function() {
 
 });
 
-var Item = function(imgUrl, name, desc, createtime) {
+var Item = function(imgUrl, name, desc, createtime, itemId, eo, owner) {
 	var item = {
 		imgUrl : imgUrl,
 		name : name,
 		desc : desc,
-		createtime : createtime
+		createtime : createtime,
+		itemId : itemId,
+		eo : eo,
+		owner : owner
 	};
 	return item;
 }
@@ -95,7 +104,9 @@ var loadNextPage = function() {
 											items[i].firstItemCenterImgUrl,
 											items[i].name,
 											items[i].description,
-											items[i].displayTime);
+											items[i].displayTime,
+											items[i].itemId, eo,
+											items[i].ownerNickname);
 									var temp = new String(html);
 									temp = Core.HtmlReplace(temp, item);
 									$(".item-list").append(temp);

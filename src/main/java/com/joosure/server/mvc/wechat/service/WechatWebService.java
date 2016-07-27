@@ -3,6 +3,7 @@ package com.joosure.server.mvc.wechat.service;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.sword.wechat4j.jsapi.JsApiManager;
 import org.sword.wechat4j.jsapi.JsApiParam;
 import org.sword.wechat4j.oauth.OAuthException;
+import org.sword.wechat4j.oauth.OAuthManager;
 import org.sword.wechat4j.oauth.protocol.get_userinfo.GetUserinfoResponse;
 
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
@@ -22,12 +24,18 @@ import com.joosure.server.mvc.wechat.entity.domain.TableURLs;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.ExchangePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.HomePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.ItemDetailPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
+import com.joosure.server.mvc.wechat.entity.pojo.Item;
+import com.joosure.server.mvc.wechat.entity.pojo.ItemComment;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.entity.pojo.UserWechatInfo;
+import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
+import com.joosure.server.mvc.wechat.exception.UserIllegalException;
 import com.shawn.server.core.util.EncryptUtil;
 import com.shawn.server.core.util.StringUtil;
 import com.shawn.server.wechat.common.web.AuthUtil;
@@ -188,21 +196,14 @@ public class WechatWebService {
 		AddItemPageInfo addItemPageInfo = null;
 		try {
 			String encodeOpenid = request.getParameter("eo");
-			String decodeOpenid = EncryptUtil.decryptAES(encodeOpenid, WechatConstant.ENCODE_KEY_OPENID);
-			String[] decodeOpenidInfo = decodeOpenid.split(";");
-			if (decodeOpenidInfo.length == 2 && StringUtil.isNumber(decodeOpenidInfo[1])) {
-				String openid = decodeOpenidInfo[0];
-				UserInfo userInfo = userService.getUserInfoByOpenid(openid);
-				if (userInfo != null) {
-					String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
-					addItemPageInfo = new AddItemPageInfo();
-					JsApiParam jsApiParam = JsApiManager.signature(url);
-					addItemPageInfo.setJsApiParam(jsApiParam);
-					addItemPageInfo.setUserInfo(userInfo);
-					addItemPageInfo.setItemTypes(itemDao.getItemTypes());
-				} else {
-					throw new OAuthException();
-				}
+			UserInfo userInfo = userService.getUserInfoByEO(encodeOpenid);
+			if (userInfo != null) {
+				String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
+				addItemPageInfo = new AddItemPageInfo();
+				JsApiParam jsApiParam = JsApiManager.signature(url);
+				addItemPageInfo.setJsApiParam(jsApiParam);
+				addItemPageInfo.setUserInfo(userInfo);
+				addItemPageInfo.setItemTypes(itemDao.getItemTypes());
 			} else {
 				throw new OAuthException();
 			}
@@ -214,7 +215,7 @@ public class WechatWebService {
 	}
 
 	/**
-	 * 我的宝贝页面
+	 * 我的宝贝列表页面
 	 * 
 	 * @param encodeOpenid
 	 * @param request
@@ -270,6 +271,99 @@ public class WechatWebService {
 	}
 
 	/**
+	 * 宝贝详情（集市入口进入）
+	 * 
+	 * @param encodeOpenid
+	 * @param itemId
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public ItemDetailPageInfo itemDetailPage(String encodeOpenid, int itemId, HttpServletRequest request)
+			throws Exception {
+
+		UserInfo userInfo = userService.getUserInfoByEO(encodeOpenid);
+
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
+
+		Item item = itemDao.getItemById(itemId);
+		if (item != null) {
+			if (item.getStatus() == 1) {
+				// 宝贝被下线
+				throw new ItemIllegalException("this item is offline");
+			}
+
+			if (item.getApprovalStatus().equals(Item.STATUS_NO)) {
+				// 宝贝未审批
+				throw new ItemIllegalException("this item is disapproval");
+			}
+
+			int ownerId = item.getOwnerId();
+			UserInfo ownerInfo = userService.getUserInfoById(ownerId);
+
+			if (ownerInfo == null) {
+				throw new ItemIllegalException("item owner is null");
+			}
+
+			if (ownerInfo.getUser().getState() == 1) {
+				throw new UserIllegalException("item owner is in blacklist");
+			}
+
+			Pages pages = new Pages(1, WechatConstant.PAGE_SIZE_ITEM_COMMENT);
+			List<ItemComment> comments = itemDao.getItemCommentByItemIdPages(itemId, pages.getPageRow(),
+					pages.getPageSize());
+
+			String toExchangePath = request.getScheme() + "://" + request.getServerName() + request.getContextPath()
+					+ WechatConstant.SCHEMA_MARKET + "/item/toExchange?tii=" + itemId;
+
+			String toExchangeUrl = OAuthManager.generateRedirectURI(toExchangePath, WechatConstant.SCOPE_SNSAPI_BASE,
+					"");
+
+			ItemDetailPageInfo pageInfo = new ItemDetailPageInfo();
+			pageInfo.setItem(item);
+			pageInfo.setOwnerInfo(ownerInfo);
+			pageInfo.setComments(comments);
+			pageInfo.setUserInfo(userInfo);
+			pageInfo.setToExchangeUrl(toExchangeUrl);
+			return pageInfo;
+		} else {
+			throw new NullPointerException("item is null");
+		}
+	}
+
+	/**
+	 * 交换页面
+	 * 
+	 * @param targetItemId
+	 * @param request
+	 * @return
+	 * @throws OAuthException
+	 * @throws ItemIllegalException
+	 */
+	public ExchangePageInfo exchangePage(int targetItemId, HttpServletRequest request)
+			throws OAuthException, ItemIllegalException {
+		UserInfo userInfo = userService.getUserInfoBySnsbase(request);
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
+
+		Item targetItem = itemDao.getItemById(targetItemId);
+		if (targetItem == null) {
+			throw new ItemIllegalException();
+		}
+
+		List<Item> items = itemDao.getExchangeableItemsByOwnerId(userInfo.getUser().getUserId());
+
+		ExchangePageInfo pageInfo = new ExchangePageInfo();
+		pageInfo.setItems(items);
+		pageInfo.setTargetItem(targetItem);
+		pageInfo.setUserInfo(userInfo);
+		return pageInfo;
+	}
+
+	/**
 	 * 生成table bar的链接
 	 * 
 	 * @param request
@@ -287,9 +381,11 @@ public class WechatWebService {
 		// WechatConstant.SCOPE_SNSAPI_USERINFO, "");
 
 		String homeURL = basePath + "home?eo=" + encodeOpenid;
+		String marketURL = basePath + "market?eo=" + encodeOpenid;
 		String meURL = basePath + "me?eo=" + encodeOpenid;
 
 		tableURLs.setHomeUrl(homeURL);
+		tableURLs.setMarketUrl(marketURL);
 		tableURLs.setMeUrl(meURL);
 
 		return tableURLs;
@@ -310,7 +406,7 @@ public class WechatWebService {
 
 		// 若用户不存在（首次进入），则保存新用户。否则，若未自行修改昵称同时微信昵称修改了，则更新用户信息。
 		if (user == null) {
-			createUserByWechatInfo(getUserinfoResponse, request);
+			user = createUserByWechatInfo(getUserinfoResponse, request);
 		} else {
 			if (userWechatInfo != null && user.getNickname() != null
 					&& user.getNickname().equals(userWechatInfo.getNickname())
@@ -345,7 +441,7 @@ public class WechatWebService {
 	 * 
 	 * @param getUserinfoResponse
 	 */
-	private void createUserByWechatInfo(GetUserinfoResponse getUserinfoResponse, HttpServletRequest request) {
+	private User createUserByWechatInfo(GetUserinfoResponse getUserinfoResponse, HttpServletRequest request) {
 		User user = new User();
 
 		String headImgUrl = null;
@@ -363,7 +459,7 @@ public class WechatWebService {
 		user.setLastModifyTime(nowDate);
 
 		userDao.saveUser(user);
-
+		return user;
 	}
 
 }

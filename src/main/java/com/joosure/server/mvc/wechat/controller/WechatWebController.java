@@ -19,11 +19,15 @@ import com.joosure.server.mvc.wechat.entity.domain.Redirecter;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.ExchangePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.HomePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.ItemDetailPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
+import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
+import com.joosure.server.mvc.wechat.exception.RequestParamsException;
 import com.joosure.server.mvc.wechat.service.ItemService;
 import com.joosure.server.mvc.wechat.service.SystemFunctionService;
 import com.joosure.server.mvc.wechat.service.SystemLogStorageService;
@@ -76,6 +80,7 @@ public class WechatWebController {
 			Redirecter redirecter = wechatWebService.redirecter(request);
 			if (redirecter.isValid()) {
 				redirectURL = "redirect:" + redirecter.getRedirectURL();
+			} else {
 			}
 		} catch (Exception e) {
 			return errorPageRouter(e, "WechatWebController.redirecter");
@@ -285,7 +290,7 @@ public class WechatWebController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/item/items")
+	@RequestMapping("/market")
 	public String items(HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
 			String eo = request.getParameter("eo");
@@ -294,16 +299,108 @@ public class WechatWebController {
 			}
 
 			ItemsPageInfo pageInfo = wechatWebService.itemsPage(eo, request);
-
+			model.addAttribute("eo", pageInfo.getUserInfo().getEncodeOpenid());
 			model.addAttribute("jsapi", pageInfo.getJsApiParam());
 			model.addAttribute("items", pageInfo.getItems());
 			model.addAttribute("nextPage", pageInfo.getItems().size() == WechatConstant.PAGE_SIZE_MY_ITEM ? 1 : 0);
 
-			pageLogger(request, "/wechat/item/items", pageInfo);
+			pageLogger(request, "/wechat/market", pageInfo);
 		} catch (Exception e) {
 			return errorPageRouter(e, "WechatWebController.items");
 		}
 		return "item/items";
+	}
+
+	@RequestMapping("/item/item")
+	public String itemDetail(HttpServletRequest request, HttpServletResponse response, Model model) {
+		try {
+			String itemIdStr = request.getParameter("ii");
+			int itemId = 0;
+			try {
+				itemId = Integer.parseInt(itemIdStr);
+			} catch (Exception e) {
+				throw new NumberFormatException();
+			}
+
+			String eo = request.getParameter("eo");
+
+			ItemDetailPageInfo pageInfo = wechatWebService.itemDetailPage(eo, itemId, request);
+			model.addAttribute("owner", pageInfo.getOwnerInfo());
+			model.addAttribute("user", pageInfo.getUserInfo());
+			model.addAttribute("item", pageInfo.getItem());
+			model.addAttribute("comments", pageInfo.getComments());
+			model.addAttribute("toExchangeUrl", pageInfo.getToExchangeUrl());
+
+			pageLogger(request, "/wechat/item/item", pageInfo);
+		} catch (Exception e) {
+			return errorPageRouter(e, "WechatWebController.itemDetail");
+		}
+		return "item/itemDetail";
+	}
+
+	@RequestMapping("/item/toExchange")
+	public String exchange(HttpServletRequest request, HttpServletResponse response, Model model) {
+		try {
+
+			String targetItemIdStr = request.getParameter("tii");
+			if (StringUtil.isBlank(targetItemIdStr)) {
+				throw new ItemIllegalException();
+			}
+
+			int targetItemId = Integer.parseInt(targetItemIdStr);
+			ExchangePageInfo pageInfo = wechatWebService.exchangePage(targetItemId, request);
+			model.addAttribute("targetItem", pageInfo.getTargetItem());
+			model.addAttribute("items", pageInfo.getItems());
+			model.addAttribute("user", pageInfo.getUserInfo());
+			model.addAttribute("eo", pageInfo.getUserInfo().getEncodeOpenid());
+
+			pageLogger(request, "/wechat/item/toExchange", pageInfo);
+		} catch (Exception e) {
+			return errorPageRouter(e, "WechatWebController.exchange");
+		}
+		return "item/exchange";
+	}
+
+	@RequestMapping("/item/exchange")
+	public void executeExchange(HttpServletRequest request, HttpServletResponse response, Model model) {
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			if (StringUtil.isBlank(eo)) {
+				throw new OAuthException();
+			}
+
+			String myItemIdStr = request.getParameter("myItemId");
+			String targetItemIdStr = request.getParameter("targetItemId");
+
+			if (StringUtil.isBlank(myItemIdStr) || StringUtil.isBlank(targetItemIdStr)) {
+				throw new RequestParamsException();
+			}
+
+			int myItemId = 0;
+			int targetItemId = 0;
+			try {
+				myItemId = Integer.parseInt(myItemIdStr);
+				targetItemId = Integer.parseInt(targetItemIdStr);
+			} catch (Exception e) {
+				throw new RequestParamsException();
+			}
+
+			itemService.executeExchange(eo, myItemId, targetItemId);
+			ar.setErrCode("0");
+
+		} catch (Exception e) {
+			if (e instanceof RequestParamsException) {
+				ar.setErrCode("1002");
+				ar.setErrMsg("服务器内部错误");
+			} else {
+				ar.setErrCode("1001");
+			}
+			e.printStackTrace();
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
 	}
 
 	@RequestMapping("/item/loadMyItems")
@@ -423,11 +520,14 @@ public class WechatWebController {
 	 * @return
 	 */
 	private String errorPageRouter(Exception e, String module) {
-		// e.printStackTrace();
+		e.printStackTrace();
 
 		if (e instanceof OAuthException) {
 			logService.systemException("OAuth fail", module);
 			return "error/403";
+		} else if (e instanceof ItemIllegalException) {
+			logService.systemException(e.getMessage(), module);
+			return "error/404";
 		}
 		logService.systemException(e.getMessage(), module);
 		return "error/500";

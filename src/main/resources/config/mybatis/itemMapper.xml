@@ -10,9 +10,43 @@
 		(#{name},#{description},#{itemType},#{ownerId},#{ownerNickname},#{itemImgNum},#{itemImgIds},#{itemImgUrls},#{itemCenterImgUrls},#{likeNum},#{unlikeNum},#{markNum},#{isRecommended},#{recommendedTime},#{approvalStatus},#{lockStatus},#{status},#{createTime},#{lastModifyTime},#{refreshTime});
 	</insert>
 
+	<update id="updateItem">
+		update item_item set
+		name= #{name}, description= #{description},
+		itemType= #{itemType}, ownerId=
+		#{ownerId}, ownerNickname=
+		#{ownerNickname}, itemImgNum= #{itemImgNum},
+		itemImgIds=
+		#{itemImgIds}, itemImgUrls= #{itemImgUrls},
+		itemCenterImgUrls=
+		#{itemCenterImgUrls}, likeNum= #{likeNum},
+		unlikeNum= #{unlikeNum},
+		markNum= #{markNum}, isRecommended=
+		#{isRecommended}, recommendedTime=
+		#{recommendedTime}, approvalStatus=
+		#{approvalStatus}, lockStatus=
+		#{lockStatus}, status= #{status},
+		lastModifyTime= #{lastModifyTime}, refreshTime= #{refreshTime} where
+		itemId= #{itemId}
+	</update>
+
+	<select id="getItemById" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
+		select * from
+		item_item where
+		itemId = #{itemId};
+	</select>
+
 	<select id="getItemsByOwnerId" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
 		item_item where ownerId = #{ownerId} order by refreshTime desc;
+	</select>
+
+	<select id="getExchangeableItemsByOwnerId" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
+		select *
+		from
+		item_item where ownerId = #{ownerId} and status = 0 and
+		approvalStatus = 'yes' and lockStatus not like 'exchanged' order by
+		refreshTime desc;
 	</select>
 
 	<select id="getItemsByOwnerIdPages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
@@ -28,9 +62,33 @@
 		#{startRow},#{limitSize};
 	</select>
 
+	<select id="getItemCommentByItemIdPages"
+		resultType="com.joosure.server.mvc.wechat.entity.pojo.ItemComment">
+		select * from item_item_comment where state = 0 and itemId
+		= #{itemId} order by createTime limit
+		#{startRow},#{limitSize};
+	</select>
+
 	<select id="getItemTypes" resultType="com.joosure.server.mvc.wechat.entity.pojo.ItemType">
 		select * from
 		item_item_type order by sort;
+	</select>
+
+	<insert id="saveExchange" keyColumn="exchangeId" keyProperty="exchangeId"
+		useGeneratedKeys="true">
+		insert into item_exchange
+		(ownerItemId,ownerItemName,ownerId,changerItemId,changerItemName,changerId,state,exchangeFinishStatus,exchangeState,createTime,exchangeTime,exchangeFinishTime)
+		values
+		(#{ownerItemId},#{ownerItemName},#{ownerId},#{changerItemId},#{changerItemName},#{changerId},#{state},#{exchangeFinishStatus},#{exchangeState},#{createTime},#{exchangeTime},#{exchangeFinishTime});
+
+	</insert>
+
+	<select id="getExchangeByBothSideItemId" resultType="com.joosure.server.mvc.wechat.entity.pojo.Exchange">
+		select *
+		from item_exchange where (ownerItemId = #{ownerItemId} and
+		changerItemId = #{changerItemId}) or (ownerItemId = #{changerItemId}
+		and
+		changerItemId = #{ownerItemId}) limit 1;
 	</select>
 
 </mapper>

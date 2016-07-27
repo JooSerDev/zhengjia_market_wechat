@@ -26,12 +26,17 @@ Core.iScroll = {
 			Core.iScroll.pullUpOffset = Core.iScroll.pullUpBar.offsetHeight;
 		}
 
-		Core.iScroll.screenHeight = document.getElementById("wrapper").offsetHeight;
-		var scrollerH = document.getElementById("scroller").offsetHeight;
+		var wrapperDOM = document.getElementById("wrapper");
 
-		if (Core.iScroll.screenHeight >= scrollerH && !Core.iScroll.isNextPage) {
-			Core.iScroll.pullUpBar.style.display = "none";
-			Core.iScroll.isNextPage = false;
+		if (wrapperDOM) {
+			Core.iScroll.screenHeight = wrapperDOM.offsetHeight;
+			var scrollerH = document.getElementById("scroller").offsetHeight;
+
+			if (Core.iScroll.screenHeight >= scrollerH
+					&& !Core.iScroll.isNextPage) {
+				Core.iScroll.pullUpBar.style.display = "none";
+				Core.iScroll.isNextPage = false;
+			}
 		}
 
 		Core.iScroll.myScroll = new iScroll(
@@ -144,7 +149,7 @@ Core.iScroll = {
 			Core.iScroll.myScroll.refresh();
 		}, 400);
 	},
-	onLoaded : function(){
+	onLoaded : function() {
 	}
 };
 
@@ -169,6 +174,7 @@ Core.tableBar = {
 		Core.tableBar.pageIndex = idx;
 
 		var homeURL = $("#homeUrl").val();
+		var marketUrl = $("#marketUrl").val();
 		var meURL = $("#meUrl").val();
 
 		$("#table_bar_home").on("click", function() {
@@ -177,11 +183,18 @@ Core.tableBar = {
 			}
 		});
 
+		$("#table_bar_market").on("click", function() {
+			if (Core.tableBar.pageIndex != 1) {
+				location.href = marketUrl;
+			}
+		});
+
 		$("#table_bar_me").on("click", function() {
 			if (Core.tableBar.pageIndex != 3) {
 				location.href = meURL;
 			}
 		});
+
 	}
 }
 
@@ -202,7 +215,7 @@ Core.HtmlReplace = function(html, obj) {
 	return html;
 }
 
-document.addEventListener('touchmove', function(e) {
-	e.preventDefault();
-}, false);
-document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll, false);
+//document.addEventListener('touchmove', function(e) {
+//	e.preventDefault();
+//}, false);
+//document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll, false);

@@ -7,7 +7,7 @@ import com.shawn.server.core.util.DateUtil;
 public class Item {
 
 	public static final String LOCK_NORMAL = "normal";
-	public static final String LOCK_DISPLAY = "display";
+	public static final String LOCK_EXCHANGING = "exchanging";
 	public static final String LOCK_EXCHANGED = "exchanged";
 
 	public static final String STATUS_YES = "yes";

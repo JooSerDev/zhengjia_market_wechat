@@ -7,9 +7,20 @@ public class Redirecter {
 
 	public boolean isValid() {
 		if (userInfo != null && userInfo.getUser() != null && userInfo.getUserWechatInfo() != null
-				&& redirectURL != null)
+				&& redirectURL != null) {
 			return true;
-		return false;
+		} else {
+			System.out.println("Redirecter ###########");
+			System.out.println("userInfo :: " + (userInfo != null));
+			if (userInfo != null) {
+				System.out.println("userInfo.getUser :: " + (userInfo.getUser() != null));
+				System.out.println("userInfo.getUserWechatInfo() :: " + (userInfo.getUserWechatInfo() != null));
+			}
+			System.out.println("redirectURL :: " + (redirectURL != null));
+			System.out.println("Redirecter ###########");
+			return false;
+		}
+
 	}
 
 	public UserInfo getUserInfo() {

@@ -3,6 +3,7 @@ package com.joosure.server.mvc.wechat.entity.domain;
 public class TableURLs {
 
 	private String homeUrl;
+	private String marketUrl;
 	private String meUrl;
 
 	public String getHomeUrl() {
@@ -19,6 +20,14 @@ public class TableURLs {
 
 	public void setMeUrl(String meUrl) {
 		this.meUrl = meUrl;
+	}
+
+	public String getMarketUrl() {
+		return marketUrl;
+	}
+
+	public void setMarketUrl(String marketUrl) {
+		this.marketUrl = marketUrl;
 	}
 
 }

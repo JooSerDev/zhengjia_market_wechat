@@ -2,6 +2,8 @@ package com.joosure.server.mvc.wechat.service;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.sword.wechat4j.oauth.OAuthException;
@@ -14,6 +16,7 @@ import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.entity.pojo.UserWechatInfo;
 import com.shawn.server.core.util.EncryptUtil;
 import com.shawn.server.core.util.StringUtil;
+import com.shawn.server.wechat.common.web.AuthUtil;
 
 @Service
 public class UserService {
@@ -107,6 +110,28 @@ public class UserService {
 	}
 
 	/**
+	 * 通过userId获得用户信息和用户微信信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	public UserInfo getUserInfoById(int userId) {
+		UserInfo userInfo = null;
+
+		User user = userDao.getUserById(userId);
+		if (user != null) {
+			UserWechatInfo userWechatInfo = userDao.getUserWechatInfoByOpenid(user.getOpenid());
+			if (userWechatInfo != null) {
+				userInfo = new UserInfo();
+				userInfo.setUser(user);
+				userInfo.setUserWechatInfo(userWechatInfo);
+			}
+		}
+
+		return userInfo;
+	}
+
+	/**
 	 * 通过密文openid获得用户信息
 	 * 
 	 * @param encodeOpenid
@@ -125,6 +150,20 @@ public class UserService {
 			userInfo.setUserWechatInfo(userWechatInfo);
 		}
 
+		return userInfo;
+	}
+
+	/**
+	 * 通过snsapi_base方式取得用户信息
+	 * 
+	 * @param request
+	 * @return
+	 * @throws OAuthException
+	 */
+	public UserInfo getUserInfoBySnsbase(HttpServletRequest request) throws OAuthException {
+		String[] authParams = AuthUtil.getCodeAndState(request);
+		String openid = AuthUtil.getOpenidByCodeInSnsbase(authParams[0]);
+		UserInfo userInfo = getUserInfoByOpenid(openid);
 		return userInfo;
 	}
 

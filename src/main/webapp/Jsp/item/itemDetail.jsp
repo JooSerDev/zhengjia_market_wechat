@@ -21,33 +21,34 @@
 	<div class="container">
 
 		<div class="row margin">
-			<div class="itemType">
-				<div class="label">宝贝类别</div>
-				<div class="selecter">
-					<select id="itemType">
-						<c:forEach items="${itemTypes}" var="it">
-							<option value="${it.typeId }">${it.name }</option>
-						</c:forEach>
-					</select>
-				</div>
+			<div>${owner.user.nickname }</div>
+			<div>${item.displayTime }</div>
+		</div>
+
+		<div class="row margin">
+			<div>${item.description}</div>
+		</div>
+
+		<div class="row margin">
+			<img src="${item.firstItemImgUrl }" class="img">
+		</div>
+
+
+		<div class="row margin"></div>
+
+		<div class="row margin"></div>
+
+		<div class="item-nav-bar">
+			<div class="col-66">
+				<a>👍</a>&nbsp;&nbsp;<a></a>&nbsp;&nbsp;<a></a>
 			</div>
-		</div>
+			<c:if test="${user.user.userId != owner.user.userId}">
 
-		<div class="row margin">
-			<input type="text" placeholder="宝贝名称" id="itemName">
-		</div>
-
-		<div class="row margin">
-			<textarea rows="3" placeholder="宝贝介绍" id="itemDesc"></textarea>
-		</div>
-
-
-		<div class="row margin">
-			<div class="camera" onclick="evens.onCameraClick()"></div>
-		</div>
-
-		<div class="row margin">
-			<button class="btn btn-block" onclick="evens.onSubmitClick()">提交申请</button>
+				<div class="col-33" style="background-color: #f00; height: 100%;">
+					<a style="width: 100%; height: 100%; text-align: center;"
+						href="${toExchangeUrl}">我想换</a>
+				</div>
+			</c:if>
 		</div>
 	</div>
 
@@ -61,6 +62,6 @@
 	<script src="<%=path%>/include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-	<script src="<%=path%>/include/page/addItem.js"></script>
+	<%-- <script src="<%=path%>/include/page/addItem.js"></script> --%>
 </body>
 </html>

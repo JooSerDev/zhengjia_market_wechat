@@ -5,13 +5,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.sword.wechat4j.oauth.OAuthException;
 
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
 import com.joosure.server.mvc.wechat.entity.domain.Pages;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
+import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
+import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
+import com.joosure.server.mvc.wechat.exception.UserIllegalException;
 import com.shawn.server.core.util.EncryptUtil;
 import com.shawn.server.core.util.StringUtil;
 
@@ -23,6 +27,82 @@ public class ItemService {
 
 	@Autowired
 	private ItemDao itemDao;
+
+	/**
+	 * 发起交换请求
+	 * 
+	 * @param eo
+	 * @param myItemId
+	 * @param targetItemId
+	 * @throws OAuthException
+	 * @throws ItemIllegalException
+	 * @throws UserIllegalException
+	 */
+	public void executeExchange(String eo, int myItemId, int targetItemId)
+			throws OAuthException, ItemIllegalException, UserIllegalException {
+
+		System.out.println("myItemId::targetItemId :: " + myItemId + " -- " + targetItemId);
+
+		UserInfo userInfo = null;
+		try {
+			userInfo = getUserInfoByEo(eo);
+		} catch (Exception e) {
+			throw new OAuthException();
+		}
+
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
+
+		Item myItem = itemDao.getItemById(myItemId);
+		if (myItem == null) {
+			throw new ItemIllegalException("my item = null");
+		} else if (myItem.getStatus() == 1 || myItem.getApprovalStatus().equals(Item.STATUS_NO)
+				|| myItem.getLockStatus().equals(Item.LOCK_EXCHANGED)) {
+			throw new ItemIllegalException("my item unexchangeble");
+		}
+
+		Item targetItem = itemDao.getItemById(targetItemId);
+		if (targetItem == null) {
+			throw new ItemIllegalException("target item = null");
+		} else if (targetItem.getStatus() == 1 || targetItem.getApprovalStatus().equals(Item.STATUS_NO)
+				|| targetItem.getLockStatus().equals(Item.LOCK_EXCHANGED)) {
+			throw new ItemIllegalException("target item unexchangeble");
+		}
+
+		if (myItem.getOwnerId() != userInfo.getUser().getUserId()) {
+			throw new UserIllegalException("is not my item");
+		}
+
+		UserInfo ownerInfo = userService.getUserInfoById(targetItem.getOwnerId());
+		if (ownerInfo == null) {
+			throw new UserIllegalException("owner item No owner exception");
+		}
+
+		Exchange exchange = itemDao.getExchangeByBothSideItemId(targetItemId, myItemId);
+		if (exchange != null) {
+			throw new ItemIllegalException("the exchange is exist");
+		}
+
+		exchange = new Exchange();
+		exchange.setChangerId(userInfo.getUser().getUserId());
+		exchange.setChangerItemId(myItemId);
+		exchange.setChangerItemName(myItem.getName());
+		exchange.setCreateTime(new Date());
+		exchange.setExchangeFinishStatus(Exchange.STATUS_NO);
+		exchange.setExchangeState(Exchange.EXCHANGE_STATE_ING);
+		exchange.setOwnerId(targetItem.getOwnerId());
+		exchange.setOwnerItemId(targetItemId);
+		exchange.setOwnerItemName(targetItem.getName());
+		exchange.setState(0);
+
+		myItem.setLockStatus(Item.LOCK_EXCHANGED);
+		targetItem.setLockStatus(Item.LOCK_EXCHANGED);
+
+		itemDao.saveExchange(exchange);
+		itemDao.updateItem(myItem);
+		itemDao.updateItem(targetItem);
+	}
 
 	/**
 	 * 保存新宝贝

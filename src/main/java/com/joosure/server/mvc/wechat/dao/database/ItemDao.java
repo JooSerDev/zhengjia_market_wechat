@@ -49,8 +49,34 @@ public interface ItemDao {
 	public List<ItemType> getItemTypes();
 
 	public void saveExchange(Exchange exchange);
+	
+	public void updateExchange(Exchange exchange);
 
+	public void updateExchanges4cancelOthersWhenAgreeExchange(@Param("exchangeId") int exchangeId,
+			@Param("ownerItemId") int ownerItemId, @Param("changerItemId") int changerItemId);
+
+	public Exchange getExchangeById(@Param("exchangeId") int exchangeId);
+
+	/**
+	 * 通过双方物品查询交易<br>
+	 * 传入两个物品id，取得该两个物品有关系的交易，不论owner与changer
+	 * 
+	 * @param ownerItemId
+	 * @param changerItemId
+	 * @return
+	 */
 	public Exchange getExchangeByBothSideItemId(@Param("ownerItemId") int ownerItemId,
 			@Param("changerItemId") int changerItemId);
+
+	/**
+	 * 获得与当前userid相关的交易
+	 * 
+	 * @param userId
+	 * @param startRow
+	 * @param limitSize
+	 * @return
+	 */
+	public List<Exchange> getExchangesByUserIdPages(@Param("userId") int userId, @Param("startRow") int startRow,
+			@Param("limitSize") int limitSize);
 
 }

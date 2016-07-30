@@ -29,6 +29,105 @@ public class ItemService {
 	private ItemDao itemDao;
 
 	/**
+	 * 同意交换
+	 * 
+	 * @param encodeExchange
+	 * @throws ItemIllegalException
+	 */
+	public void agreeExchange(String encodeExchange) throws ItemIllegalException {
+		String decodeExchange = null;
+		try {
+			decodeExchange = EncryptUtil.decryptAES(encodeExchange, WechatConstant.ENCODE_KEY_OPENID);
+		} catch (Exception e) {
+			throw new ItemIllegalException("非法交换请求0001");
+		}
+
+		if (decodeExchange == null) {
+			throw new ItemIllegalException("非法交换请求0002");
+		}
+
+		String[] exchangeInfos = decodeExchange.split(";");
+		if (exchangeInfos.length != 6) {
+			throw new ItemIllegalException("非法交换请求0003");
+		}
+
+		String ownerOpenid = exchangeInfos[0];
+		String changerOpenid = exchangeInfos[1];
+		String ownerItemIdStr = exchangeInfos[2];
+		String changerItemIdStr = exchangeInfos[3];
+		String exchangeIdStr = exchangeInfos[4];
+
+		int ownerItemId = 0;
+		int changerItemId = 0;
+		int exchangeId = 0;
+
+		try {
+			ownerItemId = Integer.parseInt(ownerItemIdStr);
+			changerItemId = Integer.parseInt(changerItemIdStr);
+			exchangeId = Integer.parseInt(exchangeIdStr);
+		} catch (Exception e) {
+			throw new ItemIllegalException("非法交换请求0006");
+		}
+
+		UserInfo ownerInfo = userService.getUserInfoByOpenid(ownerOpenid);
+		if (ownerInfo == null) {
+			throw new ItemIllegalException("非法交换请求0004");
+		}
+
+		UserInfo changerInfo = userService.getUserInfoByOpenid(changerOpenid);
+		if (changerInfo == null) {
+			throw new ItemIllegalException("非法交换请求0005");
+		}
+
+		Exchange exchange = itemDao.getExchangeById(exchangeId);
+		if (exchange == null) {
+			throw new ItemIllegalException("非法交换请求0007");
+		}
+
+		if (exchange.getOwnerItemId() != ownerItemId || exchange.getChangerItemId() != changerItemId) {
+			throw new ItemIllegalException("非法交换请求0008");
+		}
+
+		if (exchange.getExchangeState().equals(Exchange.EXCHANGE_STATE_ED)) {
+			throw new ItemIllegalException("交换已完成");
+		}
+
+		Item Oitem = itemDao.getItemById(ownerItemId);
+		if (Oitem == null) {
+			throw new ItemIllegalException("非法交换请求0009");
+		}
+
+		Item Citem = itemDao.getItemById(changerItemId);
+		if (Citem == null) {
+			throw new ItemIllegalException("非法交换请求0009");
+		}
+
+		if (Oitem.getStatus() == 1 || Oitem.getLockStatus().equals(Item.LOCK_EXCHANGED)) {
+			throw new ItemIllegalException("宝贝《" + Oitem.getName() + "》已经下线或已经交换");
+		}
+
+		if (Citem.getStatus() == 1 || Citem.getLockStatus().equals(Item.LOCK_EXCHANGED)) {
+			throw new ItemIllegalException("宝贝《" + Citem.getName() + "》已经下线或已经交换");
+		}
+
+		Date now = new Date();
+
+		// 锁定当前交易及双方宝贝
+		exchange.setExchangeState(Exchange.EXCHANGE_STATE_ED);
+		exchange.setExchangeTime(now);
+		Oitem.setLockStatus(Item.LOCK_EXCHANGED);
+		Citem.setLockStatus(Item.LOCK_EXCHANGED);
+
+		itemDao.updateItem(Oitem);
+		itemDao.updateItem(Citem);
+		itemDao.updateExchange(exchange);
+
+		// 取消双方宝贝的其他交易
+		itemDao.updateExchanges4cancelOthersWhenAgreeExchange(exchangeId, ownerItemId, changerItemId);
+
+	}
+
+	/**
 	 * 发起交换请求
 	 * 
 	 * @param eo
@@ -40,8 +139,6 @@ public class ItemService {
 	 */
 	public void executeExchange(String eo, int myItemId, int targetItemId)
 			throws OAuthException, ItemIllegalException, UserIllegalException {
-
-		System.out.println("myItemId::targetItemId :: " + myItemId + " -- " + targetItemId);
 
 		UserInfo userInfo = null;
 		try {

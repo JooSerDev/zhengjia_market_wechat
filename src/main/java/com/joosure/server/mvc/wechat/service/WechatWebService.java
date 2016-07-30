@@ -2,6 +2,7 @@ package com.joosure.server.mvc.wechat.service;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,18 +19,22 @@ import org.sword.wechat4j.oauth.protocol.get_userinfo.GetUserinfoResponse;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
 import com.joosure.server.mvc.wechat.dao.database.UserDao;
+import com.joosure.server.mvc.wechat.entity.domain.ExchangeInfo;
 import com.joosure.server.mvc.wechat.entity.domain.Pages;
 import com.joosure.server.mvc.wechat.entity.domain.Redirecter;
 import com.joosure.server.mvc.wechat.entity.domain.TableURLs;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.AgreeExchangePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ExchangePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.HomePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ItemDetailPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.MyExchangesPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
+import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemComment;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
@@ -244,6 +249,67 @@ public class WechatWebService {
 	}
 
 	/**
+	 * 我的交换列表页面
+	 * 
+	 * @param encodeOpenid
+	 * @param request
+	 * @return
+	 * @throws OAuthException
+	 */
+	public MyExchangesPageInfo myExchangesPage(String encodeOpenid, HttpServletRequest request) throws OAuthException {
+		UserInfo userInfo = null;
+		try {
+			userInfo = userService.getUserInfoByEO(encodeOpenid);
+		} catch (Exception e) {
+			throw new OAuthException();
+		}
+		if (userInfo != null) {
+			MyExchangesPageInfo pageInfo = new MyExchangesPageInfo();
+
+			Pages pages = new Pages(1, WechatConstant.PAGE_SIZE_MY_ITEM);
+			List<Exchange> exchanges = itemDao.getExchangesByUserIdPages(userInfo.getUser().getUserId(),
+					pages.getPageRow(), pages.getPageSize());
+
+			List<ExchangeInfo> exchangeInfos = new ArrayList<>();
+
+			if (exchanges != null && exchanges.size() > 0) {
+				for (int i = 0; i < exchanges.size(); i++) {
+					Exchange exchange = exchanges.get(i);
+					Item ownerItem = itemDao.getItemById(exchange.getOwnerItemId());
+					Item changerItem = itemDao.getItemById(exchange.getChangerItemId());
+
+					if (ownerItem != null && changerItem != null) {
+						ExchangeInfo info = new ExchangeInfo();
+						info.setExchange(exchange);
+						info.setChangerItem(changerItem);
+						info.setOwnerItem(ownerItem);
+
+						String toAgreeExchangePath = request.getScheme() + "://" + request.getServerName()
+								+ request.getContextPath() + WechatConstant.SCHEMA_MARKET + "/item/toAgreeExchange?e="
+								+ exchange.getExchangeId();
+						String toAgreeExchangeUrl = OAuthManager.generateRedirectURI(toAgreeExchangePath,
+								WechatConstant.SCOPE_SNSAPI_BASE, "");
+						info.setToAgreeExchangePath(toAgreeExchangeUrl);
+
+						exchangeInfos.add(info);
+					}
+
+				}
+			}
+
+			String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
+			JsApiParam jsApiParam = JsApiManager.signature(url);
+
+			pageInfo.setExchanges(exchangeInfos);
+			pageInfo.setUserInfo(userInfo);
+			pageInfo.setJsApiParam(jsApiParam);
+			return pageInfo;
+		} else {
+			throw new OAuthException();
+		}
+	}
+
+	/**
 	 * 集市宝贝列表
 	 * 
 	 * @param encodeOpenid
@@ -331,6 +397,42 @@ public class WechatWebService {
 		} else {
 			throw new NullPointerException("item is null");
 		}
+	}
+
+	public AgreeExchangePageInfo toAgreeExchangePage(int exchangeId, HttpServletRequest request)
+			throws OAuthException, ItemIllegalException {
+		AgreeExchangePageInfo pageInfo = new AgreeExchangePageInfo();
+
+		UserInfo userInfo = userService.getUserInfoBySnsbase(request);
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
+
+		Exchange exchange = itemDao.getExchangeById(exchangeId);
+		if (exchange == null) {
+			throw new ItemIllegalException();
+		}
+
+		Item ownerItem = itemDao.getItemById(exchange.getOwnerItemId());
+		Item changerItem = itemDao.getItemById(exchange.getChangerItemId());
+		UserInfo ownerInfo = userService.getUserInfoById(exchange.getOwnerId());
+		UserInfo changerInfo = userService.getUserInfoById(exchange.getChangerId());
+
+		if (ownerItem != null && changerItem != null && ownerInfo != null && changerInfo != null) {
+			ExchangeInfo info = new ExchangeInfo();
+			info.setExchange(exchange);
+			info.setChangerItem(changerItem);
+			info.setOwnerItem(ownerItem);
+			info.setChanger(changerInfo);
+			info.setOwner(ownerInfo);
+
+			pageInfo.setExchangeInfo(info);
+			pageInfo.setUserInfo(userInfo);
+		} else {
+			throw new ItemIllegalException();
+		}
+
+		return pageInfo;
 	}
 
 	/**

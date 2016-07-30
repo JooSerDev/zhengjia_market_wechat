@@ -540,3 +540,46 @@ a:hover {
   height: 50px;
   background-color: rgba(0, 0, 0, 0.6);
 }
+.exchange-list > .exchange {
+  position: relative;
+  padding: 10px;
+  clear: both;
+}
+.exchange-list > .exchange:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.exchange-list > .exchange > .exchange-img-view {
+  position: relative;
+  float: left;
+  width: 96px;
+  height: 96px;
+}
+.exchange-list > .exchange > .exchange-img-view > .owner-img-view {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #ffffff;
+}
+.exchange-list > .exchange > .exchange-img-view > .owner-img-view > img {
+  width: 100%;
+  position: relative;
+}
+.exchange-list > .exchange > .exchange-img-view > .changer-img-view {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 60px;
+  height: 60px;
+  border: 2px solid #ffffff;
+}
+.exchange-list > .exchange > .exchange-img-view > .changer-img-view > img {
+  width: 100%;
+  position: relative;
+}

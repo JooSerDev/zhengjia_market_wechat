@@ -519,3 +519,50 @@ a, a:hover {
   height: 50px;
   background-color: rgba(0, 0, 0, 0.6);
 }
+
+.exchange-list{
+  >.exchange{
+    position: relative;
+    padding: 10px;
+    .clearfix;
+
+    >.exchange-img-view{
+      position: relative;
+      .pull-left;
+      width: 96px;
+      height: 96px;
+
+      >.owner-img-view{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 60px;
+        height: 60px;
+        border: 2px solid @color-white;
+
+        >img{
+          width: 100%;
+          position: relative;
+        }
+      }
+
+      >.changer-img-view{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 60px;
+        height: 60px;
+        border: 2px solid @color-white;
+
+        >img{
+          width: 100%;
+          position: relative;
+        }
+
+      }
+    }
+
+
+
+  }
+}

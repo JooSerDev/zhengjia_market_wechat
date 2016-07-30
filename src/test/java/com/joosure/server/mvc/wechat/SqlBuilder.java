@@ -11,8 +11,8 @@ public class SqlBuilder {
 
 	static String[] Jobs = { "insert", "update" };
 	static String job = Jobs[1];
-	static String table = "item_item";
-	static Class clazz = Item.class;
+	static String table = "item_exchange";
+	static Class clazz = Exchange.class;
 
 	public static void main(String[] args) {
 		StringBuffer sb = new StringBuffer(job);

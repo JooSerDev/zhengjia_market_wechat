@@ -12,9 +12,11 @@
 
 	<update id="updateItem">
 		update item_item set
-		name= #{name}, description= #{description},
+		name= #{name}, description=
+		#{description},
 		itemType= #{itemType}, ownerId=
-		#{ownerId}, ownerNickname=
+		#{ownerId},
+		ownerNickname=
 		#{ownerNickname}, itemImgNum= #{itemImgNum},
 		itemImgIds=
 		#{itemImgIds}, itemImgUrls= #{itemImgUrls},
@@ -26,7 +28,8 @@
 		#{recommendedTime}, approvalStatus=
 		#{approvalStatus}, lockStatus=
 		#{lockStatus}, status= #{status},
-		lastModifyTime= #{lastModifyTime}, refreshTime= #{refreshTime} where
+		lastModifyTime= #{lastModifyTime},
+		refreshTime= #{refreshTime} where
 		itemId= #{itemId}
 	</update>
 
@@ -80,8 +83,32 @@
 		(ownerItemId,ownerItemName,ownerId,changerItemId,changerItemName,changerId,state,exchangeFinishStatus,exchangeState,createTime,exchangeTime,exchangeFinishTime)
 		values
 		(#{ownerItemId},#{ownerItemName},#{ownerId},#{changerItemId},#{changerItemName},#{changerId},#{state},#{exchangeFinishStatus},#{exchangeState},#{createTime},#{exchangeTime},#{exchangeFinishTime});
-
 	</insert>
+
+	<update id="updateExchange">
+		update item_exchange set ownerItemId=
+		#{ownerItemId},
+		ownerItemName= #{ownerItemName}, ownerId= #{ownerId},
+		changerItemId=
+		#{changerItemId}, changerItemName= #{changerItemName},
+		changerId=
+		#{changerId}, state= #{state}, exchangeFinishStatus=
+		#{exchangeFinishStatus}, exchangeState= #{exchangeState},
+		exchangeTime= #{exchangeTime}, exchangeFinishTime=
+		#{exchangeFinishTime} where exchangeId= #{exchangeId};
+	</update>
+
+	<update id="updateExchanges4cancelOthersWhenAgreeExchange">
+		update item_exchange set exchangeState = 'cancel'
+		where (ownerItemId = #{ownerItemId} or ownerItemId = #{changerItemId}
+		or changerItemId = #{changerItemId} or changerItemId = #{ownerItemId})
+		and exchangeId &lt;> #{exchangeId};
+	</update>
+
+	<select id="getExchangeById" resultType="com.joosure.server.mvc.wechat.entity.pojo.Exchange">
+		select * from
+		item_exchange where exchangeId = #{exchangeId};
+	</select>
 
 	<select id="getExchangeByBothSideItemId" resultType="com.joosure.server.mvc.wechat.entity.pojo.Exchange">
 		select *
@@ -89,6 +116,13 @@
 		changerItemId = #{changerItemId}) or (ownerItemId = #{changerItemId}
 		and
 		changerItemId = #{ownerItemId}) limit 1;
+	</select>
+
+	<select id="getExchangesByUserIdPages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Exchange">
+		select * from
+		item_exchange where ownerId = #{userId} or changerId = #{userId} order
+		by createTime desc limit
+		#{startRow},#{limitSize};
 	</select>
 
 </mapper>

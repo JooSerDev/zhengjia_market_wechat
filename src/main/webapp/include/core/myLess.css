@@ -167,6 +167,7 @@ a:hover {
 }
 .row {
   clear: both;
+  position: relative;
 }
 .row:after {
   clear: both;
@@ -531,6 +532,85 @@ a:hover {
 .item-list > .item > a > .item-body > .item-pic > img {
   width: 100%;
 }
+.item-list > .item-full {
+  padding: 10px;
+  border-bottom: 1px solid #b9b9b9;
+}
+.item-list > .item-full > .title {
+  clear: both;
+  margin-bottom: 5px;
+}
+.item-list > .item-full > .title:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.item-list > .item-full > .title > .head-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 3px;
+}
+.item-list > .item-full > .title > .head-img > img {
+  width: 100%;
+  border-radius: 3px;
+}
+.item-list > .item-full > .title > .nickname {
+  float: left;
+  padding-left: 5px;
+  height: 35px;
+  line-height: 35px;
+  font-size: 16px;
+}
+.item-list > .item-full > .title > .time {
+  float: right;
+  height: 35px;
+  line-height: 35px;
+  font-size: 15px;
+}
+.item-list > .item-full > .description {
+  position: relative;
+  min-height: 50px;
+}
+.item-list > .item-full > .description > .text {
+  position: relative;
+  line-height: 25px;
+  font-size: 14px;
+}
+.item-list > .item-full > .description > .recommended {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #f00;
+  right: 0;
+  top: 0;
+}
+.item-list > .item-full > .imgs {
+  clear: both;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+.item-list > .item-full > .imgs:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.item-list > .item-full > .imgs > div {
+  width: 25%;
+  float: left;
+  min-height: 1px;
+}
+.item-list > .item-full > .imgs > div > .img-view {
+  padding: 5px;
+}
+.item-list > .item-full > .imgs > div > .img-view > img {
+  width: 100%;
+}
 .item-nav-bar {
   position: fixed;
   left: 0;
@@ -582,4 +662,36 @@ a:hover {
 .exchange-list > .exchange > .exchange-img-view > .changer-img-view > img {
   width: 100%;
   position: relative;
+}
+.exchange-list > .exchange > .exchange-info-view {
+  float: left;
+}
+.search-bar {
+  border-bottom: 1px solid #00ff00;
+  padding: 10px;
+}
+.search-bar > .search-input-view {
+  position: relative;
+  margin-right: 130px;
+}
+.search-bar > .search-input-view > input {
+  width: 100%;
+  border-radius: 3px;
+  height: 30px;
+  background-color: #b9b9b9;
+  border: 0;
+  padding-left: 30px;
+  font-size: 16px;
+}
+.search-bar > .search-btn-view {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  height: 30px;
+  width: 100px;
+}
+.search-bar > .search-btn-view > .text {
+  line-height: 30px;
+  font-size: 16px;
+  text-align: right;
 }

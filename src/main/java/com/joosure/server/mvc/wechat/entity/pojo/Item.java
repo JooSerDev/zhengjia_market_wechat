@@ -16,6 +16,7 @@ public class Item {
 	private Integer itemId;
 	private String name;
 	private String description;
+	private String wishItem;
 	private Integer itemType;
 	private Integer ownerId;
 	private String ownerNickname;
@@ -229,6 +230,14 @@ public class Item {
 			return DateUtil.defaultFormat(refreshTime);
 		}
 		return null;
+	}
+
+	public String getWishItem() {
+		return wishItem;
+	}
+
+	public void setWishItem(String wishItem) {
+		this.wishItem = wishItem;
 	}
 
 }

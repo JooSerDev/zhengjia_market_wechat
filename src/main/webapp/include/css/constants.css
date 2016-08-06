@@ -1,0 +1,30 @@
+/* colors */
+/* font size */
+/* percents */
+/* margins */
+/* paddings */
+/* head img */
+/* table bar */
+.no-user-select {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.clearfix {
+  clear: both;
+}
+.clearfix:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}

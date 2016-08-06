@@ -1,0 +1,80 @@
+/* colors */
+/* font size */
+/* percents */
+/* margins */
+/* paddings */
+/* head img */
+/* table bar */
+.no-user-select {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.clearfix {
+  clear: both;
+}
+.clearfix:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.table_bar {
+  clear: both;
+  border-top: 1px solid #ff0000;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: #ffffff;
+}
+.table_bar:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.table_bar_btn {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.table_bar_btn .logo {
+  padding: 3px 0;
+}
+.table_bar_btn .label {
+  padding-bottom: 5px;
+  color: #000000;
+}
+.table_bar_btn.active * {
+  color: #000000;
+}
+.fab {
+  z-index: 100;
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  background: #00ff00;
+  -webkit-box-shadow: 0 2px 4px 0 #0CC;
+  -moz-box-shadow: 0 2px 4px 0 #0CC;
+  box-shadow: 0 2px 4px 0 #0CC;
+}
+.fab.withTableBar {
+  bottom: 90px;
+}

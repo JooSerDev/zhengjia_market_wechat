@@ -24,6 +24,7 @@ import com.joosure.server.mvc.wechat.entity.domain.Pages;
 import com.joosure.server.mvc.wechat.entity.domain.Redirecter;
 import com.joosure.server.mvc.wechat.entity.domain.TableURLs;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
+import com.joosure.server.mvc.wechat.entity.domain.WxShareParam;
 import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AgreeExchangePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
@@ -325,10 +326,9 @@ public class WechatWebService {
 			String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
 			JsApiParam jsApiParam = JsApiManager.signature(url);
 
-			Pages pages = new Pages(1, WechatConstant.PAGE_SIZE_MY_ITEM);
 			pageInfo.setJsApiParam(jsApiParam);
 			pageInfo.setUserInfo(userInfo);
-			pageInfo.setItems(itemDao.getMarketItemsPages(pages.getPageRow(), pages.getPageSize()));
+			pageInfo.setTableURLs(buildTableURLs(request, userInfo.getEncodeOpenid()));
 
 			return pageInfo;
 		} else {
@@ -377,22 +377,45 @@ public class WechatWebService {
 				throw new UserIllegalException("item owner is in blacklist");
 			}
 
+			// 第一页评论
 			Pages pages = new Pages(1, WechatConstant.PAGE_SIZE_ITEM_COMMENT);
 			List<ItemComment> comments = itemDao.getItemCommentByItemIdPages(itemId, pages.getPageRow(),
 					pages.getPageSize());
+			int hasNextCommentPage = 0;
+			if (comments.size() == 10) {
+				hasNextCommentPage = 1;
+			}
 
+			// 前往兑换页面链接
 			String toExchangePath = request.getScheme() + "://" + request.getServerName() + request.getContextPath()
 					+ WechatConstant.SCHEMA_MARKET + "/item/toExchange?tii=" + itemId;
-
 			String toExchangeUrl = OAuthManager.generateRedirectURI(toExchangePath, WechatConstant.SCOPE_SNSAPI_BASE,
 					"");
 
+			// 微信jsapi签名
+			String url = request.getRequestURL().toString() + "?ii=" + itemId + "&eo=" + encodeOpenid;
+			JsApiParam jsApiParam = JsApiManager.signature(url);
+
+			// 宝贝分享
+			String toRedirecterPath = request.getScheme() + "://" + request.getServerName() + request.getContextPath()
+					+ WechatConstant.SCHEMA_MARKET + "/redirecter?redirectURL=" + request.getRequestURL().toString()
+					+ "?ii=" + itemId;
+			String shareLink = OAuthManager.generateRedirectURI(toRedirecterPath, WechatConstant.SCOPE_SNSAPI_USERINFO,
+					"");
+			WxShareParam wxShareParam = new WxShareParam();
+			wxShareParam.setDesc(item.getDescription());
+			wxShareParam.setImgUrl(item.getFirstItemCenterImgUrl());
+			wxShareParam.setLink(shareLink);
+
 			ItemDetailPageInfo pageInfo = new ItemDetailPageInfo();
+			pageInfo.setJsApiParam(jsApiParam);
 			pageInfo.setItem(item);
-			pageInfo.setOwnerInfo(ownerInfo);
+			pageInfo.setOwnerInfo(ownerInfo.getUser());
 			pageInfo.setComments(comments);
 			pageInfo.setUserInfo(userInfo);
 			pageInfo.setToExchangeUrl(toExchangeUrl);
+			pageInfo.setHasNextCommentPage(hasNextCommentPage);
+			pageInfo.setWxShareParam(wxShareParam);
 			return pageInfo;
 		} else {
 			throw new NullPointerException("item is null");

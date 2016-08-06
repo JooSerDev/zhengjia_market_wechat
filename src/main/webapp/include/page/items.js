@@ -17,8 +17,7 @@ wx.config({
 	timestamp : jsapiparam.timeStamp, // 必填，生成签名的时间戳
 	nonceStr : jsapiparam.nonceStr, // 必填，生成签名的随机串
 	signature : jsapiparam.signature,// 必填，签名，见附录1
-	jsApiList : [ "hideOptionMenu", "chooseImage", "uploadImage" ]
-// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	jsApiList : [ "hideOptionMenu" ]
 });
 
 wx.ready(function() {
@@ -42,91 +41,118 @@ Core.iScroll.pullUpAction = function() {
 	}
 }
 
-Core.iScroll.onLoaded = function() {
-	var isNextPage = document.getElementById("nextPage").value;
-	if (isNextPage == "1") {
-		page.nextPage = true;
-		var screenHeight = document.getElementById("wrapper").offsetHeight;
-		var scrollerH = document.getElementById("scroller").offsetHeight;
+$(function() {
+	initFirstPage();
+	Core.tableBar.init(1);
 
-		if (screenHeight < scrollerH && page.nextPage) {
-			Core.iScroll.pullUpBar.style.display = "block";
-			Core.iScroll.isNextPage = true;
-		}
+	evens.onItemClick = function(id) {
+		var eo = Core.getQueryString("eo");
+		location.href = "item/item?ii=" + id + "&eo=" + eo;
+	}
+});
+
+var initFirstPage = function() {
+	if (Core.iScroll.isLoaded) {
+		loadNextPage();
 	} else {
-		Core.iScroll.pullUpBar.style.display = "none";
-		Core.iScroll.isNextPage = false;
-		page.nextPage = false;
-		
+		setTimeout(initFirstPage, 300);
 	}
 }
 
-$(function() {
-
-});
-
-var Item = function(imgUrl, name, desc, createtime, itemId, eo, owner) {
+var Item = function(itemId, head_img, nickname, displayTime, description,
+		recommended, imgHtml, wishItem) {
 	var item = {
-		imgUrl : imgUrl,
-		name : name,
-		desc : desc,
-		createtime : createtime,
 		itemId : itemId,
-		eo : eo,
-		owner : owner
+		head_img : head_img,
+		nickname : nickname,
+		displayTime : displayTime,
+		description : description,
+		recommended : recommended,
+		imgHtml : imgHtml,
+		wishItem : wishItem
 	};
 	return item;
+}
+
+var buildItemDOMs = function(iteminfos) {
+	if (iteminfos && iteminfos.length > 0) {
+		// page.nextPage = data.data.nextPage == "1" ? true : false;
+
+		var html = $("#item_template").html();
+		var imgHtml = $("#item_img_template").html();
+		for (var i = 0; i < iteminfos.length; i++) {
+			var iteminfo = iteminfos[i];
+
+			var temp = new String(html);
+			var imgtemp = new String(imgHtml);
+			var imgDomHtml = "";
+
+			if (iteminfo.item && iteminfo.ownerInfo) {
+				var itemImg = iteminfo.item.itemCenterImgUrls;
+				if (itemImg) {
+					var imgs = itemImg.split(";");
+					if (imgs.length > 0) {
+						for (var j = 0; j < imgs.length; j++) {
+							var imgUrl = imgs[j];
+							if (imgUrl != '') {
+								var obj = {
+									url : imgUrl
+								};
+								imgDomHtml = imgDomHtml
+										+ Core.HtmlReplace(imgtemp, obj);
+							}
+
+						}
+					}
+				}
+				var owner = iteminfo.ownerInfo;
+				var k = new Item(iteminfo.item.itemId, owner.headImgUrl,
+						owner.nickname, iteminfo.item.displayTime,
+						iteminfo.item.description, iteminfo.item.isRecommended,
+						imgDomHtml, iteminfo.item.wishItem);
+
+				temp = Core.HtmlReplace(temp, k);
+				$(".items").append(temp);
+			}
+		}
+
+		var scrollerH = document.getElementById("scroller").offsetHeight;
+
+		if (Core.iScroll.screenHeight < scrollerH && page.nextPage) {
+			Core.iScroll.pullUpBar.style.display = "block";
+			Core.iScroll.isNextPage = true;
+		} else {
+			Core.iScroll.pullUpBar.style.display = "none";
+			Core.iScroll.isNextPage = false;
+		}
+		Core.iScroll.myScroll.refresh();
+	}
 }
 
 var loadNextPage = function() {
 	if (Core.iScroll.isLoaded) {
 		var eo = Core.getQueryString("eo");
-		var pageNum = page.page + 1;
+		var pageNum = page.page;
 
-		$
-				.ajax({
-					url : "loadItems",
-					data : {
-						eo : eo,
-						page : pageNum
-					},
-					type : "POST",
-					success : function(data) {
-						if (data.errCode == "0") {
-							var items = data.data.items;
-							if (items.length > 0) {
-								page.nextPage = data.data.nextPage == "1" ? true
-										: false;
-
-								var html = $("#item_template").html();
-								for (var i = 0; i < items.length; i++) {
-									var item = new Item(
-											items[i].firstItemCenterImgUrl,
-											items[i].name,
-											items[i].description,
-											items[i].displayTime,
-											items[i].itemId, eo,
-											items[i].ownerNickname);
-									var temp = new String(html);
-									temp = Core.HtmlReplace(temp, item);
-									$(".item-list").append(temp);
-
-									var scrollerH = document
-											.getElementById("scroller").offsetHeight;
-
-									if (Core.iScroll.screenHeight < scrollerH
-											&& page.nextPage) {
-										Core.iScroll.pullUpBar.style.display = "block";
-										Core.iScroll.isNextPage = true;
-									}
-								}
-								Core.iScroll.myScroll.refresh();
-							}
-						} else {
-							alert("load fail");
-						}
+		$.ajax({
+			url : "item/loadItems",
+			data : {
+				eo : eo,
+				page : pageNum
+			},
+			type : "POST",
+			success : function(data) {
+				if (data.errCode == "0") {
+					var items = data.data.iteminfos;
+					page.page = page.page + 1;
+					if (items.length > 0) {
+						buildItemDOMs(items);
 					}
-				});
+				} else {
+					alert("load fail");
+				}
+			}
+		});
 	} else {
 		setTimeout(loadNextPage, 100);
 	}

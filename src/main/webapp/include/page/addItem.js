@@ -13,7 +13,6 @@ wx.config({
 	nonceStr : jsapiparam.nonceStr, // 必填，生成签名的随机串
 	signature : jsapiparam.signature,// 必填，签名，见附录1
 	jsApiList : [ "hideOptionMenu", "chooseImage", "uploadImage" ]
-// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 });
 
 wx.ready(function() {
@@ -57,6 +56,7 @@ $(function() {
 		var itemName = $("#itemName").val();
 		var itemDesc = $("#itemDesc").val();
 		var itemType = $("#itemType").val();
+		var wishItem = $("#wishItem").val();
 		var eo = Core.getQueryString("eo");
 
 		if (!eo || eo == null || eo == "") {
@@ -64,8 +64,8 @@ $(function() {
 			return;
 		}
 
-		if (itemName == "") {
-			alert("名称为空");
+		if (wishItem == "") {
+			alert("想换为空");
 			return;
 		}
 
@@ -89,7 +89,8 @@ $(function() {
 					itemDesc : itemDesc,
 					imgs : url,
 					eo : eo,
-					itemName : itemName
+					itemName : itemName,
+					wishItem : wishItem
 				},
 				type : "POST",
 				success : function(data) {
@@ -156,7 +157,7 @@ var uploadMediaIds = function() {
 							imgUrls.push(url);
 							var html = '<div class="item-img"><img src="' + url
 									+ '"></div>';
-							$(".camera").before(html);
+							$("#imgGroup").append(html);
 						}
 					}
 				} else {

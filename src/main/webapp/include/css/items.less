@@ -1,0 +1,135 @@
+@import 'base.less';
+@import 'iscroll.less';
+@import 'tableBar.less';
+.search-bar {
+    .row;
+    .view;
+    border-bottom: 1px solid @color-s1;
+    background: @color-fg;
+    >.search-input-view {
+        position: relative;
+        margin-right: 130px;
+        >input {
+            width: 100%;
+            border-radius: 3px;
+            height: 30px;
+            background-color: @color-bg;
+            border: 0;
+            padding-left: 30px;
+            font-size: 16px;
+        }
+    }
+    >.search-btn-view {
+        position: absolute;
+        right: @view-padding-width;
+        top: @view-padding-height;
+        height: 30px;
+        width: 100px;
+        >.text {
+            line-height: 30px;
+            font-size: 16px;
+            text-align: right;
+        }
+    }
+}
+
+
+/* 宝贝列表 */
+
+.items {
+    .row;
+    /* 宝贝信息 */
+    >.item {
+        .view;
+        background: @color-fg;
+        margin-bottom: 1px;
+        /* 头部 */
+        >.title {
+            .clearfix;
+            height: @head-img-size-list;
+            margin-bottom: 5px;
+            >.head-img {
+            	.pull-left;
+                width: @head-img-size-list;
+                height: @head-img-size-list;
+                border-radius: 3px;
+                >img {
+                    width: 100%;
+                    border-radius: 3px;
+                }
+            }
+            >.nickname {
+                .pull-left;
+                padding-left: 5px;
+                height: @head-img-size-list;
+                line-height: @head-img-size-list;
+                font-size: 16px;
+            }
+            >.time {
+                .pull-right;
+                height: @head-img-size-list;
+                line-height: @head-img-size-list;
+                font-size: 15px;
+            }
+        }
+        /* 简介 */
+        >.description {
+            position: relative;
+            min-height: 50px;
+            >.text {
+                position: relative;
+                line-height: 25px;
+                font-size: 14px;
+            }
+            >.recommended {
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                background-color: #f00;
+                right: 0;
+                top: 0;
+            }
+        }
+        /* 图片 */
+        >.imgs {
+            .clearfix;
+            margin-left: -5px;
+            margin-right: -5px;
+            >div {
+                .col-25;
+                >.img-view {
+                    padding: 5px;
+                    >img {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+        /* 他想换 */
+        >.wishBar {
+        	position: relative;
+            margin-top: 10px;
+            border: 1px solid @color-bg;
+            min-height: 30px;
+            border-radius: 6px;
+
+            >.tag{
+            	position: absolute;
+            	background: @color-s3;
+            	border-top-right-radius: 10px;
+            	border-bottom-left-radius: 10px;
+            	color: @color-text-title;
+            	font-size: 12px;
+            	display: inline-block;
+            	padding: 1px 8px;
+            	left: 0;
+            	top: -8px;
+            }
+
+            >.wishItem{
+            	padding: 8px;
+            	font-size: 16px;
+            }
+        }
+    }
+}

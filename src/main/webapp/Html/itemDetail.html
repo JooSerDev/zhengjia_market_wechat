@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>main</title>
+<link rel="stylesheet" href="../include/core/icono.min.css">
+<link rel="stylesheet" href="../include/iScroll/scrollbar.css">
+<link rel="stylesheet" href="../include/css/itemDetail.css">
+</head>
+<body>
+
+	<div class="container">
+
+		<div class="list">
+			<div class="item">
+				<div class="title">
+					<div class="head-img">
+						<img
+							src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+					</div>
+					<div class="nickname">${owner.user.nickname }</div>
+					<div class="time">${item.displayTime }</div>
+				</div>
+			</div>
+			<div class="item">${item.description}</div>
+			<div class="item">
+				<img class="item-img"
+					src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+			</div>
+		</div>
+
+		<div class="item-nav-bar">
+			<div class="like-view">
+				<a class="btn" href="${toExchangeUrl}">点赞</a>
+			</div>
+
+			<div class="btn-view">
+				<a class="btn" href="${toExchangeUrl}">我想换</a>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="../include/iScroll/iscroll.js"></script>
+	<script src="../include/jquery/jquery.min.js"></script>
+	<script src="../include/swiper/swiper-3.3.1.jquery.min.js"></script>
+	<script src="../include/core/core.js"></script>
+
+	<script>
+		$(function() {
+		});
+	</script>
+
+</body>
+</html>

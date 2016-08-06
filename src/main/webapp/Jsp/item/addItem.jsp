@@ -9,10 +9,10 @@
 <head lang="zh">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>add item</title>
+<title>添加宝贝</title>
 <link rel="stylesheet" href="<%=path%>/include/core/icono.min.css">
 <link rel="stylesheet" href="<%=path%>/include/iScroll/scrollbar.css">
-<link rel="stylesheet" href="<%=path%>/include/core/myLess.css">
+<link rel="stylesheet" href="<%=path%>/include/css/addItem.css">
 <link rel="stylesheet"
 	href="<%=path%>/include/swiper/swiper-3.3.1.min.css">
 </head>
@@ -20,11 +20,11 @@
 
 	<div class="container">
 
-		<div class="row margin">
-			<div class="itemType">
-				<div class="label">宝贝类别</div>
-				<div class="selecter">
-					<select id="itemType">
+		<div class="list">
+			<div class="item">
+				<div class="label selector-label">宝贝类别</div>
+				<div class="ui">
+					<select id="itemType" class="selector">
 						<c:forEach items="${itemTypes}" var="it">
 							<option value="${it.typeId }">${it.name }</option>
 						</c:forEach>
@@ -33,22 +33,35 @@
 			</div>
 		</div>
 
-		<div class="row margin">
-			<input type="text" placeholder="宝贝名称" id="itemName">
+		<div class="list">
+			<div class="item">
+				<input type="text" class="input-block" placeholder="宝贝名称"
+					id="itemName">
+			</div>
+			<div class="item">
+				<input type="text" class="input-block" placeholder="想要换"
+					id="wishItem">
+			</div>
 		</div>
 
-		<div class="row margin">
-			<textarea rows="3" placeholder="宝贝介绍" id="itemDesc"></textarea>
+		<div class="list">
+			<div class="item">
+				<textarea rows="5" placeholder="宝贝介绍" id="itemDesc"></textarea>
+			</div>
+			<div class="item" id="imgGroup"></div>
+			<div class="item">
+				<div class="cameraBtnView" onclick="evens.onCameraClick()"></div>
+				<div class="submitBtnView">
+					<button class="btn" onclick="evens.onSubmitClick()">发布宝贝</button>
+				</div>
+			</div>
 		</div>
 
-
-		<div class="row margin">
-			<div class="camera" onclick="evens.onCameraClick()"></div>
+		<div class="list">
+			<div class="item divider-bottom">文章模板</div>
+			<div class="item postTemplate">衣不如新，人不如故</div>
 		</div>
 
-		<div class="row margin">
-			<button class="btn btn-block" onclick="evens.onSubmitClick()">提交申请</button>
-		</div>
 	</div>
 
 	<input type="hidden" id="appid" value="${jsapi.appid}">

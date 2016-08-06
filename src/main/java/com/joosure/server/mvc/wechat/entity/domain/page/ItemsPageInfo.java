@@ -2,18 +2,28 @@ package com.joosure.server.mvc.wechat.entity.domain.page;
 
 import java.util.List;
 
-import com.joosure.server.mvc.wechat.entity.pojo.Item;
+import com.joosure.server.mvc.wechat.entity.domain.ItemInfo;
+import com.joosure.server.mvc.wechat.entity.domain.TableURLs;
 
 public class ItemsPageInfo extends BasePageInfo {
 
-	private List<Item> items;
+	private List<ItemInfo> itemInfos;
+	private TableURLs tableURLs;
 
-	public List<Item> getItems() {
-		return items;
+	public TableURLs getTableURLs() {
+		return tableURLs;
 	}
 
-	public void setItems(List<Item> items) {
-		this.items = items;
+	public void setTableURLs(TableURLs tableURLs) {
+		this.tableURLs = tableURLs;
+	}
+
+	public List<ItemInfo> getItemInfos() {
+		return itemInfos;
+	}
+
+	public void setItemInfos(List<ItemInfo> itemInfos) {
+		this.itemInfos = itemInfos;
 	}
 
 }

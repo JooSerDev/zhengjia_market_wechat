@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>main</title>
+<link rel="stylesheet" href="../include/core/icono.min.css">
+<link rel="stylesheet" href="../include/iScroll/scrollbar.css">
+<link rel="stylesheet" href="../include/css/addItem.css">
+<link rel="stylesheet" href="../include/swiper/swiper-3.3.1.min.css">
+</head>
+<body>
+
+	<div class="container">
+
+		<div class="list">
+			<div class="item">
+				<div class="label selector-label">宝贝类别</div>
+				<div class="ui">
+					<select id="itemType" class="selector">
+						<option value="1">服饰</option>
+					</select>
+				</div>
+			</div>
+		</div>
+
+		<div class="list">
+			<div class="item">
+				<input type="text" class="input-block" placeholder="宝贝名称"
+					id="itemName">
+			</div>
+			<div class="item">
+				<input type="text" class="input-block" placeholder="想要换"
+					id="wishItem">
+			</div>
+		</div>
+
+		<div class="list">
+			<div class="item">
+				<textarea rows="5" placeholder="宝贝介绍" id="itemDesc"></textarea>
+			</div>
+			<div class="item" id="imgGroup">
+				<div class="item-img">
+					<img
+						src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+				</div>
+
+
+			</div>
+			<div class="item">
+				<div class="cameraBtnView" onclick="evens.onCameraClick()"></div>
+				<div class="submitBtnView">
+					<button class="btn" onclick="evens.onSubmitClick()">发布宝贝</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="list">
+			<div class="item divider-bottom">文章模板</div>
+			<div class="item postTemplate">衣不如新，人不如故</div>
+		</div>
+
+	</div>
+
+	<script src="../include/iScroll/iscroll.js"></script>
+	<script src="../include/jquery/jquery.min.js"></script>
+	<script src="../include/swiper/swiper-3.3.1.jquery.min.js"></script>
+	<script src="../include/core/core.js"></script>
+
+	<script>
+		$(function() {
+			Core.mySwiper.loadSwiper();
+		});
+	</script>
+
+</body>
+</html>

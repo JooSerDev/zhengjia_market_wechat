@@ -1,6 +1,8 @@
 package com.joosure.server.mvc.wechat.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.sword.wechat4j.oauth.OAuthException;
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
+import com.joosure.server.mvc.wechat.entity.domain.ItemInfo;
 import com.joosure.server.mvc.wechat.entity.domain.Pages;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
@@ -212,7 +215,8 @@ public class ItemService {
 	 * @return
 	 * @throws Exception
 	 */
-	public boolean saveItem(String eo, String itemName, String itemDesc, int itemType, String imgs) throws Exception {
+	public boolean saveItem(String eo, String itemName, String itemDesc, int itemType, String imgs, String wishItem)
+			throws Exception {
 		UserInfo userInfo = getUserInfoByEo(eo);
 		if (userInfo != null) {
 			String[] imgUrls = imgs.split(";");
@@ -246,6 +250,7 @@ public class ItemService {
 			item.setName(itemName);
 			item.setDescription(itemDesc);
 			item.setItemType(itemType);
+			item.setWishItem(wishItem);
 			item.setItemImgNum(imgUrls.length);
 			item.setItemImgUrls(centerImgUrls);
 			item.setItemCenterImgUrls(imgs);
@@ -288,6 +293,35 @@ public class ItemService {
 		}
 
 		return null;
+	}
+
+	public List<ItemInfo> loadItems(String eo, int pageNum) throws OAuthException {
+		List<ItemInfo> itemInfos = new ArrayList<>();
+		UserInfo userInfo = null;
+		try {
+			userInfo = userService.getUserInfoByEO(eo);
+		} catch (Exception e) {
+			throw new OAuthException();
+		}
+
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
+
+		Pages pages = new Pages(pageNum);
+		List<Item> items = itemDao.getMarketItemsPages(pages.getPageRow(), pages.getPageSize());
+		if (items.size() > 0) {
+			for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();) {
+				Item item = iterator.next();
+				UserInfo owner = userService.getUserInfoById(item.getOwnerId());
+				ItemInfo itemInfo = new ItemInfo();
+				itemInfo.setItem(item);
+				itemInfo.setOwnerInfo(owner.getUser());
+				itemInfos.add(itemInfo);
+			}
+		}
+
+		return itemInfos;
 	}
 
 	/**

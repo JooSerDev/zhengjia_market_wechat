@@ -1,0 +1,634 @@
+/* reset */
+/* colors */
+/* font size */
+/* percents */
+/* margins */
+/* paddings */
+/* head img */
+/* table bar */
+.no-user-select {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.clearfix {
+  clear: both;
+}
+.clearfix:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+p,
+blockquote,
+pre,
+hr,
+figure,
+table,
+caption,
+th,
+td,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+menu {
+  margin: 0;
+  padding: 0;
+}
+header,
+footer,
+section,
+article,
+aside,
+nav,
+hgroup,
+address,
+figure,
+figcaption,
+menu,
+details {
+  display: block;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+caption,
+th {
+  text-align: left;
+  font-weight: normal;
+}
+html,
+body,
+fieldset,
+img,
+iframe,
+abbr {
+  border: 0;
+}
+i,
+cite,
+em,
+var,
+address,
+dfn {
+  font-style: normal;
+}
+[hidefocus],
+summary {
+  outline: 0;
+}
+li {
+  list-style: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+small {
+  font-size: 100%;
+}
+sup,
+sub {
+  font-size: 83%;
+}
+pre,
+code,
+kbd,
+samp {
+  font-family: inherit;
+}
+q:before,
+q:after {
+  content: none;
+}
+textarea {
+  overflow: auto;
+  resize: none;
+}
+label,
+summary {
+  cursor: default;
+}
+a,
+button {
+  cursor: pointer;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+em,
+strong,
+b {
+  font-weight: bold;
+}
+del,
+ins,
+u,
+s,
+a,
+a:hover {
+  text-decoration: none;
+}
+body,
+textarea,
+input,
+button,
+select,
+keygen,
+legend {
+  font: 12px/1.2 arial, helvetica, sans-serif;
+  color: #333;
+  outline: 0;
+}
+body {
+  background: #efeff4;
+}
+a,
+a:hover {
+  color: #333;
+}
+.row {
+  clear: both;
+  position: relative;
+}
+.row:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.row.margin {
+  margin-bottom: 10px;
+}
+.col-20 {
+  width: 20%;
+}
+.col-25 {
+  width: 25%;
+}
+.col-33 {
+  width: 33.33333333%;
+}
+.col-50 {
+  width: 50%;
+}
+.col-66 {
+  width: 66.66666667%;
+}
+.col-75 {
+  width: 75%;
+}
+.col-20,
+.col-25,
+.col-33,
+.col-50,
+.col-66,
+.col-75 {
+  float: left;
+  min-height: 1px;
+}
+.col-offset-25 {
+  margin-left: 25%;
+}
+.col-offset-33 {
+  margin-left: 33.33333333%;
+}
+.col-offset-50 {
+  margin-left: 50%;
+}
+.col-offset-66 {
+  margin-left: 66.66666667%;
+}
+.col-offset-75 {
+  margin-left: 75%;
+}
+.view {
+  padding: 10px 15px;
+}
+.list {
+  clear: both;
+  position: relative;
+}
+.list:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.list.margin {
+  margin-bottom: 10px;
+}
+.list > .item {
+  background: #ffffff;
+  display: block;
+  padding: 10px 15px;
+  clear: both;
+}
+.list > .item:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.list > .item:last-child {
+  margin-bottom: 5px;
+}
+.list > .item > .label {
+  width: 25%;
+  float: left;
+  min-height: 1px;
+}
+.list > .item > .ui {
+  width: 75%;
+  float: left;
+  min-height: 1px;
+}
+.list > .item.divider-bottom {
+  border-bottom: 1px solid #efeff4;
+}
+select {
+  background: #ffffff;
+  border: 0;
+  -webkit-appearance: none;
+  text-align: right;
+  width: 100%;
+  direction: rtl;
+  padding-right: 20px;
+}
+input,
+textarea {
+  background: #ffffff;
+  border: 0;
+}
+textarea {
+  width: 100%;
+  resize: none;
+}
+.input-block {
+  width: 100%;
+}
+.btn {
+  padding: 10px 30px;
+  font-size: 18px;
+  color: #ffffff;
+  background: #ff0000;
+  border: 0;
+  border-radius: 5px;
+  line-height: 20px;
+  height: 20px;
+  text-align: center;
+  white-space: nowrap;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: inline-block;
+}
+#wrapper {
+  z-index: 99;
+  left: 0;
+  width: 100%;
+  top: 0;
+  bottom: 60px;
+  position: absolute;
+}
+#wrapper.full {
+  bottom: 0;
+}
+#scroller {
+  width: 100%;
+  min-height: 100%;
+}
+.swiper-container {
+  width: 100%;
+}
+.swiper-slide img {
+  height: 100%;
+}
+.pull-down-text,
+.pull-up-text {
+  margin: 0 auto;
+  text-align: center;
+  font-size: 12px;
+  color: #000000;
+  padding-bottom: 15px;
+}
+.pull-down,
+.pull-up {
+  margin: 0 auto;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  font-size: 10px;
+  padding-top: 10px;
+}
+.pull-down > div,
+.pull-up > div {
+  background-color: #ffff00;
+  height: 100%;
+  width: 3px;
+  display: inline-block;
+  -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+  animation: stretchdelay 1.2s infinite ease-in-out;
+}
+.pull-down .rect2,
+.pull-up .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+.pull-down .rect3,
+.pull-up .rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+.pull-down .rect4,
+.pull-up .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+.pull-down .rect5,
+.pull-up .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+@-webkit-keyframes stretchdelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+@keyframes stretchdelay {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
+}
+.table_bar {
+  clear: both;
+  border-top: 1px solid #ff0000;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+  background-color: #ffffff;
+}
+.table_bar:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.table_bar_btn {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.table_bar_btn .logo {
+  padding: 3px 0;
+}
+.table_bar_btn .label {
+  padding-bottom: 5px;
+  color: #000000;
+}
+.table_bar_btn.active * {
+  color: #000000;
+}
+.fab {
+  z-index: 100;
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  background: #00ff00;
+  -webkit-box-shadow: 0 2px 4px 0 #0CC;
+  -moz-box-shadow: 0 2px 4px 0 #0CC;
+  box-shadow: 0 2px 4px 0 #0CC;
+}
+.fab.withTableBar {
+  bottom: 90px;
+}
+.search-bar {
+  clear: both;
+  position: relative;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ff0000;
+  background: #ffffff;
+}
+.search-bar:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.search-bar.margin {
+  margin-bottom: 10px;
+}
+.search-bar > .search-input-view {
+  position: relative;
+  margin-right: 130px;
+}
+.search-bar > .search-input-view > input {
+  width: 100%;
+  border-radius: 3px;
+  height: 30px;
+  background-color: #efeff4;
+  border: 0;
+  padding-left: 30px;
+  font-size: 16px;
+}
+.search-bar > .search-btn-view {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  height: 30px;
+  width: 100px;
+}
+.search-bar > .search-btn-view > .text {
+  line-height: 30px;
+  font-size: 16px;
+  text-align: right;
+}
+/* 宝贝列表 */
+.items {
+  clear: both;
+  position: relative;
+  /* 宝贝信息 */
+}
+.items:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.items.margin {
+  margin-bottom: 10px;
+}
+.items > .item {
+  padding: 10px 15px;
+  background: #ffffff;
+  margin-bottom: 1px;
+  /* 头部 */
+  /* 简介 */
+  /* 图片 */
+  /* 他想换 */
+}
+.items > .item > .title {
+  clear: both;
+  height: 30px;
+  margin-bottom: 5px;
+}
+.items > .item > .title:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.items > .item > .title > .head-img {
+  float: left;
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+}
+.items > .item > .title > .head-img > img {
+  width: 100%;
+  border-radius: 3px;
+}
+.items > .item > .title > .nickname {
+  float: left;
+  padding-left: 5px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+}
+.items > .item > .title > .time {
+  float: right;
+  height: 30px;
+  line-height: 30px;
+  font-size: 15px;
+}
+.items > .item > .description {
+  position: relative;
+  min-height: 50px;
+}
+.items > .item > .description > .text {
+  position: relative;
+  line-height: 25px;
+  font-size: 14px;
+}
+.items > .item > .description > .recommended {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #f00;
+  right: 0;
+  top: 0;
+}
+.items > .item > .imgs {
+  clear: both;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+.items > .item > .imgs:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.items > .item > .imgs > div {
+  width: 25%;
+  float: left;
+  min-height: 1px;
+}
+.items > .item > .imgs > div > .img-view {
+  padding: 5px;
+}
+.items > .item > .imgs > div > .img-view > img {
+  width: 100%;
+}
+.items > .item > .wishBar {
+  position: relative;
+  margin-top: 10px;
+  border: 1px solid #efeff4;
+  min-height: 30px;
+  border-radius: 6px;
+}
+.items > .item > .wishBar > .tag {
+  position: absolute;
+  background: #ff00ff;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  color: #000000;
+  font-size: 12px;
+  display: inline-block;
+  padding: 1px 8px;
+  left: 0;
+  top: -8px;
+}
+.items > .item > .wishBar > .wishItem {
+  padding: 8px;
+  font-size: 16px;
+}

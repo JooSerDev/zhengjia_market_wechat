@@ -15,6 +15,7 @@ import org.sword.wechat4j.oauth.OAuthException;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.entity.domain.AjaxResult;
 import com.joosure.server.mvc.wechat.entity.domain.BaseResult;
+import com.joosure.server.mvc.wechat.entity.domain.ItemInfo;
 import com.joosure.server.mvc.wechat.entity.domain.Redirecter;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
@@ -337,8 +338,7 @@ public class WechatWebController {
 			ItemsPageInfo pageInfo = wechatWebService.itemsPage(eo, request);
 			model.addAttribute("eo", pageInfo.getUserInfo().getEncodeOpenid());
 			model.addAttribute("jsapi", pageInfo.getJsApiParam());
-			model.addAttribute("items", pageInfo.getItems());
-			model.addAttribute("nextPage", pageInfo.getItems().size() == WechatConstant.PAGE_SIZE_MY_ITEM ? 1 : 0);
+			model.addAttribute("tableUrls", pageInfo.getTableURLs());
 
 			pageLogger(request, "/wechat/market", pageInfo);
 		} catch (Exception e) {
@@ -364,8 +364,12 @@ public class WechatWebController {
 			model.addAttribute("owner", pageInfo.getOwnerInfo());
 			model.addAttribute("user", pageInfo.getUserInfo());
 			model.addAttribute("item", pageInfo.getItem());
+			model.addAttribute("itemImgList", pageInfo.getItemImgs());
 			model.addAttribute("comments", pageInfo.getComments());
+			model.addAttribute("hasNextCommentPage", pageInfo.getHasNextCommentPage());
 			model.addAttribute("toExchangeUrl", pageInfo.getToExchangeUrl());
+			model.addAttribute("jsapi", pageInfo.getJsApiParam());
+			model.addAttribute("share", pageInfo.getWxShareParam());
 
 			pageLogger(request, "/wechat/item/item", pageInfo);
 		} catch (Exception e) {
@@ -396,7 +400,7 @@ public class WechatWebController {
 		}
 		return "item/exchange";
 	}
-	
+
 	@RequestMapping("/item/toAgreeExchange")
 	public String toAgreeExchange(HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
@@ -407,7 +411,7 @@ public class WechatWebController {
 			}
 
 			int exchangeId = Integer.parseInt(exchangeIdStr);
-			
+
 			AgreeExchangePageInfo pageInfo = wechatWebService.toAgreeExchangePage(exchangeId, request);
 			model.addAttribute("ee", pageInfo.getExchangeInfo().getEncodeExchange());
 
@@ -521,6 +525,47 @@ public class WechatWebController {
 	}
 
 	/**
+	 * 分页加载市集宝贝
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping("/item/loadItems")
+	public void loadItems(HttpServletRequest request, HttpServletResponse response, Model model) {
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			if (StringUtil.isBlank(eo)) {
+				throw new OAuthException();
+			}
+
+			String page = request.getParameter("page");
+			int pageNum = 1;
+			try {
+				pageNum = Integer.parseInt(page);
+			} catch (Exception e) {
+				throw new NumberFormatException("can not format the page number");
+			}
+
+			List<ItemInfo> items = itemService.loadItems(eo, pageNum);
+			ar.putData("iteminfos", items);
+			ar.setErrCode("0");
+		} catch (Exception e) {
+			if (e instanceof NumberFormatException) {
+				ar.setErrCode("1002");
+				ar.setErrMsg("服务器内部错误");
+			} else {
+				ar.setErrCode("1001");
+			}
+			e.printStackTrace();
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
+
+	/**
 	 * 上传宝贝图片media_id-ajax <br>
 	 * 目前本接口没有鉴权，存在一定安全隐患
 	 * 
@@ -559,9 +604,10 @@ public class WechatWebController {
 			String itemDesc = request.getParameter("itemDesc");
 			String itemType = request.getParameter("itemType");
 			String imgs = request.getParameter("imgs");
+			String wishItem = request.getParameter("wishItem");
 			String eo = request.getParameter("eo");
 
-			if (StringUtil.isBlank(itemName) || StringUtil.isBlank(itemDesc) || StringUtil.isBlank(itemType)
+			if (StringUtil.isBlank(wishItem) || StringUtil.isBlank(itemDesc) || StringUtil.isBlank(itemType)
 					|| !StringUtil.isNumber(itemType) || StringUtil.isBlank(imgs) || StringUtil.isBlank(eo)) {
 				ar.setErrCode("2001");
 				ar.setErrMsg("信息不完整");
@@ -577,7 +623,7 @@ public class WechatWebController {
 					return;
 				}
 
-				if (itemService.saveItem(eo, itemName, itemDesc, itemTypeNum, imgs)) {
+				if (itemService.saveItem(eo, itemName, itemDesc, itemTypeNum, imgs, wishItem)) {
 					ar.setErrCode("0");
 					ar.setErrMsg("保存成功");
 				} else {

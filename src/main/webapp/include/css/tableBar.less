@@ -1,0 +1,44 @@
+@import 'constants';
+.table_bar {
+    .clearfix;
+    border-top: 1px solid @color-s1;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+    background-color: @color-fg;
+}
+
+.table_bar_btn {
+    .no-user-select;
+    .logo {
+        padding: 3px 0;
+    }
+    .label {
+        padding-bottom: 5px;
+        color: @color-text-title;
+    }
+    &.active {
+        * {
+            color: @color-text-highlight;
+        }
+    }
+}
+
+.fab {
+    z-index: 100;
+    position: absolute;
+    right: @view-padding-width*2;
+    bottom: @view-padding-height*3;
+    width: 70px;
+    height: 70px;
+    border-radius: 35px;
+    background: @color-s4;
+    -webkit-box-shadow: 0 2px 4px 0 #0CC;
+    -moz-box-shadow: 0 2px 4px 0 #0CC;
+    box-shadow: 0 2px 4px 0 #0CC;
+    &.withTableBar {
+        bottom: @view-padding-height*3+60;
+    }
+}

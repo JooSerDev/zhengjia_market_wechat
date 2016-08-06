@@ -5,9 +5,9 @@
 	<insert id="saveItem" keyColumn="itemId" useGeneratedKeys="true"
 		keyProperty="itemId">
 		insert into item_item
-		(name,description,itemType,ownerId,ownerNickname,itemImgNum,itemImgIds,itemImgUrls,itemCenterImgUrls,likeNum,unlikeNum,markNum,isRecommended,recommendedTime,approvalStatus,lockStatus,status,createTime,lastModifyTime,refreshTime)
+		(name,description,itemType,ownerId,ownerNickname,itemImgNum,itemImgIds,itemImgUrls,itemCenterImgUrls,likeNum,unlikeNum,markNum,isRecommended,recommendedTime,approvalStatus,lockStatus,status,createTime,lastModifyTime,refreshTime,wishItem)
 		values
-		(#{name},#{description},#{itemType},#{ownerId},#{ownerNickname},#{itemImgNum},#{itemImgIds},#{itemImgUrls},#{itemCenterImgUrls},#{likeNum},#{unlikeNum},#{markNum},#{isRecommended},#{recommendedTime},#{approvalStatus},#{lockStatus},#{status},#{createTime},#{lastModifyTime},#{refreshTime});
+		(#{name},#{description},#{itemType},#{ownerId},#{ownerNickname},#{itemImgNum},#{itemImgIds},#{itemImgUrls},#{itemCenterImgUrls},#{likeNum},#{unlikeNum},#{markNum},#{isRecommended},#{recommendedTime},#{approvalStatus},#{lockStatus},#{status},#{createTime},#{lastModifyTime},#{refreshTime},#{wishItem});
 	</insert>
 
 	<update id="updateItem">
@@ -29,8 +29,9 @@
 		#{approvalStatus}, lockStatus=
 		#{lockStatus}, status= #{status},
 		lastModifyTime= #{lastModifyTime},
-		refreshTime= #{refreshTime} where
-		itemId= #{itemId}
+		refreshTime= #{refreshTime},wishItem=#{wishItem} where
+		itemId=
+		#{itemId}
 	</update>
 
 	<select id="getItemById" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">

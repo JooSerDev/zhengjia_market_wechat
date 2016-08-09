@@ -18,75 +18,79 @@
 </head>
 <body>
 
-	<!-- scroller start -->
-	<div id="wrapper">
-		<div class="scroller" id="scroller">
+	<div class="container">
 
-			<div class="search-bar">
-				<div class="search-input-view">
-					<input type="text" id="searchInput">
+		<!-- scroller start -->
+		<div id="wrapper">
+			<div class="scroller" id="scroller">
+
+				<div class="search-bar">
+					<div class="search-input-view">
+						<input type="text" id="searchInput">
+					</div>
+					<div class="search-btn-view">
+						<div class="text">全部分类</div>
+					</div>
 				</div>
-				<div class="search-btn-view">
-					<div class="text">全部分类</div>
+
+				<div class="items"></div>
+
+				<div class="row" id="pull_up_bar">
+					<div class="pull-up">
+						<div class="rect1"></div>
+						<div class="rect2"></div>
+						<div class="rect3"></div>
+						<div class="rect4"></div>
+						<div class="rect5"></div>
+					</div>
+					<div class="pull-up-text">加载更多</div>
 				</div>
-			</div>
 
-			<div class="items"></div>
-
-			<div class="row" id="pull_up_bar">
-				<div class="pull-up">
-					<div class="rect1"></div>
-					<div class="rect2"></div>
-					<div class="rect3"></div>
-					<div class="rect4"></div>
-					<div class="rect5"></div>
-				</div>
-				<div class="pull-up-text">加载更多</div>
-			</div>
-
-		</div>
-	</div>
-	<!-- scroller end -->
-	
-	<div class="fab withTableBar"></div>
-
-	<div class="table_bar">
-		<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">
-		<input type="hidden" id="marketUrl" value="${tableUrls.marketUrl }">
-		<input type="hidden" id="meUrl" value="${tableUrls.meUrl }">
-
-		<div class="col-25 text-center" id="table_bar_home">
-			<div class="table_bar_btn active">
-				<div class="logo">
-					<div class="icono-home"></div>
-				</div>
-				<div class="label">首页</div>
 			</div>
 		</div>
-		<div class="col-25 text-center" id="table_bar_market">
-			<div class="table_bar_btn">
-				<div class="logo">
-					<div class="icono-market"></div>
+		<!-- scroller end -->
+
+		<div class="fab withTableBar"></div>
+
+		<div class="table_bar">
+			<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">
+			<input type="hidden" id="marketUrl" value="${tableUrls.marketUrl }">
+			<input type="hidden" id="meUrl" value="${tableUrls.meUrl }">
+
+			<div class="col-25 text-center" id="table_bar_home">
+				<div class="table_bar_btn active">
+					<div class="logo">
+						<div class="icono-home"></div>
+					</div>
+					<div class="label">首页</div>
 				</div>
-				<div class="label">集市</div>
+			</div>
+			<div class="col-25 text-center" id="table_bar_market">
+				<div class="table_bar_btn">
+					<div class="logo">
+						<div class="icono-market"></div>
+					</div>
+					<div class="label">集市</div>
+				</div>
+			</div>
+			<div class="col-25 text-center">
+				<div class="table_bar_btn">
+					<div class="logo">
+						<div class="icono-cart"></div>
+					</div>
+					<div class="label">购物车</div>
+				</div>
+			</div>
+			<div class="col-25 text-center" id="table_bar_me">
+				<div class="table_bar_btn">
+					<div class="logo">
+						<div class="icono-gear"></div>
+					</div>
+					<div class="label">我的</div>
+				</div>
 			</div>
 		</div>
-		<div class="col-25 text-center">
-			<div class="table_bar_btn">
-				<div class="logo">
-					<div class="icono-cart"></div>
-				</div>
-				<div class="label">购物车</div>
-			</div>
-		</div>
-		<div class="col-25 text-center" id="table_bar_me">
-			<div class="table_bar_btn">
-				<div class="logo">
-					<div class="icono-gear"></div>
-				</div>
-				<div class="label">我的</div>
-			</div>
-		</div>
+
 	</div>
 
 	<template id="item_template">
@@ -96,22 +100,29 @@
 				<img src="{head_img}">
 			</div>
 			<div class="nickname">{nickname}</div>
+			<div class="recommended"></div>
 			<div class="time">{displayTime}</div>
 		</div>
 
 		<div class="description">
 			<div class="text">{description}</div>
-			<div class="recommended"></div>
 		</div>
 
 		<div class="imgs">{imgHtml}</div>
 
 		<div class="wishBar">
-			<div class="tag">Ta想换</div>
+			<div class="tag"></div>
 			<div class="wishItem">{wishItem}</div>
 		</div>
 
-		<div class="foot-bar"></div>
+		<div class="foot-bar">
+			<div class="text">{markNum}</div>
+			<div class="commentNumTag"></div>
+			<div class="text">{likeNum}</div>
+			<div class="likeNumTag"></div>
+		</div>
+
+		<div class="itemType"></div>
 
 	</div>
 	</template>

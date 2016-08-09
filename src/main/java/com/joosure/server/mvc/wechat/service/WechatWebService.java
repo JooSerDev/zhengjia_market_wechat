@@ -446,8 +446,8 @@ public class WechatWebService {
 			info.setExchange(exchange);
 			info.setChangerItem(changerItem);
 			info.setOwnerItem(ownerItem);
-			info.setChanger(changerInfo);
-			info.setOwner(ownerInfo);
+			info.setChanger(changerInfo.getUser());
+			info.setOwner(ownerInfo.getUser());
 
 			pageInfo.setExchangeInfo(info);
 			pageInfo.setUserInfo(userInfo);
@@ -578,6 +578,7 @@ public class WechatWebService {
 		user.setNickname(getUserinfoResponse.getNickname());
 		user.setOpenid(getUserinfoResponse.getOpenid());
 		user.setState(0);
+		user.setLikeNum(0);
 
 		Date nowDate = new Date();
 		user.setCreateTime(nowDate);

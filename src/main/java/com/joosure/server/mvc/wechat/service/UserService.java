@@ -74,6 +74,15 @@ public class UserService {
 
 	/**
 	 * 
+	 * @param userId
+	 * @return
+	 */
+	public User getUserById(int userId) {
+		return userDao.getUserById(userId);
+	}
+
+	/**
+	 * 
 	 * @param encodeOpenid
 	 * @return
 	 * @throws Exception

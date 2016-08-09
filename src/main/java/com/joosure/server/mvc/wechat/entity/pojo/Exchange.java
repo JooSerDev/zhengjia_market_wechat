@@ -1,5 +1,6 @@
 package com.joosure.server.mvc.wechat.entity.pojo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Exchange {
@@ -10,6 +11,8 @@ public class Exchange {
 	public static final String EXCHANGE_STATE_ING = "exchanging";
 	public static final String EXCHANGE_STATE_ED = "exchanged";
 	public static final String EXCHANGE_STATE_CANCEL = "cancel";
+
+	public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 
 	private Integer exchangeId;
 
@@ -131,6 +134,13 @@ public class Exchange {
 
 	public void setExchangeFinishTime(Date exchangeFinishTime) {
 		this.exchangeFinishTime = exchangeFinishTime;
+	}
+
+	public String getDisplayTime() {
+		if (createTime != null) {
+			return DATE_FORMAT.format(createTime);
+		}
+		return "";
 	}
 
 }

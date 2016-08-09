@@ -1,6 +1,4 @@
 @import 'reset.less';
-
-
 .row {
     .clearfix;
     position: relative;
@@ -87,6 +85,11 @@
             border-bottom: 1px solid @color-bg;
         }
     }
+}
+
+.container {
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(@color-s2), to(@color-s1));
+    background: -webkit-linear-gradient(top, @color-s2 60%, @color-s1);
 }
 
 select {

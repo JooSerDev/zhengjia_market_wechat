@@ -5,13 +5,14 @@ import java.util.Date;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
+import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.shawn.server.core.util.EncryptUtil;
 
 public class ExchangeInfo {
 
 	private Exchange exchange;
-	private UserInfo owner;
-	private UserInfo changer;
+	private User owner;
+	private User changer;
 	private Item ownerItem;
 	private Item changerItem;
 	private String toAgreeExchangePath;
@@ -24,19 +25,19 @@ public class ExchangeInfo {
 		this.exchange = exchange;
 	}
 
-	public UserInfo getOwner() {
+	public User getOwner() {
 		return owner;
 	}
 
-	public void setOwner(UserInfo owner) {
+	public void setOwner(User owner) {
 		this.owner = owner;
 	}
 
-	public UserInfo getChanger() {
+	public User getChanger() {
 		return changer;
 	}
 
-	public void setChanger(UserInfo changer) {
+	public void setChanger(User changer) {
 		this.changer = changer;
 	}
 
@@ -68,9 +69,8 @@ public class ExchangeInfo {
 		String ee = "";
 
 		if (exchange != null && owner != null && changer != null && ownerItem != null && changerItem != null) {
-			String decodeStr = owner.getUser().getOpenid() + ";" + changer.getUser().getOpenid() + ";"
-					+ ownerItem.getItemId() + ";" + changerItem.getItemId() + ";" + exchange.getExchangeId() + ";"
-					+ new Date().getTime();
+			String decodeStr = owner.getOpenid() + ";" + changer.getOpenid() + ";" + ownerItem.getItemId() + ";"
+					+ changerItem.getItemId() + ";" + exchange.getExchangeId() + ";" + new Date().getTime();
 			try {
 				ee = EncryptUtil.encryptAES(decodeStr, WechatConstant.ENCODE_KEY_OPENID);
 			} catch (Exception e) {

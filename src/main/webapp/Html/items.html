@@ -10,137 +10,84 @@
 <link rel="stylesheet" href="../include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
-
-	<!-- scroller start -->
-	<div class="full" id="wrapper">
-		<div class="scroller" id="scroller">
-			<div class="search-bar">
-				<div class="search-input-view">
-					<input type="text" id="searchInput">
-				</div>
-				<div class="search-btn-view">
-					<div class="text">全部分类</div>
-				</div>
-			</div>
-
-			<div class="items">
-				<div class="item">
-					<div class="title">
-						<div class="head-img pull-left">
-							<img
-								src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
-						</div>
-						<div class="nickname">{nickname}</div>
-						<div class="time">{displayTime}</div>
+	<div class="container">
+		<!-- scroller start -->
+		<div class="full" id="wrapper">
+			<div class="scroller" id="scroller">
+				<div class="search-bar">
+					<div class="search-input-view">
+						<input type="text" id="searchInput">
 					</div>
-
-					<div class="description">
-						<div class="text">{description}</div>
-						<div class="recommended"></div>
+					<div class="search-btn-view">
+						<div class="text">全部分类</div>
 					</div>
+				</div>
 
-					<div class="imgs">
-						<div>
-							<div class="img-view">
+				<div class="items">
+					<div class="item">
+						<div class="title">
+							<div class="head-img pull-left">
 								<img
 									src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
 							</div>
+							<div class="nickname">{nickname}</div>
+							<div class="recommended"></div>
+							<div class="time">{displayTime}</div>
 						</div>
-					</div>
 
-					<div class="wishBar">
-						<div class="tag">Ta想换</div>
-						<div class="wishItem">hahahaha</div>
-					</div>
-
-					<div class="foot-bar"></div>
-
-				</div>
-
-				<div class="item">
-					<div class="title">
-						<div class="head-img pull-left">
-							<img
-								src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+						<div class="description">
+							<div class="text">{description}</div>
 						</div>
-						<div class="nickname">{nickname}</div>
-						<div class="time">{displayTime}</div>
-					</div>
 
-					<div class="description">
-						<div class="text">{description}</div>
-						<div class="recommended"></div>
-					</div>
-
-					<div class="imgs">
-						<div>
-							<div class="img-view">
-								<img
-									src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+						<div class="imgs">
+							<div>
+								<div class="img-view">
+									<img
+										src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+								</div>
 							</div>
 						</div>
-					</div>
 
-					<div class="wishBar">
-						<div class="tag">Ta想换</div>
-						<div class="wishItem">hahahaha</div>
-					</div>
-
-					<div class="foot-bar"></div>
-
-				</div>
-
-				<div class="item">
-					<div class="title">
-						<div class="head-img pull-left">
-							<img
-								src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+						<div class="wishBar">
+							<div class="tag"></div>
+							<div class="wishItem">{wishItem}</div>
 						</div>
-						<div class="nickname">{nickname}</div>
-						<div class="time">{displayTime}</div>
-					</div>
 
-					<div class="description">
-						<div class="text">{description}</div>
-						<div class="recommended"></div>
-					</div>
-
-					<div class="imgs">
-						<div>
-							<div class="img-view">
-								<img
-									src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
-							</div>
+						<div class="foot-bar">
+							<div class="text">{markNum}</div>
+							<div class="commentNumTag"></div>
+							<div class="text">{likeNum}</div>
+							<div class="likeNumTag"></div>
 						</div>
+						
+						<div class="itemType">
+							
+						</div>
+						
 					</div>
+					
+					
 
-					<div class="wishBar">
-						<div class="tag">Ta想换</div>
-						<div class="wishItem">hahahaha</div>
-					</div>
-
-					<div class="foot-bar"></div>
 
 				</div>
-			</div>
 
-			<div class="row" id="pull_up_bar">
-				<div class="pull-up">
-					<div class="rect1"></div>
-					<div class="rect2"></div>
-					<div class="rect3"></div>
-					<div class="rect4"></div>
-					<div class="rect5"></div>
+				<div class="row" id="pull_up_bar">
+					<div class="pull-up">
+						<div class="rect1"></div>
+						<div class="rect2"></div>
+						<div class="rect3"></div>
+						<div class="rect4"></div>
+						<div class="rect5"></div>
+					</div>
+					<div class="pull-up-text">加载更多</div>
 				</div>
-				<div class="pull-up-text">加载更多</div>
-			</div>
 
+			</div>
 		</div>
-	</div>
-	<!-- scroller end -->
-	
-	<div class="fab withTableBar"></div>
+		<!-- scroller end -->
 
+		<div class="fab withTableBar"></div>
+	</div>
 	<template id="item_template">
 	<div class="item">
 		<div class="item-body">

@@ -12,12 +12,17 @@ import org.sword.wechat4j.oauth.OAuthException;
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
+import com.joosure.server.mvc.wechat.dao.database.UserDao;
 import com.joosure.server.mvc.wechat.entity.domain.ItemInfo;
+import com.joosure.server.mvc.wechat.entity.domain.MyExchangeInfo;
 import com.joosure.server.mvc.wechat.entity.domain.Pages;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
+import com.joosure.server.mvc.wechat.entity.pojo.ItemLike;
+import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
+import com.joosure.server.mvc.wechat.exception.RequestParamsException;
 import com.joosure.server.mvc.wechat.exception.UserIllegalException;
 import com.shawn.server.core.util.EncryptUtil;
 import com.shawn.server.core.util.StringUtil;
@@ -30,6 +35,8 @@ public class ItemService {
 
 	@Autowired
 	private ItemDao itemDao;
+	@Autowired
+	private UserDao userDao;
 
 	/**
 	 * 同意交换
@@ -204,6 +211,43 @@ public class ItemService {
 		itemDao.updateItem(targetItem);
 	}
 
+	public void likeItem(int itemId, String eo) throws OAuthException, ItemIllegalException, UserIllegalException {
+		UserInfo userInfo = null;
+		try {
+			userInfo = getUserInfoByEo(eo);
+		} catch (Exception e) {
+			throw new OAuthException();
+		}
+
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
+
+		Item item = itemDao.getItemById(itemId);
+		if (item == null) {
+			throw new ItemIllegalException("item = null");
+		}
+
+		ItemLike itemLike = itemDao.getItemLike(item.getItemId(), userInfo.getUser().getUserId());
+		if (itemLike != null) {
+			throw new UserIllegalException("user had already LIKE");
+		}
+
+		itemLike = new ItemLike();
+		itemLike.setItemId(item.getItemId());
+		itemLike.setUserId(userInfo.getUser().getUserId());
+
+		item.setLikeNum(item.getLikeNum() + 1);
+
+		User user = userInfo.getUser();
+		user.setLikeNum(user.getLikeNum() + 1);
+
+		itemDao.saveItemLike(itemLike);
+		itemDao.updateItem(item);
+		userDao.updateUser(user);
+
+	}
+
 	/**
 	 * 保存新宝贝
 	 * 
@@ -273,6 +317,71 @@ public class ItemService {
 			return true;
 		}
 		return false;
+	}
+
+	public List<MyExchangeInfo> loadMyExchanges(String eo, int pageNum, String isOwner)
+			throws OAuthException, RequestParamsException {
+		List<MyExchangeInfo> infos = new ArrayList<>();
+
+		UserInfo userInfo = null;
+		try {
+			userInfo = userService.getUserInfoByEO(eo);
+		} catch (Exception e) {
+			throw new OAuthException();
+		}
+
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
+
+		if (pageNum <= 0 || StringUtil.isBlank(isOwner) || isOwner.trim().equals("")) {
+			throw new RequestParamsException("请求参数错误");
+		}
+
+		Pages pages = new Pages(pageNum);
+		List<Exchange> exchanges = null;
+		if (isOwner.trim().equals("1")) {
+			exchanges = itemDao.getExchangesByUserIdInOwnerSidePages(userInfo.getUser().getUserId(), pages.getPageRow(),
+					pages.getPageSize());
+		} else {
+			exchanges = itemDao.getExchangesByUserIdInChangerSidePages(userInfo.getUser().getUserId(),
+					pages.getPageRow(), pages.getPageSize());
+		}
+
+		if (exchanges != null && exchanges.size() > 0) {
+			for (Iterator<Exchange> iterator = exchanges.iterator(); iterator.hasNext();) {
+				Exchange exchange = iterator.next();
+
+				int ownerId = exchange.getOwnerId();
+				int changerId = exchange.getChangerId();
+				User owner = userService.getUserById(ownerId);
+				User changer = userService.getUserById(changerId);
+
+				int ownerItemId = exchange.getOwnerItemId();
+				int changerItemId = exchange.getChangerItemId();
+				Item ownerItem = itemDao.getItemById(ownerItemId);
+				Item changerItem = itemDao.getItemById(changerItemId);
+
+				MyExchangeInfo mei = new MyExchangeInfo();
+				mei.setExchange(exchange);
+
+				if (isOwner.trim().equals("1")) {
+					mei.setUser(owner);
+					mei.setTarget(changer);
+					mei.setUserItem(ownerItem);
+					mei.setTargetItem(changerItem);
+				} else {
+					mei.setUser(changer);
+					mei.setTarget(owner);
+					mei.setUserItem(changerItem);
+					mei.setTargetItem(ownerItem);
+				}
+
+				infos.add(mei);
+			}
+		}
+
+		return infos;
 	}
 
 	/**

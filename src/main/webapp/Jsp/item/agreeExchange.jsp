@@ -9,7 +9,7 @@
 <head lang="zh">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>add item</title>
+<title>交换确认</title>
 <link rel="stylesheet" href="<%=path%>/include/core/icono.min.css">
 <link rel="stylesheet" href="<%=path%>/include/iScroll/scrollbar.css">
 <link rel="stylesheet" href="<%=path%>/include/core/myLess.css">

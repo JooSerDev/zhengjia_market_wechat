@@ -7,6 +7,8 @@
     top: 0;
     bottom: 60px;
     position: absolute;
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(@color-s2), to(@color-s1)); 
+    background: -webkit-linear-gradient(top, @color-s2 60%, @color-s1);
     &.full {
         bottom: 0;
     }
@@ -32,7 +34,7 @@
     margin: 0 auto;
     text-align: center;
     font-size: 12px;
-    color: @color-text-tag;
+    color: #fff;
     padding-bottom: 15px;
 }
 
@@ -45,7 +47,7 @@
     font-size: 10px;
     padding-top: 10px;
     > div {
-        background-color: @color-s2;
+        background-color: #fff;
         height: 100%;
         width: 3px;
         display: inline-block;

@@ -3,6 +3,50 @@
  */
 var Core = {};
 
+Core.myScroll = {
+	container : undefined,
+	isLoaded : false,
+	isLoadingNextPage : false,
+	isNextPage : false,
+	loadingBar : undefined,
+	loadingBarOffset : 0,
+	endOffset : 0,
+	loadingNextAction : function() {
+	},
+	refresh : function() {
+	},
+	load : function() {
+		Core.myScroll.container = document.getElementById("container");
+		Core.myScroll.loadingBar = document.getElementById("pull_up_bar");
+		if (Core.myScroll.loadingBar != undefined
+				&& Core.myScroll.loadingBar != null) {
+			Core.myScroll.loadingBarOffset = Core.myScroll.loadingBar.offsetHeight;
+		}
+
+		var screenHeight = window.screen.height;
+		if (Core.myScroll.container != undefined
+				&& Core.myScroll.container != null) {
+			Core.myScroll.container.style.margin = "0 0  "
+					+ Core.myScroll.endOffset + "px 0";
+			Core.myScroll.container.style.minHeight = screenHeight + "px";
+
+			$(window)
+					.scroll(
+							function() {
+								if (document.body.scrollTop > Core.myScroll.container.offsetHeight
+										- screenHeight
+										- Core.myScroll.loadingBarOffset
+										&& !Core.myScroll.isLoadingNextPage) {
+									Core.myScroll.isLoadingNextPage = true;
+									Core.myScroll.loadingNextAction();
+								}
+							});
+
+		}
+
+	}
+};
+
 // IScroll
 Core.iScroll = {
 	myScroll : {},
@@ -215,7 +259,8 @@ Core.HtmlReplace = function(html, obj) {
 	return html;
 }
 
-//document.addEventListener('touchmove', function(e) {
-//	e.preventDefault();
-//}, false);
-//document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll, false);
+// document.addEventListener('touchmove', function(e) {
+// e.preventDefault();
+// }, false);
+// document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll,
+// false);

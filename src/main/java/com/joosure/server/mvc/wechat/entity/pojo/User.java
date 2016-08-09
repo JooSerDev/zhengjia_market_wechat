@@ -13,6 +13,8 @@ public class User {
 	private Date createTime;
 	private Date lastModifyTime;
 
+	private Integer likeNum;
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -75,6 +77,14 @@ public class User {
 
 	public void setHeadImgUrl(String headImgUrl) {
 		this.headImgUrl = headImgUrl;
+	}
+
+	public Integer getLikeNum() {
+		return likeNum;
+	}
+
+	public void setLikeNum(Integer likeNum) {
+		this.likeNum = likeNum;
 	}
 
 }

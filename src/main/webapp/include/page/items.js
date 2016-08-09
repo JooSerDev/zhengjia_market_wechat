@@ -60,7 +60,7 @@ var initFirstPage = function() {
 }
 
 var Item = function(itemId, head_img, nickname, displayTime, description,
-		recommended, imgHtml, wishItem) {
+		recommended, imgHtml, wishItem, markNum, likeNum) {
 	var item = {
 		itemId : itemId,
 		head_img : head_img,
@@ -69,7 +69,9 @@ var Item = function(itemId, head_img, nickname, displayTime, description,
 		description : description,
 		recommended : recommended,
 		imgHtml : imgHtml,
-		wishItem : wishItem
+		wishItem : wishItem,
+		markNum : markNum,
+		likeNum : likeNum
 	};
 	return item;
 }
@@ -109,7 +111,8 @@ var buildItemDOMs = function(iteminfos) {
 				var k = new Item(iteminfo.item.itemId, owner.headImgUrl,
 						owner.nickname, iteminfo.item.displayTime,
 						iteminfo.item.description, iteminfo.item.isRecommended,
-						imgDomHtml, iteminfo.item.wishItem);
+						imgDomHtml, iteminfo.item.wishItem,
+						iteminfo.item.markNum, iteminfo.item.likeNum);
 
 				temp = Core.HtmlReplace(temp, k);
 				$(".items").append(temp);

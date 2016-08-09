@@ -1,8 +1,3 @@
-document.addEventListener('touchmove', function(e) {
-	e.preventDefault();
-}, false);
-document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll, false);
-
 var jsapiparam = {};
 jsapiparam.appid = document.getElementById("appid").value;
 jsapiparam.nonceStr = document.getElementById("nonceStr").value;
@@ -34,95 +29,100 @@ var page = {
 	page : 1,
 	nextPage : true
 }
-
-Core.iScroll.pullUpAction = function() {
-	if (page.nextPage) {
-
-	}
-}
-
-Core.iScroll.onLoaded = function() {
-	var isNextPage = document.getElementById("nextPage").value;
-	if (isNextPage == "1") {
-		page.nextPage = true;
-		var screenHeight = document.getElementById("wrapper").offsetHeight;
-		var scrollerH = document.getElementById("scroller").offsetHeight;
-
-		if (screenHeight < scrollerH && page.nextPage) {
-			Core.iScroll.pullUpBar.style.display = "block";
-			Core.iScroll.isNextPage = true;
-		}
-	} else {
-		Core.iScroll.pullUpBar.style.display = "none";
-		Core.iScroll.isNextPage = false;
-		page.nextPage = false;
-	}
-}
+var isOwner = 1;
 
 $(function() {
-	evens.onExchangeClick = function(url) {
-		location.href = url;
+	Core.myScroll.loadingNextAction = loadNextPage;
+	Core.myScroll.load();
+	Core.myScroll.loadingNextAction();
+
+	evens.onOwnerClick = function() {
+		$(".exchanges").empty();
+		isOwner = 1;
+		page.page = 1;
+		page.nextPage = true;
+		Core.myScroll.loadingNextAction();
+	}
+
+	evens.onChangerClick = function() {
+		$(".exchanges").empty();
+		isOwner = 0;
+		page.page = 1;
+		page.nextPage = true;
+		Core.myScroll.loadingNextAction();
 	}
 });
 
-var Item = function(imgUrl, name, desc, createtime) {
-	var item = {
-		imgUrl : imgUrl,
-		name : name,
-		desc : desc,
-		createtime : createtime
+var Exchange = function(exchangeInfo) {
+	var e = exchangeInfo.exchange;
+	var target = exchangeInfo.target;
+	var targetItem = exchangeInfo.targetItem
+	var user = exchangeInfo.user;
+	var userItem = exchangeInfo.userItem;
+
+	var exchange = {
+		myDesc : userItem.description,
+		myItemImg : userItem.firstItemCenterImgUrl,
+		targetDesc : targetItem.description,
+		targetItemImg : targetItem.firstItemCenterImgUrl,
+		targetHeadImg : target.headImgUrl,
+		targetNickname : target.nickname,
+		exchangeState : e.exchangeState == "exchanged" ? "已成功" : "进行中",
+		displayTime : e.displayTime
 	};
-	return item;
+	return exchange;
+}
+
+var buildDom = function(data) {
+	var exchanges = data.exchanges;
+	var next = data.nextPage;
+	if (next == "1") {
+		page.nextPage = true;
+	} else {
+		page.nextPage = false;
+	}
+
+	if (exchanges.length > 0) {
+		var html = $("#exchange_template").html();
+		for (var i = 0; i < exchanges.length; i++) {
+			var ei = exchanges[i];
+			var exchange = new Exchange(ei);
+			var temp = new String(html);
+			temp = Core.HtmlReplace(temp, exchange);
+			$(".exchanges").append(temp);
+		}
+	}
+}
+
+var refreshLoadingBar = function() {
+	if (page.nextPage) {
+		$(".pull-up").show();
+		$(".pull-up-text").html("加载中");
+	} else {
+		$(".pull-up").hide();
+		$(".pull-up-text").html("没有更多了");
+	}
 }
 
 var loadNextPage = function() {
-	if (Core.iScroll.isLoaded) {
-		var eo = Core.getQueryString("eo");
-		var pageNum = page.page + 1;
+	var eo = Core.getQueryString("eo");
+	var pageNum = page.page;
 
-		$
-				.ajax({
-					url : "loadMyExchanges",
-					data : {
-						eo : eo,
-						page : pageNum
-					},
-					type : "POST",
-					success : function(data) {
-						if (data.errCode == "0") {
-							var items = data.data.items;
-							if (items.length > 0) {
-								page.nextPage = data.data.nextPage == "1" ? true
-										: false;
-
-								var html = $("#item_template").html();
-								for (var i = 0; i < items.length; i++) {
-									var item = new Item(
-											items[i].firstItemCenterImgUrl,
-											items[i].name,
-											items[i].description,
-											items[i].displayTime);
-									var temp = new String(html);
-									temp = Core.HtmlReplace(temp, item);
-									$(".item-list").append(temp);
-
-									var scrollerH = document
-											.getElementById("scroller").offsetHeight;
-
-									if (Core.iScroll.screenHeight < scrollerH
-											&& page.nextPage) {
-										Core.iScroll.pullUpBar.style.display = "block";
-										Core.iScroll.isNextPage = true;
-									}
-								}
-								Core.iScroll.myScroll.refresh();
-							}
-						} else {
-							alert("load fail");
-						}
-					}
-				});
-	} else {
-		setTimeout(loadNextPage, 100);
-	}
+	$.ajax({
+		url : "loadMyExchanges",
+		data : {
+			eo : eo,
+			page : pageNum,
+			isOwner : isOwner
+		},
+		type : "POST",
+		success : function(data) {
+			if (data.errCode == "0") {
+				buildDom(data.data);
+				refreshLoadingBar();
+			} else {
+				alert("load fail");
+			}
+		}
+	});
 }

@@ -42,11 +42,12 @@
 
 			<div class="item-nav-bar">
 				<div class="like-view">
-					<a class="btn" href="${toExchangeUrl}">点赞</a>
+					<a class="btn" href="javascript:void(0);" id="likeBtn">点赞</a>
 				</div>
 
 				<div class="btn-view">
-					<c:if test="${user.user.userId != owner.userId}">
+					<c:if
+						test="${user.user.userId != owner.userId and item.lockStatus != 'exchanged'}">
 						<a class="btn" href="${toExchangeUrl}">我想换</a>
 					</c:if>
 				</div>
@@ -59,6 +60,8 @@
 		</div>
 	</div>
 	<!-- scroller end -->
+
+	<input type="hidden" id="ii" value="${item.itemId}">
 
 	<input type="hidden" id="appid" value="${jsapi.appid}">
 	<input type="hidden" id="nonceStr" value="${jsapi.nonceStr}">

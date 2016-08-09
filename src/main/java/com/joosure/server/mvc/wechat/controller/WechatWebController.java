@@ -16,6 +16,8 @@ import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.entity.domain.AjaxResult;
 import com.joosure.server.mvc.wechat.entity.domain.BaseResult;
 import com.joosure.server.mvc.wechat.entity.domain.ItemInfo;
+import com.joosure.server.mvc.wechat.entity.domain.MyExchangeInfo;
+import com.joosure.server.mvc.wechat.entity.domain.Pages;
 import com.joosure.server.mvc.wechat.entity.domain.Redirecter;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
@@ -31,6 +33,7 @@ import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
 import com.joosure.server.mvc.wechat.exception.RequestParamsException;
+import com.joosure.server.mvc.wechat.exception.UserIllegalException;
 import com.joosure.server.mvc.wechat.service.ItemService;
 import com.joosure.server.mvc.wechat.service.SystemFunctionService;
 import com.joosure.server.mvc.wechat.service.SystemLogStorageService;
@@ -490,6 +493,41 @@ public class WechatWebController {
 		ResponseHandler.output(response, json);
 	}
 
+	@RequestMapping("/item/likeItem")
+	public void likeItem(HttpServletRequest request, HttpServletResponse response, Model model) {
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			if (StringUtil.isBlank(eo)) {
+				throw new OAuthException();
+			}
+
+			String itemIdStr = request.getParameter("ii");
+			int itemId = 0;
+			try {
+				itemId = Integer.parseInt(itemIdStr);
+			} catch (Exception e) {
+				throw new NumberFormatException();
+			}
+			itemService.likeItem(itemId, eo);
+			ar.setErrCode("0");
+		} catch (Exception e) {
+			if (e instanceof NumberFormatException) {
+				ar.setErrCode("1002");
+				ar.setErrMsg("服务器内部错误");
+			} else if (e instanceof UserIllegalException) {
+				ar.setErrCode("1003");
+				ar.setErrMsg(e.getMessage());
+			} else {
+				ar.setErrCode("1001");
+			}
+			e.printStackTrace();
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
+
 	@RequestMapping("/item/loadMyItems")
 	public void loadMyItems(HttpServletRequest request, HttpServletResponse response, Model model) {
 		AjaxResult ar = new AjaxResult();
@@ -509,6 +547,42 @@ public class WechatWebController {
 
 			List<Item> items = itemService.loadMyItems(eo, pageNum);
 			ar.putData("myItems", items);
+			ar.setErrCode("0");
+		} catch (Exception e) {
+			if (e instanceof NumberFormatException) {
+				ar.setErrCode("1002");
+				ar.setErrMsg("服务器内部错误");
+			} else {
+				ar.setErrCode("1001");
+			}
+			e.printStackTrace();
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
+
+	@RequestMapping("/item/loadMyExchanges")
+	public void loadMyExchanges(HttpServletRequest request, HttpServletResponse response, Model model) {
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			if (StringUtil.isBlank(eo)) {
+				throw new OAuthException();
+			}
+
+			String page = request.getParameter("page");
+			int pageNum = 2;
+			try {
+				pageNum = Integer.parseInt(page);
+			} catch (Exception e) {
+				throw new NumberFormatException("can not format the page number");
+			}
+			String isOwner = request.getParameter("isOwner");
+
+			List<MyExchangeInfo> infos = itemService.loadMyExchanges(eo, pageNum, isOwner);
+			ar.putData("exchanges", infos);
+			ar.putData("nextPage", infos.size() == Pages.DEFAULT_PAGE_SIZE ? 1 : 0);
 			ar.setErrCode("0");
 		} catch (Exception e) {
 			if (e instanceof NumberFormatException) {

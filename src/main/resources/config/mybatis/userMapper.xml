@@ -6,15 +6,16 @@
 	<insert id="saveUser" keyColumn="userId" keyProperty="userId"
 		useGeneratedKeys="true">
 		insert into user_user
-		(openid,nickname,mobile,headImgUrl,state,createTime,lastModifyTime)
+		(openid,nickname,mobile,headImgUrl,state,createTime,lastModifyTime,likeNum)
 		values
-		(#{openid},#{nickname},#{mobile},#{headImgUrl},#{state},#{createTime},#{lastModifyTime});
+		(#{openid},#{nickname},#{mobile},#{headImgUrl},#{state},#{createTime},#{lastModifyTime},#{likeNum});
 	</insert>
 
 	<update id="updateUser">
 		update user_user set openid= #{openid}, nickname=
 		#{nickname}, mobile= #{mobile}, headImgUrl= #{headImgUrl}, state=
-		#{state}, lastModifyTime= #{lastModifyTime} where userId= #{userId};
+		#{state}, lastModifyTime= #{lastModifyTime}, likeNum = #{likeNum}
+		where userId= #{userId};
 	</update>
 
 	<select id="getUserById" resultType="com.joosure.server.mvc.wechat.entity.pojo.User">

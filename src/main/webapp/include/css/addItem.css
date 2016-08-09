@@ -174,9 +174,6 @@ legend {
   color: #333;
   outline: 0;
 }
-body {
-  background: #efeff4;
-}
 a,
 a:hover {
   color: #333;
@@ -284,7 +281,11 @@ a:hover {
   min-height: 1px;
 }
 .list > .item.divider-bottom {
-  border-bottom: 1px solid #efeff4;
+  border-bottom: 1px solid #f1f1f1;
+}
+.container {
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0050a3), to(#e4007e));
+  background: -webkit-linear-gradient(top, #0050a3 60%, #e4007e);
 }
 select {
   background: #ffffff;
@@ -309,9 +310,9 @@ textarea {
 }
 .btn {
   padding: 10px 30px;
-  font-size: 18px;
+  font-size: 16px;
   color: #ffffff;
-  background: #ff0000;
+  background: #e4007e;
   border: 0;
   border-radius: 5px;
   line-height: 20px;
@@ -326,12 +327,12 @@ textarea {
 }
 .selector-label {
   color: #000000;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
 }
 .selector {
-  color: #000000;
-  font-size: 18px;
+  color: #5ea4ec;
+  font-size: 16px;
   line-height: 24px;
 }
 .cameraBtnView {
@@ -345,7 +346,7 @@ textarea {
 }
 .postTemplate {
   color: #000000;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 24px;
 }
 .item-img {

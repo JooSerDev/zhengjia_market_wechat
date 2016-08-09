@@ -2,8 +2,10 @@ package com.joosure.server.mvc.wechat.entity.domain;
 
 public class Pages {
 
+	public static final int DEFAULT_PAGE_SIZE = 10;
+
 	private int page = 1;
-	private int pageSize = 10;
+	private int pageSize = DEFAULT_PAGE_SIZE;
 
 	public Pages() {
 	}

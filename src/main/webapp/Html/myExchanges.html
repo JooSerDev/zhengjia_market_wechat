@@ -6,45 +6,69 @@
 <title>my items</title>
 <link rel="stylesheet" href="../include/core/icono.min.css">
 <link rel="stylesheet" href="../include/iScroll/scrollbar.css">
-<link rel="stylesheet" href="../include/core/myLess.css">
+<link rel="stylesheet" href="../include/css/myExchanges.css">
 <link rel="stylesheet" href="../include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
 
-	<div class="full" id="wrapper">
-		<div class="scroller" id="scroller">
-			<div class="row margin">
-				<div class="exchange-list">
-					<div class="exchange">
-						<div class="exchange-img-view">
-							<div class="owner-img-view">
-								<img alt=""
-									src="http://www.joosure.com:80/wechatTest/item_img_center_square/20166/21/fLvylh5ZXYC8jS4khLEn8c7yLxMJ0Nmh.jpg">
-							</div>
-							<div class="changer-img-view">
-								<img alt=""
-									src="http://www.joosure.com:80/wechatTest/item_img_center_square/20166/21/fLvylh5ZXYC8jS4khLEn8c7yLxMJ0Nmh.jpg">
-							</div>
+	<div class="container" id="container">
+
+		<div class="exchanges">
+			<div class="exchange">
+				<div class="my-item-bar">
+					<div class="desc">{myDesc}</div>
+					<div class="img">
+						<img
+							src="http://www.joosure.com:80/wechatTest/item_img_center_square/20166/21/fLvylh5ZXYC8jS4khLEn8c7yLxMJ0Nmh.jpg">
+					</div>
+				</div>
+
+				<div class="target-item-bar">
+					<div class="exchange-icon"></div>
+					<div class="desc">
+						<div class="text">{targetDesc}</div>
+					</div>
+					<div class="img">
+						<img
+							src="http://www.joosure.com:80/wechatTest/item_img_center_square/20166/21/fLvylh5ZXYC8jS4khLEn8c7yLxMJ0Nmh.jpg">
+					</div>
+					<div class="target-user-view">
+						<div class="img">
+							<img
+								src="http://www.joosure.com:80/wechatTest/item_img_center_square/20166/21/fLvylh5ZXYC8jS4khLEn8c7yLxMJ0Nmh.jpg">
 						</div>
-						<div class="exchange-info-view"></div>
+						<div class="nickname">{targetNickname}</div>
+					</div>
+				</div>
+
+				<div class="foot-bar">
+					<div class="state-view">
+						<div class="state">{exchangeState}</div>
+						<div class="line"></div>
+					</div>
+					<div class="time-view">
+						<div class="time">{displayTime}</div>
+						<div class="icon"></div>
 					</div>
 				</div>
 			</div>
 
-			<div class="row" id="pull_up_bar">
-				<div class="pull-up">
-					<div class="rect1"></div>
-					<div class="rect2"></div>
-					<div class="rect3"></div>
-					<div class="rect4"></div>
-					<div class="rect5"></div>
-				</div>
-				<div class="pull-up-text">加载更多</div>
-			</div>
-
 		</div>
+
+
+
+		<div class="row" id="pull_up_bar">
+			<div class="pull-up">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+			<div class="pull-up-text">加载更多</div>
+		</div>
+
 	</div>
-	<!-- scroller end -->
 
 	<template id="item_template">
 	<div class="exchange">
@@ -68,7 +92,9 @@
 	<script src="../include/core/core.js"></script>
 
 	<script>
-		
+		$(function() {
+			Core.myScroll.load();
+		});
 	</script>
 </body>
 </html>

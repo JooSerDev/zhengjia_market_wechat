@@ -30,7 +30,7 @@
 }
 .table_bar {
   clear: both;
-  border-top: 1px solid #ff0000;
+  border-top: 1px solid #e4007e;
   position: fixed;
   width: 100%;
   left: 0;
@@ -67,13 +67,13 @@
   position: absolute;
   right: 30px;
   bottom: 30px;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   border-radius: 35px;
-  background: #00ff00;
-  -webkit-box-shadow: 0 2px 4px 0 #0CC;
-  -moz-box-shadow: 0 2px 4px 0 #0CC;
-  box-shadow: 0 2px 4px 0 #0CC;
+  background: #0050a3;
+  -webkit-box-shadow: 0 2px 4px 0 #494949;
+  -moz-box-shadow: 0 2px 4px 0 #494949;
+  box-shadow: 0 2px 4px 0 #494949;
 }
 .fab.withTableBar {
   bottom: 90px;

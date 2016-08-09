@@ -17,11 +17,11 @@ shareparam.shareLink = document.getElementById("shareLink").value;
 shareparam.shareDesc = document.getElementById("shareDesc").value;
 
 wx.config({
-	debug : true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-	appId : jsapiparam.appid, // 必填，公众号的唯一标识
-	timestamp : jsapiparam.timeStamp, // 必填，生成签名的时间戳
-	nonceStr : jsapiparam.nonceStr, // 必填，生成签名的随机串
-	signature : jsapiparam.signature,// 必填，签名，见附录1
+	debug : false,
+	appId : jsapiparam.appid,
+	timestamp : jsapiparam.timeStamp,
+	nonceStr : jsapiparam.nonceStr,
+	signature : jsapiparam.signature,
 	jsApiList : [ "hideOptionMenu", "showMenuItems", "onMenuShareTimeline",
 			"onMenuShareAppMessage" ]
 });
@@ -67,4 +67,24 @@ wx.error(function(res) {
 var evens = {};
 
 $(function() {
+	$("#likeBtn").on("click", function() {
+		var eo = Core.getQueryString("eo");
+		var ii = $("#ii").val();
+
+		$.ajax({
+			url : "likeItem",
+			data : {
+				eo : eo,
+				ii : ii
+			},
+			type : "POST",
+			success : function(data) {
+				if (data.errCode == "0") {
+					alert("Like success");
+				} else {
+					alert(data.errMsg);
+				}
+			}
+		});
+	});
 });

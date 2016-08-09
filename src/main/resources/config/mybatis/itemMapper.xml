@@ -126,4 +126,30 @@
 		#{startRow},#{limitSize};
 	</select>
 
+	<select id="getExchangesByUserIdInOwnerSidePages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Exchange">
+		select * from
+		item_exchange where ownerId = #{userId} order
+		by
+		createTime
+		desc limit #{startRow},#{limitSize};
+	</select>
+
+	<select id="getExchangesByUserIdInChangerSidePages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Exchange">
+		select * from
+		item_exchange where changerId = #{userId} order
+		by
+		createTime desc limit #{startRow},#{limitSize};
+	</select>
+
+	<insert id="saveItemLike">
+		insert into item_like (itemId,userId) values
+		(#{itemId},#{userId});
+	</insert>
+
+	<select id="getItemLike" resultType="com.joosure.server.mvc.wechat.entity.pojo.ItemLike">
+		select * from item_like
+		where itemId = #{itemId} and
+		userId = #{userId};
+	</select>
+
 </mapper>

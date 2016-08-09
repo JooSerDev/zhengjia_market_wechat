@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemComment;
+import com.joosure.server.mvc.wechat.entity.pojo.ItemLike;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemType;
 
 public interface ItemDao {
@@ -49,7 +50,7 @@ public interface ItemDao {
 	public List<ItemType> getItemTypes();
 
 	public void saveExchange(Exchange exchange);
-	
+
 	public void updateExchange(Exchange exchange);
 
 	public void updateExchanges4cancelOthersWhenAgreeExchange(@Param("exchangeId") int exchangeId,
@@ -78,5 +79,15 @@ public interface ItemDao {
 	 */
 	public List<Exchange> getExchangesByUserIdPages(@Param("userId") int userId, @Param("startRow") int startRow,
 			@Param("limitSize") int limitSize);
+
+	public List<Exchange> getExchangesByUserIdInOwnerSidePages(@Param("userId") int userId,
+			@Param("startRow") int startRow, @Param("limitSize") int limitSize);
+	
+	public List<Exchange> getExchangesByUserIdInChangerSidePages(@Param("userId") int userId,
+			@Param("startRow") int startRow, @Param("limitSize") int limitSize);
+
+	public void saveItemLike(ItemLike itemLike);
+
+	public ItemLike getItemLike(@Param("itemId") int itemId, @Param("userId") int userId);
 
 }

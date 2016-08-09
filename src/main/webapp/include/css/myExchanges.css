@@ -416,63 +416,13 @@ textarea {
     -webkit-transform: scaleY(1);
   }
 }
-.table_bar {
-  clear: both;
-  border-top: 1px solid #e4007e;
-  position: fixed;
-  width: 100%;
-  left: 0;
-  bottom: 0;
-  z-index: 999;
-  background-color: #ffffff;
-}
-.table_bar:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.table_bar_btn {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-.table_bar_btn .logo {
-  padding: 3px 0;
-}
-.table_bar_btn .label {
-  padding-bottom: 5px;
-  color: #000000;
-}
-.table_bar_btn.active * {
-  color: #000000;
-}
-.fab {
-  z-index: 100;
-  position: absolute;
-  right: 30px;
-  bottom: 30px;
-  width: 50px;
-  height: 50px;
-  border-radius: 35px;
-  background: #0050a3;
-  -webkit-box-shadow: 0 2px 4px 0 #494949;
-  -moz-box-shadow: 0 2px 4px 0 #494949;
-  box-shadow: 0 2px 4px 0 #494949;
-}
-.fab.withTableBar {
-  bottom: 90px;
-}
-.search-bar {
+.exchanges {
   clear: both;
   position: relative;
-  padding: 10px 15px;
-  background: #ffffff;
+  padding: 20px 0;
+  /* 交换信息 */
 }
-.search-bar:after {
+.exchanges:after {
   clear: both;
   display: block;
   visibility: hidden;
@@ -480,69 +430,28 @@ textarea {
   overflow: hidden;
   content: ".";
 }
-.search-bar.margin {
+.exchanges.margin {
   margin-bottom: 10px;
 }
-.search-bar > .search-input-view {
-  position: relative;
-  margin-right: 130px;
-}
-.search-bar > .search-input-view > input {
-  width: 100%;
-  border-radius: 3px;
-  height: 30px;
-  background-color: #f1f1f1;
-  border: 0;
-  padding-left: 30px;
-  font-size: 16px;
-}
-.search-bar > .search-btn-view {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  height: 30px;
-  width: 100px;
-}
-.search-bar > .search-btn-view > .text {
-  line-height: 30px;
-  font-size: 16px;
-  text-align: right;
-}
-/* 宝贝列表 */
-.items {
-  clear: both;
-  position: relative;
-  /* 宝贝信息 */
-}
-.items:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.items.margin {
-  margin-bottom: 10px;
-}
-.items > .item {
+.exchanges > .exchange {
   padding: 10px 15px;
   background: #ffffff;
   margin-top: 20px;
   margin-right: 10px;
   margin-left: 10px;
   border-radius: 5px;
-  /* 头部 */
-  /* 简介 */
-  /* 图片 */
-  /* 他想换 */
+  /*我的物品*/
+  /*ta的物品*/
 }
-.items > .item > .title {
+.exchanges > .exchange:first-child {
+  margin-top: 0;
+}
+.exchanges > .exchange > .my-item-bar {
   clear: both;
-  height: 30px;
-  margin-bottom: 5px;
+  position: relative;
+  min-height: 60px;
 }
-.items > .item > .title:after {
+.exchanges > .exchange > .my-item-bar:after {
   clear: both;
   display: block;
   visibility: hidden;
@@ -550,81 +459,78 @@ textarea {
   overflow: hidden;
   content: ".";
 }
-.items > .item > .title > .head-img {
-  float: left;
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
+.exchanges > .exchange > .my-item-bar > .desc {
+  font-size: 12px;
+  color: #000000;
+  line-height: 20px;
+  margin-right: 60px;
 }
-.items > .item > .title > .head-img > img {
-  width: 100%;
-  border-radius: 15px;
+.exchanges > .exchange > .my-item-bar > .img {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
-.items > .item > .title > .nickname {
-  float: left;
-  padding-left: 5px;
-  height: 30px;
-  line-height: 30px;
-  font-size: 16px;
-}
-.items > .item > .title > .time {
-  float: right;
-  height: 30px;
-  line-height: 30px;
-  font-size: 15px;
-}
-.items > .item > .title > .recommended {
-  margin-top: -10px;
-  margin-left: 10px;
-  float: right;
-  width: 30px;
-  height: 40px;
-  background-color: #f00;
-}
-.items > .item > .description {
-  position: relative;
-}
-.items > .item > .description > .text {
-  position: relative;
-  line-height: 25px;
-  font-size: 14px;
-}
-.items > .item > .imgs {
-  clear: both;
-  margin-left: -5px;
-  margin-right: -5px;
-}
-.items > .item > .imgs:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.items > .item > .imgs > div {
-  width: 25%;
-  float: left;
-  min-height: 1px;
-}
-.items > .item > .imgs > div > .img-view {
-  padding: 5px;
-}
-.items > .item > .imgs > div > .img-view > img {
-  width: 100%;
+.exchanges > .exchange > .my-item-bar > .img > img {
+  width: 60px;
+  height: 60px;
   border-radius: 3px;
 }
-.items > .item > .wishBar {
-  position: relative;
-  margin-top: 10px;
-  background: #f1f1f1;
-  min-height: 30px;
-  margin-left: -15px;
+.exchanges > .exchange > .target-item-bar {
   margin-right: -15px;
-  padding: 10px 15px;
-  clear: both;
+  margin-left: -15px;
+  position: relative;
+  min-height: 135px;
+  margin-top: 15px;
 }
-.items > .item > .wishBar:after {
+.exchanges > .exchange > .target-item-bar > .exchange-icon {
+  position: absolute;
+  left: 15px;
+  top: -15px;
+  background: #f00;
+  width: 30px;
+  height: 30px;
+}
+.exchanges > .exchange > .target-item-bar > .desc {
+  background: #f1f1f1;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  padding-left: 120px;
+  padding-right: 15px;
+  font-size: 14px;
+  height: 40px;
+}
+.exchanges > .exchange > .target-item-bar > .desc > .text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 20px;
+  height: 40px;
+}
+.exchanges > .exchange > .target-item-bar > .img {
+  width: 88px;
+  height: 88px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+  position: absolute;
+  left: 15px;
+  top: 30px;
+}
+.exchanges > .exchange > .target-item-bar > .img > img {
+  width: 88px;
+  height: 88px;
+  border-radius: 5px;
+}
+.exchanges > .exchange > .target-item-bar > .target-user-view {
+  clear: both;
+  padding-left: 120px;
+  padding-right: 15px;
+  padding-top: 6px;
+  height: 30px;
+}
+.exchanges > .exchange > .target-item-bar > .target-user-view:after {
   clear: both;
   display: block;
   visibility: hidden;
@@ -632,23 +538,27 @@ textarea {
   overflow: hidden;
   content: ".";
 }
-.items > .item > .wishBar > .tag {
-  height: 30px;
-  width: 30px;
-  background: #f00;
+.exchanges > .exchange > .target-item-bar > .target-user-view > .img {
   float: left;
+  height: 24px;
+  width: 24px;
 }
-.items > .item > .wishBar > .wishItem {
-  font-size: 16px;
-  line-height: 30px;
-  margin-left: 45px;
-  word-break: break-all;
+.exchanges > .exchange > .target-item-bar > .target-user-view > .img > img {
+  height: 24px;
+  width: 24px;
+  border-radius: 12px;
 }
-.items > .item > .foot-bar {
-  margin-top: 10px;
+.exchanges > .exchange > .target-item-bar > .target-user-view > .nickname {
+  float: left;
+  padding-left: 5px;
+  line-height: 24px;
+  font-size: 12px;
+}
+.exchanges > .exchange > .foot-bar {
+  height: 30px;
   clear: both;
 }
-.items > .item > .foot-bar:after {
+.exchanges > .exchange > .foot-bar:after {
   clear: both;
   display: block;
   visibility: hidden;
@@ -656,23 +566,39 @@ textarea {
   overflow: hidden;
   content: ".";
 }
-.items > .item > .foot-bar > .text {
-  float: right;
-  font-size: 12px;
-  color: #5ea4ec;
-  margin-right: 25px;
+.exchanges > .exchange > .foot-bar > .state-view {
+  float: left;
+  height: 30px;
+}
+.exchanges > .exchange > .foot-bar > .state-view > .state {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  height: 30px;
+  background: #e4007e;
+  color: #fff;
+  margin: 0 2px;
+  padding: 0 10px;
+  font-size: 14px;
   line-height: 30px;
 }
-.items > .item > .foot-bar > .commentNumTag,
-.items > .item > .foot-bar .likeNumTag {
+.exchanges > .exchange > .foot-bar > .state-view > .line {
+  background: #e4007e;
+  height: 4px;
+  border-radius: 2px;
+  margin-top: -4px;
+}
+.exchanges > .exchange > .foot-bar > .time-view {
   float: right;
-  width: 30px;
   height: 30px;
 }
-.items > .item > .itemType {
+.exchanges > .exchange > .foot-bar > .time-view > .time {
+  float: left;
+  font-size: 12px;
+  line-height: 30px;
+}
+.exchanges > .exchange > .foot-bar > .time-view > .icon {
+  float: left;
   height: 30px;
-  min-width: 30px;
   background: #f00;
-  display: inline-block;
-  margin-bottom: -25px;
+  width: 20px;
 }

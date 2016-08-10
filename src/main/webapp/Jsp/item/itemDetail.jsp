@@ -17,49 +17,44 @@
 	href="<%=path%>/include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
+	<div class="container" id="container">
 
-	<!-- scroller start -->
-	<div id="wrapper" class="full">
-		<div class="scroller" id="scroller">
-
-			<div class="list">
+		<div class="list">
+			<div class="item">
+				<div class="title">
+					<div class="head-img">
+						<img src="${owner.headImgUrl }">
+					</div>
+					<div class="nickname">${owner.nickname }</div>
+					<div class="time">${item.displayTime }</div>
+				</div>
+			</div>
+			<div class="item">${item.description}</div>
+			<c:forEach items="${itemImgList }" var="imgUrl">
 				<div class="item">
-					<div class="title">
-						<div class="head-img">
-							<img src="${owner.headImgUrl }">
-						</div>
-						<div class="nickname">${owner.nickname }</div>
-						<div class="time">${item.displayTime }</div>
-					</div>
+					<img class="item-img" src="${imgUrl }">
 				</div>
-				<div class="item">${item.description}</div>
-				<c:forEach items="${itemImgList }" var="imgUrl">
-					<div class="item">
-						<img class="item-img" src="${imgUrl }">
-					</div>
-				</c:forEach>
+			</c:forEach>
+		</div>
+
+		<div class="item-nav-bar">
+			<div class="like-view">
+				<a class="btn" href="javascript:void(0);" id="likeBtn">点赞</a>
 			</div>
 
-			<div class="item-nav-bar">
-				<div class="like-view">
-					<a class="btn" href="javascript:void(0);" id="likeBtn">点赞</a>
-				</div>
-
-				<div class="btn-view">
-					<c:if
-						test="${user.user.userId != owner.userId and item.lockStatus != 'exchanged'}">
-						<a class="btn" href="${toExchangeUrl}">我想换</a>
-					</c:if>
-				</div>
-			</div>
-
-			<div class="list">
-				<div class="item divider-bottom">评论</div>
-				<div class="item"></div>
+			<div class="btn-view">
+				<c:if
+					test="${user.user.userId != owner.userId and item.lockStatus != 'exchanged'}">
+					<a class="btn" href="${toExchangeUrl}">我想换</a>
+				</c:if>
 			</div>
 		</div>
+
+		<div class="list">
+			<div class="item divider-bottom">评论</div>
+			<div class="item"></div>
+		</div>
 	</div>
-	<!-- scroller end -->
 
 	<input type="hidden" id="ii" value="${item.itemId}">
 

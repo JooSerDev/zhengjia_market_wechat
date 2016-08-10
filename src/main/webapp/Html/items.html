@@ -10,84 +10,188 @@
 <link rel="stylesheet" href="../include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
-	<div class="container">
-		<!-- scroller start -->
-		<div class="full" id="wrapper">
-			<div class="scroller" id="scroller">
-				<div class="search-bar">
-					<div class="search-input-view">
-						<input type="text" id="searchInput">
-					</div>
-					<div class="search-btn-view">
-						<div class="text">全部分类</div>
-					</div>
-				</div>
-
-				<div class="items">
-					<div class="item">
-						<div class="title">
-							<div class="head-img pull-left">
-								<img
-									src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
-							</div>
-							<div class="nickname">{nickname}</div>
-							<div class="recommended"></div>
-							<div class="time">{displayTime}</div>
-						</div>
-
-						<div class="description">
-							<div class="text">{description}</div>
-						</div>
-
-						<div class="imgs">
-							<div>
-								<div class="img-view">
-									<img
-										src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
-								</div>
-							</div>
-						</div>
-
-						<div class="wishBar">
-							<div class="tag"></div>
-							<div class="wishItem">{wishItem}</div>
-						</div>
-
-						<div class="foot-bar">
-							<div class="text">{markNum}</div>
-							<div class="commentNumTag"></div>
-							<div class="text">{likeNum}</div>
-							<div class="likeNumTag"></div>
-						</div>
-						
-						<div class="itemType">
-							
-						</div>
-						
-					</div>
-					
-					
-
-
-				</div>
-
-				<div class="row" id="pull_up_bar">
-					<div class="pull-up">
-						<div class="rect1"></div>
-						<div class="rect2"></div>
-						<div class="rect3"></div>
-						<div class="rect4"></div>
-						<div class="rect5"></div>
-					</div>
-					<div class="pull-up-text">加载更多</div>
-				</div>
-
+	<div class="container" id="container" style="margin-bottom: 60px;">
+		<div class="search-bar">
+			<div class="search-input-view">
+			<div class="search-btn" id="searchBtn"></div>
+				<input type="text" id="searchInput">
+			</div>
+			<div class="search-btn-view">
+				<div class="text">全部分类</div>
 			</div>
 		</div>
-		<!-- scroller end -->
+		<div class="cloud"></div>
 
-		<div class="fab withTableBar"></div>
+		<div class="items">
+			<div class="item">
+				<div class="title">
+					<div class="head-img pull-left">
+						<img
+							src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+					</div>
+					<div class="nickname">{nickname}</div>
+					<div class="recommended"></div>
+					<div class="time">{displayTime}</div>
+				</div>
+
+				<div class="description">
+					<div class="text">{description}</div>
+				</div>
+
+				<div class="imgs">
+					<div>
+						<div class="img-view">
+							<img
+								src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+						</div>
+					</div>
+				</div>
+
+				<div class="wishBar">
+					<div class="tag"></div>
+					<div class="wishItem">{wishItem}</div>
+				</div>
+
+				<div class="foot-bar">
+					<div class="text">{markNum}</div>
+					<div class="commentNumTag"></div>
+					<div class="text">{likeNum}</div>
+					<div class="likeNumTag"></div>
+				</div>
+
+				<div class="itemType"></div>
+
+			</div>
+
+			<div class="item">
+				<div class="title">
+					<div class="head-img pull-left">
+						<img
+							src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+					</div>
+					<div class="nickname">{nickname}</div>
+					<div class="recommended"></div>
+					<div class="time">{displayTime}</div>
+				</div>
+
+				<div class="description">
+					<div class="text">{description}</div>
+				</div>
+
+				<div class="imgs">
+					<div>
+						<div class="img-view">
+							<img
+								src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+						</div>
+					</div>
+				</div>
+
+				<div class="wishBar">
+					<div class="tag"></div>
+					<div class="wishItem">{wishItem}</div>
+				</div>
+
+				<div class="foot-bar">
+					<div class="text">{markNum}</div>
+					<div class="commentNumTag"></div>
+					<div class="text">{likeNum}</div>
+					<div class="likeNumTag"></div>
+				</div>
+
+				<div class="itemType"></div>
+
+			</div>
+			<div class="item">
+				<div class="title">
+					<div class="head-img pull-left">
+						<img
+							src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+					</div>
+					<div class="nickname">{nickname}</div>
+					<div class="recommended"></div>
+					<div class="time">{displayTime}</div>
+				</div>
+
+				<div class="description">
+					<div class="text">{description}</div>
+				</div>
+
+				<div class="imgs">
+					<div>
+						<div class="img-view">
+							<img
+								src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+						</div>
+					</div>
+				</div>
+
+				<div class="wishBar">
+					<div class="tag"></div>
+					<div class="wishItem">{wishItem}</div>
+				</div>
+
+				<div class="foot-bar">
+					<div class="text">{markNum}</div>
+					<div class="commentNumTag"></div>
+					<div class="text">{likeNum}</div>
+					<div class="likeNumTag"></div>
+				</div>
+
+				<div class="itemType"></div>
+
+			</div>
+
+
+		</div>
+
+		<div class="row" id="pull_up_bar">
+			<div class="pull-up">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+			<div class="pull-up-text">加载更多</div>
+		</div>
+		<div class="fab withTableBar" id="fab"></div>
+
+		<div class="table_bar">
+			<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">
+			<input type="hidden" id="marketUrl" value="${tableUrls.marketUrl }">
+			<input type="hidden" id="meUrl" value="${tableUrls.meUrl }">
+
+			<div class="nav-view" id="table_bar_home">
+				<div class="table_bar_btn">
+					<div class="logo-home"></div>
+					<div class="label">首页</div>
+				</div>
+			</div>
+			<div class="nav-view" id="table_bar_market">
+				<div class="table_bar_btn">
+					<div class="logo-market"></div>
+					<div class="label">集市</div>
+				</div>
+			</div>
+			<div class="nav-view">
+				<div class="table_bar_btn">
+					<div class="logo-active"></div>
+					<div class="label">购物车</div>
+				</div>
+			</div>
+			<div class="nav-view" id="table_bar_me">
+				<div class="table_bar_btn">
+					<div class="logo-me"></div>
+					<div class="label">我的</div>
+				</div>
+			</div>
+		</div>
+
+
 	</div>
+
+
 	<template id="item_template">
 	<div class="item">
 		<div class="item-body">
@@ -107,47 +211,13 @@
 	<script src="../include/core/core.js"></script>
 
 	<script>
-		var testData = {
-			imgUrl : "http://www.joosure.com:80/wechatTest/item_img_center_square/20166/21/fLvylh5ZXYC8jS4khLEn8c7yLxMJ0Nmh.jpg",
-			name : "item name",
-			desc : "item desc single line",
-			createtime : "2016-07-22"
-		}
-
-		var evens = {};
-
 		$(function() {
-			load();
+			$(window).scroll(function() {
+				$("#fab").animate({
+					left : '-50px'
+				}, 1000);
+			});
 		});
-
-		var load = function() {
-			if (Core.iScroll.isLoaded) {
-				loadTestData();
-			} else {
-				setTimeout(load, 300);
-			}
-		}
-
-		var loadTestData = function() {
-
-			var html = $("#item_template").html();
-			for (var i = 0; i < 0; i++) {
-				var temp = new String(html);
-				temp = Core.HtmlReplace(temp, testData);
-				$(".item-list").append(temp);
-
-				var scrollerH = document.getElementById("scroller").offsetHeight;
-
-				if (Core.iScroll.screenHeight < scrollerH) {
-					Core.iScroll.pullUpBar.style.display = "block";
-				}
-
-			}
-			setTimeout(function() {
-				Core.iScroll.myScroll.refresh();
-			}, 1000);
-
-		}
 	</script>
 </body>
 </html>

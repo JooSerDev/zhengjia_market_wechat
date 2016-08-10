@@ -62,7 +62,9 @@
 
 	<select id="getMarketItemsPages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
-		item_item where approvalStatus = 'yes' order by refreshTime desc limit
+		item_item where approvalStatus = 'yes' 
+		 <if test="keyword != null and keyword != ''"> and description like '%${keyword}%' </if>
+		 order by refreshTime desc limit
 		#{startRow},#{limitSize};
 	</select>
 

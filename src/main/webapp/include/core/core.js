@@ -23,7 +23,7 @@ Core.myScroll = {
 			Core.myScroll.loadingBarOffset = Core.myScroll.loadingBar.offsetHeight;
 		}
 
-		var screenHeight = window.screen.height;
+		var screenHeight = window.screen.availHeight;
 		if (Core.myScroll.container != undefined
 				&& Core.myScroll.container != null) {
 			Core.myScroll.container.style.margin = "0 0  "
@@ -40,6 +40,10 @@ Core.myScroll = {
 									Core.myScroll.isLoadingNextPage = true;
 									Core.myScroll.loadingNextAction();
 								}
+
+//								$("#fab").animate({
+//									left : '-50px'
+//								}, 1000);
 							});
 
 		}

@@ -577,8 +577,12 @@ public class WechatWebService {
 		user.setHeadImgUrl(headImgUrl);
 		user.setNickname(getUserinfoResponse.getNickname());
 		user.setOpenid(getUserinfoResponse.getOpenid());
+		user.setSex(getUserinfoResponse.getSex());
 		user.setState(0);
 		user.setLikeNum(0);
+		user.setItemNum(0);
+		user.setFinishNum(0);
+		user.setExchangeNum(0);
 
 		Date nowDate = new Date();
 		user.setCreateTime(nowDate);

@@ -9,11 +9,15 @@ public class User {
 	private String nickname;
 	private String mobile;
 	private String headImgUrl;
+	private String sex;
 	private Integer state;
 	private Date createTime;
 	private Date lastModifyTime;
 
 	private Integer likeNum;
+	private Integer itemNum;
+	private Integer exchangeNum;
+	private Integer finishNum;// 正佳认证交易完成数量
 
 	public Integer getUserId() {
 		return userId;
@@ -85,6 +89,38 @@ public class User {
 
 	public void setLikeNum(Integer likeNum) {
 		this.likeNum = likeNum;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public Integer getItemNum() {
+		return itemNum;
+	}
+
+	public void setItemNum(Integer itemNum) {
+		this.itemNum = itemNum;
+	}
+
+	public Integer getExchangeNum() {
+		return exchangeNum;
+	}
+
+	public void setExchangeNum(Integer exchangeNum) {
+		this.exchangeNum = exchangeNum;
+	}
+
+	public Integer getFinishNum() {
+		return finishNum;
+	}
+
+	public void setFinishNum(Integer finishNum) {
+		this.finishNum = finishNum;
 	}
 
 }

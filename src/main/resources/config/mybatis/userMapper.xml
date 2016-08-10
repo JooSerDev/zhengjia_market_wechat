@@ -6,15 +6,16 @@
 	<insert id="saveUser" keyColumn="userId" keyProperty="userId"
 		useGeneratedKeys="true">
 		insert into user_user
-		(openid,nickname,mobile,headImgUrl,state,createTime,lastModifyTime,likeNum)
+		(openid,nickname,mobile,headImgUrl,state,createTime,lastModifyTime,likeNum,sex,itemNum,exchangeNum,finishNum)
 		values
-		(#{openid},#{nickname},#{mobile},#{headImgUrl},#{state},#{createTime},#{lastModifyTime},#{likeNum});
+		(#{openid},#{nickname},#{mobile},#{headImgUrl},#{state},#{createTime},#{lastModifyTime},#{likeNum},#{sex},#{itemNum},#{exchangeNum},#{finishNum});
 	</insert>
 
 	<update id="updateUser">
 		update user_user set openid= #{openid}, nickname=
 		#{nickname}, mobile= #{mobile}, headImgUrl= #{headImgUrl}, state=
-		#{state}, lastModifyTime= #{lastModifyTime}, likeNum = #{likeNum}
+		#{state}, lastModifyTime= #{lastModifyTime}, likeNum =
+		#{likeNum},sex=#{sex},itemNum=#{itemNum},exchangeNum=#{exchangeNum},finishNum=#{finishNum}
 		where userId= #{userId};
 	</update>
 

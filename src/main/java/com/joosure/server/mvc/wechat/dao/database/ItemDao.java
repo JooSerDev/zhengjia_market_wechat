@@ -37,7 +37,8 @@ public interface ItemDao {
 	 * @param limitSize
 	 * @return
 	 */
-	public List<Item> getMarketItemsPages(@Param("startRow") int startRow, @Param("limitSize") int limitSize);
+	public List<Item> getMarketItemsPages(@Param("keyword") String keyword, @Param("startRow") int startRow,
+			@Param("limitSize") int limitSize);
 
 	public List<ItemComment> getItemCommentByItemIdPages(@Param("itemId") int itemId, @Param("startRow") int startRow,
 			@Param("limitSize") int limitSize);
@@ -82,7 +83,7 @@ public interface ItemDao {
 
 	public List<Exchange> getExchangesByUserIdInOwnerSidePages(@Param("userId") int userId,
 			@Param("startRow") int startRow, @Param("limitSize") int limitSize);
-	
+
 	public List<Exchange> getExchangesByUserIdInChangerSidePages(@Param("userId") int userId,
 			@Param("startRow") int startRow, @Param("limitSize") int limitSize);
 

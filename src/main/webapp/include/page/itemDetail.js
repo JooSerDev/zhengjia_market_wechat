@@ -1,8 +1,3 @@
-document.addEventListener('touchmove', function(e) {
-	e.preventDefault();
-}, false);
-document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll, false);
-
 var jsapiparam = {};
 jsapiparam.appid = document.getElementById("appid").value;
 jsapiparam.nonceStr = document.getElementById("nonceStr").value;
@@ -67,6 +62,8 @@ wx.error(function(res) {
 var evens = {};
 
 $(function() {
+	Core.myScroll.load();
+	
 	$("#likeBtn").on("click", function() {
 		var eo = Core.getQueryString("eo");
 		var ii = $("#ii").val();

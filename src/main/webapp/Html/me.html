@@ -4,88 +4,91 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <title>main</title>
-<link rel="stylesheet" href="../include/core/icono.min.css">
-<link rel="stylesheet" href="../include/iScroll/scrollbar.css">
-<link rel="stylesheet" href="../include/core/myLess.css">
-<link rel="stylesheet" href="../include/swiper/swiper-3.3.1.min.css">
+<link rel="stylesheet" href="../include/css/me.css">
 </head>
 <body>
 
-	<!-- scroller start -->
-	<div class="container" id="wrapper">
-		<div class="scroller" id="scroller">
+	<div class="scroller">
 
-			<div class="row margin me-head-img-banner">
+		<div class="container">
+
+			<div class="cloud"></div>
+
+			<div class="me-head">
 				<div class="head-img">
 					<img
 						src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
 				</div>
+				<div class="nickname">笑笑笑</div>
+				<div class="sex1"></div>
+
+				<div class="info-view">
+					<div class="integral-icon"></div>
+					<div class="integral">12345</div>
+					<div class="line"></div>
+					<div class="like-icon"></div>
+					<div class="like">123</div>
+					<div class="line"></div>
+					<div class="v-icon"></div>
+					<div class="v">123</div>
+				</div>
 			</div>
 
-			<div class="row margin">
-				<a>
-					<div class="list-item">
-						<div class="pull-left">加宝贝</div>
-						<div class="pull-right">2</div>
+			<div class="list-view">
+				<div class="label">联系方式</div>
+				<div class="text">13268112212</div>
+			</div>
+
+			<div class="list-view">
+				<div class="label">我的宝贝</div>
+				<div class="text">1</div>
+			</div>
+
+			<div class="list-view">
+				<div class="label">我的交易</div>
+				<div class="text">2</div>
+			</div>
+			
+			<div class="add-item">发布宝贝</div>
+
+			<div class="table_bar">
+				<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">
+				<input type="hidden" id="marketUrl" value="${tableUrls.marketUrl }">
+				<input type="hidden" id="meUrl" value="${tableUrls.meUrl }">
+
+				<div class="nav-view" id="table_bar_home">
+					<div class="table_bar_btn">
+						<div class="logo-home"></div>
+						<div class="label">首页</div>
 					</div>
-				</a>
-			</div>
-
-			<div class="row margin">
-				<a href="tel:13268112212"> 我电话 </a>
-			</div>
-
-
-		</div>
-	</div>
-	<!-- scroller end -->
-
-	<div class="table_bar clearfix">
-		<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">
-		<input type="hidden" id="meUrl" value="${tableUrls.meUrl }">
-
-		<div class="col-25 text-center" id="table_bar_home">
-			<div class="table_bar_btn active">
-				<div class="logo">
-					<div class="icono-home"></div>
 				</div>
-				<div class="label">首页</div>
-			</div>
-		</div>
-		<div class="col-25 text-center">
-			<div class="table_bar_btn">
-				<div class="logo">
-					<div class="icono-market"></div>
+				<div class="nav-view" id="table_bar_market">
+					<div class="table_bar_btn">
+						<div class="logo-market"></div>
+						<div class="label">集市</div>
+					</div>
 				</div>
-				<div class="label">商店</div>
-			</div>
-		</div>
-		<div class="col-25 text-center">
-			<div class="table_bar_btn">
-				<div class="logo">
-					<div class="icono-cart"></div>
+				<div class="nav-view">
+					<div class="table_bar_btn">
+						<div class="logo-active"></div>
+						<div class="label">活动</div>
+					</div>
 				</div>
-				<div class="label">购物车</div>
-			</div>
-		</div>
-		<div class="col-25 text-center" id="table_bar_me">
-			<div class="table_bar_btn">
-				<div class="logo">
-					<div class="icono-gear"></div>
+				<div class="nav-view" id="table_bar_me">
+					<div class="table_bar_btn active">
+						<div class="logo-me"></div>
+						<div class="label">我</div>
+					</div>
 				</div>
-				<div class="label">我的</div>
 			</div>
 		</div>
 	</div>
-
-	<script src="../include/iScroll/iscroll.js"></script>
+	
 	<script src="../include/jquery/jquery.min.js"></script>
-	<script src="../include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="../include/core/core.js"></script>
 
 	<script>
 		$(function() {
-			Core.mySwiper.loadSwiper();
 			Core.tableBar.init(3);
 		});
 	</script>

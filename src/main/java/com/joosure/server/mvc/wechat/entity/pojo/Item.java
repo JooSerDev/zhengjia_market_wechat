@@ -2,6 +2,7 @@ package com.joosure.server.mvc.wechat.entity.pojo;
 
 import java.util.Date;
 
+import com.joosure.server.mvc.wechat.dao.cache.ItemCache;
 import com.shawn.server.core.util.DateUtil;
 
 public class Item {
@@ -238,6 +239,16 @@ public class Item {
 
 	public void setWishItem(String wishItem) {
 		this.wishItem = wishItem;
+	}
+
+	public String getItemTypeName() {
+		if (itemType != null) {
+			ItemType it = ItemCache.getItemType(itemType);
+			if (it != null) {
+				return it.getName();
+			}
+		}
+		return "";
 	}
 
 }

@@ -1,34 +1,74 @@
 @import 'constants';
 .table_bar {
     .clearfix;
-    border-top: 1px solid @color-s1;
+    border-top: 1px solid @color-s2;
     position: fixed;
     width: 100%;
     left: 0;
     bottom: 0;
     z-index: 999;
     background-color: @color-fg;
+    height: 60px;
+    >.nav-view {
+        .col-25;
+        text-align: center;
+    }
 }
 
 .table_bar_btn {
+    height: 60px;
     .no-user-select;
-    .logo {
-        padding: 3px 0;
+    >.label {
+        font-size: 12px;
+        line-height: 26px;
+        color: @color-s1;
+        text-align: center;
     }
-    .label {
-        padding-bottom: 5px;
-        color: @color-text-title;
+    >.logo-home,
+    .logo-market,
+    .logo-active,
+    .logo-me {
+        width: 40px;
+        height: 36px;
+        margin: 0 auto;
+        background: url('../images/bar_bt3.png');
+        background-size: 160px auto;
+        background-repeat: no-repeat;
+    }
+    >.logo-home {
+        background-position: 0 0;
+    }
+    >.logo-market {
+        background-position: -40px 0;
+    }
+    >.logo-active {
+        background-position: -80px 0;
+    }
+    >.logo-me {
+        background-position: -120px 0;
     }
     &.active {
-        * {
-            color: @color-text-highlight;
+        .label {
+            color: @color-s2;
+        }
+        .logo-home {
+            background-position: 0 -36px;
+        }
+        .logo-market {
+            background-position: -40px -36px;
+        }
+        .logo-active {
+            background-position: -80px -36px;
+        }
+        .logo-me {
+            background-position: -120px -36px;
         }
     }
 }
 
 .fab {
     z-index: 100;
-    position: absolute;
+    position: fixed;
     right: @view-padding-width*2;
     bottom: @view-padding-height*3;
     width: 50px;
@@ -36,7 +76,6 @@
     border-radius: 35px;
     background: @color-s2;
     -webkit-box-shadow: 0 2px 4px 0 #494949;
-    -moz-box-shadow: 0 2px 4px 0 #494949;
     box-shadow: 0 2px 4px 0 #494949;
     &.withTableBar {
         bottom: @view-padding-height*3+60;

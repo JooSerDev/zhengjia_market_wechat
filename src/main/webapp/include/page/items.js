@@ -1,8 +1,3 @@
-document.addEventListener('touchmove', function(e) {
-	e.preventDefault();
-}, false);
-document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll, false);
-
 var jsapiparam = {};
 jsapiparam.appid = document.getElementById("appid").value;
 jsapiparam.nonceStr = document.getElementById("nonceStr").value;
@@ -35,15 +30,24 @@ var page = {
 	nextPage : true
 }
 
-Core.iScroll.pullUpAction = function() {
-	if (page.nextPage) {
-
-	}
-}
+var keyword = "";
 
 $(function() {
-	initFirstPage();
+	Core.myScroll.endOffset = 61;
+	loadNextPage();
+	Core.myScroll.loadingNextAction = loadNextPage;
+	// Core.myScroll.loadingNextAction();
+	Core.myScroll.load();
+
 	Core.tableBar.init(1);
+
+	$("#searchBtn").on("click", function() {
+		keyword = $("#searchInput").val();
+		$(".items").empty();
+		page.page = 1;
+		page.nextPage = true;
+		loadNextPage();
+	});
 
 	evens.onItemClick = function(id) {
 		var eo = Core.getQueryString("eo");
@@ -51,16 +55,8 @@ $(function() {
 	}
 });
 
-var initFirstPage = function() {
-	if (Core.iScroll.isLoaded) {
-		loadNextPage();
-	} else {
-		setTimeout(initFirstPage, 300);
-	}
-}
-
 var Item = function(itemId, head_img, nickname, displayTime, description,
-		recommended, imgHtml, wishItem, markNum, likeNum) {
+		recommended, imgHtml, wishItem, markNum, likeNum, itemTypeName) {
 	var item = {
 		itemId : itemId,
 		head_img : head_img,
@@ -71,14 +67,14 @@ var Item = function(itemId, head_img, nickname, displayTime, description,
 		imgHtml : imgHtml,
 		wishItem : wishItem,
 		markNum : markNum,
-		likeNum : likeNum
+		likeNum : likeNum,
+		itemTypeName : itemTypeName
 	};
 	return item;
 }
 
 var buildItemDOMs = function(iteminfos) {
 	if (iteminfos && iteminfos.length > 0) {
-		// page.nextPage = data.data.nextPage == "1" ? true : false;
 
 		var html = $("#item_template").html();
 		var imgHtml = $("#item_img_template").html();
@@ -112,51 +108,57 @@ var buildItemDOMs = function(iteminfos) {
 						owner.nickname, iteminfo.item.displayTime,
 						iteminfo.item.description, iteminfo.item.isRecommended,
 						imgDomHtml, iteminfo.item.wishItem,
-						iteminfo.item.markNum, iteminfo.item.likeNum);
+						iteminfo.item.markNum, iteminfo.item.likeNum,
+						iteminfo.item.itemTypeName);
 
 				temp = Core.HtmlReplace(temp, k);
 				$(".items").append(temp);
 			}
 		}
+	}
+}
 
-		var scrollerH = document.getElementById("scroller").offsetHeight;
-
-		if (Core.iScroll.screenHeight < scrollerH && page.nextPage) {
-			Core.iScroll.pullUpBar.style.display = "block";
-			Core.iScroll.isNextPage = true;
-		} else {
-			Core.iScroll.pullUpBar.style.display = "none";
-			Core.iScroll.isNextPage = false;
-		}
-		Core.iScroll.myScroll.refresh();
+var refreshLoadingBar = function() {
+	if (page.nextPage) {
+		$("#pull_up_bar").show();
+		$(".pull-up-text").html("加载中");
+	} else {
+		$("#pull_up_bar").hide();
+		$(".pull-up-text").html("没有更多了");
 	}
 }
 
 var loadNextPage = function() {
-	if (Core.iScroll.isLoaded) {
-		var eo = Core.getQueryString("eo");
-		var pageNum = page.page;
-
+	var eo = Core.getQueryString("eo");
+	var pageNum = page.page;
+	if (page.nextPage) {
 		$.ajax({
 			url : "item/loadItems",
 			data : {
 				eo : eo,
-				page : pageNum
+				page : pageNum,
+				keyword : keyword
 			},
 			type : "POST",
 			success : function(data) {
+				Core.myScroll.isLoadingNextPage = false;
 				if (data.errCode == "0") {
 					var items = data.data.iteminfos;
+					var next = data.data.nextPage;
+					if (next == "1") {
+						page.nextPage = true;
+					} else {
+						page.nextPage = false;
+					}
 					page.page = page.page + 1;
 					if (items.length > 0) {
 						buildItemDOMs(items);
+						refreshLoadingBar();
 					}
 				} else {
 					alert("load fail");
 				}
 			}
 		});
-	} else {
-		setTimeout(loadNextPage, 100);
 	}
 }

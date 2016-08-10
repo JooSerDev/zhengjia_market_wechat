@@ -314,6 +314,11 @@ public class ItemService {
 			item.setApprovalStatus(Item.STATUS_NO);
 
 			itemDao.saveItem(item);
+
+			User user = userInfo.getUser();
+			user.setItemNum(user.getItemNum() + 1);
+			userDao.updateUser(user);
+
 			return true;
 		}
 		return false;
@@ -404,7 +409,7 @@ public class ItemService {
 		return null;
 	}
 
-	public List<ItemInfo> loadItems(String eo, int pageNum) throws OAuthException {
+	public List<ItemInfo> loadItems(String eo, int pageNum, String keyword) throws OAuthException {
 		List<ItemInfo> itemInfos = new ArrayList<>();
 		UserInfo userInfo = null;
 		try {
@@ -418,7 +423,7 @@ public class ItemService {
 		}
 
 		Pages pages = new Pages(pageNum);
-		List<Item> items = itemDao.getMarketItemsPages(pages.getPageRow(), pages.getPageSize());
+		List<Item> items = itemDao.getMarketItemsPages(keyword, pages.getPageRow(), pages.getPageSize());
 		if (items.size() > 0) {
 			for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();) {
 				Item item = iterator.next();

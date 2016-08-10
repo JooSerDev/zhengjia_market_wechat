@@ -20,17 +20,20 @@
 	<!-- 自动扫描 -->
 	<context:component-scan base-package="com.joosure" />
 
-	<!-- 将多个配置文件读取到容器中，交给Spring管理 -->  
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
-        <property name="locations">  
-           <list>  
-              <!-- 这里支持多种寻址方式：classpath和file -->  
-              <value>classpath:jdbc.properties</value>  
-            </list>  
-        </property>  
-    </bean> 
+	<!-- 将多个配置文件读取到容器中，交给Spring管理 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<!-- 这里支持多种寻址方式：classpath和file -->
+				<value>classpath:jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
 
-	<import resource="spring-database.xml"/> 
+	<bean class="com.shawn.server.core.util.SpringUtil"></bean>
+
+	<import resource="spring-database.xml" />
 	<import resource="spring-dao.xml" />
 
 </beans>

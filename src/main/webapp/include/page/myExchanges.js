@@ -96,10 +96,10 @@ var buildDom = function(data) {
 
 var refreshLoadingBar = function() {
 	if (page.nextPage) {
-		$(".pull-up").show();
+		$("#pull_up_bar").show();
 		$(".pull-up-text").html("加载中");
 	} else {
-		$(".pull-up").hide();
+		$("#pull_up_bar").hide();
 		$(".pull-up-text").html("没有更多了");
 	}
 }
@@ -118,6 +118,7 @@ var loadNextPage = function() {
 		type : "POST",
 		success : function(data) {
 			if (data.errCode == "0") {
+				page.page = page.page + 1;
 				buildDom(data.data);
 				refreshLoadingBar();
 			} else {

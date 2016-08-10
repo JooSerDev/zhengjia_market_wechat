@@ -622,8 +622,11 @@ public class WechatWebController {
 				throw new NumberFormatException("can not format the page number");
 			}
 
-			List<ItemInfo> items = itemService.loadItems(eo, pageNum);
+			String keyword = request.getParameter("keyword");
+
+			List<ItemInfo> items = itemService.loadItems(eo, pageNum, keyword);
 			ar.putData("iteminfos", items);
+			ar.putData("nextPage", items.size() == Pages.DEFAULT_PAGE_SIZE ? 1 : 0);
 			ar.setErrCode("0");
 		} catch (Exception e) {
 			if (e instanceof NumberFormatException) {
@@ -634,9 +637,13 @@ public class WechatWebController {
 			}
 			e.printStackTrace();
 		}
+		try {
+			String json = JsonUtil.Object2JsonStr(ar);
+			ResponseHandler.output(response, json);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		String json = JsonUtil.Object2JsonStr(ar);
-		ResponseHandler.output(response, json);
 	}
 
 	/**

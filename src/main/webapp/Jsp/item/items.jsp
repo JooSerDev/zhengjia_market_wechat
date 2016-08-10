@@ -9,83 +9,64 @@
 <head lang="zh">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>main</title>
-<link rel="stylesheet" href="<%=path%>/include/core/icono.min.css">
-<link rel="stylesheet" href="<%=path%>/include/iScroll/scrollbar.css">
+<title>正佳分享集市</title>
 <link rel="stylesheet" href="<%=path%>/include/css/items.css">
-<link rel="stylesheet"
-	href="<%=path%>/include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
+	<div class="container" id="container">
 
-	<div class="container">
-
-		<!-- scroller start -->
-		<div id="wrapper">
-			<div class="scroller" id="scroller">
-
-				<div class="search-bar">
-					<div class="search-input-view">
-						<input type="text" id="searchInput">
-					</div>
-					<div class="search-btn-view">
-						<div class="text">全部分类</div>
-					</div>
-				</div>
-
-				<div class="items"></div>
-
-				<div class="row" id="pull_up_bar">
-					<div class="pull-up">
-						<div class="rect1"></div>
-						<div class="rect2"></div>
-						<div class="rect3"></div>
-						<div class="rect4"></div>
-						<div class="rect5"></div>
-					</div>
-					<div class="pull-up-text">加载更多</div>
-				</div>
-
+		<div class="search-bar">
+			<div class="search-input-view">
+				<div class="search-btn" id="searchBtn"></div>
+				<input type="text" id="searchInput">
+			</div>
+			<div class="search-btn-view">
+				<div class="text">全部分类</div>
 			</div>
 		</div>
-		<!-- scroller end -->
+		<div class="cloud"></div>
 
-		<div class="fab withTableBar"></div>
+		<div class="items"></div>
+
+		<div class="row" id="pull_up_bar">
+			<div class="pull-up">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+			<div class="pull-up-text">加载中</div>
+		</div>
+
+		<div class="fab withTableBar" id="fab"></div>
 
 		<div class="table_bar">
 			<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">
 			<input type="hidden" id="marketUrl" value="${tableUrls.marketUrl }">
 			<input type="hidden" id="meUrl" value="${tableUrls.meUrl }">
 
-			<div class="col-25 text-center" id="table_bar_home">
-				<div class="table_bar_btn active">
-					<div class="logo">
-						<div class="icono-home"></div>
-					</div>
+			<div class="nav-view" id="table_bar_home">
+				<div class="table_bar_btn">
+					<div class="logo-home"></div>
 					<div class="label">首页</div>
 				</div>
 			</div>
-			<div class="col-25 text-center" id="table_bar_market">
-				<div class="table_bar_btn">
-					<div class="logo">
-						<div class="icono-market"></div>
-					</div>
+			<div class="nav-view" id="table_bar_market">
+				<div class="table_bar_btn active">
+					<div class="logo-market"></div>
 					<div class="label">集市</div>
 				</div>
 			</div>
-			<div class="col-25 text-center">
+			<div class="nav-view">
 				<div class="table_bar_btn">
-					<div class="logo">
-						<div class="icono-cart"></div>
-					</div>
+					<div class="logo-active"></div>
 					<div class="label">购物车</div>
 				</div>
 			</div>
-			<div class="col-25 text-center" id="table_bar_me">
+			<div class="nav-view" id="table_bar_me">
 				<div class="table_bar_btn">
-					<div class="logo">
-						<div class="icono-gear"></div>
-					</div>
+					<div class="logo-me"></div>
 					<div class="label">我的</div>
 				</div>
 			</div>
@@ -122,7 +103,10 @@
 			<div class="likeNumTag"></div>
 		</div>
 
-		<div class="itemType"></div>
+		<div class="itemType">
+			<div class="img"></div>
+			<div class="text">{itemTypeName}</div>
+		</div>
 
 	</div>
 	</template>
@@ -141,9 +125,7 @@
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
 	<input type="hidden" id="signature" value="${jsapi.signature}">
 
-	<script src="<%=path%>/include/iScroll/iscroll.js"></script>
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
-	<script src="<%=path%>/include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script src="<%=path%>/include/page/items.js"></script>

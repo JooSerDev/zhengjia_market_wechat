@@ -10,17 +10,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <title>我的交换</title>
-<link rel="stylesheet" href="<%=path%>/include/core/icono.min.css">
-<link rel="stylesheet" href="<%=path%>/include/iScroll/scrollbar.css">
 <link rel="stylesheet" href="<%=path%>/include/css/myExchanges.css">
-<link rel="stylesheet"
-	href="<%=path%>/include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
 
 	<div class="container" id="container">
 		<div>
-			<button onclick="evens.onOwnerClick()">owner</button><button onclick="evens.onChangerClick()">changer</button>
+			<button onclick="evens.onOwnerClick()">owner</button>
+			<button onclick="evens.onChangerClick()">changer</button>
 		</div>
 
 		<div class="exchanges"></div>
@@ -83,9 +80,7 @@
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
 	<input type="hidden" id="signature" value="${jsapi.signature}">
 
-	<script src="<%=path%>/include/iScroll/iscroll.js"></script>
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
-	<script src="<%=path%>/include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script src="<%=path%>/include/page/myExchanges.js"></script>

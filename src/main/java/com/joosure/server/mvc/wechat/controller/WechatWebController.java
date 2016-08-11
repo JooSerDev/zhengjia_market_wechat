@@ -392,6 +392,11 @@ public class WechatWebController {
 
 			int targetItemId = Integer.parseInt(targetItemIdStr);
 			ExchangePageInfo pageInfo = wechatWebService.exchangePage(targetItemId, request);
+
+			if (pageInfo.getItems().size() == 0) {
+				return "redirect:addItem?eo=" + pageInfo.getUserInfo().getEncodeOpenid();
+			}
+
 			model.addAttribute("targetItem", pageInfo.getTargetItem());
 			model.addAttribute("items", pageInfo.getItems());
 			model.addAttribute("user", pageInfo.getUserInfo());

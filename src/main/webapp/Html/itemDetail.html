@@ -9,42 +9,86 @@
 <link rel="stylesheet" href="../include/css/itemDetail.css">
 </head>
 <body>
+		<div class="container" id="container">
 
-	<div class="container">
-
-		<div class="list">
-			<div class="item">
-				<div class="title">
-					<div class="head-img">
-						<img
-							src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+			<div class="head-view">
+				<div class="head-img">
+					<img
+						src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+				</div>
+				<div class="info-view">
+					<div class="line">
+						<div class="nickname">${owner.user.nickname }</div>
+						<div class="state">123</div>
 					</div>
-					<div class="nickname">${owner.user.nickname }</div>
-					<div class="time">${item.displayTime }</div>
+					<div class="line">
+						<div class="time">${item.displayTime }</div>
+						<div class="itemType">123</div>
+					</div>
 				</div>
 			</div>
-			<div class="item">${item.description}</div>
-			<div class="item">
-				<img class="item-img"
-					src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+
+			<div class="content-view">
+				<div class="itemName">${item.name}</div>
+				<div class="itemDescription">${item.description}</div>
+				<div class="itemImg">
+					<img
+						src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+				</div>
+				<div class="wish">
+					<div class="icon"></div>
+					<div class="text">123123</div>
+				</div>
+
+				<div class="like-view" id="likeBtn">
+					<div class="icon"></div>
+					<div class="text">1234</div>
+				</div>
 			</div>
+
+			<div class="comment-view">
+				<div class="header">
+					<div class="count">
+						<div class="icon"></div>
+						<div class="text">123123</div>
+					</div>
+				</div>
+				<div class="comments">
+					<div class="comment">
+						<div class="head-img">
+							<img
+								src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+						</div>
+						<div class="info">
+							<div class="line">
+								<span>nickname</span> &nbsp;&nbsp;<span>time</span>
+							</div>
+							<div class="content">123123123123</div>
+						</div>
+					</div>
+				</div>
+				<div class="loading">加载中</div>
+			</div>
+
+			<div class="foot-bar">
+				<div class="btns">
+					<div class="col-33">
+						<div class="submitBtnView">
+							<a class="btn" href="${toExchangeUrl}">写评论</a>
+						</div>
+					</div>
+					<div class="col-66">
+						
+					</div>
+				</div>
+				<div class="ps-text">宝贝发布需后台审核通过后才可见</div>
+			</div>
+
+
 		</div>
 
-		<div class="item-nav-bar">
-			<div class="like-view">
-				<a class="btn" href="${toExchangeUrl}">点赞</a>
-			</div>
 
-			<div class="btn-view">
-				<a class="btn" href="${toExchangeUrl}">我想换</a>
-			</div>
-		</div>
-
-	</div>
-
-	<script src="../include/iScroll/iscroll.js"></script>
 	<script src="../include/jquery/jquery.min.js"></script>
-	<script src="../include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="../include/core/core.js"></script>
 
 	<script>

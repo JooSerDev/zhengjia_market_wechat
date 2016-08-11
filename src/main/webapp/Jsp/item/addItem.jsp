@@ -9,57 +9,60 @@
 <head lang="zh">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>添加宝贝</title>
-<link rel="stylesheet" href="<%=path%>/include/core/icono.min.css">
-<link rel="stylesheet" href="<%=path%>/include/iScroll/scrollbar.css">
+<title>正佳分享集市</title>
 <link rel="stylesheet" href="<%=path%>/include/css/addItem.css">
-<link rel="stylesheet"
-	href="<%=path%>/include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
+	<div class="scroller">
+		<div class="container">
 
-	<div class="container">
+			<div class="cloud"></div>
 
-		<div class="list">
-			<div class="item">
-				<div class="label selector-label">宝贝类别</div>
-				<div class="ui">
-					<select id="itemType" class="selector">
-						<c:forEach items="${itemTypes}" var="it">
-							<option value="${it.typeId }">${it.name }</option>
-						</c:forEach>
-					</select>
+			<div class="list input-view">
+				<div class="item">
+					<div class="item-name-view">
+						<input type="text" class="input-block" placeholder="宝贝名称（最多20字）"
+							id="itemName" maxlength="20">
+					</div>
+					<div class="selector-view">
+						<select id="itemType" class="selector">
+							<option value="0">宝贝分类</option>
+							<c:forEach items="${itemTypes}" var="it">
+								<option value="${it.typeId }">${it.name }</option>
+							</c:forEach>
+						</select>
+					</div>
+
 				</div>
 			</div>
-		</div>
 
-		<div class="list">
-			<div class="item">
-				<input type="text" class="input-block" placeholder="宝贝名称"
-					id="itemName">
+			<div class="list input-view">
+				<div class="item textarea">
+					<textarea rows="8" placeholder="宝贝故事（描述）" id="itemDesc"
+						maxlength="500"></textarea>
+				</div>
+				<div class="item">
+					<div class="temp-view">描述模板</div>
+				</div>
 			</div>
-			<div class="item">
-				<input type="text" class="input-block" placeholder="想要换"
-					id="wishItem">
-			</div>
-		</div>
 
-		<div class="list">
-			<div class="item">
-				<textarea rows="5" placeholder="宝贝介绍" id="itemDesc"></textarea>
-			</div>
-			<div class="item" id="imgGroup"></div>
-			<div class="item">
+			<div class="img-group-view">
 				<div class="cameraBtnView" onclick="evens.onCameraClick()"></div>
-				<div class="submitBtnView">
-					<button class="btn" onclick="evens.onSubmitClick()">发布宝贝</button>
+			</div>
+
+			<div class="list input-view">
+				<div class="item wishItem">
+					<input type="text" placeholder="期望交换的物品" id="wishItem">
 				</div>
 			</div>
-		</div>
 
-		<div class="list">
-			<div class="item divider-bottom">文章模板</div>
-			<div class="item postTemplate">衣不如新，人不如故</div>
+
+			<div class="submitBtnView">
+				<button class="btn" onclick="evens.onSubmitClick()">发布宝贝</button>
+			</div>
+
+			<div class="ps-text">宝贝发布需后台审核通过后才可见</div>
+
 		</div>
 
 	</div>
@@ -69,9 +72,7 @@
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
 	<input type="hidden" id="signature" value="${jsapi.signature}">
 
-	<script src="<%=path%>/include/iScroll/iscroll.js"></script>
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
-	<script src="<%=path%>/include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script src="<%=path%>/include/page/addItem.js"></script>

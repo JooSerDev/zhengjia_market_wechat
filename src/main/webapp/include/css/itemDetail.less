@@ -1,52 +1,229 @@
 @import 'base.less';
-@import 'iscroll.less';
-@item-nav-bar-height : 50px;
-.title {
+.container {
+    padding-bottom: 114px;
+}
+
+.head-view {
     .clearfix;
-    height: @head-img-size-list;
-    margin-bottom: 5px;
+    padding: @view-padding-height @view-padding-width;
+    height: 42px;
     >.head-img {
         .pull-left;
-        width: @head-img-size-list;
-        height: @head-img-size-list;
-        border-radius: 3px;
+        height: 42px;
+        padding: 0 10px;
         >img {
-            width: 100%;
-            border-radius: 3px;
+            width: 42px;
+            height: 42px;
+            border-radius: 21px;
         }
     }
-    >.nickname {
-        .pull-left;
-        padding-left: 5px;
-        height: @head-img-size-list;
-        line-height: @head-img-size-list;
+    >.info-view {
+        margin-left: 62px;
+        height: 42px;
+        >.line {
+            height: 20px;
+            &:first-child {
+                margin-bottom: 2px;
+            }
+            >.nickname {
+                .pull-left;
+                line-height: 20px;
+                font-size: 15px;
+                color: #fff;
+            }
+            >.time {
+                .pull-left;
+                line-height: 20px;
+                font-size: 12px;
+                color: #fff;
+            }
+            >.state,
+            .itemType {
+                .pull-right;
+                height: 20px;
+                line-height: 20px;
+                font-size: 12px;
+                padding: 0 10px;
+                border-radius: 10px;
+                color: #fff;
+            }
+            >.state {
+                background: @color-s4;
+            }
+            >.itemType {
+                background: @color-s3;
+            }
+        }
+    }
+}
+
+.content-view {
+    margin: @view-padding-height @view-padding-width;
+    padding: @view-padding-height*2 @view-padding-width;
+    background: #fff;
+    border-radius: 10px;
+    >.itemName {
         font-size: 16px;
+        margin-bottom: 20px;
     }
-    >.time {
-        .pull-right;
-        height: @head-img-size-list;
-        line-height: @head-img-size-list;
+    >.itemDescription {
         font-size: 15px;
+        margin-bottom: 10px;
     }
-}
-
-.item-img {
-    width: 100%;
-}
-
-.item-nav-bar {
-    width: 100%;
-    height: @item-nav-bar-height;
-    background-color: @color-fg;
+    >.itemImg {
+        >img {
+            width: 100%;
+        }
+        &:last-child {
+            margin-bottom: 20px;
+        }
+    }
+    >.wish {
+        margin: 10px @view-padding-width*-1;
+        padding: @view-padding-height @view-padding-width;
+        background: @color-bg;
+        .clearfix;
+        >.icon {
+            .pull-left;
+            width: 30px;
+            height: 30px;
+            background: #f00;
+        }
+        >.text {
+            height: 30px;
+            margin-left: 30px;
+            padding: 0 10px;
+            line-height: 30px;
+            font-size: 15px;
+        }
+    }
+    @text-with : 50px;
     >.like-view {
-        .col-50;
-        height: @item-nav-bar-height;
-        background: #567;
+        .clearfix;
+        margin: 0 auto;
+        height: 20px;
+        padding: 5px 15px;
+        border-radius: 15px;
+        background: @color-s3;
+        width: 20px+@text-with;
+        >.icon {
+            .pull-left;
+            width: 20px;
+            height: 20px;
+            background: #f00;
+        }
+        >.text {
+            .pull-left;
+            text-align: center;
+            width: @text-with;
+            height: 20px;
+            line-height: 20px;
+            font-size: 12px;
+            color: #fff;
+        }
     }
-    >.btn-view {
-        .col-50;
-        height: @item-nav-bar-height;
-        background: #159;
-        position: relative;
+}
+
+.comment-view {
+    background: #fff;
+    border-radius: 10px;
+    margin: @view-padding-height @view-padding-width;
+    padding: @view-padding-height 0;
+    >.header {
+        .clearfix;
+        height: 20px;
+        padding: 0 @view-padding-width;
+        padding-bottom: @view-padding-height;
+        border-bottom: 1px solid @color-bg;
+        >.count {
+            .pull-right;
+            >.icon {
+                width: 20px;
+                height: 20px;
+                .pull-left;
+                background: #f00;
+            }
+            >.text {
+                .pull-left;
+                padding: 0 5px;
+                line-height: 20px;
+                height: 20px;
+                font-size: 12px;
+            }
+        }
+    }
+    >.comments {
+        >.comment {
+            .clearfix;
+            padding-top: 10px;
+            >.head-img {
+                .pull-left;
+                padding: 0 @view-padding-width;
+                width: 30px;
+                height: 30px;
+                >img {
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 15px;
+                }
+            }
+
+            >.info{
+                margin-left: 30+2*@view-padding-width;
+
+                >.line{
+                    line-height: 30px;
+                    color: #000;
+                }
+
+                >.content{
+                    padding: 15px 0;
+                    border-bottom: 1px solid @color-bg;
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+
+    >.loading{
+        font-size: 15px;
+        color: #000;
+        text-align: center;
+        line-height: 30px;
+    }
+}
+
+.foot-bar {
+    .clearfix;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    z-index: 999;
+    height: 104px;
+    background: rgba(0, 0, 0, 0.3);
+    .btns{
+        .clearfix;
+    }
+
+    .submitBtnView {
+        margin: @view-padding-height @view-padding-width;
+        background: #fff;
+        border-radius: 8px;
+        >.btn {
+            background: 0;
+            width: 100%;
+            color: @color-s3;
+            height: auto;
+            line-height: 35px;
+            padding: 10px 0;
+        }
+    }
+    >.ps-text {
+        font-size: 12px;
+        color: #fff;
+        text-align: center;
+        margin-top: 10px;
+        margin-bottom: 5px;
     }
 }

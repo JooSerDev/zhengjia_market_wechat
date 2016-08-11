@@ -303,80 +303,12 @@ a,
 a:hover {
   color: #333;
 }
-.row {
-  clear: both;
-  position: relative;
-}
-.row:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.row.margin {
-  margin-bottom: 10px;
-}
-.col-20 {
-  width: 20%;
-}
-.col-25 {
-  width: 25%;
-}
-.col-33 {
-  width: 33.33333333%;
-}
-.col-50 {
-  width: 50%;
-}
-.col-66 {
-  width: 66.66666667%;
-}
-.col-75 {
-  width: 75%;
-}
-.col-20,
-.col-25,
-.col-33,
-.col-50,
-.col-66,
-.col-75 {
-  float: left;
-  min-height: 1px;
-}
-.col-offset-25 {
-  margin-left: 25%;
-}
-.col-offset-33 {
-  margin-left: 33.33333333%;
-}
-.col-offset-50 {
-  margin-left: 50%;
-}
-.col-offset-66 {
-  margin-left: 66.66666667%;
-}
-.col-offset-75 {
-  margin-left: 75%;
-}
 .view {
   padding: 10px 15px;
 }
 .list {
   clear: both;
   position: relative;
-}
-.list:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.list.margin {
-  margin-bottom: 10px;
 }
 .list:after {
   clear: both;
@@ -419,9 +351,28 @@ a:hover {
 .list > .item.divider-bottom {
   border-bottom: 1px solid #f1f1f1;
 }
+.scroller {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: auto;
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0050a3), to(#e4007e));
+  background: -webkit-linear-gradient(top, #0050a3 60%, #e4007e);
+}
+.scroller > .container {
+  background: 0;
+}
 .container {
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0050a3), to(#e4007e));
   background: -webkit-linear-gradient(top, #0050a3 60%, #e4007e);
+}
+.cloud {
+  background: url('../images/cloud3.png') no-repeat center center;
+  background-size: auto 36px;
+  width: 100%;
+  height: 36px;
 }
 select {
   background: #ffffff;
@@ -461,35 +412,15 @@ textarea {
   user-select: none;
   display: inline-block;
 }
-#wrapper {
-  z-index: 99;
-  left: 0;
-  width: 100%;
-  top: 0;
-  bottom: 60px;
-  position: absolute;
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0050a3), to(#e4007e));
-  background: -webkit-linear-gradient(top, #0050a3 60%, #e4007e);
+.container {
+  padding-bottom: 114px;
 }
-#wrapper.full {
-  bottom: 0;
-}
-#scroller {
-  width: 100%;
-  min-height: 100%;
-}
-.swiper-container {
-  width: 100%;
-}
-.swiper-slide img {
-  height: 100%;
-}
-.title {
+.head-view {
   clear: both;
-  height: 30px;
-  margin-bottom: 5px;
+  padding: 10px 15px;
+  height: 42px;
 }
-.title:after {
+.head-view:after {
   clear: both;
   display: block;
   visibility: hidden;
@@ -497,49 +428,257 @@ textarea {
   overflow: hidden;
   content: ".";
 }
-.title > .head-img {
+.head-view > .head-img {
+  float: left;
+  height: 42px;
+  padding: 0 10px;
+}
+.head-view > .head-img > img {
+  width: 42px;
+  height: 42px;
+  border-radius: 21px;
+}
+.head-view > .info-view {
+  margin-left: 62px;
+  height: 42px;
+}
+.head-view > .info-view > .line {
+  height: 20px;
+}
+.head-view > .info-view > .line:first-child {
+  margin-bottom: 2px;
+}
+.head-view > .info-view > .line > .nickname {
+  float: left;
+  line-height: 20px;
+  font-size: 15px;
+  color: #fff;
+}
+.head-view > .info-view > .line > .time {
+  float: left;
+  line-height: 20px;
+  font-size: 12px;
+  color: #fff;
+}
+.head-view > .info-view > .line > .state,
+.head-view > .info-view > .line .itemType {
+  float: right;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+  padding: 0 10px;
+  border-radius: 10px;
+  color: #fff;
+}
+.head-view > .info-view > .line > .state {
+  background: #e456a4;
+}
+.head-view > .info-view > .line > .itemType {
+  background: #5ea4ec;
+}
+.content-view {
+  margin: 10px 15px;
+  padding: 20px 15px;
+  background: #fff;
+  border-radius: 10px;
+}
+.content-view > .itemName {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+.content-view > .itemDescription {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+.content-view > .itemImg > img {
+  width: 100%;
+}
+.content-view > .itemImg:last-child {
+  margin-bottom: 20px;
+}
+.content-view > .wish {
+  margin: 10px -15px;
+  padding: 10px 15px;
+  background: #f1f1f1;
+  clear: both;
+}
+.content-view > .wish:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.content-view > .wish > .icon {
   float: left;
   width: 30px;
   height: 30px;
-  border-radius: 3px;
+  background: #f00;
 }
-.title > .head-img > img {
-  width: 100%;
-  border-radius: 3px;
-}
-.title > .nickname {
-  float: left;
-  padding-left: 5px;
+.content-view > .wish > .text {
   height: 30px;
-  line-height: 30px;
-  font-size: 16px;
-}
-.title > .time {
-  float: right;
-  height: 30px;
+  margin-left: 30px;
+  padding: 0 10px;
   line-height: 30px;
   font-size: 15px;
 }
-.item-img {
-  width: 100%;
+.content-view > .like-view {
+  clear: both;
+  margin: 0 auto;
+  height: 20px;
+  padding: 5px 15px;
+  border-radius: 15px;
+  background: #5ea4ec;
+  width: 70px;
 }
-.item-nav-bar {
-  width: 100%;
-  height: 50px;
-  background-color: #ffffff;
+.content-view > .like-view:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
 }
-.item-nav-bar > .like-view {
-  width: 50%;
+.content-view > .like-view > .icon {
   float: left;
-  min-height: 1px;
-  height: 50px;
-  background: #567;
+  width: 20px;
+  height: 20px;
+  background: #f00;
 }
-.item-nav-bar > .btn-view {
-  width: 50%;
+.content-view > .like-view > .text {
   float: left;
-  min-height: 1px;
-  height: 50px;
-  background: #159;
-  position: relative;
+  text-align: center;
+  width: 50px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 12px;
+  color: #fff;
+}
+.comment-view {
+  background: #fff;
+  border-radius: 10px;
+  margin: 10px 15px;
+  padding: 10px 0;
+}
+.comment-view > .header {
+  clear: both;
+  height: 20px;
+  padding: 0 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f1f1f1;
+}
+.comment-view > .header:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.comment-view > .header > .count {
+  float: right;
+}
+.comment-view > .header > .count > .icon {
+  width: 20px;
+  height: 20px;
+  float: left;
+  background: #f00;
+}
+.comment-view > .header > .count > .text {
+  float: left;
+  padding: 0 5px;
+  line-height: 20px;
+  height: 20px;
+  font-size: 12px;
+}
+.comment-view > .comments > .comment {
+  clear: both;
+  padding-top: 10px;
+}
+.comment-view > .comments > .comment:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.comment-view > .comments > .comment > .head-img {
+  float: left;
+  padding: 0 15px;
+  width: 30px;
+  height: 30px;
+}
+.comment-view > .comments > .comment > .head-img > img {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+}
+.comment-view > .comments > .comment > .info {
+  margin-left: 60px;
+}
+.comment-view > .comments > .comment > .info > .line {
+  line-height: 30px;
+  color: #000;
+}
+.comment-view > .comments > .comment > .info > .content {
+  padding: 15px 0;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 15px;
+}
+.comment-view > .loading {
+  font-size: 15px;
+  color: #000;
+  text-align: center;
+  line-height: 30px;
+}
+.foot-bar {
+  clear: both;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+  height: 104px;
+  background: rgba(0, 0, 0, 0.3);
+}
+.foot-bar:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.foot-bar .btns {
+  clear: both;
+}
+.foot-bar .btns:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.foot-bar .submitBtnView {
+  margin: 10px 15px;
+  background: #fff;
+  border-radius: 8px;
+}
+.foot-bar .submitBtnView > .btn {
+  background: 0;
+  width: 100%;
+  color: #5ea4ec;
+  height: auto;
+  line-height: 35px;
+  padding: 10px 0;
+}
+.foot-bar > .ps-text {
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 5px;
 }

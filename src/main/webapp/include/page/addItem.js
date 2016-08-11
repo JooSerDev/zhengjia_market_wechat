@@ -58,6 +58,11 @@ $(function() {
 		var itemType = $("#itemType").val();
 		var wishItem = $("#wishItem").val();
 		var eo = Core.getQueryString("eo");
+		
+		if(itemType == "0"){
+			alert("未选择分类");
+			return;
+		}
 
 		if (!eo || eo == null || eo == "") {
 			alert("未授权使用者");
@@ -157,7 +162,7 @@ var uploadMediaIds = function() {
 							imgUrls.push(url);
 							var html = '<div class="item-img"><img src="' + url
 									+ '"></div>';
-							$("#imgGroup").append(html);
+							$(".cameraBtnView").before(html);
 						}
 					}
 				} else {

@@ -4,72 +4,70 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <title>main</title>
-<link rel="stylesheet" href="../include/core/icono.min.css">
-<link rel="stylesheet" href="../include/iScroll/scrollbar.css">
 <link rel="stylesheet" href="../include/css/addItem.css">
-<link rel="stylesheet" href="../include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
+	<div class="scroller">
+		<div class="container">
 
-	<div class="container">
+			<div class="cloud"></div>
 
-		<div class="list">
-			<div class="item">
-				<div class="label selector-label">宝贝类别</div>
-				<div class="ui">
-					<select id="itemType" class="selector">
-						<option value="1">服饰</option>
-					</select>
+			<div class="list input-view">
+				<div class="item">
+					<div class="item-name-view">
+						<input type="text" class="input-block" placeholder="宝贝名称（最多20字）"
+							id="itemName" maxlength="20">
+					</div>
+					<div class="selector-view">
+						<select id="itemType" class="selector">
+							<option value="1">宝贝分类</option>
+						</select>
+					</div>
+
 				</div>
 			</div>
-		</div>
 
-		<div class="list">
-			<div class="item">
-				<input type="text" class="input-block" placeholder="宝贝名称"
-					id="itemName">
+			<div class="list input-view">
+				<div class="item textarea">
+					<textarea rows="8" placeholder="宝贝故事（描述）" id="itemDesc"
+						maxlength="500"></textarea>
+				</div>
+				<div class="item">
+					<div class="temp-view">描述模板</div>
+				</div>
 			</div>
-			<div class="item">
-				<input type="text" class="input-block" placeholder="想要换"
-					id="wishItem">
-			</div>
-		</div>
 
-		<div class="list">
-			<div class="item">
-				<textarea rows="5" placeholder="宝贝介绍" id="itemDesc"></textarea>
-			</div>
-			<div class="item" id="imgGroup">
+			<div class="img-group-view">
 				<div class="item-img">
 					<img
 						src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
 				</div>
 
-
-			</div>
-			<div class="item">
 				<div class="cameraBtnView" onclick="evens.onCameraClick()"></div>
-				<div class="submitBtnView">
-					<button class="btn" onclick="evens.onSubmitClick()">发布宝贝</button>
+			</div>
+
+			<div class="list input-view">
+				<div class="item wishItem">
+					<input type="text" placeholder="期望交换的物品" id="wishItem">
 				</div>
 			</div>
-		</div>
 
-		<div class="list">
-			<div class="item divider-bottom">文章模板</div>
-			<div class="item postTemplate">衣不如新，人不如故</div>
+
+			<div class="submitBtnView">
+				<button class="btn" onclick="evens.onSubmitClick()">发布宝贝</button>
+			</div>
+			
+			<div class="ps-text">宝贝发布需后台审核通过后才可见</div>
+			
 		</div>
 
 	</div>
 
-	<script src="../include/iScroll/iscroll.js"></script>
 	<script src="../include/jquery/jquery.min.js"></script>
-	<script src="../include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="../include/core/core.js"></script>
 
 	<script>
 		$(function() {
-			Core.mySwiper.loadSwiper();
 		});
 	</script>
 

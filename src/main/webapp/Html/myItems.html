@@ -4,103 +4,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <title>my items</title>
-<link rel="stylesheet" href="../include/core/myLess.css">
+<link rel="stylesheet" href="../include/css/myItems.css">
 </head>
 <body>
 
-	<!-- scroller start -->
-	<div class="full" id="wrapper">
-		<div class="scroller" id="scroller">
-			<div class="row search-bar">
-				<div class="search-input-view">
-					<input type="text" id="searchInput">
-				</div>
-				<div class="search-btn-view">
-					<div class="text">全部分类</div>
-				</div>
-			</div>
+	<div class="container" id="container">
+		<div class="cloud"></div>
 
-			<div class="row margin">
-				<div class="item-list">
-					
+		<div class="items">
+			<div class="item">
+				<div class="time">{createtime}</div>
+				<div class="info">
+					<div class="desc">{desc}</div>
+					<div class="img">
+						<img
+							src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+					</div>
 				</div>
-			</div>
-
-			<div class="row" id="pull_up_bar">
-				<div class="pull-up">
-					<div class="rect1"></div>
-					<div class="rect2"></div>
-					<div class="rect3"></div>
-					<div class="rect4"></div>
-					<div class="rect5"></div>
+				<div class="state-view">
+					<div class="state">{state}</div>
+					<div class="line"></div>
 				</div>
-				<div class="pull-up-text">加载更多</div>
 			</div>
 
 		</div>
+
+		<div class="row" id="pull_up_bar">
+			<div class="pull-up">
+				<div class="rect1"></div>
+				<div class="rect2"></div>
+				<div class="rect3"></div>
+				<div class="rect4"></div>
+				<div class="rect5"></div>
+			</div>
+			<div class="pull-up-text">加载更多</div>
+		</div>
+
+
+		<div class="add-item-view">
+			<div class="addItem" id="addItem">添加宝贝</div>
+		</div>
+
 	</div>
-	<!-- scroller end -->
+
 
 	<template id="item_template">
 	<div class="item">
-		<div class="item-body">
-			<div class="item-pic">
+		<div class="time">{createtime}</div>
+		<div class="info">
+			<div class="desc">{desc}</div>
+			<div class="img">
 				<img src="{imgUrl}">
 			</div>
-			<div class="item-name">{name}</div>
-			<div class="item-desc">{desc}</div>
-			<div class="item-createtime">{createtime}</div>
+		</div>
+		<div class="state-view">
+			<div class="state">{state}</div>
+			<div class="line"></div>
 		</div>
 	</div>
 	</template>
 
-	<script src="../include/iScroll/iscroll.js"></script>
 	<script src="../include/jquery/jquery.min.js"></script>
-	<script src="../include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="../include/core/core.js"></script>
 
 	<script>
-		var testData = {
-			imgUrl : "http://www.joosure.com:80/wechatTest/item_img_center_square/20166/21/fLvylh5ZXYC8jS4khLEn8c7yLxMJ0Nmh.jpg",
-			name : "item name",
-			desc : "item desc single line",
-			createtime : "2016-07-22"
-		}
-
 		var evens = {};
 
 		$(function() {
-			load();
+			Core.myScroll.load();
 		});
-
-		var load = function() {
-			if (Core.iScroll.isLoaded) {
-				loadTestData();
-			} else {
-				setTimeout(load, 300);
-			}
-		}
-
-		var loadTestData = function() {
-
-			var html = $("#item_template").html();
-			for (var i = 0; i < 0; i++) {
-				var temp = new String(html);
-				temp = Core.HtmlReplace(temp, testData);
-				$(".item-list").append(temp);
-
-				var scrollerH = document.getElementById("scroller").offsetHeight;
-
-				if (Core.iScroll.screenHeight < scrollerH) {
-					Core.iScroll.pullUpBar.style.display = "block";
-				}
-
-			}
-			setTimeout(function() {
-				Core.iScroll.myScroll.refresh();
-			}, 1000);
-
-		}
 	</script>
 </body>
 </html>

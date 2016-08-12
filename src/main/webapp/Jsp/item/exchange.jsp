@@ -9,16 +9,22 @@
 <head lang="zh">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>申请交换</title>
-<link rel="stylesheet" href="<%=path%>/include/core/icono.min.css">
-<link rel="stylesheet" href="<%=path%>/include/iScroll/scrollbar.css">
+<title>正佳分享集市</title>
 <link rel="stylesheet" href="<%=path%>/include/core/myLess.css">
-<link rel="stylesheet"
-	href="<%=path%>/include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
 
-	<div class="container">
+	<div class="container" id="container">
+		<div class="cloud"></div>
+
+		<div class="target-item-view"></div>
+		<div class="divider-view"></div>
+		<div class="items">
+			<div class="item"></div>
+		</div>
+		<div class="btn-view">
+			<button class="btn btn-block" onclick="evens.onSubmitClick()">提交申请</button>
+		</div>
 
 		<div class="row margin">
 			<div class="itemType">
@@ -33,9 +39,6 @@
 			</div>
 		</div>
 
-		<div class="row margin">
-			<button class="btn btn-block" onclick="evens.onSubmitClick()">提交申请</button>
-		</div>
 	</div>
 
 	<input type="hidden" id="targetItemId" value="${targetItem.itemId}">
@@ -46,9 +49,7 @@
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
 	<input type="hidden" id="signature" value="${jsapi.signature}">
 
-	<script src="<%=path%>/include/iScroll/iscroll.js"></script>
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
-	<script src="<%=path%>/include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script>

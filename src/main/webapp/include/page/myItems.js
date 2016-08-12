@@ -1,8 +1,3 @@
-document.addEventListener('touchmove', function(e) {
-	e.preventDefault();
-}, false);
-document.addEventListener('DOMContentLoaded', Core.iScroll.loadIScroll, false);
-
 var jsapiparam = {};
 jsapiparam.appid = document.getElementById("appid").value;
 jsapiparam.nonceStr = document.getElementById("nonceStr").value;
@@ -17,8 +12,7 @@ wx.config({
 	timestamp : jsapiparam.timeStamp, // 必填，生成签名的时间戳
 	nonceStr : jsapiparam.nonceStr, // 必填，生成签名的随机串
 	signature : jsapiparam.signature,// 必填，签名，见附录1
-	jsApiList : [ "hideOptionMenu", "chooseImage", "uploadImage" ]
-// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+	jsApiList : [ "hideOptionMenu" ]
 });
 
 wx.ready(function() {
@@ -36,92 +30,80 @@ var page = {
 	nextPage : true
 }
 
-Core.iScroll.pullUpAction = function() {
-	if (page.nextPage) {
-
-	}
-}
-
-Core.iScroll.onLoaded = function() {
-	var isNextPage = document.getElementById("nextPage").value;
-	if (isNextPage == "1") {
-		page.nextPage = true;
-		var screenHeight = document.getElementById("wrapper").offsetHeight;
-		var scrollerH = document.getElementById("scroller").offsetHeight;
-
-		if (screenHeight < scrollerH && page.nextPage) {
-			Core.iScroll.pullUpBar.style.display = "block";
-			Core.iScroll.isNextPage = true;
-		}
-	} else {
-		Core.iScroll.pullUpBar.style.display = "none";
-		Core.iScroll.isNextPage = false;
-		page.nextPage = false;
-	}
-}
-
 $(function() {
+	loadNextPage();
+	Core.myScroll.loadingNextAction = loadNextPage;
+	Core.myScroll.load();
 
+	$("#addItem").on("click", function() {
+		var eo = Core.getQueryString("eo");
+		location.href = "addItem?eo=" + eo;
+	});
 });
 
-var Item = function(imgUrl, name, desc, createtime) {
+var Item = function(imgUrl, state, desc, createtime) {
+	var stateStr = state == "yes" ? "可交换" : "未审核";
 	var item = {
 		imgUrl : imgUrl,
-		name : name,
+		state : stateStr,
 		desc : desc,
 		createtime : createtime
 	};
 	return item;
 }
 
-var loadNextPage = function() {
-	if (Core.iScroll.isLoaded) {
-		var eo = Core.getQueryString("eo");
-		var pageNum = page.page + 1;
+var buildDom = function(items) {
+	var html = $("#item_template").html();
+	for (var i = 0; i < items.length; i++) {
+		var item = new Item(items[i].firstItemCenterImgUrl,
+				items[i].approvalStatus, items[i].description,
+				items[i].displayTime);
+		var temp = new String(html);
+		temp = Core.HtmlReplace(temp, item);
+		$(".items").append(temp);
+	}
+}
 
-		$
-				.ajax({
-					url : "loadMyItems",
-					data : {
-						eo : eo,
-						page : pageNum
-					},
-					type : "POST",
-					success : function(data) {
-						if (data.errCode == "0") {
-							var items = data.data.items;
-							if (items.length > 0) {
-								page.nextPage = data.data.nextPage == "1" ? true
-										: false;
-
-								var html = $("#item_template").html();
-								for (var i = 0; i < items.length; i++) {
-									var item = new Item(
-											items[i].firstItemCenterImgUrl,
-											items[i].name,
-											items[i].description,
-											items[i].displayTime);
-									var temp = new String(html);
-									temp = Core.HtmlReplace(temp, item);
-									$(".item-list").append(temp);
-
-									var scrollerH = document
-											.getElementById("scroller").offsetHeight;
-
-									if (Core.iScroll.screenHeight < scrollerH
-											&& page.nextPage) {
-										Core.iScroll.pullUpBar.style.display = "block";
-										Core.iScroll.isNextPage = true;
-									}
-								}
-								Core.iScroll.myScroll.refresh();
-							}
-						} else {
-							alert("load fail");
-						}
-					}
-				});
+var refreshLoadingBar = function() {
+	if (page.nextPage) {
+		$("#pull_up_bar").show();
+		$(".pull-up-text").html("加载中");
 	} else {
-		setTimeout(loadNextPage, 100);
+		$("#pull_up_bar").hide();
+		$(".pull-up-text").html("没有更多了");
+	}
+}
+
+var loadNextPage = function() {
+	var eo = Core.getQueryString("eo");
+	var pageNum = page.page;
+	if (page.nextPage) {
+		$.ajax({
+			url : "loadMyItems",
+			data : {
+				eo : eo,
+				page : pageNum
+			},
+			type : "POST",
+			success : function(data) {
+				Core.myScroll.isLoadingNextPage = false;
+				if (data.errCode == "0") {
+					page.page = page.page + 1;
+					var next = data.data.nextPage;
+					if (next == "1") {
+						page.nextPage = true;
+					} else {
+						page.nextPage = false;
+					}
+					var items = data.data.myItems;
+					if (items.length > 0) {
+						buildDom(items);
+						refreshLoadingBar();
+					}
+				} else {
+					alert("load fail");
+				}
+			}
+		});
 	}
 }

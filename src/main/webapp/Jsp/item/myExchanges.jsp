@@ -15,10 +15,11 @@
 <body>
 
 	<div class="container" id="container">
-		<div>
-			<button onclick="evens.onOwnerClick()">owner</button>
-			<button onclick="evens.onChangerClick()">changer</button>
+		<div class="nav-bar">
+			<button onclick="evens.onOwnerClick()" id="ownerBtn" class="active">我被换的</button>
+			<button onclick="evens.onChangerClick()" id="changerBtn">我想换的</button>
 		</div>
+		<div class="cloud"></div>
 
 		<div class="exchanges"></div>
 

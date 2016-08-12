@@ -36,21 +36,28 @@ $(function() {
 	Core.myScroll.load();
 	Core.myScroll.loadingNextAction();
 
-	evens.onOwnerClick = function() {
+	$("#ownerBtn").on("click", function() {
+		$("#ownerBtn").addClass("active");
+		$("#changerBtn").removeClass("active");
 		$(".exchanges").empty();
 		isOwner = 1;
 		page.page = 1;
 		page.nextPage = true;
+		refreshLoadingBar();
 		Core.myScroll.loadingNextAction();
-	}
+	});
 
-	evens.onChangerClick = function() {
+	$("#changerBtn").on("click", function() {
+		$("#changerBtn").addClass("active");
+		$("#ownerBtn").removeClass("active");
 		$(".exchanges").empty();
 		isOwner = 0;
 		page.page = 1;
 		page.nextPage = true;
+		refreshLoadingBar();
 		Core.myScroll.loadingNextAction();
-	}
+	});
+
 });
 
 var Exchange = function(exchangeInfo) {
@@ -107,23 +114,25 @@ var refreshLoadingBar = function() {
 var loadNextPage = function() {
 	var eo = Core.getQueryString("eo");
 	var pageNum = page.page;
-
-	$.ajax({
-		url : "loadMyExchanges",
-		data : {
-			eo : eo,
-			page : pageNum,
-			isOwner : isOwner
-		},
-		type : "POST",
-		success : function(data) {
-			if (data.errCode == "0") {
-				page.page = page.page + 1;
-				buildDom(data.data);
-				refreshLoadingBar();
-			} else {
-				alert("load fail");
+	if (page.nextPage) {
+		$.ajax({
+			url : "loadMyExchanges",
+			data : {
+				eo : eo,
+				page : pageNum,
+				isOwner : isOwner
+			},
+			type : "POST",
+			success : function(data) {
+				Core.myScroll.isLoadingNextPage = false;
+				if (data.errCode == "0") {
+					page.page = page.page + 1;
+					buildDom(data.data);
+					refreshLoadingBar();
+				} else {
+					alert("load fail");
+				}
 			}
-		}
-	});
+		});
+	}
 }

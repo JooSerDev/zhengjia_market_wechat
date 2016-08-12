@@ -412,64 +412,26 @@ textarea {
   user-select: none;
   display: inline-block;
 }
-.nav-bar {
-  width: 100%;
-  height: 50px;
+.items {
+  padding: 0 15px;
+  clear: both;
+}
+.items:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.items > .item {
   background: #fff;
-  text-align: center;
-}
-.nav-bar > #ownerBtn,
-.nav-bar #changerBtn {
-  background: #5ea4ec;
-  border: 0;
-  border-radius: 3px;
-  font-size: 15px;
-  line-height: 20px;
-  padding: 5px 15px;
-  color: #fff;
-  width: 95px;
-  margin-top: 10px;
-}
-.nav-bar > #ownerBtn.active,
-.nav-bar #changerBtn.active {
-  background: #e456a4;
-}
-.exchanges {
-  clear: both;
-  position: relative;
-  padding: 20px 0;
-  /* 交换信息 */
-}
-.exchanges:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.exchanges.margin {
-  margin-bottom: 10px;
-}
-.exchanges > .exchange {
+  border-radius: 8px;
   padding: 10px 15px;
-  background: #ffffff;
-  margin-top: 20px;
-  margin-right: 10px;
-  margin-left: 10px;
-  border-radius: 5px;
-  /*我的物品*/
-  /*ta的物品*/
-}
-.exchanges > .exchange:first-child {
-  margin-top: 0;
-}
-.exchanges > .exchange > .my-item-bar {
+  margin: 10px 0;
   clear: both;
-  position: relative;
-  min-height: 60px;
 }
-.exchanges > .exchange > .my-item-bar:after {
+.items > .item:after {
   clear: both;
   display: block;
   visibility: hidden;
@@ -477,118 +439,38 @@ textarea {
   overflow: hidden;
   content: ".";
 }
-.exchanges > .exchange > .my-item-bar > .desc {
+.items > .item > .time {
+  color: #000;
   font-size: 12px;
-  color: #000000;
   line-height: 20px;
-  margin-right: 60px;
 }
-.exchanges > .exchange > .my-item-bar > .img {
-  width: 60px;
-  height: 60px;
+.items > .item > .info {
+  padding: 5px 0;
+  height: 90px;
+  position: relative;
+}
+.items > .item > .info > .desc {
+  line-height: 30px;
+  font-size: 15px;
+  margin-right: 100px;
+  max-height: 90px;
+}
+.items > .item > .info > .img {
   position: absolute;
+  top: 5px;
   right: 0;
-  top: 0;
+  height: 90px;
+  width: 90px;
 }
-.exchanges > .exchange > .my-item-bar > .img > img {
-  width: 60px;
-  height: 60px;
-  border-radius: 3px;
+.items > .item > .info > .img > img {
+  width: 90px;
+  height: 90px;
 }
-.exchanges > .exchange > .target-item-bar {
-  margin-right: -15px;
-  margin-left: -15px;
-  position: relative;
-  min-height: 135px;
-  margin-top: 15px;
-}
-.exchanges > .exchange > .target-item-bar > .exchange-icon {
-  position: absolute;
-  left: 15px;
-  top: -15px;
-  background: #f00;
-  width: 30px;
-  height: 30px;
-}
-.exchanges > .exchange > .target-item-bar > .desc {
-  background: #f1f1f1;
-  padding-top: 30px;
-  padding-bottom: 20px;
-  padding-left: 120px;
-  padding-right: 15px;
-  font-size: 14px;
-  height: 40px;
-}
-.exchanges > .exchange > .target-item-bar > .desc > .text {
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  line-height: 20px;
-  height: 40px;
-}
-.exchanges > .exchange > .target-item-bar > .img {
-  width: 88px;
-  height: 88px;
-  border: 1px solid #ffffff;
-  border-radius: 5px;
-  position: absolute;
-  left: 15px;
-  top: 30px;
-}
-.exchanges > .exchange > .target-item-bar > .img > img {
-  width: 88px;
-  height: 88px;
-  border-radius: 5px;
-}
-.exchanges > .exchange > .target-item-bar > .target-user-view {
-  clear: both;
-  padding-left: 120px;
-  padding-right: 15px;
-  padding-top: 6px;
-  height: 30px;
-}
-.exchanges > .exchange > .target-item-bar > .target-user-view:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.exchanges > .exchange > .target-item-bar > .target-user-view > .img {
-  float: left;
-  height: 24px;
-  width: 24px;
-}
-.exchanges > .exchange > .target-item-bar > .target-user-view > .img > img {
-  height: 24px;
-  width: 24px;
-  border-radius: 12px;
-}
-.exchanges > .exchange > .target-item-bar > .target-user-view > .nickname {
-  float: left;
-  padding-left: 5px;
-  line-height: 24px;
-  font-size: 12px;
-}
-.exchanges > .exchange > .foot-bar {
-  height: 30px;
-  clear: both;
-}
-.exchanges > .exchange > .foot-bar:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.exchanges > .exchange > .foot-bar > .state-view {
+.items > .item > .state-view {
   float: left;
   height: 30px;
 }
-.exchanges > .exchange > .foot-bar > .state-view > .state {
+.items > .item > .state-view > .state {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   height: 30px;
@@ -599,24 +481,30 @@ textarea {
   font-size: 14px;
   line-height: 30px;
 }
-.exchanges > .exchange > .foot-bar > .state-view > .line {
+.items > .item > .state-view > .line {
   background: #e4007e;
   height: 4px;
   border-radius: 2px;
   margin-top: -4px;
 }
-.exchanges > .exchange > .foot-bar > .time-view {
-  float: right;
-  height: 30px;
+.bottom {
+  height: 58px;
+  width: 100%;
 }
-.exchanges > .exchange > .foot-bar > .time-view > .time {
-  float: left;
-  font-size: 12px;
-  line-height: 30px;
+.add-item-view {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  z-index: 999;
+  background: rgba(0, 0, 0, 0.3);
 }
-.exchanges > .exchange > .foot-bar > .time-view > .icon {
-  float: left;
-  height: 30px;
-  background: #f00;
-  width: 20px;
+.add-item-view .addItem {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin: 10px 15px;
+  text-align: center;
+  color: #5ea4ec;
+  font-size: 15px;
 }

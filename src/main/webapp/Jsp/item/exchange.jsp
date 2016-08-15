@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <title>正佳分享集市</title>
-<link rel="stylesheet" href="<%=path%>/include/core/myLess.css">
+<link rel="stylesheet" href="<%=path%>/include/css/exchange.css">
 </head>
 <body>
 
@@ -18,25 +18,27 @@
 		<div class="cloud"></div>
 
 		<div class="target-item-view"></div>
-		<div class="divider-view"></div>
+		<div class="divider-view">请选择交换物品</div>
 		<div class="items">
-			<div class="item"></div>
+			<c:forEach items="${items}" var="item">
+				<div class="item" id="item_${item.itemId }"
+					onclick="evens.onItemClick(${item.itemId })">
+					<div class="time">${item.displayTime }</div>
+					<div class="info">
+						<div class="desc">${item.description}</div>
+						<div class="img">
+							<img src="${item.firstItemCenterImgUrl }">
+						</div>
+					</div>
+					<div class="radio-view">
+						<input type="radio" id="radio_${item.itemId }" name="radio-1-set"
+							class="regular-radio" /><label for="radio_${item.itemId }">
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 		<div class="btn-view">
-			<button class="btn btn-block" onclick="evens.onSubmitClick()">提交申请</button>
-		</div>
-
-		<div class="row margin">
-			<div class="itemType">
-				<div class="label">我的宝贝</div>
-				<div class="selecter">
-					<select id="myItemId">
-						<c:forEach items="${items}" var="item">
-							<option value="${item.itemId }">${item.name }</option>
-						</c:forEach>
-					</select>
-				</div>
-			</div>
+			<button onclick="evens.onSubmitClick()">提交申请</button>
 		</div>
 
 	</div>
@@ -62,13 +64,12 @@
 		jsapiparam.isWxJsApiReady = false;
 
 		wx.config({
-			debug : false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-			appId : jsapiparam.appid, // 必填，公众号的唯一标识
-			timestamp : jsapiparam.timeStamp, // 必填，生成签名的时间戳
-			nonceStr : jsapiparam.nonceStr, // 必填，生成签名的随机串
-			signature : jsapiparam.signature,// 必填，签名，见附录1
-			jsApiList : [ "hideOptionMenu", "chooseImage", "uploadImage" ]
-		// 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+			debug : false, 
+			appId : jsapiparam.appid, 
+			timestamp : jsapiparam.timeStamp, 
+			nonceStr : jsapiparam.nonceStr, 
+			signature : jsapiparam.signature,
+			jsApiList : [ "hideOptionMenu"]
 		});
 
 		wx.ready(function() {
@@ -81,14 +82,22 @@
 		});
 
 		var evens = {};
+		var myItemId = 0;
 
 		$(function() {
+			Core.myScroll.load();
+			
+			evens.onItemClick = function(itemId){
+				myItemId = itemId;
+				$(".regular-radio").attr("checked",false);
+				$(".regular-radio").removeClass("checked");
+				$("#radio_" + itemId).attr("checked",true);
+				$("#radio_" + itemId).addClass("checked");
+			}
+
 			evens.onSubmitClick = function() {
 				var eo = $("#eo").val();
-				var myItemId = $("#myItemId").val();
 				var targetItemId = $("#targetItemId").val();
-
-				alert(myItemId + " --- " + targetItemId);
 
 				$.ajax({
 					url : "exchange",

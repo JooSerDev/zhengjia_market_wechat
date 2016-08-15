@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>main</title>
+<link rel="stylesheet" href="../include/css/exchange.css">
+</head>
+<body>
+
+	<div class="container" id="container">
+		<div class="cloud"></div>
+
+		<div class="target-item-view"></div>
+		<div class="divider-view">请选择交换物品</div>
+		<div class="items">
+			<div class="item" onclick="evens.onItemClick(1)">
+				<div class="time">${item.displayTime }</div>
+				<div class="info">
+					<div class="desc">${item.description}</div>
+					<div class="img">
+						<img src="${item.firstItemCenterImgUrl }">
+					</div>
+				</div>
+				<div class="radio-view">
+					<input type="radio" id="radio_1" name="radio-1-set"
+						class="regular-radio" /><label for="radio-1-1">
+				</div>
+
+			</div>
+
+			<div class="item" onclick="evens.onItemClick(2)">
+				<div class="time">${item.displayTime }</div>
+				<div class="info">
+					<div class="desc">${item.description}</div>
+					<div class="img">
+						<img src="${item.firstItemCenterImgUrl }">
+					</div>
+				</div>
+				<div class="radio-view">
+					<input type="radio" id="radio_2" name="radio-1-set"
+						class="regular-radio" /><label for="radio-1-2">
+				</div>
+
+			</div>
+		</div>
+		<div class="btn-view">
+			<button onclick="evens.onSubmitClick()">提交申请</button>
+		</div>
+
+	</div>
+
+	<script src="../include/jquery/jquery.min.js"></script>
+	<script src="../include/core/core.js"></script>
+
+	<script>
+		var evens = {};
+
+		$(function() {
+			Core.myScroll.load();
+
+			evens.onItemClick = function(itemId) {
+				$(".regular-radio").attr("checked",false);
+				$(".regular-radio").removeClass("checked");
+				$("#radio_" + itemId).attr("checked",true);
+				$("#radio_" + itemId).addClass("checked");
+			}
+		});
+	</script>
+
+</body>
+</html>

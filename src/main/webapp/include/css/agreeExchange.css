@@ -497,6 +497,14 @@ textarea {
   height: 30px;
   padding: 0 10px;
 }
+.other-item-view > .changer-view > .line > .user > label {
+  line-height: 30px;
+  font-size: 15px;
+}
+.other-item-view > .changer-view > .line > .user > img {
+  width: 30px;
+  height: 30px;
+}
 .contact-view {
   background: rgba(255, 255, 255, 0.3);
   margin: 10px;

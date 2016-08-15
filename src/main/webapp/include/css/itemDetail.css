@@ -364,6 +364,9 @@ a:hover {
 .scroller > .container {
   background: 0;
 }
+.scroller > .container.withTableBar {
+  padding-bottom: 60px;
+}
 .container {
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0050a3), to(#e4007e));
   background: -webkit-linear-gradient(top, #0050a3 60%, #e4007e);

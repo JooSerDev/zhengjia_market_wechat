@@ -11,7 +11,21 @@
 	<div class="container" id="container">
 		<div class="cloud"></div>
 
-		<div class="target-item-view"></div>
+		<div class="target-item-view">
+			<div class="info">
+				<div class="headimg">
+					<img class="target-head-img" src="${targetUser.headImgUrl }">
+				</div>
+				<div class="text">${targetItem.description }</div>
+			</div>
+			<div class="wish">
+				<div class="icon"></div>
+				<div class="text">${targetItem.wishItem}</div>
+			</div>
+			<div class="img">
+				<img src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+			</div>
+		</div>
 		<div class="divider-view">请选择交换物品</div>
 		<div class="items">
 			<div class="item" onclick="evens.onItemClick(1)">
@@ -60,9 +74,9 @@
 			Core.myScroll.load();
 
 			evens.onItemClick = function(itemId) {
-				$(".regular-radio").attr("checked",false);
+				$(".regular-radio").attr("checked", false);
 				$(".regular-radio").removeClass("checked");
-				$("#radio_" + itemId).attr("checked",true);
+				$("#radio_" + itemId).attr("checked", true);
 				$("#radio_" + itemId).addClass("checked");
 			}
 		});

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>正佳分享集市</title>
+<link rel="stylesheet" href="../include/css/agreeExchange.css">
+</head>
+<body>
+	<div class="container" id="container">
+		<div class="cloud"></div>
+
+		<div class="my-item-view">
+			<div class="text">${userItem.description}</div>
+			<div class="img">
+				<img
+					src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+			</div>
+		</div>
+		<div class="other-item-view">
+			<div class="change-icon"></div>
+			<div class="img">
+				<img
+					src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+			</div>
+			<div class="text">${otherItem.description}</div>
+			<div class="changer-view">
+				<div class="line"></div>
+				<div class="line"></div>
+			</div>
+		</div>
+		<div class="contact-view"></div>
+		<div class="btn-view"></div>
+
+	</div>
+
+
+	<script src="../include/jquery/jquery.min.js"></script>
+	<script src="../include/core/core.js"></script>
+
+	<script>
+		$(function() {
+			Core.resizeContainer();
+
+			$(window).resize(function() {
+				Core.resizeContainer();
+			});
+		});
+	</script>
+
+</body>
+</html>

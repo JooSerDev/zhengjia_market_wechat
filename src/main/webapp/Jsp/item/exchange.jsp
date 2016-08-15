@@ -17,7 +17,21 @@
 	<div class="container" id="container">
 		<div class="cloud"></div>
 
-		<div class="target-item-view"></div>
+		<div class="target-item-view">
+			<div class="info">
+				<div class="headimg">
+					<img class="target-head-img" src="${targetUser.headImgUrl }">
+				</div>
+				<div class="text">${targetItem.description }</div>
+			</div>
+			<div class="wish">
+				<div class="icon"></div>
+				<div class="text">${targetItem.wishItem}</div>
+			</div>
+			<div class="img">
+				<img src="${targetItem.firstItemCenterImgUrl }">
+			</div>
+		</div>
 		<div class="divider-view">请选择交换物品</div>
 		<div class="items">
 			<c:forEach items="${items}" var="item">
@@ -69,7 +83,7 @@
 			timestamp : jsapiparam.timeStamp, 
 			nonceStr : jsapiparam.nonceStr, 
 			signature : jsapiparam.signature,
-			jsApiList : [ "hideOptionMenu"]
+			jsApiList : [ "hideOptionMenu","showOptionMenu"]
 		});
 
 		wx.ready(function() {

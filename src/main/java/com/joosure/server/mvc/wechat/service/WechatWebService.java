@@ -441,7 +441,8 @@ public class WechatWebService {
 		UserInfo ownerInfo = userService.getUserInfoById(exchange.getOwnerId());
 		UserInfo changerInfo = userService.getUserInfoById(exchange.getChangerId());
 
-		if (ownerItem != null && changerItem != null && ownerInfo != null && changerInfo != null) {
+		if (ownerItem != null && changerItem != null && ownerInfo != null && changerInfo != null
+				&& ownerInfo.getUser().getUserId() == userInfo.getUser().getUserId()) {
 			ExchangeInfo info = new ExchangeInfo();
 			info.setExchange(exchange);
 			info.setChangerItem(changerItem);
@@ -479,12 +480,15 @@ public class WechatWebService {
 			throw new ItemIllegalException();
 		}
 
+		User targetUser = userService.getUserById(targetItem.getOwnerId());
+
 		List<Item> items = itemDao.getExchangeableItemsByOwnerId(userInfo.getUser().getUserId());
 
 		ExchangePageInfo pageInfo = new ExchangePageInfo();
 		pageInfo.setItems(items);
 		pageInfo.setTargetItem(targetItem);
 		pageInfo.setUserInfo(userInfo);
+		pageInfo.setTargetUser(targetUser);
 		return pageInfo;
 	}
 

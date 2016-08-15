@@ -364,6 +364,9 @@ a:hover {
 .scroller > .container {
   background: 0;
 }
+.scroller > .container.withTableBar {
+  padding-bottom: 60px;
+}
 .container {
   background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#0050a3), to(#e4007e));
   background: -webkit-linear-gradient(top, #0050a3 60%, #e4007e);
@@ -431,6 +434,61 @@ textarea {
   padding: 15px 10px;
   border-radius: 8px;
   background: #fff;
+  position: relative;
+}
+.target-item-view > .info {
+  margin-right: 100px;
+  padding: 0 10px;
+  height: 60px;
+}
+.target-item-view > .info > .headimg {
+  width: 30px;
+  height: 30px;
+  float: left;
+}
+.target-item-view > .info > .headimg > .target-head-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+}
+.target-item-view > .info > .text {
+  line-height: 20px;
+  height: 60px;
+  font-size: 14px;
+  padding-left: 35px;
+}
+.target-item-view > .wish {
+  margin: 0 -10px;
+  background: #f1f1f1;
+  height: 30px;
+  padding: 10px 10px;
+}
+.target-item-view > .wish > .icon {
+  float: left;
+  background: #f00;
+  height: 30px;
+  width: 30px;
+}
+.target-item-view > .wish > .text {
+  padding-left: 40px;
+  line-height: 30px;
+  height: 30px;
+  font-size: 13px;
+  margin-right: 110px;
+}
+.target-item-view > .img {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+  width: 98px;
+  height: 98px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+}
+.target-item-view > .img > img {
+  width: 98px;
+  height: 98px;
+  border-radius: 3px;
 }
 .divider-view {
   margin: 10px;

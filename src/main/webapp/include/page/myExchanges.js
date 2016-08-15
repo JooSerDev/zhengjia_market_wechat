@@ -36,6 +36,12 @@ $(function() {
 	Core.myScroll.load();
 	Core.myScroll.loadingNextAction();
 
+	evens.onExchangeClick = function(url) {
+		if (isOwner == 1) {
+			location.href = url;
+		}
+	}
+
 	$("#ownerBtn").on("click", function() {
 		$("#ownerBtn").addClass("active");
 		$("#changerBtn").removeClass("active");
@@ -66,6 +72,7 @@ var Exchange = function(exchangeInfo) {
 	var targetItem = exchangeInfo.targetItem
 	var user = exchangeInfo.user;
 	var userItem = exchangeInfo.userItem;
+	var toAgreeExchangePath = exchangeInfo.toAgreeExchangePath;
 
 	var exchange = {
 		myDesc : userItem.description,
@@ -75,7 +82,8 @@ var Exchange = function(exchangeInfo) {
 		targetHeadImg : target.headImgUrl,
 		targetNickname : target.nickname,
 		exchangeState : e.exchangeState == "exchanged" ? "已成功" : "进行中",
-		displayTime : e.displayTime
+		displayTime : e.displayTime,
+		toAgreeExchangePath : toAgreeExchangePath
 	};
 	return exchange;
 }

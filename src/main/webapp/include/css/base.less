@@ -1,6 +1,4 @@
 @import 'reset.less';
-
-
 .view {
     padding: @view-padding-height @view-padding-width;
 }
@@ -38,6 +36,9 @@
     background: -webkit-linear-gradient(top, @color-s2 60%, @color-s1);
     >.container {
         background: 0;
+        &.withTableBar {
+            padding-bottom: 60px;
+        }
     }
 }
 
@@ -53,9 +54,7 @@
     height: 36px;
 }
 
-.bg{
-
-}
+.bg {}
 
 select {
     background: @color-fg;

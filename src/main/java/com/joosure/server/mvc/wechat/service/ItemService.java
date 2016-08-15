@@ -5,9 +5,12 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.sword.wechat4j.oauth.OAuthException;
+import org.sword.wechat4j.oauth.OAuthManager;
 
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
@@ -61,30 +64,30 @@ public class ItemService {
 			throw new ItemIllegalException("非法交换请求0003");
 		}
 
-		String ownerOpenid = exchangeInfos[0];
-		String changerOpenid = exchangeInfos[1];
-		String ownerItemIdStr = exchangeInfos[2];
-		String changerItemIdStr = exchangeInfos[3];
+		String userOpenid = exchangeInfos[0];
+		String targetOpenid = exchangeInfos[1];
+		String userItemIdStr = exchangeInfos[2];
+		String targetItemIdStr = exchangeInfos[3];
 		String exchangeIdStr = exchangeInfos[4];
 
-		int ownerItemId = 0;
-		int changerItemId = 0;
+		int userItemId = 0;
+		int targetItemId = 0;
 		int exchangeId = 0;
 
 		try {
-			ownerItemId = Integer.parseInt(ownerItemIdStr);
-			changerItemId = Integer.parseInt(changerItemIdStr);
+			userItemId = Integer.parseInt(userItemIdStr);
+			targetItemId = Integer.parseInt(targetItemIdStr);
 			exchangeId = Integer.parseInt(exchangeIdStr);
 		} catch (Exception e) {
 			throw new ItemIllegalException("非法交换请求0006");
 		}
 
-		UserInfo ownerInfo = userService.getUserInfoByOpenid(ownerOpenid);
+		UserInfo ownerInfo = userService.getUserInfoByOpenid(userOpenid);
 		if (ownerInfo == null) {
 			throw new ItemIllegalException("非法交换请求0004");
 		}
 
-		UserInfo changerInfo = userService.getUserInfoByOpenid(changerOpenid);
+		UserInfo changerInfo = userService.getUserInfoByOpenid(targetOpenid);
 		if (changerInfo == null) {
 			throw new ItemIllegalException("非法交换请求0005");
 		}
@@ -94,7 +97,7 @@ public class ItemService {
 			throw new ItemIllegalException("非法交换请求0007");
 		}
 
-		if (exchange.getOwnerItemId() != ownerItemId || exchange.getChangerItemId() != changerItemId) {
+		if (exchange.getOwnerItemId() != userItemId || exchange.getChangerItemId() != targetItemId) {
 			throw new ItemIllegalException("非法交换请求0008");
 		}
 
@@ -102,12 +105,12 @@ public class ItemService {
 			throw new ItemIllegalException("交换已完成");
 		}
 
-		Item Oitem = itemDao.getItemById(ownerItemId);
+		Item Oitem = itemDao.getItemById(userItemId);
 		if (Oitem == null) {
 			throw new ItemIllegalException("非法交换请求0009");
 		}
 
-		Item Citem = itemDao.getItemById(changerItemId);
+		Item Citem = itemDao.getItemById(targetItemId);
 		if (Citem == null) {
 			throw new ItemIllegalException("非法交换请求0009");
 		}
@@ -133,7 +136,7 @@ public class ItemService {
 		itemDao.updateExchange(exchange);
 
 		// 取消双方宝贝的其他交易
-		itemDao.updateExchanges4cancelOthersWhenAgreeExchange(exchangeId, ownerItemId, changerItemId);
+		itemDao.updateExchanges4cancelOthersWhenAgreeExchange(exchangeId, userItemId, targetItemId);
 
 	}
 
@@ -203,8 +206,8 @@ public class ItemService {
 		exchange.setOwnerItemName(targetItem.getName());
 		exchange.setState(0);
 
-		myItem.setLockStatus(Item.LOCK_EXCHANGED);
-		targetItem.setLockStatus(Item.LOCK_EXCHANGED);
+		myItem.setLockStatus(Item.LOCK_EXCHANGING);
+		targetItem.setLockStatus(Item.LOCK_EXCHANGING);
 
 		itemDao.saveExchange(exchange);
 		itemDao.updateItem(myItem);
@@ -324,7 +327,7 @@ public class ItemService {
 		return false;
 	}
 
-	public List<MyExchangeInfo> loadMyExchanges(String eo, int pageNum, String isOwner)
+	public List<MyExchangeInfo> loadMyExchanges(String eo, int pageNum, String isOwner, HttpServletRequest request)
 			throws OAuthException, RequestParamsException {
 		List<MyExchangeInfo> infos = new ArrayList<>();
 
@@ -375,11 +378,22 @@ public class ItemService {
 					mei.setTarget(changer);
 					mei.setUserItem(ownerItem);
 					mei.setTargetItem(changerItem);
+					mei.setIsOwner(true);
+
+					String toAgreeExchangePath = request.getScheme() + "://" + request.getServerName()
+							+ request.getContextPath() + WechatConstant.SCHEMA_MARKET + "/item/toAgreeExchange?e="
+							+ exchange.getExchangeId();
+					String toAgreeExchangeUrl = OAuthManager.generateRedirectURI(toAgreeExchangePath,
+							WechatConstant.SCOPE_SNSAPI_BASE, "");
+					mei.setToAgreeExchangePath(toAgreeExchangeUrl);
+
 				} else {
 					mei.setUser(changer);
 					mei.setTarget(owner);
 					mei.setUserItem(changerItem);
 					mei.setTargetItem(ownerItem);
+					mei.setIsOwner(false);
+					mei.setToAgreeExchangePath("");
 				}
 
 				infos.add(mei);

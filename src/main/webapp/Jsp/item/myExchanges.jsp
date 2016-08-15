@@ -37,7 +37,7 @@
 	</div>
 
 	<template id="exchange_template">
-	<div class="exchange">
+	<div class="exchange" onclick="evens.onExchangeClick('{toAgreeExchangePath}')">
 		<div class="my-item-bar">
 			<div class="desc">{myDesc}</div>
 			<div class="img">
@@ -73,8 +73,6 @@
 		</div>
 	</div>
 	</template>
-
-	<input type="hidden" id="nextPage" value="${nextPage}">
 
 	<input type="hidden" id="appid" value="${jsapi.appid}">
 	<input type="hidden" id="nonceStr" value="${jsapi.nonceStr}">

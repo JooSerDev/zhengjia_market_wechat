@@ -41,9 +41,9 @@ Core.myScroll = {
 									Core.myScroll.loadingNextAction();
 								}
 
-//								$("#fab").animate({
-//									left : '-50px'
-//								}, 1000);
+								// $("#fab").animate({
+								// left : '-50px'
+								// }, 1000);
 							});
 
 		}
@@ -261,6 +261,12 @@ Core.HtmlReplace = function(html, obj) {
 		html = html.replace(regexp, obj[k]);
 	}
 	return html;
+}
+
+Core.resizeContainer = function() {
+	var screenHeight = window.screen.availHeight;
+	var container = document.getElementById("container");
+	container.style.minHeight = screenHeight + "px";
 }
 
 // document.addEventListener('touchmove', function(e) {

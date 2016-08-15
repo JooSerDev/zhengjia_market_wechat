@@ -1,0 +1,95 @@
+@import 'base.less';
+.container {
+    min-height: 100%;
+}
+
+.white-card {
+    background: #fff;
+}
+
+.apha-card {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.card-view {
+    margin: @view-card-margin-width;
+    padding: @view-padding-width @view-padding-height;
+    border-radius: 8px;
+}
+
+.my-item-view,
+.other-item-view {
+    .card-view;
+    .white-card;
+}
+
+@my-item-view-img-size : 60px;
+.my-item-view {
+    position: relative;
+    >.text {
+        line-height: 20px;
+        font-size: 12px;
+        margin-right: @my-item-view-img-size+@view-padding-height;
+        height: @my-item-view-img-size;
+    }
+    >.img {
+        position: absolute;
+        top: @view-padding-width;
+        right: @view-padding-height;
+        width: @my-item-view-img-size;
+        height: @my-item-view-img-size;
+        >img {
+            width: @my-item-view-img-size;
+            height: @my-item-view-img-size;
+            border-radius: 3px;
+        }
+    }
+}
+
+.other-item-view {
+    position: relative;
+    >.change-icon {
+        width: 30px;
+        height: 30px;
+        margin: 0 auto;
+        margin-top: -35px;
+        background: #ff0;
+        z-index: 20;
+    }
+    >.text {
+        line-height: 20px;
+        font-size: 12px;
+        margin-left: @my-item-view-img-size+@view-padding-height;
+        height: @my-item-view-img-size;
+    }
+    >.img {
+        position: absolute;
+        
+        width: @my-item-view-img-size;
+        height: @my-item-view-img-size;
+        >img {
+            width: @my-item-view-img-size;
+            height: @my-item-view-img-size;
+            border-radius: 3px;
+        }
+    }
+    >.changer-view {
+        margin: 0 @view-padding-height*-1;
+        margin-top: @view-padding-height;
+        margin-bottom: @view-padding-width*-1;
+        background: @color-bg;
+        height: 60px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+
+        >.line{
+        	height: 30px;
+        	padding: 0 @view-padding-height;
+        }
+    }
+}
+
+.contact-view {
+    .apha-card;
+    .card-view;
+}

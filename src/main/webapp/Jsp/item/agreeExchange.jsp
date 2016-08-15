@@ -9,12 +9,8 @@
 <head lang="zh">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>交换确认</title>
-<link rel="stylesheet" href="<%=path%>/include/core/icono.min.css">
-<link rel="stylesheet" href="<%=path%>/include/iScroll/scrollbar.css">
-<link rel="stylesheet" href="<%=path%>/include/core/myLess.css">
-<link rel="stylesheet"
-	href="<%=path%>/include/swiper/swiper-3.3.1.min.css">
+<title>正佳分享集市</title>
+<link rel="stylesheet" href="<%=path%>/include/css/agreeExchange.css">
 </head>
 <body>
 
@@ -49,7 +45,7 @@
 		jsapiparam.isWxJsApiReady = false;
 
 		wx.config({
-			debug : false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+			debug : false,
 			appId : jsapiparam.appid, // 必填，公众号的唯一标识
 			timestamp : jsapiparam.timeStamp, // 必填，生成签名的时间戳
 			nonceStr : jsapiparam.nonceStr, // 必填，生成签名的随机串

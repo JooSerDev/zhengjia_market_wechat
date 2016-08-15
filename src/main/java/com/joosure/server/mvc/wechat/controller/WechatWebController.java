@@ -307,8 +307,6 @@ public class WechatWebController {
 			MyExchangesPageInfo pageInfo = wechatWebService.myExchangesPage(eo, request);
 
 			model.addAttribute("jsapi", pageInfo.getJsApiParam());
-			model.addAttribute("exchanges", pageInfo.getExchanges());
-			model.addAttribute("nextPage", pageInfo.getExchanges().size() == WechatConstant.PAGE_SIZE_MY_ITEM ? 1 : 0);
 
 			String redirectUrl = registeredValidAndRedirect(pageInfo.getUserInfo(), request);
 			if (redirectUrl != null) {
@@ -398,6 +396,7 @@ public class WechatWebController {
 			}
 
 			model.addAttribute("targetItem", pageInfo.getTargetItem());
+			model.addAttribute("targetUser", pageInfo.getTargetUser());
 			model.addAttribute("items", pageInfo.getItems());
 			model.addAttribute("user", pageInfo.getUserInfo());
 			model.addAttribute("eo", pageInfo.getUserInfo().getEncodeOpenid());
@@ -422,6 +421,8 @@ public class WechatWebController {
 
 			AgreeExchangePageInfo pageInfo = wechatWebService.toAgreeExchangePage(exchangeId, request);
 			model.addAttribute("ee", pageInfo.getExchangeInfo().getEncodeExchange());
+			model.addAttribute("userItem", pageInfo.getExchangeInfo().getOwnerItem());
+			model.addAttribute("otherItem", pageInfo.getExchangeInfo().getChangerItem());
 
 			pageLogger(request, "/wechat/item/toAgreeExchange", pageInfo);
 		} catch (Exception e) {
@@ -585,7 +586,7 @@ public class WechatWebController {
 			}
 			String isOwner = request.getParameter("isOwner");
 
-			List<MyExchangeInfo> infos = itemService.loadMyExchanges(eo, pageNum, isOwner);
+			List<MyExchangeInfo> infos = itemService.loadMyExchanges(eo, pageNum, isOwner, request);
 			ar.putData("exchanges", infos);
 			ar.putData("nextPage", infos.size() == Pages.DEFAULT_PAGE_SIZE ? 1 : 0);
 			ar.setErrCode("0");

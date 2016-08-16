@@ -492,18 +492,65 @@ textarea {
   height: 60px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
+  padding-top: 10px;
 }
 .other-item-view > .changer-view > .line {
   height: 30px;
   padding: 0 10px;
+  clear: both;
 }
-.other-item-view > .changer-view > .line > .user > label {
+.other-item-view > .changer-view > .line:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.other-item-view > .changer-view > .line > .user {
+  clear: both;
+}
+.other-item-view > .changer-view > .line > .user:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.other-item-view > .changer-view > .line > .user > .label {
+  float: left;
   line-height: 30px;
   font-size: 15px;
+  height: 30px;
 }
-.other-item-view > .changer-view > .line > .user > img {
+.other-item-view > .changer-view > .line > .user > .headimg {
+  float: left;
+  height: 30px;
+  margin: 0 10px;
+}
+.other-item-view > .changer-view > .line > .user > .headimg > img {
+  border-radius: 15px;
   width: 30px;
   height: 30px;
+}
+.other-item-view > .changer-view > .line > .user > .nickname {
+  line-height: 30px;
+  font-size: 13px;
+  height: 30px;
+  float: left;
+}
+.other-item-view > .changer-view > .line > .icon {
+  width: 25px;
+  height: 25px;
+  background: #f00;
+  float: right;
+}
+.other-item-view > .changer-view > .line > .displayTime {
+  height: 25px;
+  line-height: 25px;
+  font-size: 12px;
+  float: right;
 }
 .contact-view {
   background: rgba(255, 255, 255, 0.3);

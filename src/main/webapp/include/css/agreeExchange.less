@@ -64,7 +64,6 @@
     }
     >.img {
         position: absolute;
-        
         width: @my-item-view-img-size;
         height: @my-item-view-img-size;
         >img {
@@ -81,21 +80,52 @@
         height: 60px;
         border-bottom-left-radius: 8px;
         border-bottom-right-radius: 8px;
+        padding-top: 10px;
+        >.line {
+            height: 30px;
+            padding: 0 @view-padding-height;
+            .clearfix;
+            >.user {
+            	
+                .clearfix;
+                >.label {
+                    .pull-left;
+                    line-height: 30px;
+                    font-size: 15px;
+                    height: 30px;
+                }
+                >.headimg {
+                    .pull-left;
+                    height: 30px;
+                    margin: 0 10px;
+                    >img {
+                    	border-radius: 15px;
+                        width: 30px;
+                        height: 30px;
+                    }
+                }
 
-        >.line{
-        	height: 30px;
-        	padding: 0 @view-padding-height;
+                >.nickname{
+                	line-height: 30px;
+                	font-size: 13px;
+                	height: 30px;
+                	.pull-left;
+                }
+            }
 
-        	>.user{
-        		>label{
-        			line-height: 30px;
-        			font-size: 15px;
-        		}
-        		>img{
-        			width: 30px;
-        			height: 30px;
-        		}
-        	}
+            >.icon{
+            	width: 25px;
+            	height: 25px;
+            	background: #f00;
+            	.pull-right;
+            }
+
+            >.displayTime{
+            	height: 25px;
+            	line-height: 25px;
+            	font-size: 12px;
+            	.pull-right;
+            }
         }
     }
 }

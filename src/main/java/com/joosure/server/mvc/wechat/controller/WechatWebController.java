@@ -423,6 +423,8 @@ public class WechatWebController {
 			model.addAttribute("ee", pageInfo.getExchangeInfo().getEncodeExchange());
 			model.addAttribute("userItem", pageInfo.getExchangeInfo().getOwnerItem());
 			model.addAttribute("otherItem", pageInfo.getExchangeInfo().getChangerItem());
+			model.addAttribute("changer", pageInfo.getExchangeInfo().getChanger());
+			model.addAttribute("exchange", pageInfo.getExchangeInfo().getExchange());
 
 			pageLogger(request, "/wechat/item/toAgreeExchange", pageInfo);
 		} catch (Exception e) {
@@ -440,7 +442,9 @@ public class WechatWebController {
 				throw new RequestParamsException("非法交换请求");
 			}
 
-			itemService.agreeExchange(ee);
+			String flag = request.getParameter("flag");
+
+			itemService.agreeExchange(ee, flag);
 			ar.setErrCode("0");
 
 		} catch (Exception e) {

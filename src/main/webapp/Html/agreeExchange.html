@@ -13,15 +13,13 @@
 		<div class="my-item-view">
 			<div class="text">${userItem.description}</div>
 			<div class="img">
-				<img
-					src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+				<img src="${userItem.firstItemCenterImgUrl}">
 			</div>
 		</div>
 		<div class="other-item-view">
 			<div class="change-icon"></div>
 			<div class="img">
-				<img
-					src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+				<img src="${otherItem.firstItemCenterImgUrl}">
 			</div>
 			<div class="text">${otherItem.description}</div>
 			<div class="changer-view">
@@ -29,20 +27,22 @@
 					<div class="user">
 						<div class="label">申请人</div>
 						<div class="headimg">
-							<img
-								src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+							<img src="${changer.headImgUrl}">
 						</div>
-						<div class="nickname">nickname</div>
+						<div class="nickname">${changer.nickname}</div>
 					</div>
 				</div>
 				<div class="line">
 					<div class="icon"></div>
-					<div class="displayTime">12312313</div>
+					<div class="displayTime">${exchange.displayTime}</div>
 				</div>
 			</div>
 		</div>
 		<div class="contact-view"></div>
-		<div class="btn-view"></div>
+		<div class="btn-view">
+			<button onclick="evens.onSubmitClick(0)">拒绝</button>
+			<button onclick="evens.onSubmitClick(1)">同意</button>
+		</div>
 
 	</div>
 

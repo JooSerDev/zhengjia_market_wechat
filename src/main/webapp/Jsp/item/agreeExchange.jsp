@@ -14,13 +14,43 @@
 </head>
 <body>
 
-	<div class="container">
+	<div class="container" id="container">
+		<div class="cloud"></div>
 
-		<div class="row margin"></div>
-
-		<div class="row margin">
-			<button class="btn btn-block" onclick="evens.onSubmitClick()">提交申请</button>
+		<div class="my-item-view">
+			<div class="text">${userItem.description}</div>
+			<div class="img">
+				<img src="${userItem.firstItemCenterImgUrl}">
+			</div>
 		</div>
+		<div class="other-item-view">
+			<div class="change-icon"></div>
+			<div class="img">
+				<img src="${otherItem.firstItemCenterImgUrl}">
+			</div>
+			<div class="text">${otherItem.description}</div>
+			<div class="changer-view">
+				<div class="line">
+					<div class="user">
+						<div class="label">申请人</div>
+						<div class="headimg">
+							<img src="${changer.headImgUrl}">
+						</div>
+						<div class="nickname">${changer.nickname}</div>
+					</div>
+				</div>
+				<div class="line">
+					<div class="icon"></div>
+					<div class="displayTime">${exchange.displayTime}</div>
+				</div>
+			</div>
+		</div>
+		<div class="contact-view"></div>
+		<div class="btn-view">
+			<button onclick="evens.onSubmitClick(0)">拒绝</button>
+			<button onclick="evens.onSubmitClick(1)">同意</button>
+		</div>
+
 	</div>
 
 	<input type="hidden" id="ee" value="${ee}">
@@ -65,13 +95,14 @@
 		var evens = {};
 
 		$(function() {
-			evens.onSubmitClick = function() {
+			evens.onSubmitClick = function(flag) {
 				var ee = $("#ee").val();
 
 				$.ajax({
 					url : "agreeExchange",
 					data : {
-						ee : ee
+						ee : ee,
+						flag : flag
 					},
 					type : "POST",
 					success : function(data) {

@@ -47,7 +47,7 @@ public class ItemService {
 	 * @param encodeExchange
 	 * @throws ItemIllegalException
 	 */
-	public void agreeExchange(String encodeExchange) throws ItemIllegalException {
+	public void agreeExchange(String encodeExchange, String flag) throws ItemIllegalException {
 		String decodeExchange = null;
 		try {
 			decodeExchange = EncryptUtil.decryptAES(encodeExchange, WechatConstant.ENCODE_KEY_OPENID);
@@ -123,20 +123,25 @@ public class ItemService {
 			throw new ItemIllegalException("宝贝《" + Citem.getName() + "》已经下线或已经交换");
 		}
 
-		Date now = new Date();
+		if (flag.trim().equals("1")) {
+			Date now = new Date();
 
-		// 锁定当前交易及双方宝贝
-		exchange.setExchangeState(Exchange.EXCHANGE_STATE_ED);
-		exchange.setExchangeTime(now);
-		Oitem.setLockStatus(Item.LOCK_EXCHANGED);
-		Citem.setLockStatus(Item.LOCK_EXCHANGED);
+			// 锁定当前交易及双方宝贝
+			exchange.setExchangeState(Exchange.EXCHANGE_STATE_ED);
+			exchange.setExchangeTime(now);
+			Oitem.setLockStatus(Item.LOCK_EXCHANGED);
+			Citem.setLockStatus(Item.LOCK_EXCHANGED);
 
-		itemDao.updateItem(Oitem);
-		itemDao.updateItem(Citem);
-		itemDao.updateExchange(exchange);
+			itemDao.updateItem(Oitem);
+			itemDao.updateItem(Citem);
+			itemDao.updateExchange(exchange);
 
-		// 取消双方宝贝的其他交易
-		itemDao.updateExchanges4cancelOthersWhenAgreeExchange(exchangeId, userItemId, targetItemId);
+			// 取消双方宝贝的其他交易
+			itemDao.updateExchanges4cancelOthersWhenAgreeExchange(exchangeId, userItemId, targetItemId);
+		} else {
+			exchange.setExchangeState(Exchange.EXCHANGE_STATE_CANCEL);
+			itemDao.updateExchange(exchange);
+		}
 
 	}
 

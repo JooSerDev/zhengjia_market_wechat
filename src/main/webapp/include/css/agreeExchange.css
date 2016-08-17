@@ -558,3 +558,6 @@ textarea {
   padding: 15px 10px;
   border-radius: 8px;
 }
+.btn-view > button {
+  background: #fff;
+}

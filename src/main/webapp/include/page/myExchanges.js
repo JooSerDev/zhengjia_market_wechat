@@ -37,9 +37,9 @@ $(function() {
 	Core.myScroll.loadingNextAction();
 
 	evens.onExchangeClick = function(url) {
-		if (isOwner == 1) {
-			location.href = url;
-		}
+		// if (isOwner == 1) {
+		location.href = url;
+		// }
 	}
 
 	$("#ownerBtn").on("click", function() {

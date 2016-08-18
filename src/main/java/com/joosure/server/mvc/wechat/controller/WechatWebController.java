@@ -421,7 +421,7 @@ public class WechatWebController {
 
 			AgreeExchangePageInfo pageInfo = wechatWebService.toAgreeExchangePage(exchangeId, request);
 			int isOwner = 0;
-			
+
 			model.addAttribute("ee", pageInfo.getExchangeInfo().getEncodeExchange());
 			if (pageInfo.getUserInfo().getUser().getUserId() == pageInfo.getExchangeInfo().getOwner().getUserId()) {
 				model.addAttribute("userItem", pageInfo.getExchangeInfo().getOwnerItem());
@@ -434,7 +434,7 @@ public class WechatWebController {
 				model.addAttribute("other", pageInfo.getExchangeInfo().getOwner());
 				isOwner = 0;
 			}
-			
+
 			model.addAttribute("isOwner", isOwner);
 			model.addAttribute("exchange", pageInfo.getExchangeInfo().getExchange());
 
@@ -734,6 +734,23 @@ public class WechatWebController {
 					ar.setErrMsg("信息不完整");
 				}
 			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			ar.setErrCode("1001");
+			ar.setErrMsg("信息不完整");
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
+
+	public void saveComment(HttpServletRequest request, HttpServletResponse response, Model model) {
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			String itemIdStr = request.getParameter("itemId");
+			String content = request.getParameter("content");
 
 		} catch (Exception e) {
 			e.printStackTrace();

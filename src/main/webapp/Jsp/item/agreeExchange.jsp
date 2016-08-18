@@ -94,6 +94,13 @@
 		var evens = {};
 
 		$(function() {
+			
+			Core.resizeContainer();
+
+			$(window).resize(function() {
+				Core.resizeContainer();
+			});
+			
 			evens.onSubmitClick = function(flag) {
 				var ee = $("#ee").val();
 

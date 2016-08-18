@@ -15,86 +15,92 @@
 <body>
 	<div class="container" id="container">
 
-		<div class="head-view">
-			<div class="head-img">
-				<img src="${owner.headImgUrl }">
-			</div>
-			<div class="info-view">
-				<div class="line">
-					<div class="nickname">${owner.nickname }</div>
-					<div class="state">${item.lockStatus == 'exchanged' ? '已交换':'交换中' }</div>
-				</div>
-				<div class="line">
-					<div class="time">${item.displayTime }</div>
-					<div class="itemType">${item.itemTypeName }</div>
-				</div>
-			</div>
-		</div>
+		<div class="main-view">
 
-		<div class="content-view">
-			<div class="itemName">${item.name}</div>
-			<div class="itemDescription">${item.description}</div>
-			<c:forEach items="${itemImgList }" var="imgUrl">
-				<div class="itemImg">
-					<img src="${imgUrl }">
+			<div class="head-view">
+				<div class="head-img">
+					<img src="${owner.headImgUrl }">
 				</div>
-			</c:forEach>
-
-			<div class="wish">
-				<div class="icon"></div>
-				<div class="text">${item.wishItem }</div>
+				<div class="info-view">
+					<div class="line">
+						<div class="nickname">${owner.nickname }</div>
+						<div class="state">${item.lockStatus == 'exchanged' ? '已交换':'交换中' }</div>
+					</div>
+					<div class="line">
+						<div class="time">${item.displayTime }</div>
+						<div class="itemType">${item.itemTypeName }</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="like-view" id="likeBtn">
-				<div class="icon"></div>
-				<div class="text">${item.likeNum }</div>
+			<div class="content-view">
+				<div class="itemName">${item.name}</div>
+				<div class="itemDescription">${item.description}</div>
+				<c:forEach items="${itemImgList }" var="imgUrl">
+					<div class="itemImg">
+						<img src="${imgUrl }">
+					</div>
+				</c:forEach>
+
+				<div class="wish">
+					<div class="icon"></div>
+					<div class="text">${item.wishItem }</div>
+				</div>
+
+				<div class="like-view" id="likeBtn">
+					<div class="icon"></div>
+					<div class="text">${item.likeNum }</div>
+				</div>
+			</div>
+
+			<div class="comment-view">
+				<div class="header">
+					<div class="count">
+						<div class="icon"></div>
+						<div class="text">123123</div>
+					</div>
+				</div>
+				<div class="comments">
+					<div class="comment">
+						<div class="head-img">
+							<img
+								src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
+						</div>
+						<div class="info">
+							<div class="line">
+								<span>nickname</span> &nbsp;&nbsp;<span>time</span>
+							</div>
+							<div class="content">123123123123</div>
+						</div>
+					</div>
+				</div>
+				<div class="loading">加载中</div>
+			</div>
+
+			<div class="foot-bar">
+				<div class="btns">
+					<div class="col-33">
+						<div class="submitBtnView">
+							<a class="btn" href="javascript:void(0);">写评论</a>
+						</div>
+					</div>
+					<div class="col-66">
+						<c:if
+							test="${user.user.userId != owner.userId and item.lockStatus != 'exchanged'}">
+							<div class="submitBtnView">
+								<a class="btn" href="${toExchangeUrl}">我要交换</a>
+							</div>
+						</c:if>
+					</div>
+				</div>
+
+				<div class="ps-text">宝贝发布需后台审核通过后才可见</div>
 			</div>
 		</div>
 
 		<div class="comment-view">
-			<div class="header">
-				<div class="count">
-					<div class="icon"></div>
-					<div class="text">123123</div>
-				</div>
-			</div>
-			<div class="comments">
-				<div class="comment">
-					<div class="head-img">
-						<img
-							src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
-					</div>
-					<div class="info">
-						<div class="line">
-							<span>nickname</span> &nbsp;&nbsp;<span>time</span>
-						</div>
-						<div class="content">123123123123</div>
-					</div>
-				</div>
-			</div>
-			<div class="loading">加载中</div>
+			
 		</div>
-
-		<div class="foot-bar">
-			<div class="btns">
-				<div class="col-33">
-					<div class="submitBtnView">
-						<a class="btn" href="${toExchangeUrl}">写评论</a>
-					</div>
-				</div>
-				<div class="col-66">
-					<c:if
-						test="${user.user.userId != owner.userId and item.lockStatus != 'exchanged'}">
-						<div class="submitBtnView">
-							<a class="btn" href="${toExchangeUrl}">我要交换</a>
-						</div>
-					</c:if>
-				</div>
-			</div>
-
-			<div class="ps-text">宝贝发布需后台审核通过后才可见</div>
-		</div>
-
 	</div>
 
 

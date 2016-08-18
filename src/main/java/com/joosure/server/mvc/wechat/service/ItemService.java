@@ -257,6 +257,19 @@ public class ItemService {
 	}
 
 	/**
+	 * 
+	 * @param eo
+	 * @param itemId
+	 * @param content
+	 * @throws OAuthException
+	 */
+	public void saveItemComment(String eo, Integer itemId, String content) throws OAuthException {
+		if(eo == null || eo.trim().equals("")){
+			throw new OAuthException();
+		}
+	}
+
+	/**
 	 * 保存新宝贝
 	 * 
 	 * @param eo

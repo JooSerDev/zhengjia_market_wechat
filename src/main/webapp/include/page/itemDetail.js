@@ -62,6 +62,12 @@ wx.error(function(res) {
 var evens = {};
 
 $(function() {
+	Core.resizeContainer();
+
+	$(window).resize(function() {
+		Core.resizeContainer();
+	});
+	
 	Core.myScroll.load();
 	
 	$("#likeBtn").on("click", function() {

@@ -34,9 +34,9 @@
 					<div class="user">
 						<div class="label">申请人</div>
 						<div class="headimg">
-							<img src="${changer.headImgUrl}">
+							<img src="${other.headImgUrl}">
 						</div>
-						<div class="nickname">${changer.nickname}</div>
+						<div class="nickname">${other.nickname}</div>
 					</div>
 				</div>
 				<div class="line">
@@ -46,11 +46,12 @@
 			</div>
 		</div>
 		<div class="contact-view"></div>
-		<div class="btn-view">
-			<button onclick="evens.onSubmitClick(0)">拒绝</button>
-			<button onclick="evens.onSubmitClick(1)">同意</button>
-		</div>
-
+		<c:if test="${isOwner ==  1}">
+			<div class="btn-view">
+				<button onclick="evens.onSubmitClick(0)">拒绝</button>
+				<button onclick="evens.onSubmitClick(1)">同意</button>
+			</div>
+		</c:if>
 	</div>
 
 	<input type="hidden" id="ee" value="${ee}">
@@ -60,9 +61,7 @@
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
 	<input type="hidden" id="signature" value="${jsapi.signature}">
 
-	<script src="<%=path%>/include/iScroll/iscroll.js"></script>
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
-	<script src="<%=path%>/include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script>

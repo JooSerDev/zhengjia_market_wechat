@@ -420,10 +420,22 @@ public class WechatWebController {
 			int exchangeId = Integer.parseInt(exchangeIdStr);
 
 			AgreeExchangePageInfo pageInfo = wechatWebService.toAgreeExchangePage(exchangeId, request);
+			int isOwner = 0;
+			
 			model.addAttribute("ee", pageInfo.getExchangeInfo().getEncodeExchange());
-			model.addAttribute("userItem", pageInfo.getExchangeInfo().getOwnerItem());
-			model.addAttribute("otherItem", pageInfo.getExchangeInfo().getChangerItem());
-			model.addAttribute("changer", pageInfo.getExchangeInfo().getChanger());
+			if (pageInfo.getUserInfo().getUser().getUserId() == pageInfo.getExchangeInfo().getOwner().getUserId()) {
+				model.addAttribute("userItem", pageInfo.getExchangeInfo().getOwnerItem());
+				model.addAttribute("otherItem", pageInfo.getExchangeInfo().getChangerItem());
+				model.addAttribute("other", pageInfo.getExchangeInfo().getChanger());
+				isOwner = 1;
+			} else {
+				model.addAttribute("userItem", pageInfo.getExchangeInfo().getChangerItem());
+				model.addAttribute("otherItem", pageInfo.getExchangeInfo().getOwnerItem());
+				model.addAttribute("other", pageInfo.getExchangeInfo().getOwner());
+				isOwner = 0;
+			}
+			
+			model.addAttribute("isOwner", isOwner);
 			model.addAttribute("exchange", pageInfo.getExchangeInfo().getExchange());
 
 			pageLogger(request, "/wechat/item/toAgreeExchange", pageInfo);

@@ -415,6 +415,9 @@ textarea {
   user-select: none;
   display: inline-block;
 }
+body {
+  background-color: #0050a3;
+}
 .container {
   padding-bottom: 114px;
 }
@@ -684,4 +687,32 @@ textarea {
   text-align: center;
   margin-top: 10px;
   margin-bottom: 5px;
+}
+.comment-post-view {
+  display: none;
+  padding-top: 10px;
+}
+.comment-post-view > .comment-input {
+  margin: 10px 15px;
+  margin-top: 0;
+  padding: 20px 15px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+.comment-post-view > .comment-input > #itemComment {
+  background: 0;
+  font-size: 15px;
+  color: #fff;
+}
+.comment-post-view > .comment-input > #itemComment::-webkit-input-placeholder {
+  color: #fff !important;
+}
+.comment-post-view > .post-btn {
+  margin: 10px 15px;
+  padding: 20px 15px;
+  background: #fff;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 20px;
+  text-align: center;
 }

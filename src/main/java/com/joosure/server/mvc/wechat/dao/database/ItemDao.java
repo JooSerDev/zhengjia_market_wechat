@@ -40,9 +40,6 @@ public interface ItemDao {
 	public List<Item> getMarketItemsPages(@Param("keyword") String keyword, @Param("startRow") int startRow,
 			@Param("limitSize") int limitSize);
 
-	public List<ItemComment> getItemCommentByItemIdPages(@Param("itemId") int itemId, @Param("startRow") int startRow,
-			@Param("limitSize") int limitSize);
-
 	/**
 	 * 宝贝分类
 	 * 
@@ -50,6 +47,16 @@ public interface ItemDao {
 	 */
 	public List<ItemType> getItemTypes();
 
+	/*
+	 * 宝贝评论
+	 * #########################################################################
+	 */
+
+	public void saveItemComment(ItemComment itemComment);
+	
+	public List<ItemComment> getItemCommentByItemIdPages(@Param("itemId") int itemId, @Param("startRow") int startRow,
+			@Param("limitSize") int limitSize);
+	
 	public void saveExchange(Exchange exchange);
 
 	public void updateExchange(Exchange exchange);

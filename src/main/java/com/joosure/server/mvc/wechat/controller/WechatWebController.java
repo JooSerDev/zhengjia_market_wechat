@@ -15,6 +15,7 @@ import org.sword.wechat4j.oauth.OAuthException;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.entity.domain.AjaxResult;
 import com.joosure.server.mvc.wechat.entity.domain.BaseResult;
+import com.joosure.server.mvc.wechat.entity.domain.ItemCommentInfo;
 import com.joosure.server.mvc.wechat.entity.domain.ItemInfo;
 import com.joosure.server.mvc.wechat.entity.domain.MyExchangeInfo;
 import com.joosure.server.mvc.wechat.entity.domain.Pages;
@@ -745,12 +746,55 @@ public class WechatWebController {
 		ResponseHandler.output(response, json);
 	}
 
+	@RequestMapping("/item/loadComment")
+	public void loadComment(HttpServletRequest request, HttpServletResponse response, Model model) {
+		AjaxResult ar = new AjaxResult();
+		try {
+			String itemIdStr = request.getParameter("ii");
+			String pagenum = request.getParameter("pageNum");
+
+			Integer itemId = null;
+			int pageNum = 0;
+			try {
+				itemId = Integer.parseInt(itemIdStr);
+				pageNum = Integer.parseInt(pagenum);
+			} catch (Exception e) {
+				throw new RequestParamsException();
+			}
+
+			List<ItemCommentInfo> infos = itemService.loatComments(pageNum, itemId);
+			ar.putData("infos", infos);
+			ar.putData("nextPage", infos.size() == WechatConstant.PAGE_SIZE_ITEM_COMMENT ? 1 : 0);
+			ar.setErrCode("0");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			ar.setErrCode("1001");
+			ar.setErrMsg("信息不完整");
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
+
+	@RequestMapping("/item/itemComment")
 	public void saveComment(HttpServletRequest request, HttpServletResponse response, Model model) {
 		AjaxResult ar = new AjaxResult();
 		try {
 			String eo = request.getParameter("eo");
-			String itemIdStr = request.getParameter("itemId");
+			String itemIdStr = request.getParameter("ii");
 			String content = request.getParameter("content");
+
+			Integer itemId = null;
+			try {
+				itemId = Integer.parseInt(itemIdStr);
+			} catch (Exception e) {
+				throw new RequestParamsException();
+			}
+
+			itemService.saveItemComment(eo, itemId, content);
+			ar.setErrCode(0 + "");
+			ar.setErrMsg("保存成功");
 
 		} catch (Exception e) {
 			e.printStackTrace();

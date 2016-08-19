@@ -16,12 +16,14 @@ import com.joosure.server.mvc.wechat.constant.StorageConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
 import com.joosure.server.mvc.wechat.dao.database.UserDao;
+import com.joosure.server.mvc.wechat.entity.domain.ItemCommentInfo;
 import com.joosure.server.mvc.wechat.entity.domain.ItemInfo;
 import com.joosure.server.mvc.wechat.entity.domain.MyExchangeInfo;
 import com.joosure.server.mvc.wechat.entity.domain.Pages;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
+import com.joosure.server.mvc.wechat.entity.pojo.ItemComment;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemLike;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
@@ -262,11 +264,41 @@ public class ItemService {
 	 * @param itemId
 	 * @param content
 	 * @throws OAuthException
+	 * @throws RequestParamsException
 	 */
-	public void saveItemComment(String eo, Integer itemId, String content) throws OAuthException {
-		if(eo == null || eo.trim().equals("")){
+	public void saveItemComment(String eo, Integer itemId, String content)
+			throws OAuthException, RequestParamsException {
+		if (eo == null || eo.trim().equals("")) {
 			throw new OAuthException();
 		}
+
+		UserInfo userInfo = userService.getUserInfoByEO(eo);
+
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
+
+		if (itemId == null) {
+			throw new RequestParamsException("itemId is null");
+		}
+
+		Item item = itemDao.getItemById(itemId);
+		if (item == null) {
+			throw new RequestParamsException("item is null");
+		}
+
+		ItemComment ic = new ItemComment();
+		ic.setFromUserId(userInfo.getUser().getUserId());
+		ic.setCreateTime(new Date());
+		ic.setComment(content);
+		ic.setItemId(itemId);
+		ic.setState(0);
+		ic.setToUserId(item.getOwnerId());
+
+		item.setMarkNum(item.getMarkNum() + 1);
+
+		itemDao.updateItem(item);
+		itemDao.saveItemComment(ic);
 	}
 
 	/**
@@ -468,6 +500,36 @@ public class ItemService {
 		}
 
 		return itemInfos;
+	}
+
+	/**
+	 * 
+	 * @param pageNum
+	 * @param itemId
+	 * @return
+	 */
+	public List<ItemCommentInfo> loatComments(int pageNum, int itemId) {
+		List<ItemCommentInfo> infos = new ArrayList<>();
+		if (pageNum > 0 && itemId > 0) {
+			Pages pages = new Pages(pageNum, WechatConstant.PAGE_SIZE_ITEM_COMMENT);
+			List<ItemComment> comments = itemDao.getItemCommentByItemIdPages(itemId, pages.getPageRow(),
+					pages.getPageSize());
+			if (comments.size() > 0) {
+				for (Iterator<ItemComment> iterator = comments.iterator(); iterator.hasNext();) {
+					ItemComment itemComment = iterator.next();
+					User fromUser = userService.getUserById(itemComment.getFromUserId());
+
+					if (fromUser != null) {
+						ItemCommentInfo ici = new ItemCommentInfo();
+						ici.setComment(itemComment);
+						ici.setUser(fromUser);
+						infos.add(ici);
+					}
+				}
+			}
+		}
+
+		return infos;
 	}
 
 	/**

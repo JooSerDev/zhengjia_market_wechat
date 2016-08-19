@@ -27,9 +27,9 @@ public class Item {
 	private String itemImgUrls;
 	private String itemCenterImgUrls;
 
-	private Integer likeNum;
-	private Integer unlikeNum;
-	private Integer markNum;
+	private Integer likeNum; // 点赞数
+	private Integer unlikeNum; // 差评数（目前没有用）
+	private Integer markNum; // 评论数
 
 	private Integer isRecommended; // 0-未被推荐 1-小编推荐a
 	private Date recommendedTime;

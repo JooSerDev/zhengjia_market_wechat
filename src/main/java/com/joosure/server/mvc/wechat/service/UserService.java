@@ -145,10 +145,16 @@ public class UserService {
 	 * 
 	 * @param encodeOpenid
 	 * @return
+	 * @throws OAuthException
 	 * @throws Exception
 	 */
-	public UserInfo getUserInfoByEO(String encodeOpenid) throws Exception {
-		String openid = decodeEO(encodeOpenid);
+	public UserInfo getUserInfoByEO(String encodeOpenid) throws OAuthException {
+		String openid = null;
+		try {
+			openid = decodeEO(encodeOpenid);
+		} catch (Exception e) {
+			throw new OAuthException();
+		}
 		User user = userDao.getUserByOpenid(openid);
 		UserWechatInfo userWechatInfo = userDao.getUserWechatInfoByOpenid(openid);
 

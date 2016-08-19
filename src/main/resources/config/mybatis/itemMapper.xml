@@ -62,9 +62,9 @@
 
 	<select id="getMarketItemsPages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
-		item_item where approvalStatus = 'yes' 
-		 <if test="keyword != null and keyword != ''"> and description like '%${keyword}%' </if>
-		 order by refreshTime desc limit
+		item_item where approvalStatus = 'yes'
+		<if test="keyword != null and keyword != ''"> and description like '%${keyword}%' </if>
+		order by refreshTime desc limit
 		#{startRow},#{limitSize};
 	</select>
 
@@ -79,6 +79,20 @@
 		select * from
 		item_item_type order by sort;
 	</select>
+
+	<insert id="saveItemComment">
+		insert into item_item_comment
+		(createTime, fromUserId,
+		toUserId,
+		itemId, `state`, `comment`
+		)
+		values
+		(#{createTime,jdbcType=TIMESTAMP}, #{fromUserId,jdbcType=INTEGER},
+		#{toUserId,jdbcType=INTEGER},
+		#{itemId,jdbcType=INTEGER},
+		#{state,jdbcType=INTEGER}, #{comment,jdbcType=LONGVARCHAR}
+		)
+	</insert>
 
 	<insert id="saveExchange" keyColumn="exchangeId" keyProperty="exchangeId"
 		useGeneratedKeys="true">

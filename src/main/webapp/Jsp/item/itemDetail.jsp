@@ -49,7 +49,7 @@
 
 				<div class="like-view" id="likeBtn">
 					<div class="icon"></div>
-					<div class="text">${item.likeNum }</div>
+					<div class="text" id="likeCount">${item.likeNum }</div>
 				</div>
 			</div>
 
@@ -60,20 +60,7 @@
 						<div class="text">123123</div>
 					</div>
 				</div>
-				<div class="comments">
-					<div class="comment">
-						<div class="head-img">
-							<img
-								src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
-						</div>
-						<div class="info">
-							<div class="line">
-								<span>nickname</span> &nbsp;&nbsp;<span>time</span>
-							</div>
-							<div class="content">123123123123</div>
-						</div>
-					</div>
-				</div>
+				<div class="comments"></div>
 				<div class="loading">加载中</div>
 			</div>
 
@@ -81,7 +68,7 @@
 				<div class="btns">
 					<div class="col-33">
 						<div class="submitBtnView">
-							<a class="btn" href="javascript:void(0);">写评论</a>
+							<a class="btn" href="javascript:void(0);" id="toComment">写评论</a>
 						</div>
 					</div>
 					<div class="col-66">
@@ -97,11 +84,29 @@
 				<div class="ps-text">宝贝发布需后台审核通过后才可见</div>
 			</div>
 		</div>
+	</div>
 
-		<div class="comment-view">
-			
+	<div class="comment-post-view">
+		<div class="comment-input">
+			<textarea rows="8" placeholder="评论" id="itemComment" maxlength="500"></textarea>
+		</div>
+		<div class="post-btn" id="commentSubmitBtn">发表评论</div>
+		<div class="post-btn" id="commentCancelBtn">返回</div>
+	</div>
+
+	<template id="item_comment_template">
+	<div class="comment">
+		<div class="head-img">
+			<img src="{headimg}">
+		</div>
+		<div class="info">
+			<div class="line">
+				<span>{nickname}</span> &nbsp;&nbsp;<span>{time}</span>
+			</div>
+			<div class="content">{comment}</div>
 		</div>
 	</div>
+	</template>
 
 
 	<input type="hidden" id="ii" value="${item.itemId}">

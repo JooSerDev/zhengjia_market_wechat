@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="../include/css/itemDetail.css">
 </head>
 <body>
-		<div class="container" id="container">
-
+	<div class="container" id="container">
+		<div class="main-view">
 			<div class="head-view">
 				<div class="head-img">
 					<img
@@ -74,18 +74,24 @@
 				<div class="btns">
 					<div class="col-33">
 						<div class="submitBtnView">
-							<a class="btn" href="${toExchangeUrl}">写评论</a>
+							<a class="btn" href="javascript:void(0);" id="toComment">写评论</a>
 						</div>
 					</div>
-					<div class="col-66">
-						
-					</div>
+					<div class="col-66"></div>
 				</div>
 				<div class="ps-text">宝贝发布需后台审核通过后才可见</div>
 			</div>
-
-
 		</div>
+
+	</div>
+
+	<div class="comment-post-view">
+		<div class="comment-input">
+			<textarea rows="8" placeholder="评论" id="itemDesc" maxlength="500"></textarea>
+		</div>
+		<div class="post-btn" id="commentSubmitBtn">发表评论</div>
+		<div class="post-btn" id="commentCancelBtn">返回</div>
+	</div>
 
 
 	<script src="../include/jquery/jquery.min.js"></script>
@@ -93,6 +99,23 @@
 
 	<script>
 		$(function() {
+
+			Core.resizeContainer();
+
+			$(window).resize(function() {
+				Core.resizeContainer();
+			});
+
+			$("#toComment").on("click", function() {
+				$("#container").hide();
+				$(".comment-post-view").show();
+			});
+			
+			$("#commentCancelBtn").on("click", function() {
+				$("#container").show();
+				$(".comment-post-view").hide();
+			});
+
 		});
 	</script>
 

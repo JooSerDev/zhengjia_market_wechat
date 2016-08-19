@@ -1,4 +1,9 @@
 @import 'base.less';
+
+body{
+	background-color: @color-s2;
+}
+
 .container {
     padding-bottom: 114px;
 }
@@ -167,16 +172,13 @@
                     border-radius: 15px;
                 }
             }
-
-            >.info{
+            >.info {
                 margin-left: 30+2*@view-padding-width;
-
-                >.line{
+                >.line {
                     line-height: 30px;
                     color: #000;
                 }
-
-                >.content{
+                >.content {
                     padding: 15px 0;
                     border-bottom: 1px solid @color-bg;
                     font-size: 15px;
@@ -184,8 +186,7 @@
             }
         }
     }
-
-    >.loading{
+    >.loading {
         font-size: 15px;
         color: #000;
         text-align: center;
@@ -202,10 +203,9 @@
     z-index: 999;
     height: 104px;
     background: rgba(0, 0, 0, 0.3);
-    .btns{
+    .btns {
         .clearfix;
     }
-
     .submitBtnView {
         margin: @view-padding-height @view-padding-width;
         background: #fff;
@@ -225,5 +225,34 @@
         text-align: center;
         margin-top: 10px;
         margin-bottom: 5px;
+    }
+}
+
+.comment-post-view {
+	display: none;
+	padding-top: @view-padding-height;
+    >.comment-input {
+        margin: @view-padding-height @view-padding-width;
+        margin-top: 0;
+        padding: @view-padding-height*2 @view-padding-width;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        >#itemComment {
+            background: 0;
+            font-size: 15px;
+            color: #fff;
+            &::-webkit-input-placeholder {
+                color: #fff !important;
+            }
+        }
+    }
+    >.post-btn {
+        margin: @view-padding-height @view-padding-width;
+        padding: @view-padding-height*2 @view-padding-width;
+        background: #fff;
+        border-radius: 10px;
+        font-size: 15px;
+        line-height: 20px;
+        text-align: center;
     }
 }

@@ -29,6 +29,8 @@ public interface ItemDao {
 
 	public List<Item> getItemsByOwnerIdPages(@Param("ownerId") int ownerId, @Param("startRow") int startRow,
 			@Param("limitSize") int limitSize);
+	
+	public List<Item> getItemsRecommended();
 
 	/**
 	 * 集市宝贝列表分页查询

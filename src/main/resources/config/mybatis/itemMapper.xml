@@ -68,6 +68,12 @@
 		#{startRow},#{limitSize};
 	</select>
 
+	<select id="getItemsRecommended" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
+		select * from
+		item_item where isRecommended = 1 order by recommendedTime desc limit
+		15;
+	</select>
+
 	<select id="getItemCommentByItemIdPages"
 		resultType="com.joosure.server.mvc.wechat.entity.pojo.ItemComment">
 		select * from item_item_comment where state = 0 and itemId

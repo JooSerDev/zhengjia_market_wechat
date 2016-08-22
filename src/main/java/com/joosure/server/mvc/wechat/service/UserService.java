@@ -1,6 +1,7 @@
 package com.joosure.server.mvc.wechat.service;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -180,6 +181,10 @@ public class UserService {
 		String openid = AuthUtil.getOpenidByCodeInSnsbase(authParams[0]);
 		UserInfo userInfo = getUserInfoByOpenid(openid);
 		return userInfo;
+	}
+
+	public List<User> getUsersOrderByItemNumTop8() {
+		return userDao.getUsersOrderByItemNumTop8();
 	}
 
 }

@@ -142,6 +142,10 @@ public class WechatWebController {
 	public String home(HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
 			HomePageInfo homePageInfo = wechatWebService.homePage(request);
+			model.addAttribute("tableUrls", homePageInfo.getTableURLs());
+			model.addAttribute("jsapi", homePageInfo.getJsApiParam());
+			model.addAttribute("users", homePageInfo.getTop8User());
+			model.addAttribute("items", homePageInfo.getTop15Item());
 
 			pageLogger(request, "/wechat/home", homePageInfo);
 		} catch (Exception e) {

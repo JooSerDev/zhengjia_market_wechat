@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
 %>
@@ -8,85 +9,160 @@
 <head lang="zh">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>main</title>
-<link rel="stylesheet" href="<%=path%>/include/core/icono.min.css">
-<link rel="stylesheet" href="<%=path%>/include/iScroll/scrollbar.css">
-<link rel="stylesheet" href="<%=path%>/include/core/myLess.css">
-<link rel="stylesheet"
-	href="<%=path%>/include/swiper/swiper-3.3.1.min.css">
+<title>正佳分享集市</title>
+<link rel="stylesheet" href="<%=path%>/include/css/home.css">
 </head>
 <body>
+	<div class="container" id="container">
+		<div class="banner">
+			<img src="">
+		</div>
 
-	<!-- scroller start -->
-	<div class="container" id="wrapper">
-		<div class="scroller" id="scroller">
+		<div class="cloud-up"></div>
 
-			<div class="row margin">
-				<!-- swiper start -->
-				<div class="swiper-container" id="mySwiper">
-					<div class="swiper-wrapper">
-						<div class="swiper-slide">
-							<img
-								src="http://ecmb.bdimg.com/tam-ogel/cc4e1f5be3c5773a63b08c9909441236_950_200.jpg">
-						</div>
-						<div class="swiper-slide">
-							<img
-								src="http://ecmb.bdimg.com/tam-ogel/9c8769a3b4a599aadb812405527ae42c_950_200.jpg">
+		<div class="ranks">
+			<div class="header"></div>
+			<div class="rank">
+				<div class="header">
+					<div class="label"></div>
+					<div class="text">热门人气社区TOP8</div>
+				</div>
+				<div class="grid">
+					<div class="item">
+						<div class="card">
+							<div class="icon"></div>
+							<div class="text">家居控</div>
 						</div>
 					</div>
-					<div class="swiper-pagination"></div>
+					<div class="item">
+						<div class="card">
+							<div class="icon"></div>
+							<div class="text">数码潮人</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="card">
+							<div class="icon"></div>
+							<div class="text">家居控</div>
+						</div>
+					</div>
+					<div class="item">
+						<div class="card">
+							<div class="icon"></div>
+							<div class="text">家居控</div>
+						</div>
+					</div>
+
 				</div>
-				<!-- swiper end -->
 			</div>
 
+			<!-- 分享达人 -->
+			<div class="rank">
+				<div class="header">
+					<div class="label"></div>
+					<div class="text">分享达人</div>
+				</div>
+				<div class="grid">
+					<c:forEach items="${users }" var="user">
+						<div class="item">
+							<div class="card">
+								<div class="headimg">
+									<img src="${user.headImgUrl }">
+									<div class="like-bar">
+										<div class="icon"></div>
+										<div class="text">${user.itemNum }</div>
+									</div>
+								</div>
+								<div class="text">${user.nickname }</div>
+							</div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
+
+			<!-- 小编推荐 -->
+			<div class="rank">
+				<div class="header">
+					<div class="label"></div>
+					<div class="text">小编推荐</div>
+				</div>
+				<div class="list">
+					<c:forEach items="${items }" var="ii">
+						<div class="item">
+							<div class="info">
+								<div class="head-img">
+									<img src="${ii.ownerInfo.headImgUrl }">
+								</div>
+								<div class="description">${ii.item.description}</div>
+
+								<div class="wishBar">
+									<div class="tag"></div>
+									<div class="wishItem">${ii.item.wishItem}</div>
+								</div>
+								<div class="img-view">
+									<img src="${ii.item.firstItemCenterImgUrl }">
+								</div>
+							</div>
+
+							<div class="foot-bar">
+								<div class="text">${ii.item.likeNum}</div>
+								<div class="likeNumTag"></div>
+							</div>
+
+							<div class="itemType"></div>
+						</div>
+					</c:forEach>
+				</div>
+			</div>
 
 		</div>
+
+		<div class="table_bar">
+			<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">
+			<input type="hidden" id="marketUrl" value="${tableUrls.marketUrl }">
+			<input type="hidden" id="meUrl" value="${tableUrls.meUrl }">
+
+			<div class="nav-view" id="table_bar_home">
+				<div class="table_bar_btn active">
+					<div class="logo-home"></div>
+					<div class="label">首页</div>
+				</div>
+			</div>
+			<div class="nav-view" id="table_bar_market">
+				<div class="table_bar_btn">
+					<div class="logo-market"></div>
+					<div class="label">集市</div>
+				</div>
+			</div>
+			<div class="nav-view">
+				<div class="table_bar_btn">
+					<div class="logo-active"></div>
+					<div class="label">活动</div>
+				</div>
+			</div>
+			<div class="nav-view" id="table_bar_me">
+				<div class="table_bar_btn">
+					<div class="logo-me"></div>
+					<div class="label">我</div>
+				</div>
+			</div>
+		</div>
+
+
 	</div>
-	<!-- scroller end -->
 
-	<div class="table_bar clearfix">
-		<div class="col-25 text-center" id="table_bar_home">
-			<div class="table_bar_btn active">
-				<div class="logo">
-					<div class="icono-home"></div>
-				</div>
-				<div class="label">首页</div>
-			</div>
-		</div>
-		<div class="col-25 text-center">
-			<div class="table_bar_btn">
-				<div class="logo">
-					<div class="icono-market"></div>
-				</div>
-				<div class="label">商店</div>
-			</div>
-		</div>
-		<div class="col-25 text-center">
-			<div class="table_bar_btn">
-				<div class="logo">
-					<div class="icono-cart"></div>
-				</div>
-				<div class="label">购物车</div>
-			</div>
-		</div>
-		<div class="col-25 text-center" id="table_bar_me">
-			<div class="table_bar_btn">
-				<div class="logo">
-					<div class="icono-gear"></div>
-				</div>
-				<div class="label">我的</div>
-			</div>
-		</div>
-	</div>
-
-	<script src="<%=path%>/include/iScroll/iscroll.js"></script>
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
-	<script src="<%=path%>/include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 
 	<script>
 		$(function() {
-			Core.mySwiper.loadSwiper();
+			Core.tableBar.init(0);
+
+			Core.resizeContainer();
+
+			$(window).resize(function() {
+				Core.resizeContainer();
+			});
 		});
 	</script>
 

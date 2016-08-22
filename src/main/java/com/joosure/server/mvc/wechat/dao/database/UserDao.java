@@ -1,5 +1,7 @@
 package com.joosure.server.mvc.wechat.dao.database;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.joosure.server.mvc.wechat.entity.pojo.User;
@@ -19,6 +21,8 @@ public interface UserDao {
 	public User getUserByOpenid(@Param("openid") String openid);
 
 	public User getUserByMobile(@Param("mobile") String mobile);
+	
+	public List<User> getUsersOrderByItemNumTop8();
 	/*
 	 * 基本用户信息相关 结束--------------------------------------------------------------
 	 */

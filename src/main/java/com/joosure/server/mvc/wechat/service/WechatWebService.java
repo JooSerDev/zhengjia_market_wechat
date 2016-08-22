@@ -20,6 +20,7 @@ import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
 import com.joosure.server.mvc.wechat.dao.database.UserDao;
 import com.joosure.server.mvc.wechat.entity.domain.ExchangeInfo;
+import com.joosure.server.mvc.wechat.entity.domain.ItemInfo;
 import com.joosure.server.mvc.wechat.entity.domain.Pages;
 import com.joosure.server.mvc.wechat.entity.domain.Redirecter;
 import com.joosure.server.mvc.wechat.entity.domain.TableURLs;
@@ -53,6 +54,8 @@ public class WechatWebService {
 	private ObjectStorageService objectStorageService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ItemService itemService;
 
 	@Autowired
 	private UserDao userDao;
@@ -106,9 +109,27 @@ public class WechatWebService {
 	 */
 	public HomePageInfo homePage(HttpServletRequest request) throws OAuthException {
 		HomePageInfo homePageInfo = new HomePageInfo();
+		String encodeOpenid = request.getParameter("eo");
+		UserInfo userInfo = userService.getUserInfoByEO(encodeOpenid);
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
 
-		UserInfo userInfo = createOrUpdateUserByWechatAuth(request);
 		homePageInfo.setUserInfo(userInfo);
+		try {
+			homePageInfo.setTableURLs(buildTableURLs(request, userInfo.getEncodeOpenid()));
+		} catch (Exception e) {
+			throw new OAuthException();
+		}
+		String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
+		JsApiParam jsApiParam = JsApiManager.signature(url);
+		homePageInfo.setJsApiParam(jsApiParam);
+
+		List<User> userTop8 = userService.getUsersOrderByItemNumTop8();
+		homePageInfo.setTop8User(userTop8);
+
+		List<ItemInfo> itemTop15 = itemService.getItemsRecommended();
+		homePageInfo.setTop15Item(itemTop15);
 
 		return homePageInfo;
 	}

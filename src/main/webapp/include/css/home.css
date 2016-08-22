@@ -512,59 +512,33 @@ textarea {
 .fab.withTableBar {
   bottom: 90px;
 }
-.me-view {
-  padding: 20px 15px;
+.container {
+  padding-bottom: 67px;
+}
+.banner {
+  width: 100%;
+}
+.banner > img {
+  width: 100%;
+}
+.ranks > .header {
+  height: 10px;
+  background: #0050a3;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: -5px;
+}
+.ranks > .rank {
   margin: 10px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
 }
-.me-head {
-  padding: 20px 15px;
-  margin: 10px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
+.ranks > .rank:last-child {
+  margin-bottom: 0;
 }
-.me-head > .head-img {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto;
-  border: 2px solid #fff;
-  border-radius: 32px;
-}
-.me-head > .head-img > img {
-  width: 64px;
-  height: 64px;
-  border-radius: 32px;
-}
-.me-head > .nickname {
-  text-align: center;
-  color: #ffffff;
-  font-size: 16px;
-  line-height: 30px;
-  padding: 3px 0;
-}
-.me-head > .sex1,
-.me-head .sex2 {
-  width: 25px;
-  height: 25px;
-  margin: 0 auto;
-}
-.me-head > .sex1 {
-  background-color: #f00;
-}
-.me-head > .sex2 {
-  background-color: #f00;
-}
-.me-head > .info-view {
-  background-color: #ffffff;
-  border-radius: 8px;
-  padding: 20px 30px;
-  margin: 0 auto;
-  margin-top: 10px;
+.ranks > .rank > .header {
+  height: 30px;
   clear: both;
-  width: 200px;
 }
-.me-head > .info-view:after {
+.ranks > .rank > .header:after {
   clear: both;
   display: block;
   visibility: hidden;
@@ -572,39 +546,109 @@ textarea {
   overflow: hidden;
   content: ".";
 }
-.me-head > .info-view > .integral-icon,
-.me-head > .info-view .like-icon,
-.me-head > .info-view .v-icon {
+.ranks > .rank > .header > .label {
+  width: 95px;
+  height: 30px;
+  background: #f00;
+  float: left;
+}
+.ranks > .rank > .header > .text {
+  font-size: 13px;
+  color: #fff;
+  line-height: 30px;
+  height: 30px;
+}
+.ranks > .rank > .grid {
+  box-sizing: border-box;
+  margin: 10px -5px;
+  clear: both;
+}
+.ranks > .rank > .grid:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.ranks > .rank > .grid > .item {
+  box-sizing: border-box;
+  width: 25%;
+  float: left;
+  padding: 5px;
+}
+.ranks > .rank > .grid > .item > .card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px;
+}
+.ranks > .rank > .grid > .item > .card > .icon {
+  background: #edf0f5;
+  border-radius: 8px;
+  padding: 10px;
+}
+.ranks > .rank > .grid > .item > .card > .icon > img {
+  width: 100%;
+}
+.ranks > .rank > .grid > .item > .card > .headimg {
+  position: relative;
+}
+.ranks > .rank > .grid > .item > .card > .headimg > img {
+  width: 100%;
+  vertical-align: top;
+  border-radius: 4px;
+}
+.ranks > .rank > .grid > .item > .card > .headimg > .like-bar {
+  position: absolute;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+  line-height: 20px;
+  color: #fff;
+  clear: both;
+}
+.ranks > .rank > .grid > .item > .card > .headimg > .like-bar:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.ranks > .rank > .grid > .item > .card > .headimg > .like-bar > .icon {
   width: 20px;
   height: 20px;
-  background: #ff0;
+  background: #f00;
   float: left;
 }
-.me-head > .info-view > .integral,
-.me-head > .info-view .like,
-.me-head > .info-view .v {
+.ranks > .rank > .grid > .item > .card > .headimg > .like-bar > .text {
+  height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+.ranks > .rank > .grid > .item > .card > .text {
   font-size: 12px;
-  color: #000000;
-  float: left;
-  width: 35px;
-  height: 20px;
-  line-height: 20px;
-  padding-left: 5px;
+  margin: 4px 0;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 16px;
+  height: 16px;
+  word-break: break-all;
 }
-.me-head > .info-view > .line {
-  width: 9px;
-  height: 20px;
-  border-left: 1px solid #f1f1f1;
-  float: left;
-}
-.list-view {
-  padding: 20px 15px;
-  margin: 10px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
+.ranks > .rank > .list {
   clear: both;
+  position: relative;
+  padding-bottom: 20px;
+  margin-top: 10px;
+  /* 宝贝信息 */
 }
-.list-view:after {
+.ranks > .rank > .list:after {
   clear: both;
   display: block;
   visibility: hidden;
@@ -612,26 +656,131 @@ textarea {
   overflow: hidden;
   content: ".";
 }
-.list-view > .label {
-  font-size: 16px;
-  line-height: 25px;
+.ranks > .rank > .list.margin {
+  margin-bottom: 10px;
+}
+.ranks > .rank > .list > .item {
+  box-sizing: border-box;
+  padding: 8px;
+  background: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.ranks > .rank > .list > .item:last-child {
+  margin-bottom: 5px !important;
+}
+.ranks > .rank > .list > .item > .info {
+  position: relative;
+  /* 他想换 */
+}
+.ranks > .rank > .list > .item > .info > .head-img {
+  float: left;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+}
+.ranks > .rank > .list > .item > .info > .head-img > img {
+  width: 100%;
+  border-radius: 15px;
+}
+.ranks > .rank > .list > .item > .info > .description {
+  margin-left: 38px;
+  margin-right: 98px;
+  line-height: 20px;
+  font-size: 14px;
+  height: 60px;
+}
+.ranks > .rank > .list > .item > .info > .wishBar {
+  position: relative;
+  background: #f1f1f1;
+  min-height: 30px;
+  margin-left: -8px;
+  margin-right: -8px;
+  padding: 10px 8px;
+  clear: both;
+}
+.ranks > .rank > .list > .item > .info > .wishBar:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.ranks > .rank > .list > .item > .info > .wishBar > .tag {
+  height: 30px;
+  width: 30px;
+  background: #f00;
+  float: left;
+}
+.ranks > .rank > .list > .item > .info > .wishBar > .wishItem {
+  font-size: 14px;
+  line-height: 30px;
+  margin-left: 38px;
+  margin-right: 98px;
+  word-break: break-all;
+}
+.ranks > .rank > .list > .item > .info > .img-view {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 88px;
+  height: 88px;
+  border: 1px solid #fff;
+}
+.ranks > .rank > .list > .item > .info > .img-view > img {
+  width: 88px;
+  height: 88px;
+  vertical-align: top;
+  border-radius: 4px;
+}
+.ranks > .rank > .list > .item > .foot-bar {
+  margin-top: 10px;
+  clear: both;
+}
+.ranks > .rank > .list > .item > .foot-bar:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.ranks > .rank > .list > .item > .foot-bar > .text {
+  float: right;
+  font-size: 12px;
+  color: #5ea4ec;
+  margin-right: 25px;
+  line-height: 30px;
+}
+.ranks > .rank > .list > .item > .foot-bar > .commentNumTag,
+.ranks > .rank > .list > .item > .foot-bar .likeNumTag {
+  float: right;
+  width: 30px;
+  height: 30px;
+}
+.ranks > .rank > .list > .item > .itemType {
+  clear: both;
+  height: 30px;
+  min-width: 30px;
+  background: #e4007e;
+  display: inline-block;
+  margin-bottom: -25px;
+  border-radius: 3px;
+  padding: 0 10px;
+}
+.ranks > .rank > .list > .item > .itemType > .img {
+  width: 30px;
+  height: 30px;
+  float: left;
+}
+.ranks > .rank > .list > .item > .itemType > .img > img {
+  width: 30px;
+  height: 30px;
+}
+.ranks > .rank > .list > .item > .itemType > .text {
   float: left;
   color: #ffffff;
-}
-.list-view > .text {
-  float: right;
-  color: #FF8C31;
-  font-size: 16px;
-  line-height: 25px;
-}
-.add-item {
-  padding: 20px 15px;
-  margin: 10px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  margin-top: 20px;
-  font-size: 16px;
-  line-height: 25px;
-  color: #ffffff;
-  text-align: center;
+  font-size: 12px;
+  line-height: 30px;
 }

@@ -556,4 +556,28 @@ public class ItemService {
 
 	}
 
+	/**
+	 * 获得推荐前15的宝贝
+	 * 
+	 * @return
+	 */
+	public List<ItemInfo> getItemsRecommended() {
+		List<ItemInfo> infos = new ArrayList<>();
+		List<Item> list = itemDao.getItemsRecommended();
+		if (list.size() > 0) {
+			for (Iterator<Item> iterator = list.iterator(); iterator.hasNext();) {
+				Item item = iterator.next();
+				User user = userService.getUserById(item.getOwnerId());
+				if (item != null && user != null) {
+					ItemInfo ii = new ItemInfo();
+					ii.setItem(item);
+					ii.setOwnerInfo(user);
+					infos.add(ii);
+				}
+			}
+		}
+
+		return infos;
+	}
+
 }

@@ -34,6 +34,11 @@
 		where mobile= #{mobile} limit 1;
 	</select>
 
+	<select id="getUsersOrderByItemNumTop8" resultType="com.joosure.server.mvc.wechat.entity.pojo.User">
+		select * from
+		user_user where state = 0 order by itemNum desc limit 8;
+	</select>
+
 	<!-- 基本用户信息相关-结束 -->
 
 	<!-- 微信用户信息相关-开始 -->

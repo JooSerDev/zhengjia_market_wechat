@@ -46,7 +46,7 @@
 					</div>
 					<div class="radio-view">
 						<input type="radio" id="radio_${item.itemId }" name="radio-1-set"
-							class="regular-radio" /><label for="radio_${item.itemId }">
+							class="regular-radio" /><label for="radio_${item.itemId }"></label>
 					</div>
 				</div>
 			</c:forEach>

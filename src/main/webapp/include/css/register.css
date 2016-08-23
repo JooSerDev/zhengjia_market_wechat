@@ -421,3 +421,79 @@ textarea {
   user-select: none;
   display: inline-block;
 }
+body {
+  background: #0050a3;
+}
+.container {
+  background: 0;
+}
+.h3 {
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+  margin: 20px;
+}
+.h6 {
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+  margin-top: 4px;
+}
+.input-view {
+  padding: 10px;
+  clear: both;
+}
+.input-view:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.input-view .block-input {
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 20px;
+}
+.input-view .block-btn {
+  background: #e456a4;
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px;
+  border: 0;
+  font-size: 14px;
+  color: #fff;
+  line-height: 20px;
+}
+.input-view > .code-view {
+  box-sizing: border-box;
+  width: 60%;
+  padding-right: 8px;
+  float: left;
+}
+.input-view > .btn-view {
+  box-sizing: border-box;
+  width: 40%;
+  float: left;
+}
+.submit-view {
+  padding: 10px;
+  margin-top: 20px;
+}
+.submit-view > .submit-btn {
+  border-radius: 8px;
+  padding: 8px;
+  border: 0;
+  font-size: 14px;
+  color: #e456a4;
+  line-height: 20px;
+  background: #fff;
+  text-align: center;
+  width: 150px;
+  margin: 0 auto;
+}

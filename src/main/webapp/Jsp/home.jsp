@@ -147,14 +147,44 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 
+	<input type="hidden" id="appid" value="${jsapi.appid}">
+	<input type="hidden" id="nonceStr" value="${jsapi.nonceStr}">
+	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
+	<input type="hidden" id="signature" value="${jsapi.signature}">
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 
 	<script>
+		var jsapiparam = {};
+		jsapiparam.appid = document.getElementById("appid").value;
+		jsapiparam.nonceStr = document.getElementById("nonceStr").value;
+		jsapiparam.timeStamp = document.getElementById("timeStamp").value;
+		jsapiparam.signature = document.getElementById("signature").value;
+
+		jsapiparam.isWxJsApiReady = false;
+
+		wx.config({
+			debug : false,
+			appId : jsapiparam.appid,
+			timestamp : jsapiparam.timeStamp,
+			nonceStr : jsapiparam.nonceStr,
+			signature : jsapiparam.signature,
+			jsApiList : [ "hideOptionMenu" ]
+		});
+
+		wx.ready(function() {
+			jsapiparam.isWxJsApiReady = true;
+			wx.hideOptionMenu();
+		});
+
+		wx.error(function(res) {
+			wx.hideOptionMenu();
+		});
+
 		$(function() {
 			Core.tableBar.init(0);
 

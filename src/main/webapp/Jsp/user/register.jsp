@@ -9,39 +9,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <title>add item</title>
-<link rel="stylesheet" href="<%=path%>/include/core/icono.min.css">
-<link rel="stylesheet" href="<%=path%>/include/iScroll/scrollbar.css">
-<link rel="stylesheet" href="<%=path%>/include/core/myLess.css">
-<link rel="stylesheet"
-	href="<%=path%>/include/swiper/swiper-3.3.1.min.css">
+<link rel="stylesheet" href="<%=path%>/include/css/register.css">
 </head>
 <body>
 
+	<div class="container" id="container">
 
-	<!-- scroller start -->
-	<div class="container" id="wrapper">
-		<div class="scroller" id="scroller">
+		<div class="cloud"></div>
+		<div class="h3">完善您的个人信息</div>
 
-			<div class="row margin">
-				<input type="text" id="mobile" placeholder="手机号码">
-			</div>
-
-			<div class="row margin">
-				<input type="text" id="checkCode" placeholder="短信验证码">
-			</div>
-
-			<div class="row margin">
-				<button class="countdown btn" onclick="evens.onSendCheckCodeClick()">发送验证码</button>
-			</div>
-
-			<div class="row margin">
-				<button class="btn btn-block" onclick="evens.onSubmitClick()">提交申请</button>
-			</div>
-
-
+		<div class="input-view">
+			<input class="block-input" type="text" placeholder="请输入手机号码"
+				maxlength="11" id="mobile">
 		</div>
+
+		<div class="input-view">
+			<div class="code-view">
+				<input class="block-input" type="text" placeholder="请输入验证码"
+					maxlength="6" id="checkCode">
+			</div>
+			<div class="btn-view">
+				<button class="block-btn" onclick="evens.onSendCheckCodeClick()">点击获取验证码</button>
+			</div>
+		</div>
+
+		<div class="submit-view">
+			<div class="submit-btn" onclick="evens.onSubmitClick()">提交资料</div>
+		</div>
+
+		<div class="h6">个人信息隐私说明</div>
+
+
 	</div>
-	<!-- scroller end -->
 
 	<input type="hidden" id="eo" value="${eo}">
 
@@ -50,9 +49,7 @@
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
 	<input type="hidden" id="signature" value="${jsapi.signature}">
 
-	<script src="<%=path%>/include/iScroll/iscroll.js"></script>
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
-	<script src="<%=path%>/include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script src="<%=path%>/include/page/register.js"></script>

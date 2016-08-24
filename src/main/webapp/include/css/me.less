@@ -1,7 +1,8 @@
 @import 'base.less';
 @import 'tableBar.less';
-
-
+.container{
+    padding-bottom: 67px;
+}
 
 @me-view-padding-width : 15px;
 @me-view-padding-height : 20px;
@@ -35,12 +36,15 @@
     }
     >.sex1,
     .sex2 {
-        width: 25px;
-        height: 25px;
+        width: 16px;
+        height: 16px;
         margin: 0 auto;
     }
     >.sex1 {
-        background-color: #f00;
+        background: url('../images/logos.png');
+        background-size: 160px auto;
+        background-repeat: no-repeat;
+        background-position: -18px -162px;
     }
     >.sex2 {
         background-color: #f00;
@@ -60,6 +64,24 @@
             height: 20px;
             background: #ff0;
             .pull-left
+        }
+        >.integral-icon {
+            background: url('../images/logos.png');
+            background-size: 160px auto;
+            background-repeat: no-repeat;
+            background-position: -122px -181px;
+        }
+        >.like-icon {
+            background: url('../images/logos.png');
+            background-size: 160px auto;
+            background-repeat: no-repeat;
+            background-position: -101px -181px;
+        }
+        >.v-icon {
+            background: url('../images/logos.png');
+            background-size: 160px auto;
+            background-repeat: no-repeat;
+            background-position: -80px -181px;
         }
         >.integral,
         .like,

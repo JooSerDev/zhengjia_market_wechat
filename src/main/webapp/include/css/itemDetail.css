@@ -504,6 +504,7 @@ body {
 }
 .content-view > .itemImg > img {
   width: 100%;
+  border-radius: 3px;
 }
 .content-view > .itemImg:last-child {
   margin-bottom: 20px;
@@ -524,9 +525,13 @@ body {
 }
 .content-view > .wish > .icon {
   float: left;
-  width: 30px;
-  height: 30px;
-  background: #f00;
+  height: 24px;
+  width: 24px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -24px -136px;
+  margin: 3px;
 }
 .content-view > .wish > .text {
   height: 30px;
@@ -556,7 +561,10 @@ body {
   float: left;
   width: 20px;
   height: 20px;
-  background: #f00;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -40px -180px;
 }
 .content-view > .like-view > .text {
   float: left;
@@ -594,8 +602,11 @@ body {
 .comment-view > .header > .count > .icon {
   width: 20px;
   height: 20px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: 0px -180px;
   float: left;
-  background: #f00;
 }
 .comment-view > .header > .count > .text {
   float: left;

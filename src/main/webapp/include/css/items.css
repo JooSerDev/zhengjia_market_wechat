@@ -466,7 +466,7 @@ textarea {
   width: 40px;
   height: 36px;
   margin: 0 auto;
-  background: url('../images/bar_bt3.png');
+  background: url('../images/logos.png');
   background-size: 160px auto;
   background-repeat: no-repeat;
 }
@@ -512,6 +512,15 @@ textarea {
 .fab.withTableBar {
   bottom: 90px;
 }
+.fab > .icon {
+  height: 24px;
+  width: 24px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -72px -136px;
+  margin: 13px;
+}
 .search-bar {
   clear: both;
   position: relative;
@@ -544,11 +553,15 @@ textarea {
 }
 .search-bar > .search-input-view > .search-btn {
   position: absolute;
-  height: 30px;
   left: 0;
   top: 0;
-  width: 30px;
-  background: #f00;
+  height: 20px;
+  width: 20px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -61px -182px;
+  margin: 5px;
 }
 .search-bar > .search-btn-view {
   position: absolute;
@@ -556,17 +569,31 @@ textarea {
   top: 10px;
   height: 30px;
   width: 100px;
+  clear: both;
+}
+.search-bar > .search-btn-view:after {
+  clear: both;
+  display: block;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  content: ".";
+}
+.search-bar > .search-btn-view > .icon {
+  width: 24px;
+  height: 24px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -49px -136px;
+  margin: 3px;
+  float: right;
 }
 .search-bar > .search-btn-view > .text {
   line-height: 30px;
   font-size: 16px;
   text-align: right;
-}
-.cloud {
-  background: url('../images/cloud3.png') no-repeat center center;
-  background-size: auto 36px;
-  width: 100%;
-  height: 36px;
+  float: right;
 }
 /* 宝贝列表 */
 .items {
@@ -632,15 +659,18 @@ textarea {
   float: right;
   height: 30px;
   line-height: 30px;
-  font-size: 15px;
+  font-size: 12px;
 }
 .items > .item > .title > .recommended {
   margin-top: -10px;
   margin-left: 10px;
   float: right;
-  width: 30px;
-  height: 40px;
-  background-color: #f00;
+  width: 34px;
+  height: 44px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -4px -337px;
 }
 .items > .item > .description {
   position: relative;
@@ -694,9 +724,13 @@ textarea {
   content: ".";
 }
 .items > .item > .wishBar > .tag {
-  height: 30px;
-  width: 30px;
-  background: #f00;
+  height: 24px;
+  width: 24px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -24px -136px;
+  margin: 3px;
   float: left;
 }
 .items > .item > .wishBar > .wishItem {
@@ -727,8 +761,18 @@ textarea {
 .items > .item > .foot-bar > .commentNumTag,
 .items > .item > .foot-bar .likeNumTag {
   float: right;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+}
+.items > .item > .foot-bar > .commentNumTag {
+  background-position: 0px -179px;
+}
+.items > .item > .foot-bar > .likeNumTag {
+  background-position: -22px -179px;
 }
 .items > .item > .itemType {
   clear: both;

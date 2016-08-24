@@ -22,6 +22,7 @@
 			</div>
 			<div class="search-btn-view">
 				<div class="text">全部分类</div>
+				<div class="icon"></div>
 			</div>
 		</div>
 		<div class="cloud"></div>
@@ -39,7 +40,9 @@
 			<div class="pull-up-text">加载中</div>
 		</div>
 
-		<div class="fab withTableBar" id="fab"></div>
+		<div class="fab withTableBar" id="fab">
+			<div class="icon"></div>
+		</div>
 
 		<div class="table_bar">
 			<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">

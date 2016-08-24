@@ -1,7 +1,6 @@
 @import 'base.less';
-
-body{
-	background-color: @color-s2;
+body {
+    background-color: @color-s2;
 }
 
 .container {
@@ -78,6 +77,7 @@ body{
     >.itemImg {
         >img {
             width: 100%;
+            border-radius: 3px;
         }
         &:last-child {
             margin-bottom: 20px;
@@ -90,9 +90,13 @@ body{
         .clearfix;
         >.icon {
             .pull-left;
-            width: 30px;
-            height: 30px;
-            background: #f00;
+            height: 24px;
+            width: 24px;
+            background: url('../images/logos.png');
+            background-size: 160px auto;
+            background-repeat: no-repeat;
+            background-position: -24px -136px;
+            margin: 3px;
         }
         >.text {
             height: 30px;
@@ -115,7 +119,10 @@ body{
             .pull-left;
             width: 20px;
             height: 20px;
-            background: #f00;
+            background: url('../images/logos.png');
+            background-size: 160px auto;
+            background-repeat: no-repeat;
+            background-position: -40px -180px;
         }
         >.text {
             .pull-left;
@@ -145,8 +152,11 @@ body{
             >.icon {
                 width: 20px;
                 height: 20px;
+                background: url('../images/logos.png');
+                background-size: 160px auto;
+                background-repeat: no-repeat;
+                background-position: -0px -180px;
                 .pull-left;
-                background: #f00;
             }
             >.text {
                 .pull-left;
@@ -229,8 +239,8 @@ body{
 }
 
 .comment-post-view {
-	display: none;
-	padding-top: @view-padding-height;
+    display: none;
+    padding-top: @view-padding-height;
     >.comment-input {
         margin: @view-padding-height @view-padding-width;
         margin-top: 0;

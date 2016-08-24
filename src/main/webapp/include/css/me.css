@@ -466,7 +466,7 @@ textarea {
   width: 40px;
   height: 36px;
   margin: 0 auto;
-  background: url('../images/bar_bt3.png');
+  background: url('../images/logos.png');
   background-size: 160px auto;
   background-repeat: no-repeat;
 }
@@ -512,6 +512,18 @@ textarea {
 .fab.withTableBar {
   bottom: 90px;
 }
+.fab > .icon {
+  height: 24px;
+  width: 24px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -72px -136px;
+  margin: 13px;
+}
+.container {
+  padding-bottom: 67px;
+}
 .me-view {
   padding: 20px 15px;
   margin: 10px;
@@ -545,12 +557,15 @@ textarea {
 }
 .me-head > .sex1,
 .me-head .sex2 {
-  width: 25px;
-  height: 25px;
+  width: 16px;
+  height: 16px;
   margin: 0 auto;
 }
 .me-head > .sex1 {
-  background-color: #f00;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -18px -162px;
 }
 .me-head > .sex2 {
   background-color: #f00;
@@ -579,6 +594,24 @@ textarea {
   height: 20px;
   background: #ff0;
   float: left;
+}
+.me-head > .info-view > .integral-icon {
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -122px -181px;
+}
+.me-head > .info-view > .like-icon {
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -101px -181px;
+}
+.me-head > .info-view > .v-icon {
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -80px -181px;
 }
 .me-head > .info-view > .integral,
 .me-head > .info-view .like,

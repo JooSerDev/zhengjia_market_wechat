@@ -15,7 +15,7 @@
 <body>
 	<div class="container" id="container">
 		<div class="banner">
-			<img src="">
+			<img src="<%=path%>/include/images/banner.png">
 		</div>
 
 		<div class="cloud-up"></div>
@@ -24,7 +24,7 @@
 			<div class="header"></div>
 			<div class="rank">
 				<div class="header">
-					<div class="label"></div>
+					<div class="label bbs"></div>
 					<div class="text">热门人气社区TOP8</div>
 				</div>
 				<div class="grid">
@@ -59,7 +59,7 @@
 			<!-- 分享达人 -->
 			<div class="rank">
 				<div class="header">
-					<div class="label"></div>
+					<div class="label users"></div>
 					<div class="text">分享达人</div>
 				</div>
 				<div class="grid">
@@ -83,7 +83,7 @@
 			<!-- 小编推荐 -->
 			<div class="rank">
 				<div class="header">
-					<div class="label"></div>
+					<div class="label items"></div>
 					<div class="text">小编推荐</div>
 				</div>
 				<div class="list">

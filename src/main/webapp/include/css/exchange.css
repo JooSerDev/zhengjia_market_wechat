@@ -471,9 +471,13 @@ textarea {
 }
 .target-item-view > .wish > .icon {
   float: left;
-  background: #f00;
-  height: 30px;
-  width: 30px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -24px -136px;
+  margin: 3px;
+  height: 24px;
+  width: 24px;
 }
 .target-item-view > .wish > .text {
   padding-left: 40px;

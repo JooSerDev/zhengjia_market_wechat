@@ -47,7 +47,9 @@
 			</div>
 
 			<div class="img-group-view">
-				<div class="cameraBtnView" onclick="evens.onCameraClick()"></div>
+				<div class="cameraBtnView" onclick="evens.onCameraClick()">
+					<div class="icon"></div>
+				</div>
 			</div>
 
 			<div class="list input-view">

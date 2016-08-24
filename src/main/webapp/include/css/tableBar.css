@@ -198,7 +198,7 @@
   width: 40px;
   height: 36px;
   margin: 0 auto;
-  background: url('../images/bar_bt3.png');
+  background: url('../images/logos.png');
   background-size: 160px auto;
   background-repeat: no-repeat;
 }
@@ -243,4 +243,13 @@
 }
 .fab.withTableBar {
   bottom: 90px;
+}
+.fab > .icon {
+  height: 24px;
+  width: 24px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -72px -136px;
+  margin: 13px;
 }

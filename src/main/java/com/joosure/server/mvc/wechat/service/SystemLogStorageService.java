@@ -1,8 +1,14 @@
 package com.joosure.server.mvc.wechat.service;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.joosure.server.mvc.wechat.dao.database.SystemFunctionDao;
+import com.joosure.server.mvc.wechat.entity.pojo.PageViewLog;
 
 /**
  * 统一处理系统日志
@@ -12,6 +18,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SystemLogStorageService {
+
+	@Autowired
+	private SystemFunctionDao systemFunctionDao;
 
 	private static final Logger DefaultLogger = LoggerFactory.getLogger("DefaultLogger");
 	private static final Logger SystemExceptionLogger = LoggerFactory.getLogger("SystemException");
@@ -42,6 +51,14 @@ public class SystemLogStorageService {
 	public void pageLogger(String URI, String ip, int userId) {
 		String log = URI + "#*#" + ip + "#*#" + userId;
 		PageAccessLogger.info(log);
+
+		PageViewLog pvl = new PageViewLog();
+		pvl.setAccessState(PageViewLog.ACCESS_STATE_SUCCESS);
+		pvl.setIp(ip);
+		pvl.setCreateTime(new Date());
+		pvl.setUri(URI);
+		pvl.setUserId(userId);
+		systemFunctionDao.savePageViewLog(pvl);
 	}
 
 	public void smsLogger(String mobile, String content) {

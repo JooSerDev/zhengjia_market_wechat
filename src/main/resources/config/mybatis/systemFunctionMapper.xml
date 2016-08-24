@@ -19,5 +19,12 @@
 		timestamp > #{timestamp};
 	</select>
 
+	<insert id="savePageViewLog">
+		insert into sys_page_view_log
+		(uri,ip,userId,accessState,createTime,remark)
+		values
+		(#{uri},#{ip},#{userId},#{accessState},#{createTime},#{remark});
+	</insert>
+
 
 </mapper>

@@ -3,6 +3,7 @@ package com.joosure.server.mvc.wechat.dao.database;
 import org.apache.ibatis.annotations.Param;
 
 import com.joosure.server.mvc.wechat.entity.pojo.CheckCode;
+import com.joosure.server.mvc.wechat.entity.pojo.PageViewLog;
 
 public interface SystemFunctionDao {
 
@@ -12,5 +13,7 @@ public interface SystemFunctionDao {
 
 	public CheckCode getCheckCodeInTime(@Param("mobile") String mobile, @Param("code") String code,
 			@Param("timestamp") Long timestamp);
+	
+	public void savePageViewLog(PageViewLog pageViewLog);
 
 }

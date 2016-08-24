@@ -663,6 +663,7 @@ textarea {
   text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
   line-height: 16px;
   height: 16px;
   word-break: break-all;

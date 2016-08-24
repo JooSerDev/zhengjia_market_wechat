@@ -4,10 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <title>my items</title>
-<link rel="stylesheet" href="../include/core/icono.min.css">
-<link rel="stylesheet" href="../include/iScroll/scrollbar.css">
 <link rel="stylesheet" href="../include/css/items.css">
-<link rel="stylesheet" href="../include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
 	<div class="container" id="container" style="margin-bottom: 60px;">
@@ -19,6 +16,42 @@
 			<div class="search-btn-view">
 				<div class="text">全部分类</div>
 				<div class="icon"></div>
+			</div>
+			<div class="screening-bar">
+				<div class="grid">
+					<div class="item">
+						<div class="type-btn">我是五个字</div>
+					</div>
+					<div class="item">
+						<div class="type-btn">我这是六个字</div>
+					</div>
+					<div class="item">
+						<div class="type-btn">{itemType}</div>
+					</div>
+					<div class="item">
+						<div class="type-btn">{itemType}</div>
+					</div>
+					<div class="item">
+						<div class="type-btn">{itemType}</div>
+					</div>
+					<div class="item">
+						<div class="type-btn">{itemType}</div>
+					</div>
+					<div class="item">
+						<div class="type-btn">{itemType}</div>
+					</div>
+					<div class="item">
+						<div class="type-btn">{itemType}</div>
+					</div>
+				</div>
+				<div class="btn-view">
+					<div class="isRecommended active">
+						<div class="ball"></div>
+					</div>
+					<div class="text">小编推荐</div>
+					<div class="ok-btn"></div>
+					<div class="cancel-btn"></div>
+				</div>
 			</div>
 		</div>
 		<div class="cloud"></div>
@@ -208,18 +241,12 @@
 	</div>
 	</template>
 
-	<script src="../include/iScroll/iscroll.js"></script>
 	<script src="../include/jquery/jquery.min.js"></script>
-	<script src="../include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="../include/core/core.js"></script>
 
 	<script>
 		$(function() {
-			$(window).scroll(function() {
-				$("#fab").animate({
-					left : '-50px'
-				}, 1000);
-			});
+			$(".screening-bar").slideDown();
 		});
 	</script>
 </body>

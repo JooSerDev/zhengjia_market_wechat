@@ -2,8 +2,9 @@
 @import 'tableBar.less';
 .search-bar {
     .row;
-    .view;
+    padding: 10px 10px;
     background: @color-fg;
+    z-index: 20;
     >.search-input-view {
         position: relative;
         margin-right: 130px;
@@ -51,6 +52,81 @@
             font-size: 16px;
             text-align: right;
             .pull-right;
+        }
+    }
+    >.screening-bar {
+        position: absolute;
+        top: 40px;
+        left: 0px;
+        box-sizing: border-box;
+        width: 100%;
+        background: #fff;
+        padding: 15px;
+        padding-top: 20px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        display: none;
+        -webkit-box-shadow: 0 2px 4px 0 #494949;
+        box-shadow: 0 2px 4px 0 #494949;
+        >.grid {
+            margin: 0 -15px;
+            padding: 0 4px;
+            .clearfix;
+            >.item {
+                box-sizing: border-box;
+                .col-25;
+                padding: 2px 5px;
+                >.type-btn {
+                    padding: 10px 4px;
+                    border-radius: 4px;
+                    background: @color-bg;
+                    font-size: 12px;
+                    line-height: 18px;
+                    height: 18px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                }
+            }
+        }
+        >.btn-view {
+            margin-top: 10px;
+            .clearfix;
+            >.isRecommended {
+                .pull-left;
+                position: relative;
+                height: 30px;
+                width: 45px;
+                border-radius: 15px;
+                background: @color-bg;
+                padding: 2px;
+                box-sizing: border-box;
+                &.active {
+                    background: #44db5e;
+                    >.ball {
+                        margin-left: 14px;
+                    }
+                }
+                >.ball {
+                    width: 26px;
+                    height: 26px;
+                    border-radius: 14px;
+                    background: #fff;
+                }
+            }
+            >.text {
+                color: #ff8c31;
+                font-size: 14px;
+                line-height: 30px;
+                .pull-left;
+                margin-left: 10px;
+            }
+            >.ok-btn,
+            .cancel-btn {
+                .pull-right;
+                height: 32px;
+                width: 32px;
+            }
         }
     }
 }

@@ -65,7 +65,7 @@
 				<div class="grid">
 					<c:forEach items="${users }" var="user">
 						<div class="item">
-							<div class="card">
+							<div class="card" onclick="evens.onUserClick('${user.openid}')">
 								<div class="headimg">
 									<img src="${user.headImgUrl }">
 									<div class="like-bar">
@@ -88,7 +88,7 @@
 				</div>
 				<div class="list">
 					<c:forEach items="${items }" var="ii">
-						<div class="item">
+						<div class="item" onclick="evens.onItemClick(${ii.item.itemId})">
 							<div class="info">
 								<div class="head-img">
 									<img src="${ii.ownerInfo.headImgUrl }">
@@ -154,7 +154,7 @@
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
 	<input type="hidden" id="signature" value="${jsapi.signature}">
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-	
+
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 
@@ -184,6 +184,8 @@
 		wx.error(function(res) {
 			wx.hideOptionMenu();
 		});
+		
+		var evens = {};
 
 		$(function() {
 			Core.tableBar.init(0);
@@ -193,6 +195,16 @@
 			$(window).resize(function() {
 				Core.resizeContainer();
 			});
+			
+			evens.onItemClick = function(id) {
+				var eo = Core.getQueryString("eo");
+				location.href = "item/item?ii=" + id + "&eo=" + eo;
+			}
+			
+			evens.onUserClick = function(id){
+				var eo = Core.getQueryString("eo");
+				location.href = "ta?eo="+eo+"&oi="+id;
+			}
 		});
 	</script>
 

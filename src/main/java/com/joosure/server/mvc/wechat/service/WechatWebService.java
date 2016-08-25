@@ -17,6 +17,7 @@ import org.sword.wechat4j.oauth.OAuthManager;
 import org.sword.wechat4j.oauth.protocol.get_userinfo.GetUserinfoResponse;
 
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
+import com.joosure.server.mvc.wechat.dao.cache.ItemCache;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
 import com.joosure.server.mvc.wechat.dao.database.UserDao;
 import com.joosure.server.mvc.wechat.entity.domain.ExchangeInfo;
@@ -36,12 +37,14 @@ import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyExchangesPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.TaPageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemComment;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.entity.pojo.UserWechatInfo;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
+import com.joosure.server.mvc.wechat.exception.RequestParamsException;
 import com.joosure.server.mvc.wechat.exception.UserIllegalException;
 import com.shawn.server.core.util.EncryptUtil;
 import com.shawn.server.core.util.StringUtil;
@@ -132,6 +135,37 @@ public class WechatWebService {
 		homePageInfo.setTop15Item(itemTop15);
 
 		return homePageInfo;
+	}
+
+	public TaPageInfo taPage(HttpServletRequest request, String encodeOpenid, String openid)
+			throws RequestParamsException, OAuthException {
+		TaPageInfo pageInfo = null;
+		UserInfo userInfo;
+		try {
+			userInfo = userService.getUserInfoByEO(encodeOpenid);
+		} catch (OAuthException e) {
+			throw new OAuthException();
+		}
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
+
+		UserInfo taInfo = userService.getUserInfoByOpenid(openid);
+		if (taInfo == null) {
+			throw new RequestParamsException();
+		}
+
+		pageInfo = new TaPageInfo();
+		pageInfo.setUserInfo(userInfo);
+		pageInfo.setUser(taInfo.getUser());
+		String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid + "&oi=" + openid;
+		JsApiParam jsApiParam = JsApiManager.signature(url);
+		pageInfo.setJsApiParam(jsApiParam);
+
+		List<Item> items = itemService.getItemsByOwnerId(taInfo.getUser().getUserId());
+		pageInfo.setItems(items);
+
+		return pageInfo;
 	}
 
 	/**
@@ -230,7 +264,7 @@ public class WechatWebService {
 				JsApiParam jsApiParam = JsApiManager.signature(url);
 				addItemPageInfo.setJsApiParam(jsApiParam);
 				addItemPageInfo.setUserInfo(userInfo);
-				addItemPageInfo.setItemTypes(itemDao.getItemTypes());
+				addItemPageInfo.setItemTypes(ItemCache.getItemTypes());
 			} else {
 				throw new OAuthException();
 			}
@@ -337,24 +371,41 @@ public class WechatWebService {
 	 * @param encodeOpenid
 	 * @param request
 	 * @return
+	 * @throws OAuthException
 	 * @throws Exception
 	 */
-	public ItemsPageInfo itemsPage(String encodeOpenid, HttpServletRequest request) throws Exception {
-		UserInfo userInfo = userService.getUserInfoByEO(encodeOpenid);
-		if (userInfo != null) {
-			ItemsPageInfo pageInfo = new ItemsPageInfo();
+	public ItemsPageInfo itemsPage(String encodeOpenid, HttpServletRequest request) throws OAuthException {
+		try {
+			UserInfo userInfo;
+			try {
+				userInfo = userService.getUserInfoByEO(encodeOpenid);
+			} catch (OAuthException e) {
+				throw new OAuthException();
+			}
+			if (userInfo != null) {
+				ItemsPageInfo pageInfo = new ItemsPageInfo();
 
-			String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
-			JsApiParam jsApiParam = JsApiManager.signature(url);
+				String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
+				JsApiParam jsApiParam = JsApiManager.signature(url);
 
-			pageInfo.setJsApiParam(jsApiParam);
-			pageInfo.setUserInfo(userInfo);
-			pageInfo.setTableURLs(buildTableURLs(request, userInfo.getEncodeOpenid()));
+				pageInfo.setJsApiParam(jsApiParam);
+				pageInfo.setUserInfo(userInfo);
+				try {
+					pageInfo.setTableURLs(buildTableURLs(request, userInfo.getEncodeOpenid()));
+				} catch (Exception e) {
+					throw new OAuthException();
+				}
+				pageInfo.setItemTypes(ItemCache.getItemTypes());
 
-			return pageInfo;
-		} else {
-			throw new OAuthException();
+				return pageInfo;
+			} else {
+				throw new OAuthException();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+		return null;
+
 	}
 
 	/**

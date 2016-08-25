@@ -7,11 +7,11 @@ jsapiparam.signature = document.getElementById("signature").value;
 jsapiparam.isWxJsApiReady = false;
 
 wx.config({
-	debug : false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-	appId : jsapiparam.appid, // 必填，公众号的唯一标识
-	timestamp : jsapiparam.timeStamp, // 必填，生成签名的时间戳
-	nonceStr : jsapiparam.nonceStr, // 必填，生成签名的随机串
-	signature : jsapiparam.signature,// 必填，签名，见附录1
+	debug : false,
+	appId : jsapiparam.appid,
+	timestamp : jsapiparam.timeStamp,
+	nonceStr : jsapiparam.nonceStr,
+	signature : jsapiparam.signature,
 	jsApiList : [ "hideOptionMenu" ]
 });
 
@@ -30,16 +30,38 @@ var page = {
 	nextPage : true
 }
 
+var screeningBarOn = false;
 var keyword = "";
+var itemType = 0;
+var isRecommended = 0;
 
 $(function() {
 	Core.myScroll.endOffset = 61;
 	loadNextPage();
 	Core.myScroll.loadingNextAction = loadNextPage;
-	// Core.myScroll.loadingNextAction();
 	Core.myScroll.load();
 
 	Core.tableBar.init(1);
+
+	$(".isRecommended").on("click", function() {
+		if (isRecommended == 0) {
+			isRecommended = 1;
+			$(".isRecommended").addClass("active");
+		} else {
+			isRecommended = 0;
+			$(".isRecommended").removeClass("active");
+		}
+	});
+
+	$("#screening-bar-tig").on("click", function() {
+		if (!screeningBarOn) {
+			screeningBarOn = true;
+			$(".screening-bar").slideDown();
+		} else {
+			screeningBarOn = false;
+			$(".screening-bar").slideUp();
+		}
+	});
 
 	$("#searchBtn").on("click", function() {
 		keyword = $("#searchInput").val();
@@ -47,11 +69,54 @@ $(function() {
 		page.page = 1;
 		page.nextPage = true;
 		loadNextPage();
+
+		if (!screeningBarOn) {
+			screeningBarOn = true;
+			$(".screening-bar").slideDown();
+		} else {
+			screeningBarOn = false;
+			$(".screening-bar").slideUp();
+		}
+	});
+
+	$(".ok-btn").on("click", function() {
+		keyword = $("#searchInput").val();
+		$(".items").empty();
+		page.page = 1;
+		page.nextPage = true;
+		loadNextPage();
+
+		if (!screeningBarOn) {
+			screeningBarOn = true;
+			$(".screening-bar").slideDown();
+		} else {
+			screeningBarOn = false;
+			$(".screening-bar").slideUp();
+		}
+	});
+
+	$(".cancel-btn").on("click", function() {
+		$(".type-btn").removeClass("active");
+		itemType = 0;
+
+		if (!screeningBarOn) {
+			screeningBarOn = true;
+			$(".screening-bar").slideDown();
+		} else {
+			screeningBarOn = false;
+			$(".screening-bar").slideUp();
+		}
 	});
 
 	evens.onItemClick = function(id) {
 		var eo = Core.getQueryString("eo");
 		location.href = "item/item?ii=" + id + "&eo=" + eo;
+	}
+
+	evens.onItemTypeClick = function(it) {
+		itemType = it;
+		$(".type-btn").removeClass("active");
+		$("#itemType_" + it).addClass("active");
 	}
 });
 
@@ -137,7 +202,9 @@ var loadNextPage = function() {
 			data : {
 				eo : eo,
 				page : pageNum,
-				keyword : keyword
+				keyword : keyword,
+				itemType : itemType,
+				isRecommended : isRecommended
 			},
 			type : "POST",
 			success : function(data) {

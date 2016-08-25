@@ -29,13 +29,13 @@
 
 				<div class="info-view">
 					<div class="integral-icon"></div>
-					<div class="integral">12345</div>
+					<div class="integral"></div>
 					<div class="line"></div>
 					<div class="like-icon"></div>
 					<div class="like">${user.likeNum}</div>
 					<div class="line"></div>
 					<div class="v-icon"></div>
-					<div class="v">123</div>
+					<div class="v">${user.exchangeNum}</div>
 				</div>
 			</div>
 

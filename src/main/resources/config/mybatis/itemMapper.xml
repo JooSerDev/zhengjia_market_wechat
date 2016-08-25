@@ -64,6 +64,8 @@
 		select * from
 		item_item where approvalStatus = 'yes'
 		<if test="keyword != null and keyword != ''"> and description like '%${keyword}%' </if>
+		<if test="itemType != 0"> and itemType = ${itemType} </if>
+		<if test="isRecommended != 0"> and isRecommended = 1 </if>
 		order by refreshTime desc limit
 		#{startRow},#{limitSize};
 	</select>

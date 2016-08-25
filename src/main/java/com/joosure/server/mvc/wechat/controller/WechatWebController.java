@@ -31,6 +31,7 @@ import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyExchangesPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.TaPageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
 import com.joosure.server.mvc.wechat.exception.RequestParamsException;
@@ -146,6 +147,7 @@ public class WechatWebController {
 			model.addAttribute("jsapi", homePageInfo.getJsApiParam());
 			model.addAttribute("users", homePageInfo.getTop8User());
 			model.addAttribute("items", homePageInfo.getTop15Item());
+			model.addAttribute("eo", homePageInfo.getUserInfo().getEncodeOpenid());
 
 			pageLogger(request, "/wechat/home", homePageInfo);
 		} catch (Exception e) {
@@ -181,6 +183,37 @@ public class WechatWebController {
 			return errorPageRouter(e, "WechatWebController.me");
 		}
 		return "me";
+	}
+
+	/**
+	 * ta的信息页面
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/ta")
+	public String ta(HttpServletRequest request, HttpServletResponse response, Model model) {
+		try {
+			String eo = request.getParameter("eo");
+			String openid = request.getParameter("oi");
+			TaPageInfo pageInfo = wechatWebService.taPage(request, eo, openid);
+
+			model.addAttribute("user", pageInfo.getUser());
+			model.addAttribute("items", pageInfo.getItems());
+			model.addAttribute("jsapi", pageInfo.getJsApiParam());
+
+			String redirectUrl = registeredValidAndRedirect(pageInfo.getUserInfo(), request);
+			if (redirectUrl != null) {
+				return redirectUrl;
+			}
+
+			pageLogger(request, "/wechat/ta", pageInfo);
+		} catch (Exception e) {
+			return errorPageRouter(e, "WechatWebController.me");
+		}
+		return "user/ta";
 	}
 
 	/**
@@ -345,6 +378,7 @@ public class WechatWebController {
 			model.addAttribute("eo", pageInfo.getUserInfo().getEncodeOpenid());
 			model.addAttribute("jsapi", pageInfo.getJsApiParam());
 			model.addAttribute("tableUrls", pageInfo.getTableURLs());
+			model.addAttribute("itemTypes", pageInfo.getItemTypes());
 
 			pageLogger(request, "/wechat/market", pageInfo);
 		} catch (Exception e) {
@@ -651,7 +685,23 @@ public class WechatWebController {
 
 			String keyword = request.getParameter("keyword");
 
-			List<ItemInfo> items = itemService.loadItems(eo, pageNum, keyword);
+			String itemTypeStr = request.getParameter("itemType");
+			int itemType = 0;
+			try {
+				itemType = Integer.parseInt(itemTypeStr);
+			} catch (Exception e) {
+				throw new NumberFormatException("can not format the page number");
+			}
+
+			String isRecommendedStr = request.getParameter("isRecommended");
+			int isRecommended = 0;
+			try {
+				isRecommended = Integer.parseInt(isRecommendedStr);
+			} catch (Exception e) {
+				throw new NumberFormatException("can not format the page number");
+			}
+
+			List<ItemInfo> items = itemService.loadItems(eo, pageNum, keyword, itemType, isRecommended);
 			ar.putData("iteminfos", items);
 			ar.putData("nextPage", items.size() == Pages.DEFAULT_PAGE_SIZE ? 1 : 0);
 			ar.setErrCode("0");

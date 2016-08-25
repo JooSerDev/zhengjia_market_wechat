@@ -20,9 +20,28 @@
 				<div class="search-btn" id="searchBtn"></div>
 				<input type="text" id="searchInput">
 			</div>
-			<div class="search-btn-view">
+			<div class="search-btn-view" id="screening-bar-tig">
 				<div class="text">全部分类</div>
 				<div class="icon"></div>
+			</div>
+			<div class="screening-bar">
+				<div class="grid">
+					<c:forEach items="${itemTypes}" var="it">
+						<div class="item">
+							<div class="type-btn"
+								onclick="evens.onItemTypeClick(${it.typeId })"
+								id="itemType_${it.typeId }">${it.name }</div>
+						</div>
+					</c:forEach>
+				</div>
+				<div class="btn-view">
+					<div class="isRecommended">
+						<div class="ball"></div>
+					</div>
+					<div class="text">小编推荐</div>
+					<div class="ok-btn"></div>
+					<div class="cancel-btn"></div>
+				</div>
 			</div>
 		</div>
 		<div class="cloud"></div>

@@ -29,7 +29,7 @@ public interface ItemDao {
 
 	public List<Item> getItemsByOwnerIdPages(@Param("ownerId") int ownerId, @Param("startRow") int startRow,
 			@Param("limitSize") int limitSize);
-	
+
 	public List<Item> getItemsRecommended();
 
 	/**
@@ -39,7 +39,8 @@ public interface ItemDao {
 	 * @param limitSize
 	 * @return
 	 */
-	public List<Item> getMarketItemsPages(@Param("keyword") String keyword, @Param("startRow") int startRow,
+	public List<Item> getMarketItemsPages(@Param("keyword") String keyword, @Param("itemType") int itemType,
+			@Param("isRecommended") int isRecommended, @Param("startRow") int startRow,
 			@Param("limitSize") int limitSize);
 
 	/**
@@ -55,10 +56,10 @@ public interface ItemDao {
 	 */
 
 	public void saveItemComment(ItemComment itemComment);
-	
+
 	public List<ItemComment> getItemCommentByItemIdPages(@Param("itemId") int itemId, @Param("startRow") int startRow,
 			@Param("limitSize") int limitSize);
-	
+
 	public void saveExchange(Exchange exchange);
 
 	public void updateExchange(Exchange exchange);

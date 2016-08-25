@@ -14,6 +14,7 @@ import org.sword.wechat4j.oauth.OAuthManager;
 
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
+import com.joosure.server.mvc.wechat.dao.cache.ItemCache;
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
 import com.joosure.server.mvc.wechat.dao.database.UserDao;
 import com.joosure.server.mvc.wechat.entity.domain.ItemCommentInfo;
@@ -25,6 +26,7 @@ import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemComment;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemLike;
+import com.joosure.server.mvc.wechat.entity.pojo.ItemType;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
 import com.joosure.server.mvc.wechat.exception.RequestParamsException;
@@ -584,6 +586,25 @@ public class ItemService {
 		}
 
 		return infos;
+	}
+
+	/**
+	 * 热门社区
+	 * 
+	 * @return
+	 */
+	public List<ItemType> getHotItemType() {
+		List<ItemType> types = ItemCache.getItemTypes();
+		if (types.size() > 8) {
+			List<ItemType> temps = new ArrayList<>();
+			for (int i = 0; i < 8; i++) {
+				ItemType itemType = types.get(i);
+				temps.add(itemType);
+			}
+			return temps;
+		} else {
+			return types;
+		}
 	}
 
 }

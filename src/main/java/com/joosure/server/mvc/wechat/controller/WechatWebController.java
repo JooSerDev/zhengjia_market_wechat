@@ -375,11 +375,14 @@ public class WechatWebController {
 				throw new OAuthException();
 			}
 
-			ItemsPageInfo pageInfo = wechatWebService.itemsPage(eo, request);
+			String itemType = request.getParameter("it");
+
+			ItemsPageInfo pageInfo = wechatWebService.itemsPage(eo, itemType, request);
 			model.addAttribute("eo", pageInfo.getUserInfo().getEncodeOpenid());
 			model.addAttribute("jsapi", pageInfo.getJsApiParam());
 			model.addAttribute("tableUrls", pageInfo.getTableURLs());
 			model.addAttribute("itemTypes", pageInfo.getItemTypes());
+			model.addAttribute("itemType", itemType == null || itemType.trim().equals("") ? "0" : itemType);
 
 			pageLogger(request, "/wechat/market", pageInfo);
 		} catch (Exception e) {

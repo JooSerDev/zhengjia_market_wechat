@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.joosure.server.mvc.wechat.dao.database.DictDao">
+
+	<select id="getAllDict" resultType="com.joosure.server.mvc.wechat.entity.pojo.Dict"
+		parameterType="com.joosure.server.mvc.wechat.entity.pojo.Dict">
+		select * from sys_conf_param
+		where 1=1 and status = 1
+		<if test="paramGroup!=null and paramGroup!=''">
+			and paramgroup = #{paramGroup}
+		</if>
+		<if test="paramId!=null and paramId!=''">
+			and paramId = #{paramId}
+		</if>
+	</select>
+</mapper>

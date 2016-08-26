@@ -8,7 +8,7 @@
 <head lang="zh">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>add item</title>
+<title>正佳分享集市</title>
 <link rel="stylesheet" href="<%=path%>/include/css/register.css">
 </head>
 <body>
@@ -29,7 +29,7 @@
 					maxlength="6" id="checkCode">
 			</div>
 			<div class="btn-view">
-				<button class="block-btn" onclick="evens.onSendCheckCodeClick()">点击获取验证码</button>
+				<button class="block-btn countdown" onclick="evens.onSendCheckCodeClick()">点击获取验证码</button>
 			</div>
 		</div>
 

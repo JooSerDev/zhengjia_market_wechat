@@ -30,7 +30,7 @@
 				<div class="grid">
 					<c:forEach items="${types }" var="type">
 						<div class="item">
-							<div class="card">
+							<div class="card" onclick="evens.onTypeClick(${type.typeId})">
 								<div class="icon">
 									<img
 										src="<%=path%>/include/images/itemType/g${type.typeId}.png">
@@ -96,8 +96,7 @@
 								<div class="likeNumTag"></div>
 							</div>
 
-							<div class="itemType"
-								style="background: ${ii.item.itemTypeBg}">
+							<div class="itemType" style="background: ${ii.item.itemTypeBg}">
 								<div class="img">
 									<img
 										src="<%=path%>/include/images/itemType/t${ii.item.itemType}.png">
@@ -198,6 +197,11 @@
 			evens.onUserClick = function(id){
 				var eo = Core.getQueryString("eo");
 				location.href = "ta?eo="+eo+"&oi="+id;
+			}
+			
+			evens.onTypeClick = function(id){
+				var eo = Core.getQueryString("eo");
+				location.href = "market?eo="+eo+"&it="+id;
 			}
 		});
 	</script>

@@ -143,7 +143,8 @@
 	</div>
 	</template>
 
-	<input type="hidden" id="nextPage" value="${nextPage}">
+	<input type="hidden" id="itemTypeIncome" value="${itemType}">
+
 	<input type="hidden" id="appid" value="${jsapi.appid}">
 	<input type="hidden" id="nonceStr" value="${jsapi.nonceStr}">
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">

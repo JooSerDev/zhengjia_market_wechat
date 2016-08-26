@@ -7,7 +7,7 @@ jsapiparam.signature = document.getElementById("signature").value;
 jsapiparam.isWxJsApiReady = false;
 
 wx.config({
-	debug : false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+	debug : false,
 	appId : jsapiparam.appid,
 	timestamp : jsapiparam.timeStamp,
 	nonceStr : jsapiparam.nonceStr,
@@ -29,7 +29,7 @@ var countdownInterval;
 var countdown = 0;
 
 $(function() {
-	
+
 	evens.ev1 = null;
 
 	evens.onSendCheckCodeClick = function() {
@@ -51,6 +51,7 @@ $(function() {
 
 			if (mobile == "") {
 				alert("手机号码不能为空");
+				return;
 			}
 
 			$.ajax({
@@ -61,18 +62,21 @@ $(function() {
 				},
 				type : "POST",
 				success : function(data) {
+					countdown = 60;
+					countdownInterval = setInterval(function() {
+						setCountdown();
+					}, 1000);
 					if (data.errCode == "0") {
-						countdown = 60;
-						countdownInterval = setInterval(function() {
-							setCountdown();
-						}, 1000);
-						alert(data.errMsg);
+						alert("短信发送成功");
 					} else {
-						alert(data.errMsg);
+						alert("短信验证码发送失败");
 					}
 				}
 			});
 
+		} else {
+			alert("60秒内不能重发");
+			return;
 		}
 	}
 
@@ -119,7 +123,7 @@ $(function() {
 			type : "POST",
 			success : function(data) {
 				if (data.errCode == "0") {
-					alert(data.errMsg);
+					location.href = "../me?eo=" + eo;
 				} else {
 					alert("register fail");
 				}

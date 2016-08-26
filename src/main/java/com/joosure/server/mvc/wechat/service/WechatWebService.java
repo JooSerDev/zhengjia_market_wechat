@@ -134,7 +134,7 @@ public class WechatWebService {
 
 		List<ItemInfo> itemTop15 = itemService.getItemsRecommended();
 		homePageInfo.setTop15Item(itemTop15);
-		
+
 		List<ItemType> itemTypeHot = itemService.getHotItemType();
 		homePageInfo.setTop8Type(itemTypeHot);
 
@@ -378,7 +378,8 @@ public class WechatWebService {
 	 * @throws OAuthException
 	 * @throws Exception
 	 */
-	public ItemsPageInfo itemsPage(String encodeOpenid, HttpServletRequest request) throws OAuthException {
+	public ItemsPageInfo itemsPage(String encodeOpenid, String itemType, HttpServletRequest request)
+			throws OAuthException {
 		try {
 			UserInfo userInfo;
 			try {
@@ -389,7 +390,11 @@ public class WechatWebService {
 			if (userInfo != null) {
 				ItemsPageInfo pageInfo = new ItemsPageInfo();
 
-				String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
+				String itemTypeUrl = "";
+				if (itemType != null && !itemType.trim().equals("")) {
+					itemTypeUrl = "&it=" + itemType;
+				}
+				String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid + itemTypeUrl;
 				JsApiParam jsApiParam = JsApiManager.signature(url);
 
 				pageInfo.setJsApiParam(jsApiParam);

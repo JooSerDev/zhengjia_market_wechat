@@ -28,13 +28,13 @@
 
 			<div class="info-view">
 				<div class="integral-icon"></div>
-				<div class="integral">12345</div>
+				<div class="integral">${user.score }</div>
 				<div class="line"></div>
 				<div class="like-icon"></div>
 				<div class="like">${user.likeNum}</div>
 				<div class="line"></div>
 				<div class="v-icon"></div>
-				<div class="v">${user.exchangeNum}</div>
+				<div class="v">${user.finishNum}</div>
 			</div>
 		</div>
 

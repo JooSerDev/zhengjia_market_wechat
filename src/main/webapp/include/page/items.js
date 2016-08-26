@@ -35,7 +35,15 @@ var keyword = "";
 var itemType = 0;
 var isRecommended = 0;
 
+var initItemTypeIncome = function() {
+	itemType = $("#itemTypeIncome").val();
+	if (itemType != "0") {
+		$("#itemType_" + itemType).addClass("active");
+	}
+}
+
 $(function() {
+	initItemTypeIncome();
 	Core.myScroll.endOffset = 61;
 	loadNextPage();
 	Core.myScroll.loadingNextAction = loadNextPage;

@@ -1,5 +1,12 @@
 package com.joosure.server.mvc.wechat.service;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +35,8 @@ public class SystemFunctionService {
 
 	@Autowired
 	private SystemFunctionDao systemFunctionDao;
+
+	public static final String SMS_POST_URL = "http://www.jianzhou.sh.cn/JianzhouSMSWSServer/http/sendBatchMessage";
 
 	/**
 	 * 发送验证码<br>
@@ -62,15 +71,20 @@ public class SystemFunctionService {
 			checkCode.setMobile(mobile);
 			checkCode.setTimestamp(System.currentTimeMillis());
 
-			String content = "手机验证码是：" + checkCode.getCode();
+			String content = "[分享集市] 手机验证码是：" + checkCode.getCode();
 
 			// 此处发送短信
-			if (sendSMS(mobile, content)) {
-				systemFunctionDao.deleteCheckCodeByMobile(mobile);
-				systemFunctionDao.saveCheckCode(checkCode);
-				result.setErrCode("0");
-				result.setErrMsg("发送成功");
-			} else {
+			try {
+				if (sendSMS(mobile, content)) {
+					systemFunctionDao.deleteCheckCodeByMobile(mobile);
+					systemFunctionDao.saveCheckCode(checkCode);
+					result.setErrCode("0");
+					result.setErrMsg("发送成功");
+				} else {
+					result.setErrCode("1003");
+					result.setErrMsg("发送短信失败");
+				}
+			} catch (IOException e) {
 				result.setErrCode("1003");
 				result.setErrMsg("发送短信失败");
 			}
@@ -139,10 +153,52 @@ public class SystemFunctionService {
 	 * @param mobile
 	 * @param content
 	 * @return
+	 * @throws IOException
 	 */
-	private boolean sendSMS(String mobile, String content) {
-		logService.smsLogger(mobile, content);
-		return true;
+	private boolean sendSMS(String mobile, String content) throws IOException {
+		BufferedReader reader = null;
+		HttpURLConnection connection = null;
+		try {
+			logService.smsLogger(mobile, content);
+			URL postUrl = new URL(SMS_POST_URL);
+			connection = (HttpURLConnection) postUrl.openConnection();
+			connection.setDoOutput(true);
+			connection.setDoInput(true);
+			connection.setRequestMethod("POST");
+			connection.setUseCaches(false);
+			connection.setInstanceFollowRedirects(true);
+			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			connection.connect();
+			DataOutputStream out = new DataOutputStream(connection.getOutputStream());
+			String smsContent = "account=" + "sdk_zhengjiagc" + "&" + "password=" + "28478376" + "&" + "sendDateTime="
+					+ "" + "&" + "destmobile=" + mobile + "&" + "msgText="
+					+ URLEncoder.encode(content + "【正佳广场】", "UTF-8");
+
+			out.writeBytes(smsContent);
+			out.flush();
+			out.close(); // flush and close
+			reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+			StringBuffer sb = new StringBuffer();
+			String line;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line);
+			}
+			if (!sb.toString().equals("")) {
+				int temp = Integer.parseInt(sb.toString());
+				if (temp > 0) {
+					return true;
+				}
+			}
+			return false;
+		} finally {
+			if (reader != null) {
+				reader.close();
+			}
+			if (connection != null) {
+				connection.disconnect();
+			}
+		}
+
 	}
 
 }

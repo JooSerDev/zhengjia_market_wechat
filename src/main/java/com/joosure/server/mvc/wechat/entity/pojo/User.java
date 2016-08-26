@@ -18,6 +18,7 @@ public class User {
 	private Integer itemNum;
 	private Integer exchangeNum;
 	private Integer finishNum;// 正佳认证交易完成数量
+	private Integer score;
 
 	public Integer getUserId() {
 		return userId;
@@ -121,6 +122,14 @@ public class User {
 
 	public void setFinishNum(Integer finishNum) {
 		this.finishNum = finishNum;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
 }

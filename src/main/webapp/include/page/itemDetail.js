@@ -127,7 +127,7 @@ $(function() {
 					var num = new Number(likeCount);
 					num = num + 1;
 					$("#likeCount").html(num);
-					alert("Like success");
+					// alert("Like success");
 				} else {
 					alert(data.errMsg);
 				}

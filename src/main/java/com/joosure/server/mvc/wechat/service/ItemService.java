@@ -178,7 +178,7 @@ public class ItemService {
 			throw new ItemIllegalException("my item = null");
 		} else if (myItem.getStatus() == 1 || myItem.getApprovalStatus().equals(Item.STATUS_NO)
 				|| myItem.getLockStatus().equals(Item.LOCK_EXCHANGED)) {
-			throw new ItemIllegalException("my item unexchangeble");
+			throw new ItemIllegalException("我的宝贝已经锁定");
 		}
 
 		Item targetItem = itemDao.getItemById(targetItemId);
@@ -186,7 +186,7 @@ public class ItemService {
 			throw new ItemIllegalException("target item = null");
 		} else if (targetItem.getStatus() == 1 || targetItem.getApprovalStatus().equals(Item.STATUS_NO)
 				|| targetItem.getLockStatus().equals(Item.LOCK_EXCHANGED)) {
-			throw new ItemIllegalException("target item unexchangeble");
+			throw new ItemIllegalException("对方的宝贝已经锁定");
 		}
 
 		if (myItem.getOwnerId() != userInfo.getUser().getUserId()) {
@@ -200,7 +200,7 @@ public class ItemService {
 
 		Exchange exchange = itemDao.getExchangeByBothSideItemId(targetItemId, myItemId);
 		if (exchange != null) {
-			throw new ItemIllegalException("the exchange is exist");
+			throw new ItemIllegalException("这个交换已经存在了");
 		}
 
 		exchange = new Exchange();
@@ -208,7 +208,7 @@ public class ItemService {
 		exchange.setChangerItemId(myItemId);
 		exchange.setChangerItemName(myItem.getName());
 		exchange.setCreateTime(new Date());
-		exchange.setExchangeFinishStatus(Exchange.STATUS_NO);
+		exchange.setExchangeFinishStatus(Exchange.STATUS_WAIT);
 		exchange.setExchangeState(Exchange.EXCHANGE_STATE_ING);
 		exchange.setOwnerId(targetItem.getOwnerId());
 		exchange.setOwnerItemId(targetItemId);
@@ -218,9 +218,17 @@ public class ItemService {
 		myItem.setLockStatus(Item.LOCK_EXCHANGING);
 		targetItem.setLockStatus(Item.LOCK_EXCHANGING);
 
+		User targetUser = ownerInfo.getUser();
+		targetUser.setExchangeNum(targetUser.getExchangeNum() + 1);
+
+		User user = userInfo.getUser();
+		user.setExchangeNum(user.getExchangeNum() + 1);
+
 		itemDao.saveExchange(exchange);
 		itemDao.updateItem(myItem);
 		itemDao.updateItem(targetItem);
+		userDao.updateUser(user);
+		userDao.updateUser(targetUser);
 	}
 
 	public void likeItem(int itemId, String eo) throws OAuthException, ItemIllegalException, UserIllegalException {
@@ -237,12 +245,12 @@ public class ItemService {
 
 		Item item = itemDao.getItemById(itemId);
 		if (item == null) {
-			throw new ItemIllegalException("item = null");
+			throw new ItemIllegalException("宝贝不存在");
 		}
 
 		ItemLike itemLike = itemDao.getItemLike(item.getItemId(), userInfo.getUser().getUserId());
 		if (itemLike != null) {
-			throw new UserIllegalException("user had already LIKE");
+			throw new UserIllegalException("你已经点过赞了");
 		}
 
 		itemLike = new ItemLike();
@@ -251,7 +259,7 @@ public class ItemService {
 
 		item.setLikeNum(item.getLikeNum() + 1);
 
-		User user = userInfo.getUser();
+		User user = userService.getUserById(item.getOwnerId());
 		user.setLikeNum(user.getLikeNum() + 1);
 
 		itemDao.saveItemLike(itemLike);
@@ -446,6 +454,13 @@ public class ItemService {
 					mei.setTargetItem(ownerItem);
 					mei.setIsOwner(false);
 					mei.setToAgreeExchangePath("");
+
+					String toAgreeExchangePath = request.getScheme() + "://" + request.getServerName()
+							+ request.getContextPath() + WechatConstant.SCHEMA_MARKET + "/item/toAgreeExchange?e="
+							+ exchange.getExchangeId();
+					String toAgreeExchangeUrl = OAuthManager.generateRedirectURI(toAgreeExchangePath,
+							WechatConstant.SCOPE_SNSAPI_BASE, "");
+					mei.setToAgreeExchangePath(toAgreeExchangeUrl);
 				}
 
 				infos.add(mei);

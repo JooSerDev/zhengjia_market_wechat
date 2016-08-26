@@ -50,7 +50,7 @@
 				</div>
 			</a> <a href="item/myExchanges?eo=${eo}">
 				<div class="list-view">
-					<div class="label">我的交易</div>
+					<div class="label">我的交换</div>
 					<div class="text">${user.exchangeNum }</div>
 				</div>
 			</a> <a href="item/addItem?eo=${eo}">
@@ -60,21 +60,22 @@
 			<div class="table_bar">
 				<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">
 				<input type="hidden" id="marketUrl" value="${tableUrls.marketUrl }">
+				<input type="hidden" id="postUrl" value="${tableUrls.postUrl }">
 				<input type="hidden" id="meUrl" value="${tableUrls.meUrl }">
 
 				<div class="nav-view" id="table_bar_home">
-					<div class="table_bar_btn">
+					<div class="table_bar_btn ">
 						<div class="logo-home"></div>
 						<div class="label">首页</div>
 					</div>
 				</div>
 				<div class="nav-view" id="table_bar_market">
-					<div class="table_bar_btn">
+					<div class="table_bar_btn ">
 						<div class="logo-market"></div>
 						<div class="label">集市</div>
 					</div>
 				</div>
-				<div class="nav-view">
+				<div class="nav-view" id="table_bar_post">
 					<div class="table_bar_btn">
 						<div class="logo-active"></div>
 						<div class="label">活动</div>

@@ -37,6 +37,7 @@ import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyExchangesPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.PostPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.TaPageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
@@ -168,6 +169,35 @@ public class WechatWebService {
 
 		List<Item> items = itemService.getItemsByOwnerId(taInfo.getUser().getUserId());
 		pageInfo.setItems(items);
+
+		return pageInfo;
+	}
+
+	/**
+	 * post
+	 * 
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	public PostPageInfo postPage(String encodeOpenid, HttpServletRequest request) throws Exception {
+		PostPageInfo pageInfo = null;
+		UserInfo userInfo;
+		try {
+			userInfo = userService.getUserInfoByEO(encodeOpenid);
+		} catch (OAuthException e) {
+			throw new OAuthException();
+		}
+		if (userInfo == null) {
+			throw new OAuthException();
+		}
+
+		pageInfo = new PostPageInfo();
+		pageInfo.setUserInfo(userInfo);
+		pageInfo.setTableURLs(buildTableURLs(request, userInfo.getEncodeOpenid()));
+		String url = request.getRequestURL().toString() + "?eo=" + encodeOpenid;
+		JsApiParam jsApiParam = JsApiManager.signature(url);
+		pageInfo.setJsApiParam(jsApiParam);
 
 		return pageInfo;
 	}
@@ -522,8 +552,7 @@ public class WechatWebService {
 		UserInfo ownerInfo = userService.getUserInfoById(exchange.getOwnerId());
 		UserInfo changerInfo = userService.getUserInfoById(exchange.getChangerId());
 
-		if (ownerItem != null && changerItem != null && ownerInfo != null && changerInfo != null
-				&& ownerInfo.getUser().getUserId() == userInfo.getUser().getUserId()) {
+		if (ownerItem != null && changerItem != null && ownerInfo != null && changerInfo != null) {
 			ExchangeInfo info = new ExchangeInfo();
 			info.setExchange(exchange);
 			info.setChangerItem(changerItem);
@@ -592,11 +621,13 @@ public class WechatWebService {
 
 		String homeURL = basePath + "home?eo=" + encodeOpenid;
 		String marketURL = basePath + "market?eo=" + encodeOpenid;
+		String postURL = basePath + "post?eo=" + encodeOpenid;
 		String meURL = basePath + "me?eo=" + encodeOpenid;
 
 		tableURLs.setHomeUrl(homeURL);
 		tableURLs.setMarketUrl(marketURL);
 		tableURLs.setMeUrl(meURL);
+		tableURLs.setPostUrl(postURL);
 
 		return tableURLs;
 	}

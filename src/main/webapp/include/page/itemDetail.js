@@ -142,7 +142,7 @@ var Comment = function(comment) {
 	var ct = {
 		headimg : u.headImgUrl,
 		nickname : u.nickname,
-		time : cm.createTime,
+		time : new Date(cm.createTime).format("yyyy-MM-dd hh:mm"),
 		comment : cm.comment
 	}
 	return ct;

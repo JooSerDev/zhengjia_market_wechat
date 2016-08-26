@@ -123,9 +123,10 @@
 					type : "POST",
 					success : function(data) {
 						if (data.errCode == "0") {
-							alert("exchange success");
+							alert("交换成功");
+							location.href = "../market?eo="+eo;
 						} else {
-							alert("load fail");
+							alert(data.errMsg);
 						}
 					}
 				});

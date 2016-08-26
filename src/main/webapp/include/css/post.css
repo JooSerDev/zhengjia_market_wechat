@@ -421,252 +421,18 @@ textarea {
   user-select: none;
   display: inline-block;
 }
-body {
-  background-color: #0050a3;
-}
-.container {
-  padding-bottom: 86px;
-}
-.head-view {
+.table_bar {
   clear: both;
-  padding: 10px 15px;
-  height: 42px;
-}
-.head-view:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.head-view > .head-img {
-  float: left;
-  height: 42px;
-  padding: 0 10px;
-}
-.head-view > .head-img > img {
-  width: 42px;
-  height: 42px;
-  border-radius: 21px;
-}
-.head-view > .info-view {
-  margin-left: 62px;
-  height: 42px;
-}
-.head-view > .info-view > .line {
-  height: 20px;
-}
-.head-view > .info-view > .line:first-child {
-  margin-bottom: 2px;
-}
-.head-view > .info-view > .line > .nickname {
-  float: left;
-  line-height: 20px;
-  font-size: 15px;
-  color: #fff;
-}
-.head-view > .info-view > .line > .time {
-  float: left;
-  line-height: 20px;
-  font-size: 12px;
-  color: #fff;
-}
-.head-view > .info-view > .line > .state,
-.head-view > .info-view > .line .itemType {
-  float: right;
-  height: 20px;
-  line-height: 20px;
-  font-size: 12px;
-  padding: 0 10px;
-  border-radius: 10px;
-  color: #fff;
-}
-.head-view > .info-view > .line > .state {
-  background: #e456a4;
-}
-.head-view > .info-view > .line > .itemType {
-  background: #5ea4ec;
-}
-.content-view {
-  margin: 10px 15px;
-  padding: 20px 15px;
-  background: #fff;
-  border-radius: 10px;
-}
-.content-view > .itemName {
-  font-size: 16px;
-  margin-bottom: 20px;
-}
-.content-view > .itemDescription {
-  font-size: 15px;
-  margin-bottom: 10px;
-}
-.content-view > .itemImg > img {
-  width: 100%;
-  border-radius: 3px;
-}
-.content-view > .itemImg:last-child {
-  margin-bottom: 20px;
-}
-.content-view > .wish {
-  margin: 10px -15px;
-  padding: 10px 15px;
-  background: #f1f1f1;
-  clear: both;
-}
-.content-view > .wish:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.content-view > .wish > .icon {
-  float: left;
-  height: 24px;
-  width: 24px;
-  background: url('../images/logos.png');
-  background-size: 160px auto;
-  background-repeat: no-repeat;
-  background-position: -24px -136px;
-  margin: 3px;
-}
-.content-view > .wish > .text {
-  height: 30px;
-  margin-left: 30px;
-  padding: 0 10px;
-  line-height: 30px;
-  font-size: 15px;
-}
-.content-view > .like-view {
-  clear: both;
-  margin: 0 auto;
-  height: 20px;
-  padding: 5px 15px;
-  border-radius: 15px;
-  background: #5ea4ec;
-  width: 70px;
-}
-.content-view > .like-view:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.content-view > .like-view > .icon {
-  float: left;
-  width: 20px;
-  height: 20px;
-  background: url('../images/logos.png');
-  background-size: 160px auto;
-  background-repeat: no-repeat;
-  background-position: -40px -180px;
-}
-.content-view > .like-view > .text {
-  float: left;
-  text-align: center;
-  width: 50px;
-  height: 20px;
-  line-height: 20px;
-  font-size: 12px;
-  color: #fff;
-}
-.comment-view {
-  background: #fff;
-  border-radius: 10px;
-  margin: 10px 15px;
-  padding: 10px 0;
-}
-.comment-view > .header {
-  clear: both;
-  height: 20px;
-  padding: 0 15px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #f1f1f1;
-}
-.comment-view > .header:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.comment-view > .header > .count {
-  float: right;
-}
-.comment-view > .header > .count > .icon {
-  width: 20px;
-  height: 20px;
-  background: url('../images/logos.png');
-  background-size: 160px auto;
-  background-repeat: no-repeat;
-  background-position: 0px -180px;
-  float: left;
-}
-.comment-view > .header > .count > .text {
-  float: left;
-  padding: 0 5px;
-  line-height: 20px;
-  height: 20px;
-  font-size: 12px;
-}
-.comment-view > .comments > .comment {
-  clear: both;
-  padding-top: 10px;
-}
-.comment-view > .comments > .comment:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
-}
-.comment-view > .comments > .comment > .head-img {
-  float: left;
-  padding: 0 15px;
-  width: 30px;
-  height: 30px;
-}
-.comment-view > .comments > .comment > .head-img > img {
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-}
-.comment-view > .comments > .comment > .info {
-  margin-left: 60px;
-}
-.comment-view > .comments > .comment > .info > .line {
-  line-height: 30px;
-  color: #000;
-}
-.comment-view > .comments > .comment > .info > .content {
-  padding: 15px 0;
-  border-bottom: 1px solid #f1f1f1;
-  font-size: 15px;
-}
-.comment-view > .loading {
-  font-size: 15px;
-  color: #000;
-  text-align: center;
-  line-height: 30px;
-}
-.foot-bar {
-  clear: both;
+  border-top: 1px solid #0050a3;
   position: fixed;
   width: 100%;
   left: 0;
   bottom: 0;
   z-index: 999;
-  height: 75px;
-  background: rgba(0, 0, 0, 0.3);
+  background-color: #ffffff;
+  height: 60px;
 }
-.foot-bar:after {
+.table_bar:after {
   clear: both;
   display: block;
   visibility: hidden;
@@ -674,62 +440,98 @@ body {
   overflow: hidden;
   content: ".";
 }
-.foot-bar .btns {
-  clear: both;
+.table_bar > .nav-view {
+  width: 25%;
+  float: left;
+  min-height: 1px;
+  text-align: center;
 }
-.foot-bar .btns:after {
-  clear: both;
-  display: block;
-  visibility: hidden;
-  height: 0;
-  overflow: hidden;
-  content: ".";
+.table_bar_btn {
+  height: 60px;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
-.foot-bar .submitBtnView {
-  margin: 10px 15px;
-  background: #fff;
-  border-radius: 8px;
-}
-.foot-bar .submitBtnView > .btn {
-  background: 0;
-  width: 100%;
-  color: #5ea4ec;
-  height: auto;
-  line-height: 35px;
-  padding: 10px 0;
-}
-.foot-bar > .ps-text {
+.table_bar_btn > .label {
   font-size: 12px;
-  color: #fff;
+  line-height: 24px;
+  color: #e4007e;
   text-align: center;
-  margin-top: 10px;
-  margin-bottom: 5px;
 }
-.comment-post-view {
-  display: none;
-  padding-top: 10px;
+.table_bar_btn > .logo-home,
+.table_bar_btn .logo-market,
+.table_bar_btn .logo-active,
+.table_bar_btn .logo-me {
+  width: 40px;
+  height: 36px;
+  margin: 0 auto;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
 }
-.comment-post-view > .comment-input {
-  margin: 10px 15px;
-  margin-top: 0;
-  padding: 20px 15px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
+.table_bar_btn > .logo-home {
+  background-position: 0 0;
 }
-.comment-post-view > .comment-input > #itemComment {
+.table_bar_btn > .logo-market {
+  background-position: -40px 0;
+}
+.table_bar_btn > .logo-active {
+  background-position: -80px 0;
+}
+.table_bar_btn > .logo-me {
+  background-position: -120px 0;
+}
+.table_bar_btn.active .label {
+  color: #0050a3;
+}
+.table_bar_btn.active .logo-home {
+  background-position: 0 -37px;
+}
+.table_bar_btn.active .logo-market {
+  background-position: -40px -37px;
+}
+.table_bar_btn.active .logo-active {
+  background-position: -80px -37px;
+}
+.table_bar_btn.active .logo-me {
+  background-position: -120px -37px;
+}
+.fab {
+  z-index: 100;
+  position: fixed;
+  right: 30px;
+  bottom: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 35px;
+  background: #0050a3;
+  -webkit-box-shadow: 0 2px 4px 0 #494949;
+  box-shadow: 0 2px 4px 0 #494949;
+}
+.fab.withTableBar {
+  bottom: 90px;
+}
+.fab > .icon {
+  height: 24px;
+  width: 24px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  background-position: -72px -136px;
+  margin: 13px;
+}
+.container {
+  padding-bottom: 61px;
   background: 0;
-  font-size: 15px;
-  color: #fff;
 }
-.comment-post-view > .comment-input > #itemComment::-webkit-input-placeholder {
-  color: #fff !important;
+body {
+  background: 0;
 }
-.comment-post-view > .post-btn {
-  margin: 10px 15px;
-  padding: 20px 15px;
-  background: #fff;
-  border-radius: 10px;
-  font-size: 15px;
-  line-height: 20px;
-  text-align: center;
+.bg-img {
+  width: 100%;
+}
+.bg-img > img {
+  width: 100%;
+  vertical-align: top;
 }

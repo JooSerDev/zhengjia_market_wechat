@@ -8,6 +8,7 @@
 <html>
 <head lang="zh">
 <meta charset="UTF-8">
+<meta content="telephone=no" name="format-detection" />
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <title>正佳分享集市</title>
 <link rel="stylesheet" href="<%=path%>/include/css/agreeExchange.css">
@@ -32,7 +33,9 @@
 			<div class="changer-view">
 				<div class="line">
 					<div class="user">
-						<div class="label">申请人</div>
+						<div class="label">
+							<c:if test="${isOwner !=  1}">被</c:if>申请人
+						</div>
 						<div class="headimg">
 							<img src="${other.headImgUrl}">
 						</div>
@@ -45,11 +48,23 @@
 				</div>
 			</div>
 		</div>
-		<div class="contact-view"></div>
-		<c:if test="${isOwner ==  1}">
+
+		<div class="contact-view">
+			<div class="label">联系方式</div>
+			<div class="phone">
+				<c:if test="${exchange.exchangeState == 'exchanged' }">${other.mobile }</c:if>
+				<c:if test="${exchange.exchangeState != 'exchanged' }">********</c:if>
+			</div>
+		</div>
+
+		<c:if test="${isOwner ==  1 and exchange.exchangeState != 'exchanged'}">
 			<div class="btn-view">
-				<button onclick="evens.onSubmitClick(0)">拒绝</button>
-				<button onclick="evens.onSubmitClick(1)">同意</button>
+				<div class="bv">
+					<button onclick="evens.onSubmitClick(0)">拒绝</button>
+				</div>
+				<div class="bv">
+					<button onclick="evens.onSubmitClick(1)">同意</button>
+				</div>
 			</div>
 		</c:if>
 	</div>
@@ -94,13 +109,13 @@
 		var evens = {};
 
 		$(function() {
-			
+
 			Core.resizeContainer();
 
 			$(window).resize(function() {
 				Core.resizeContainer();
 			});
-			
+
 			evens.onSubmitClick = function(flag) {
 				var ee = $("#ee").val();
 

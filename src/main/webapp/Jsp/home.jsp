@@ -113,6 +113,7 @@
 		<div class="table_bar">
 			<input type="hidden" id="homeUrl" value="${tableUrls.homeUrl }">
 			<input type="hidden" id="marketUrl" value="${tableUrls.marketUrl }">
+			<input type="hidden" id="postUrl" value="${tableUrls.postUrl }">
 			<input type="hidden" id="meUrl" value="${tableUrls.meUrl }">
 
 			<div class="nav-view" id="table_bar_home">
@@ -127,7 +128,7 @@
 					<div class="label">集市</div>
 				</div>
 			</div>
-			<div class="nav-view">
+			<div class="nav-view" id="table_bar_post">
 				<div class="table_bar_btn">
 					<div class="logo-active"></div>
 					<div class="label">活动</div>
@@ -166,12 +167,15 @@
 			timestamp : jsapiparam.timeStamp,
 			nonceStr : jsapiparam.nonceStr,
 			signature : jsapiparam.signature,
-			jsApiList : [ "hideOptionMenu" ]
+			jsApiList : [ "hideOptionMenu","showMenuItems" ]
 		});
 
 		wx.ready(function() {
 			jsapiparam.isWxJsApiReady = true;
-			wx.hideOptionMenu();
+			//wx.hideOptionMenu();
+			wx.showMenuItems({
+			    menuList: ["menuItem:copyUrl"] 
+			});
 		});
 
 		wx.error(function(res) {

@@ -31,6 +31,7 @@ import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyExchangesPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.PostPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.TaPageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
@@ -157,6 +158,21 @@ public class WechatWebController {
 		return "home";
 	}
 
+	@RequestMapping("/post")
+	public String post(HttpServletRequest request, HttpServletResponse response, Model model) {
+		try {
+			String eo = request.getParameter("eo");
+			PostPageInfo PageInfo = wechatWebService.postPage(eo, request);
+			model.addAttribute("tableUrls", PageInfo.getTableURLs());
+			model.addAttribute("jsapi", PageInfo.getJsApiParam());
+
+			pageLogger(request, "/wechat/post", PageInfo);
+		} catch (Exception e) {
+			return errorPageRouter(e, "WechatWebController.post");
+		}
+		return "post";
+	}
+
 	/**
 	 * 个人页
 	 * 
@@ -205,14 +221,9 @@ public class WechatWebController {
 			model.addAttribute("items", pageInfo.getItems());
 			model.addAttribute("jsapi", pageInfo.getJsApiParam());
 
-			String redirectUrl = registeredValidAndRedirect(pageInfo.getUserInfo(), request);
-			if (redirectUrl != null) {
-				return redirectUrl;
-			}
-
 			pageLogger(request, "/wechat/ta", pageInfo);
 		} catch (Exception e) {
-			return errorPageRouter(e, "WechatWebController.me");
+			return errorPageRouter(e, "WechatWebController.ta");
 		}
 		return "user/ta";
 	}
@@ -548,6 +559,9 @@ public class WechatWebController {
 			if (e instanceof RequestParamsException) {
 				ar.setErrCode("1002");
 				ar.setErrMsg("服务器内部错误");
+			} else if (e instanceof ItemIllegalException) {
+				ar.setErrCode("1003");
+				ar.setErrMsg(e.getMessage());
 			} else {
 				ar.setErrCode("1001");
 			}

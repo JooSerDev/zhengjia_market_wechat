@@ -57,7 +57,7 @@
 				<div class="header">
 					<div class="count">
 						<div class="icon"></div>
-						<div class="text">123123</div>
+						<div class="text">${item.markNum }</div>
 					</div>
 				</div>
 				<div class="comments"></div>
@@ -80,8 +80,6 @@
 						</c:if>
 					</div>
 				</div>
-
-				<div class="ps-text">宝贝发布需后台审核通过后才可见</div>
 			</div>
 		</div>
 	</div>

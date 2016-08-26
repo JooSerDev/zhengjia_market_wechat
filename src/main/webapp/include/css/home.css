@@ -455,7 +455,7 @@ textarea {
 }
 .table_bar_btn > .label {
   font-size: 12px;
-  line-height: 26px;
+  line-height: 24px;
   color: #e4007e;
   text-align: center;
 }
@@ -486,16 +486,16 @@ textarea {
   color: #0050a3;
 }
 .table_bar_btn.active .logo-home {
-  background-position: 0 -36px;
+  background-position: 0 -37px;
 }
 .table_bar_btn.active .logo-market {
-  background-position: -40px -36px;
+  background-position: -40px -37px;
 }
 .table_bar_btn.active .logo-active {
-  background-position: -80px -36px;
+  background-position: -80px -37px;
 }
 .table_bar_btn.active .logo-me {
-  background-position: -120px -36px;
+  background-position: -120px -37px;
 }
 .fab {
   z-index: 100;

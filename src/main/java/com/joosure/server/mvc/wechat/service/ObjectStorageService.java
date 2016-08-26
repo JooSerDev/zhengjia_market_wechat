@@ -65,6 +65,8 @@ public class ObjectStorageService {
 			dataInputStream.close();
 			fileOutputStream.close();
 
+			ImageCropUtil.ImageCropCenterSquare(imgFile.getPath(), imgFile.getPath(), 100, 100);
+
 		} catch (MalformedURLException e) {
 			logService.systemException("img url can not read", "ObjectStorageService.putHeadImg");
 		} catch (IOException e) {
@@ -113,12 +115,12 @@ public class ObjectStorageService {
 			String sourceName = imgFile.getName();
 
 			String centerPathFileURI = StorageConstant.ITEM_IMG_CENTER_SQUARE_FILE_PATH + datePath;
-			
+
 			File pathCenterFile = new File(StoragePath + centerPathFileURI);
 			if (!pathCenterFile.exists() || !pathCenterFile.isDirectory()) {
 				pathCenterFile.mkdirs();
 			}
-			
+
 			String descPath = StoragePath + centerPathFileURI + "/" + sourceName;
 
 			ImageCropUtil.ImageCropCenterSquare(sourcePath, descPath, StorageConstant.ITEM_IMG_RESIZE,

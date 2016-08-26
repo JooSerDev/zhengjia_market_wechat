@@ -7,6 +7,7 @@ public class Exchange {
 
 	public static final String STATUS_YES = "yes";
 	public static final String STATUS_NO = "no";
+	public static final String STATUS_WAIT = "wait";
 
 	public static final String EXCHANGE_STATE_ING = "exchanging";
 	public static final String EXCHANGE_STATE_ED = "exchanged";

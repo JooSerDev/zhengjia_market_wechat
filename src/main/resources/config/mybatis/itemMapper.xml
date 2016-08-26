@@ -72,7 +72,7 @@
 
 	<select id="getItemsRecommended" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
-		item_item where isRecommended = 1 order by recommendedTime desc limit
+		item_item where approvalStatus = 'yes' and isRecommended = 1 order by recommendedTime desc limit
 		15;
 	</select>
 

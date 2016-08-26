@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.joosure.server.mvc.wechat.dao.database.ItemDao;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemType;
@@ -12,19 +14,28 @@ import com.shawn.server.core.util.SpringUtil;
 
 public class ItemCache {
 
+	private static Timer timer = new Timer();
 	private static List<ItemType> ItemTypes = new ArrayList<>();
 	private static Map<Integer, ItemType> ItemTypeMap = new HashMap<>();
 
 	static {
-		System.out.println("##############");
-		System.out.println("init item cache");
-		System.out.println("##############");
-		ItemDao itemDao = SpringUtil.getBean(ItemDao.class);
-		ItemCache.ItemTypes = itemDao.getItemTypes();
-		resetItemTypeMap(ItemTypes);
-		System.out.println("##############");
-		System.out.println("init item cache end [itemType size : " + ItemCache.ItemTypes.size() + "]");
-		System.out.println("##############");
+		loadData();
+	}
+
+	public static void loadData() {
+		timer.schedule(new LoadDataTask(), 0);
+	}
+
+	private static class LoadDataTask extends TimerTask {
+
+		@Override
+		public void run() {
+			ItemDao itemDao = SpringUtil.getBean(ItemDao.class);
+			ItemCache.ItemTypes = itemDao.getItemTypes();
+			resetItemTypeMap(ItemTypes);
+			timer.schedule(new LoadDataTask(), 5 * 60 * 1000);
+		}
+
 	}
 
 	public static List<ItemType> getItemTypes() {

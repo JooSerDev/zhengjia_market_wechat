@@ -251,4 +251,14 @@ public class Item {
 		return "";
 	}
 
+	public String getItemTypeBg() {
+		if (itemType != null) {
+			ItemType it = ItemCache.getItemType(itemType);
+			if (it != null) {
+				return it.getBgColor();
+			}
+		}
+		return "";
+	}
+
 }

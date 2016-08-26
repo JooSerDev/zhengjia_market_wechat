@@ -885,26 +885,27 @@ textarea {
 }
 .items > .item > .itemType {
   clear: both;
-  height: 30px;
+  height: 26px;
   min-width: 30px;
-  background: #e4007e;
   display: inline-block;
   margin-bottom: -25px;
   border-radius: 3px;
   padding: 0 10px;
 }
 .items > .item > .itemType > .img {
-  width: 30px;
-  height: 30px;
+  width: auto;
+  height: 26px;
   float: left;
 }
 .items > .item > .itemType > .img > img {
-  width: 30px;
-  height: 30px;
+  width: 17px;
+  height: 17px;
+  margin: 4px 3px 5px 0px;
+  border-radius: 10px;
 }
 .items > .item > .itemType > .text {
   float: left;
   color: #ffffff;
   font-size: 12px;
-  line-height: 30px;
+  line-height: 26px;
 }

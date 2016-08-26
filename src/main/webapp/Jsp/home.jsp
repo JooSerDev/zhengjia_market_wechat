@@ -28,30 +28,17 @@
 					<div class="text">热门人气社区TOP8</div>
 				</div>
 				<div class="grid">
-					<div class="item">
-						<div class="card">
-							<div class="icon"></div>
-							<div class="text">家居控</div>
+					<c:forEach items="${types }" var="type">
+						<div class="item">
+							<div class="card">
+								<div class="icon">
+									<img
+										src="<%=path%>/include/images/itemType/g${type.typeId}.png">
+								</div>
+								<div class="text">${type.nameGroup}</div>
+							</div>
 						</div>
-					</div>
-					<div class="item">
-						<div class="card">
-							<div class="icon"></div>
-							<div class="text">数码潮人</div>
-						</div>
-					</div>
-					<div class="item">
-						<div class="card">
-							<div class="icon"></div>
-							<div class="text">家居控</div>
-						</div>
-					</div>
-					<div class="item">
-						<div class="card">
-							<div class="icon"></div>
-							<div class="text">家居控</div>
-						</div>
-					</div>
+					</c:forEach>
 
 				</div>
 			</div>
@@ -109,7 +96,14 @@
 								<div class="likeNumTag"></div>
 							</div>
 
-							<div class="itemType"></div>
+							<div class="itemType"
+								style="background: ${ii.item.itemTypeBg}">
+								<div class="img">
+									<img
+										src="<%=path%>/include/images/itemType/t${ii.item.itemType}.png">
+								</div>
+								<div class="text">${ii.item.itemTypeName}</div>
+							</div>
 						</div>
 					</c:forEach>
 				</div>

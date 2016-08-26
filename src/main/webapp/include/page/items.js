@@ -121,7 +121,8 @@ $(function() {
 });
 
 var Item = function(itemId, head_img, nickname, displayTime, description,
-		recommended, imgHtml, wishItem, markNum, likeNum, itemTypeName) {
+		recommended, imgHtml, wishItem, markNum, likeNum, itemTypeName,
+		itemType, itemTypeBg) {
 	var item = {
 		itemId : itemId,
 		head_img : head_img,
@@ -133,7 +134,9 @@ var Item = function(itemId, head_img, nickname, displayTime, description,
 		wishItem : wishItem,
 		markNum : markNum,
 		likeNum : likeNum,
-		itemTypeName : itemTypeName
+		itemTypeName : itemTypeName,
+		itemType : itemType,
+		itemTypeBg : itemTypeBg
 	};
 	return item;
 }
@@ -174,7 +177,8 @@ var buildItemDOMs = function(iteminfos) {
 						iteminfo.item.description, iteminfo.item.isRecommended,
 						imgDomHtml, iteminfo.item.wishItem,
 						iteminfo.item.markNum, iteminfo.item.likeNum,
-						iteminfo.item.itemTypeName);
+						iteminfo.item.itemTypeName, iteminfo.item.itemType,
+						iteminfo.item.itemTypeBg);
 
 				temp = Core.HtmlReplace(temp, k);
 				$(".items").append(temp);

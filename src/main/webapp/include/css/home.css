@@ -563,11 +563,11 @@ textarea {
   background-repeat: no-repeat;
 }
 .ranks > .rank > .header > .label.bbs {
-  background-position: 0 -233px;
+  background-position: 0 -295px;
   width: 93px;
 }
 .ranks > .rank > .header > .label.users {
-  background-position: 0 -295px;
+  background-position: 0 -233px;
   width: 93px;
 }
 .ranks > .rank > .header > .label.items {
@@ -797,7 +797,7 @@ textarea {
 }
 .ranks > .rank > .list > .item > .itemType {
   clear: both;
-  height: 30px;
+  height: 26px;
   min-width: 30px;
   background: #e4007e;
   display: inline-block;
@@ -806,17 +806,19 @@ textarea {
   padding: 0 10px;
 }
 .ranks > .rank > .list > .item > .itemType > .img {
-  width: 30px;
-  height: 30px;
+  width: auto;
+  height: 26px;
   float: left;
 }
 .ranks > .rank > .list > .item > .itemType > .img > img {
-  width: 30px;
-  height: 30px;
+  width: 17px;
+  height: 17px;
+  margin: 4px 3px 5px 0px;
+  border-radius: 10px;
 }
 .ranks > .rank > .list > .item > .itemType > .text {
   float: left;
   color: #ffffff;
   font-size: 12px;
-  line-height: 30px;
+  line-height: 26px;
 }

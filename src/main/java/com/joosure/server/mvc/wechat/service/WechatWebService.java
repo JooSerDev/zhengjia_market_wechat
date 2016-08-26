@@ -41,6 +41,7 @@ import com.joosure.server.mvc.wechat.entity.domain.page.TaPageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemComment;
+import com.joosure.server.mvc.wechat.entity.pojo.ItemType;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.entity.pojo.UserWechatInfo;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
@@ -133,6 +134,9 @@ public class WechatWebService {
 
 		List<ItemInfo> itemTop15 = itemService.getItemsRecommended();
 		homePageInfo.setTop15Item(itemTop15);
+		
+		List<ItemType> itemTypeHot = itemService.getHotItemType();
+		homePageInfo.setTop8Type(itemTypeHot);
 
 		return homePageInfo;
 	}

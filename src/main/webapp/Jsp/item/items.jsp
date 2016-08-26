@@ -125,8 +125,10 @@
 			<div class="likeNumTag"></div>
 		</div>
 
-		<div class="itemType">
-			<div class="img"></div>
+		<div class="itemType" style="background: {itemTypeBg}">
+			<div class="img">
+				<img src="<%=path%>/include/images/itemType/t{itemType}.png">
+			</div>
 			<div class="text">{itemTypeName}</div>
 		</div>
 

@@ -385,7 +385,7 @@ public class ItemService {
 			item.setLastModifyTime(nowDate);
 			item.setRefreshTime(nowDate);
 			item.setLockStatus(Item.LOCK_NORMAL);
-			item.setApprovalStatus(Item.STATUS_NO);
+			item.setApprovalStatus(Item.STATUS_WAIT);
 
 			itemDao.saveItem(item);
 

@@ -13,6 +13,7 @@ public class Item {
 
 	public static final String STATUS_YES = "yes";
 	public static final String STATUS_NO = "no";
+	public static final String STATUS_WAIT = "wait";
 
 	private Integer itemId;
 	private String name;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.sword.wechat4j.oauth.OAuthException;
 
+import com.joosure.server.mvc.wechat.constant.CommonConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.database.UserDao;
 import com.joosure.server.mvc.wechat.entity.domain.BaseResult;
@@ -23,6 +24,8 @@ import com.shawn.server.wechat.common.web.AuthUtil;
 public class UserService {
 	@Autowired
 	private SystemFunctionService systemFunctionService;
+	@Autowired
+	private ScoreService scoreService;
 
 	@Autowired
 	private UserDao userDao;
@@ -50,6 +53,7 @@ public class UserService {
 					userDao.updateUser(user);
 					result.setErrCode("0");
 					result.setErrMsg("注册成功");
+					scoreService.updateScoreByEvent(user.getUserId(), CommonConstant.SCORE_EVENT_REGIST);
 				} else {
 					result = baseResult;
 				}

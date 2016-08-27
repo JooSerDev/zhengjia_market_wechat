@@ -72,7 +72,8 @@
 
 	<select id="getItemsRecommended" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
-		item_item where approvalStatus = 'yes' and isRecommended = 1 order by recommendedTime desc limit
+		item_item where approvalStatus = 'yes' and isRecommended = 1 order by
+		recommendedTime desc limit
 		15;
 	</select>
 
@@ -124,9 +125,11 @@
 	</update>
 
 	<update id="updateExchanges4cancelOthersWhenAgreeExchange">
-		update item_exchange set exchangeState = 'cancel'
+		update item_exchange set exchangeState = 'cancel' ,
+		exchangeTime = now()
 		where (ownerItemId = #{ownerItemId} or ownerItemId = #{changerItemId}
-		or changerItemId = #{changerItemId} or changerItemId = #{ownerItemId})
+		or
+		changerItemId = #{changerItemId} or changerItemId = #{ownerItemId})
 		and exchangeId &lt;> #{exchangeId};
 	</update>
 

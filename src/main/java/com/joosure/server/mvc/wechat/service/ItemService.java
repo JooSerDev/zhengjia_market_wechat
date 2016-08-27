@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.sword.wechat4j.oauth.OAuthException;
 import org.sword.wechat4j.oauth.OAuthManager;
 
+import com.joosure.server.mvc.wechat.constant.CommonConstant;
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.cache.ItemCache;
@@ -39,6 +40,8 @@ public class ItemService {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private ScoreService scoreService;
 
 	@Autowired
 	private ItemDao itemDao;
@@ -126,9 +129,8 @@ public class ItemService {
 		if (Citem.getStatus() == 1 || Citem.getLockStatus().equals(Item.LOCK_EXCHANGED)) {
 			throw new ItemIllegalException("宝贝《" + Citem.getName() + "》已经下线或已经交换");
 		}
-
+		Date now = new Date();
 		if (flag.trim().equals("1")) {
-			Date now = new Date();
 
 			// 锁定当前交易及双方宝贝
 			exchange.setExchangeState(Exchange.EXCHANGE_STATE_ED);
@@ -140,11 +142,17 @@ public class ItemService {
 			itemDao.updateItem(Citem);
 			itemDao.updateExchange(exchange);
 
+			scoreService.updateScoreByEvent(changerInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_AGR_EXG);
+
 			// 取消双方宝贝的其他交易
 			itemDao.updateExchanges4cancelOthersWhenAgreeExchange(exchangeId, userItemId, targetItemId);
 		} else {
 			exchange.setExchangeState(Exchange.EXCHANGE_STATE_CANCEL);
 			itemDao.updateExchange(exchange);
+		}
+
+		if (exchange.getCreateTime().getTime() + 10 * 60 * 1000 > now.getTime()) {
+			scoreService.updateScoreByEvent(ownerInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_RES_EXG);
 		}
 
 	}
@@ -266,6 +274,8 @@ public class ItemService {
 		itemDao.updateItem(item);
 		userDao.updateUser(user);
 
+		scoreService.updateScoreByEvent(userInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_USER_UP);
+		scoreService.updateScoreByEvent(item.getOwnerId(), CommonConstant.SCORE_EVENT_ITEM_UP);
 	}
 
 	/**
@@ -309,6 +319,7 @@ public class ItemService {
 
 		itemDao.updateItem(item);
 		itemDao.saveItemComment(ic);
+		scoreService.updateScoreByEvent(userInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_MSG);
 	}
 
 	/**

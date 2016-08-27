@@ -13,9 +13,8 @@
 <link rel="stylesheet" href="<%=path%>/include/css/addItem.css">
 </head>
 <body>
-	<div class="scroller">
-		<div class="container">
-
+	<div class="container" id="container">
+		<div id="mainContainer">
 			<div class="cloud"></div>
 
 			<div class="list input-view">
@@ -42,7 +41,7 @@
 						maxlength="500"></textarea>
 				</div>
 				<div class="item">
-					<div class="temp-view">描述模板</div>
+					<div class="temp-view" onclick="evens.onModelBtnClick()">描述模板</div>
 				</div>
 			</div>
 
@@ -64,9 +63,49 @@
 			</div>
 
 			<div class="ps-text">宝贝发布需后台审核通过后才可见</div>
-
 		</div>
 
+		<div id="modelContainer" style="display: none;">
+			<div class="list input-view">
+				<div class="item textItem">选择你喜欢的模版</div>
+			</div>
+
+			<div class="list modelList">
+				<div class="item header" onclick="evens.onItemClick(1)">
+					<div class="text" id="mo_text_1">选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版</div>
+					<div class="checkbox">
+						<input type="radio" id="radio_1" name="radio-1-set"
+							class="regular-radio" /><label for="radio_1">
+					</div>
+				</div>
+				<div class="item" onclick="evens.onItemClick(2)">
+					<div class="text" id="mo_text_2">选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版</div>
+					<div class="checkbox">
+						<input type="radio" id="radio_2" name="radio-1-set"
+							class="regular-radio" /><label for="radio_2">
+					</div>
+				</div>
+				<div class="item" onclick="evens.onItemClick(3)">
+					<div class="text" id="mo_text_3">选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版</div>
+					<div class="checkbox">
+						<input type="radio" id="radio_3" name="radio-1-set"
+							class="regular-radio" /><label for="radio_3">
+					</div>
+				</div>
+				<div class="item foot" onclick="evens.onItemClick(4)">
+					<div class="text" id="mo_text_4">选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版选择你喜欢的模版</div>
+					<div class="checkbox">
+						<input type="radio" id="radio_4" name="radio-1-set"
+							class="regular-radio" /><label for="radio_4">
+					</div>
+				</div>
+			</div>
+			
+			<div class="submitBtnView">
+					<button class="btn" onclick="evens.onModelSubmitClick()">使用模板</button>
+				</div>
+			
+		</div>
 	</div>
 
 	<input type="hidden" id="appid" value="${jsapi.appid}">

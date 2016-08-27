@@ -21,22 +21,30 @@ wx.ready(function() {
 });
 
 wx.error(function(res) {
-	console.log(res);
+	wx.hideOptionMenu();
 });
 
 var evens = {};
 
+var imgSize = 0;
 var localIdsList = [];
 var imgServerIds = [];
 var imgUrls = [];
 
+var modelId = 0;
+
 $(function() {
 
+	evens.onModelBtnClick = function() {
+		$("#mainContainer").hide();
+		$("#modelContainer").show();
+	}
+
 	evens.onCameraClick = function() {
-		if (jsapiparam.isWxJsApiReady) {
+		if (jsapiparam.isWxJsApiReady && imgSize < 4) {
 
 			wx.chooseImage({
-				count : 9, // 默认9
+				count : 4, // 默认9
 				sizeType : [ 'original', 'compressed' ], // 可以指定是原图还是压缩图，默认二者都有
 				sourceType : [ 'album', 'camera' ], // 可以指定来源是相册还是相机，默认二者都有
 				success : function(res) {
@@ -44,6 +52,7 @@ $(function() {
 					if (localIds.length > 0) {
 						for (var i = 0; i < localIds.length; i++) {
 							localIdsList.push(localIds[i]);
+							imgSize++;
 						}
 						uploadImages();
 					}
@@ -58,8 +67,8 @@ $(function() {
 		var itemType = $("#itemType").val();
 		var wishItem = $("#wishItem").val();
 		var eo = Core.getQueryString("eo");
-		
-		if(itemType == "0"){
+
+		if (itemType == "0") {
 			alert("未选择分类");
 			return;
 		}
@@ -111,6 +120,25 @@ $(function() {
 			alert("没有图片");
 			return;
 		}
+	}
+
+	evens.onItemClick = function(itemId) {
+		$(".regular-radio").attr("checked", false);
+		$(".regular-radio").removeClass("checked");
+		$("#radio_" + itemId).attr("checked", true);
+		$("#radio_" + itemId).addClass("checked");
+		modelId = itemId;
+	}
+
+	evens.onModelSubmitClick = function() {
+		var temp = "";
+		if (modelId != 0) {
+			temp = $("#mo_text_" + modelId).html();
+		}
+		temp = $("#itemDesc").val() + temp;
+		$("#itemDesc").val(temp);
+		$("#modelContainer").hide();
+		$("#mainContainer").show();
 	}
 
 });

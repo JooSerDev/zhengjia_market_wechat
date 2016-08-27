@@ -17,7 +17,7 @@ public class AppTest {
 	}
 
 	public static String makeSNSAPIurl() {
-		String url = "http://www.joosure.com/wechatTest/wechat/redirecter?redirectURL=http://www.joosure.com/wechatTest/wechat/market";
+		String url = "http://www.joosure.com/wechatTest/wechat/redirecter?redirectURL=http://www.joosure.com/wechatTest/wechat/home";
 		// 宝贝分享链接
 		// String url =
 		// "http://www.joosure.com/wechatTest/wechat/redirecter?redirectURL=http://www.joosure.com/wechatTest/wechat/item/item?ii=4";

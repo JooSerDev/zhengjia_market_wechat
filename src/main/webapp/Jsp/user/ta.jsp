@@ -58,7 +58,13 @@
 						<div class="likeNumTag"></div>
 					</div>
 
-					<div class="itemType">${item.itemTypeName }</div>
+					<div class="itemType" style="background: ${item.itemTypeBg}">
+						<div class="img">
+							<img
+								src="<%=path%>/include/images/itemType/t${item.itemType}.png">
+						</div>
+						<div class="text">${item.itemTypeName}</div>
+					</div>
 				</div>
 			</c:forEach>
 		</div>

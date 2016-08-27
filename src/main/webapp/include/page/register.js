@@ -93,6 +93,13 @@ $(function() {
 			}
 		}
 
+		var agreement = $("#agreement").val();
+
+		if (agreement != "on") {
+			alert("请同意相关协议");
+			return;
+		}
+
 		var eo = $("#eo").val();
 		var checkCode = $("#checkCode").val();
 		var mobile = $("#mobile").val();

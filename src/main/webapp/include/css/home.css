@@ -575,10 +575,11 @@ textarea {
   width: 113px;
 }
 .ranks > .rank > .header > .text {
-  font-size: 13px;
+  font-size: 14px;
   color: #fff;
-  line-height: 30px;
-  height: 30px;
+  line-height: 26px;
+  height: 26px;
+  padding-top: 4px;
 }
 .ranks > .rank > .grid {
   box-sizing: border-box;
@@ -710,12 +711,28 @@ textarea {
   width: 100%;
   border-radius: 15px;
 }
-.ranks > .rank > .list > .item > .info > .description {
+.ranks > .rank > .list > .item > .info > .name {
   margin-left: 38px;
   margin-right: 98px;
   line-height: 20px;
   font-size: 14px;
-  height: 60px;
+  height: 20px;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-weight: bold;
+}
+.ranks > .rank > .list > .item > .info > .description {
+  margin-left: 38px;
+  margin-right: 98px;
+  height: 40px;
+  line-height: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
 }
 .ranks > .rank > .list > .item > .info > .wishBar {
   position: relative;
@@ -801,7 +818,7 @@ textarea {
   min-width: 30px;
   background: #e4007e;
   display: inline-block;
-  margin-bottom: -25px;
+  margin-bottom: -20px;
   border-radius: 3px;
   padding: 0 10px;
 }

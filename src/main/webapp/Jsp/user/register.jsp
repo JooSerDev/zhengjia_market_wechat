@@ -16,7 +16,7 @@
 	<div class="container" id="container">
 
 		<div class="cloud"></div>
-		<div class="h3">完善您的个人信息</div>
+		<div class="h3">请完善您的个人信息</div>
 
 		<div class="input-view">
 			<input class="block-input" type="text" placeholder="请输入手机号码"
@@ -29,16 +29,19 @@
 					maxlength="6" id="checkCode">
 			</div>
 			<div class="btn-view">
-				<button class="block-btn countdown" onclick="evens.onSendCheckCodeClick()">点击获取验证码</button>
+				<button class="block-btn countdown"
+					onclick="evens.onSendCheckCodeClick()">点击获取验证码</button>
 			</div>
+		</div>
+
+		<div class="h6">
+			<input type="checkbox" checked="checked" id="agreement">同意<a
+				href="<%=path%>/include/core/agreement.html">个人信息隐私说明</a>
 		</div>
 
 		<div class="submit-view">
 			<div class="submit-btn" onclick="evens.onSubmitClick()">提交资料</div>
 		</div>
-
-		<div class="h6">个人信息隐私说明</div>
-
 
 	</div>
 

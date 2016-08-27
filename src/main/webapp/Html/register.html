@@ -27,12 +27,16 @@
 				<button class="block-btn">点击获取验证码</button>
 			</div>
 		</div>
-		
+
+		<div class="h6">
+			<input type="checkbox" checked="checked" id="agreement">同意<a>个人信息隐私说明</a>
+		</div>
+
 		<div class="submit-view">
 			<div class="submit-btn">提交资料</div>
 		</div>
-		
-		<div class="h6">个人信息隐私说明</div>
+
+
 
 
 	</div>
@@ -42,12 +46,7 @@
 
 	<script>
 		$(function() {
-			Core.resizeContainer();
-
-			$(window).resize(function() {
-				Core.resizeContainer();
-			});
-
+			alert($("#agreement").val());
 		});
 	</script>
 

@@ -437,7 +437,14 @@ body {
   text-align: center;
   color: #fff;
   font-size: 12px;
-  margin-top: 4px;
+  margin-top: 15px;
+}
+.h6 > input {
+  vertical-align: middle;
+}
+.h6 > a {
+  text-decoration: underline;
+  color: #fff;
 }
 .input-view {
   padding: 10px;

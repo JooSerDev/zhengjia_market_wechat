@@ -524,7 +524,7 @@ public class ItemService {
 				UserInfo owner = userService.getUserInfoById(item.getOwnerId());
 				ItemInfo itemInfo = new ItemInfo();
 				itemInfo.setItem(item);
-				itemInfo.setOwnerInfo(owner.getUser());
+				itemInfo.setOwnerInfo(owner != null ? owner.getUser() : null);
 				itemInfos.add(itemInfo);
 			}
 		}

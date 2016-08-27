@@ -160,8 +160,10 @@
         margin-right: @view-card-margin-width;
         margin-left: @view-card-margin-width;
         border-radius: 5px;
+        position: relative;
         /* 头部 */
         >.title {
+            position: relative;
             .clearfix;
             height: @head-img-size-list;
             margin-bottom: 5px;
@@ -180,15 +182,20 @@
                 padding-left: 5px;
                 height: @head-img-size-list;
                 line-height: @head-img-size-list;
-                font-size: 16px;
+                font-size: 14px;
+                font-weight: bold;
             }
             >.time {
+                display: none;
                 .pull-right;
                 height: @head-img-size-list;
                 line-height: @head-img-size-list;
                 font-size: 12px;
             }
             >.recommended {
+                position: absolute;
+                top: 0;
+                right: 0;
                 margin-top: @view-padding-height*-1;
                 margin-left: 10px;
                 .pull-right;

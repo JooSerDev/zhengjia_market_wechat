@@ -47,7 +47,7 @@
 			<div class="rank">
 				<div class="header">
 					<div class="label users"></div>
-					<div class="text">分享达人</div>
+					<div class="text">集赞达人大头贴</div>
 				</div>
 				<div class="grid">
 					<c:forEach items="${users }" var="user">
@@ -71,7 +71,7 @@
 			<div class="rank">
 				<div class="header">
 					<div class="label items"></div>
-					<div class="text">小编推荐</div>
+					<div class="text">小编推荐良心好物</div>
 				</div>
 				<div class="list">
 					<c:forEach items="${items }" var="ii">
@@ -80,11 +80,12 @@
 								<div class="head-img">
 									<img src="${ii.ownerInfo.headImgUrl }">
 								</div>
+								<div class="name">${ii.item.name}</div>
 								<div class="description">${ii.item.description}</div>
 
 								<div class="wishBar">
 									<div class="tag"></div>
-									<div class="wishItem">${ii.item.wishItem}</div>
+									<div class="wishItem">想换: ${ii.item.wishItem}</div>
 								</div>
 								<div class="img-view">
 									<img src="${ii.item.firstItemCenterImgUrl }">

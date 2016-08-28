@@ -444,7 +444,7 @@ textarea {
 }
 .target-item-view > .info {
   margin-right: 100px;
-  padding: 0 10px;
+  padding: 0 10px 0 0;
   height: 60px;
 }
 .target-item-view > .info > .headimg {
@@ -457,11 +457,27 @@ textarea {
   height: 30px;
   border-radius: 15px;
 }
+.target-item-view > .info > .name {
+  line-height: 20px;
+  font-size: 14px;
+  padding-left: 5px;
+  height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+  font-weight: bold;
+}
 .target-item-view > .info > .text {
   line-height: 20px;
-  height: 60px;
+  height: 40px;
   font-size: 14px;
-  padding-left: 35px;
+  padding-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
 }
 .target-item-view > .wish {
   margin: 0 -10px;
@@ -480,11 +496,14 @@ textarea {
   width: 24px;
 }
 .target-item-view > .wish > .text {
-  padding-left: 40px;
+  padding-left: 10px;
   line-height: 30px;
   height: 30px;
   font-size: 13px;
   margin-right: 110px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
 }
 .target-item-view > .img {
   position: absolute;
@@ -501,9 +520,8 @@ textarea {
   border-radius: 3px;
 }
 .divider-view {
-  margin: 10px;
+  margin: 10px 0;
   padding: 15px 10px;
-  border-radius: 8px;
   background: rgba(255, 255, 255, 0.3);
   text-align: center;
   color: #fff;
@@ -528,11 +546,27 @@ textarea {
   height: 90px;
   position: relative;
 }
-.item > .info > .desc {
+.item > .info > .name {
   line-height: 30px;
   font-size: 15px;
   margin-right: 100px;
-  max-height: 90px;
+  height: 30px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+}
+.item > .info > .desc {
+  line-height: 20px;
+  font-size: 14px;
+  margin-right: 100px;
+  height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
 }
 .item > .info > .img {
   position: absolute;

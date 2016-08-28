@@ -724,6 +724,7 @@ textarea {
 }
 .items > .item {
   padding: 10px 15px;
+  padding-bottom: 0;
   background: #ffffff;
   margin-top: 20px;
   margin-right: 10px;
@@ -750,7 +751,9 @@ textarea {
   content: ".";
 }
 .items > .item > .title > .head-img {
-  float: left;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 30px;
   height: 30px;
   border-radius: 15px;
@@ -760,12 +763,15 @@ textarea {
   border-radius: 15px;
 }
 .items > .item > .title > .nickname {
-  float: left;
+  margin-left: 30px;
+  margin-right: 44px;
   padding-left: 5px;
   height: 30px;
   line-height: 30px;
   font-size: 14px;
   font-weight: bold;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 .items > .item > .title > .time {
   display: none;
@@ -895,7 +901,7 @@ textarea {
   height: 26px;
   min-width: 30px;
   display: inline-block;
-  margin-bottom: -25px;
+  margin-bottom: -15px;
   border-radius: 3px;
   padding: 0 10px;
 }

@@ -431,6 +431,10 @@ body {
   background: rgba(255, 255, 255, 0.3);
   border-radius: 8px;
 }
+.input-view.show-view {
+  margin: 10px 0;
+  border-radius: 0;
+}
 .input-view > .item {
   padding: 0;
   position: relative;
@@ -517,7 +521,6 @@ body {
 .temp-view {
   float: right;
   text-align: center;
-  width: 50px;
   padding: 10px 10px;
   background: rgba(255, 255, 255, 0.3);
   border-radius: 5px;

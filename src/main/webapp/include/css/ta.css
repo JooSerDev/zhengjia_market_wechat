@@ -559,12 +559,28 @@ body {
   color: #b9b9b9;
   margin-right: 90px;
 }
+.itemList > .item > .info > .name {
+  margin-right: 95px;
+  line-height: 20px;
+  font-size: 14px;
+  height: 20px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-all;
+  font-weight: bold;
+}
 .itemList > .item > .info > .description {
   margin-right: 95px;
   line-height: 20px;
   font-size: 14px;
-  height: 80px;
+  height: 60px;
   margin-bottom: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
 }
 .itemList > .item > .info > .img-view {
   position: absolute;

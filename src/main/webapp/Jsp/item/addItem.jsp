@@ -59,14 +59,14 @@
 
 
 			<div class="submitBtnView">
-				<button class="btn" onclick="evens.onSubmitClick()">发布宝贝</button>
+				<button class="btn" onclick="evens.onSubmitClick()">提交审核</button>
 			</div>
 
 			<div class="ps-text">宝贝发布需后台审核通过后才可见</div>
 		</div>
 
 		<div id="modelContainer" style="display: none;">
-			<div class="list input-view">
+			<div class="list input-view show-view">
 				<div class="item textItem">选择你喜欢的模版</div>
 			</div>
 

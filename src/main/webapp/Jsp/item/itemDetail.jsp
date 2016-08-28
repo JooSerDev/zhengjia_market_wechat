@@ -18,7 +18,7 @@
 		<div class="main-view">
 
 			<div class="head-view">
-				<div class="head-img">
+				<div class="head-img" onclick="evens.onHeadImgClick('${owner.openid}')">
 					<img src="${owner.headImgUrl }">
 				</div>
 				<div class="info-view">

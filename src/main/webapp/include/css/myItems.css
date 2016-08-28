@@ -458,11 +458,27 @@ textarea {
   height: 90px;
   position: relative;
 }
+.items > .item > .info > .name {
+  line-height: 30px;
+  font-size: 15px;
+  margin-right: 100px;
+  height: 30px;
+  font-weight: bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
 .items > .item > .info > .desc {
   line-height: 30px;
   font-size: 15px;
   margin-right: 100px;
-  max-height: 90px;
+  height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
 }
 .items > .item > .info > .img {
   position: absolute;
@@ -490,11 +506,29 @@ textarea {
   font-size: 14px;
   line-height: 30px;
 }
+.items > .item > .state-view > .state.wait {
+  background: #a0ce00 !important;
+}
+.items > .item > .state-view > .state.yes {
+  background: #0050a3 !important;
+}
+.items > .item > .state-view > .state.no {
+  background: #e4007e !important;
+}
 .items > .item > .state-view > .line {
   background: #e4007e;
   height: 4px;
   border-radius: 2px;
   margin-top: -4px;
+}
+.items > .item > .state-view > .line.wait {
+  background: #a0ce00 !important;
+}
+.items > .item > .state-view > .line.yes {
+  background: #0050a3 !important;
+}
+.items > .item > .state-view > .line.no {
+  background: #e4007e !important;
 }
 .bottom {
   height: 58px;

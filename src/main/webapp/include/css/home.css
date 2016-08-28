@@ -690,6 +690,7 @@ textarea {
 .ranks > .rank > .list > .item {
   box-sizing: border-box;
   padding: 8px;
+  padding-bottom: 0;
   background: #ffffff;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -818,7 +819,7 @@ textarea {
   min-width: 30px;
   background: #e4007e;
   display: inline-block;
-  margin-bottom: -20px;
+  margin-bottom: -10px;
   border-radius: 3px;
   padding: 0 10px;
 }

@@ -8,8 +8,8 @@ body {
   background: @color-s2;
 }
 
-@me-view-padding-width : 15px;
-@me-view-padding-height : 20px;
+@me-view-padding-width: 15px;
+@me-view-padding-height: 20px;
 .me-view {
   padding: @me-view-padding-height @me-view-padding-width;
   margin: @view-card-margin-width;
@@ -128,12 +128,29 @@ body {
         margin-right: 90px;
       }
 
+      > .name {
+        margin-right: 95px;
+        line-height: 20px;
+        font-size: 14px;
+        height: 20px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-all;
+        font-weight: bold;
+      }
+
       > .description {
         margin-right: 95px;
         line-height: 20px;
         font-size: 14px;
-        height: 80px;
+        height: 60px;
         margin-bottom: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        word-break: break-all;
       }
 
       > .img-view {
@@ -208,7 +225,7 @@ body {
       min-width: 30px;
       background: @color-s1;
       display: inline-block;
-      margin-bottom: -15px-@me-view-padding-height/2;
+      margin-bottom: -15-@me-view-padding-height/2;
       border-radius: 3px;
       padding: 0 10px;
       > .img {

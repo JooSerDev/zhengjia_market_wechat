@@ -16,11 +16,12 @@
 				<div class="headimg">
 					<img class="target-head-img" src="${targetUser.headImgUrl }">
 				</div>
+				<div class="name">${targetItem.name }</div>
 				<div class="text">${targetItem.description }</div>
 			</div>
 			<div class="wish">
 				<div class="icon"></div>
-				<div class="text">${targetItem.wishItem}</div>
+				<div class="text">想换: ${targetItem.wishItem}</div>
 			</div>
 			<div class="img">
 				<img src="http://www.joosure.com/wechatTest/head_img/20166/15/BXBVz7YlhAqRHq4CJ0jvEAJtRDRPcPcq.jpg">
@@ -31,6 +32,7 @@
 			<div class="item" onclick="evens.onItemClick(1)">
 				<div class="time">${item.displayTime }</div>
 				<div class="info">
+					<div class="name">${item.name}</div>
 					<div class="desc">${item.description}</div>
 					<div class="img">
 						<img src="${item.firstItemCenterImgUrl }">

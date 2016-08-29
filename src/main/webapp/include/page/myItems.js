@@ -48,7 +48,7 @@ var Item = function (imgUrl, state, desc, createtime, name) {
     } else if (state == "no") {
         stateStr = "审核不通过";
     } else {
-        stateStr = "审核以上架";
+        stateStr = "已上架";
     }
 
     var item = {

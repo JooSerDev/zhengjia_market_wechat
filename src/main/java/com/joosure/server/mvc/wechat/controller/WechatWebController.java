@@ -25,6 +25,7 @@ import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AgreeExchangePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ExchangePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.FinalAgreeExchangePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.HomePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ItemDetailPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
@@ -445,14 +446,16 @@ public class WechatWebController {
 			int targetItemId = Integer.parseInt(targetItemIdStr);
 			ExchangePageInfo pageInfo = wechatWebService.exchangePage(targetItemId, request);
 
-			if (pageInfo.getItems().size() == 0) {
-				return "redirect:addItem?eo=" + pageInfo.getUserInfo().getEncodeOpenid();
-			}
+			// if (pageInfo.getItems().size() == 0) {
+			// return "redirect:addItem?eo=" +
+			// pageInfo.getUserInfo().getEncodeOpenid();
+			// }
 
 			model.addAttribute("targetItem", pageInfo.getTargetItem());
 			model.addAttribute("targetUser", pageInfo.getTargetUser());
 			model.addAttribute("items", pageInfo.getItems());
 			model.addAttribute("user", pageInfo.getUserInfo());
+			model.addAttribute("isHasItems", pageInfo.getItems().size() == 0 ? 0 : 1);
 			model.addAttribute("eo", pageInfo.getUserInfo().getEncodeOpenid());
 
 			pageLogger(request, "/wechat/item/toExchange", pageInfo);
@@ -473,7 +476,9 @@ public class WechatWebController {
 
 			int exchangeId = Integer.parseInt(exchangeIdStr);
 
-			AgreeExchangePageInfo pageInfo = wechatWebService.toAgreeExchangePage(exchangeId, request);
+			String eo = request.getParameter("eo");
+
+			AgreeExchangePageInfo pageInfo = wechatWebService.toAgreeExchangePage(exchangeId, eo);
 			int isOwner = 0;
 
 			model.addAttribute("ee", pageInfo.getExchangeInfo().getEncodeExchange());
@@ -497,6 +502,26 @@ public class WechatWebController {
 			return errorPageRouter(e, "WechatWebController.toAgreeExchange");
 		}
 		return "item/agreeExchange";
+	}
+
+	@RequestMapping("/item/toFinalAgreeExchange")
+	public String toFinalAgreeExchange(HttpServletRequest request, HttpServletResponse response, Model model) {
+		try {
+
+			String ee = request.getParameter("ee");
+			if (StringUtil.isBlank(ee)) {
+				throw new RequestParamsException("非法交换请求");
+			}
+
+			FinalAgreeExchangePageInfo pageInfo = wechatWebService.toFinalAgreeExchangePage(ee, request);
+			model.addAttribute("ee", ee);
+			model.addAttribute("changerInfo", pageInfo.getChanger());
+
+			pageLogger(request, "/wechat/item/toFinalAgreeExchange", pageInfo);
+		} catch (Exception e) {
+			return errorPageRouter(e, "WechatWebController.toFinalAgreeExchange");
+		}
+		return "item/finalAgreeExchange";
 	}
 
 	@RequestMapping("/item/agreeExchange")

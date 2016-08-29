@@ -117,7 +117,7 @@ String path = request.getContextPath();
 
         <div class="wishBar">
             <div class="tag"></div>
-            <div class="wishItem">{wishItem}</div>
+            <div class="wishItem">想换: {wishItem}</div>
         </div>
 
         <div class="foot-bar">

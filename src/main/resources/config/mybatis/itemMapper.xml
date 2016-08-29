@@ -42,7 +42,8 @@
 
 	<select id="getItemsByOwnerId" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
-		item_item where ownerId = #{ownerId} order by refreshTime desc;
+		item_item where status = 0 and ownerId = #{ownerId} and approvalStatus
+		= 'yes' order by refreshTime desc;
 	</select>
 
 	<select id="getExchangeableItemsByOwnerId" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
@@ -55,14 +56,14 @@
 
 	<select id="getItemsByOwnerIdPages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
-		item_item where ownerId = #{ownerId}
+		item_item where status = 0 and ownerId = #{ownerId}
 		order by refreshTime desc limit
 		#{startRow},#{limitSize};
 	</select>
 
 	<select id="getMarketItemsPages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
-		item_item where approvalStatus = 'yes'
+		item_item where status = 0 and approvalStatus = 'yes'
 		<if test="keyword != null and keyword != ''"> and description like '%${keyword}%' </if>
 		<if test="itemType != 0"> and itemType = ${itemType} </if>
 		<if test="isRecommended != 0"> and isRecommended = 1 </if>
@@ -72,7 +73,9 @@
 
 	<select id="getItemsRecommended" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
-		item_item where approvalStatus = 'yes' and isRecommended = 1 order by
+		item_item where status = 0 and approvalStatus = 'yes' and
+		isRecommended =
+		1 order by
 		recommendedTime desc limit
 		15;
 	</select>
@@ -127,9 +130,11 @@
 	<update id="updateExchanges4cancelOthersWhenAgreeExchange">
 		update item_exchange set exchangeState = 'cancel' ,
 		exchangeTime = now()
-		where (ownerItemId = #{ownerItemId} or ownerItemId = #{changerItemId}
+		where (ownerItemId = #{ownerItemId} or ownerItemId
+		= #{changerItemId}
 		or
-		changerItemId = #{changerItemId} or changerItemId = #{ownerItemId})
+		changerItemId = #{changerItemId} or changerItemId
+		= #{ownerItemId})
 		and exchangeId &lt;> #{exchangeId};
 	</update>
 

@@ -1,21 +1,33 @@
 package com.joosure.server.mvc.wechat.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.joosure.server.mvc.wechat.constant.CommonConstant;
+import com.joosure.server.mvc.wechat.constant.ExceptionConstant;
 import com.joosure.server.mvc.wechat.dao.cache.DictsCache;
 import com.joosure.server.mvc.wechat.dao.database.ScoreDao;
+import com.joosure.server.mvc.wechat.dao.database.UserDao;
 import com.joosure.server.mvc.wechat.entity.pojo.Score;
+import com.joosure.server.mvc.wechat.entity.pojo.User;
 
 @Service("scoreService")
 public class ScoreService {
 
+	private Logger log = Logger.getLogger(ScoreService.class);
+
 	@Autowired
 	private ScoreDao scoreDao;
+	@Autowired
+	private UserDao userDao;
 
 	/**
 	 * 获取用户积分列表记录
@@ -69,9 +81,19 @@ public class ScoreService {
 	 * @return
 	 */
 	public int updateScoreByEvent(int userId, String eventKey) {
+		// 检查是否存在该用户：
+		User user = userDao.getUserById(userId);
+		if (user == null) {
+			log.warn("进行积分操作时,检测用户id：" + userId + " 不存在");
+			return ExceptionConstant.userNotExistException;
+		}
 		int ret = 0;
 		Map<String, String> scoreEvents = DictsCache.getScoreEvent();
 		if (scoreEvents != null) {
+			ret = specialEventKey(userId, eventKey);// 特殊操作特殊处理
+			if (ret != 0) {
+				return ret;
+			}
 			String eventScore = scoreEvents.get(eventKey);
 			if (eventScore != null && !"".equals(eventScore)) {
 				int score = Integer.parseInt(eventScore);
@@ -80,15 +102,52 @@ public class ScoreService {
 				// 更新用户总积分
 				score += oldScore;
 				ret = updateUserScore(userId, score);
+				if (ret != 1) {
+					log.warn("进行积分操作时,更新用户积分出错");
+					return ExceptionConstant.updateUserScoreException;
+				}
 				// 插入积分记录
 				Score record = new Score();
 				record.setUserId(userId);
 				record.setEventKey(eventKey);
 				record.setScore(Integer.parseInt(eventScore));
 				ret = scoreDao.insertScore(record);
+				if (ret != 1) {
+					log.warn("进行积分操作时,插入用户积分出错");
+					return ExceptionConstant.insertScoreException;
+				}
 			}
 		}
 		return ret;
 	}
 
+	/**
+	 * 留言和用户点赞有单日累计量
+	 * 
+	 * @param eventKey
+	 */
+	private int specialEventKey(int userId, String eventKey) {
+		if (CommonConstant.SCORE_EVENT_MSG.equals(eventKey) || CommonConstant.SCORE_EVENT_USER_UP.equals(eventKey)) {
+			Map<String, Object> cond = new HashMap<String, Object>();
+			cond.put("userId", userId);
+			cond.put("eventKey", eventKey);
+			Calendar cal = Calendar.getInstance();
+			cal.set(Calendar.HOUR_OF_DAY, 0);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			Date startTime = cal.getTime();// 开始时间
+			cal.set(Calendar.HOUR_OF_DAY, 23);
+			cal.set(Calendar.MINUTE, 59);
+			cal.set(Calendar.SECOND, 59);
+			Date endTime = cal.getTime();// 结束时间
+			cond.put("startTime", startTime);
+			cond.put("endTime", endTime);
+			int sumScore = scoreDao.getSumScoreByCond(cond);
+			if (sumScore > CommonConstant.DayMaxScore - 1) {// 这两个事件单日积分最多为5
+				log.warn("进行积分操作时,用户点赞或留言 单日数量达到最大值");
+				return ExceptionConstant.msgOrUpCountToMax;
+			}
+		}
+		return 0;
+	}
 }

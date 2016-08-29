@@ -453,10 +453,13 @@ public class ItemService {
 
 					String toAgreeExchangePath = request.getScheme() + "://" + request.getServerName()
 							+ request.getContextPath() + WechatConstant.SCHEMA_MARKET + "/item/toAgreeExchange?e="
-							+ exchange.getExchangeId();
-					String toAgreeExchangeUrl = OAuthManager.generateRedirectURI(toAgreeExchangePath,
-							WechatConstant.SCOPE_SNSAPI_BASE, "");
-					mei.setToAgreeExchangePath(toAgreeExchangeUrl);
+							+ exchange.getExchangeId()+ "&eo=" + eo;;
+
+					/* 未使用授权链接 */
+					// String toAgreeExchangeUrl =
+					// OAuthManager.generateRedirectURI(toAgreeExchangePath,
+					// WechatConstant.SCOPE_SNSAPI_BASE, "");
+					mei.setToAgreeExchangePath(toAgreeExchangePath);
 
 				} else {
 					mei.setUser(changer);
@@ -468,10 +471,11 @@ public class ItemService {
 
 					String toAgreeExchangePath = request.getScheme() + "://" + request.getServerName()
 							+ request.getContextPath() + WechatConstant.SCHEMA_MARKET + "/item/toAgreeExchange?e="
-							+ exchange.getExchangeId();
-					String toAgreeExchangeUrl = OAuthManager.generateRedirectURI(toAgreeExchangePath,
-							WechatConstant.SCOPE_SNSAPI_BASE, "");
-					mei.setToAgreeExchangePath(toAgreeExchangeUrl);
+							+ exchange.getExchangeId() + "&eo=" + eo;
+					// String toAgreeExchangeUrl =
+					// OAuthManager.generateRedirectURI(toAgreeExchangePath,
+					// WechatConstant.SCOPE_SNSAPI_BASE, "");
+					mei.setToAgreeExchangePath(toAgreeExchangePath);
 				}
 
 				infos.add(mei);

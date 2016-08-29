@@ -14,6 +14,8 @@ package com.joosure.server.mvc.wechat.constant;
  */
 public class CommonConstant {
 
+	public static final int DayMaxScore = 5;// 单日某个操作累计积分 阈值
+
 	public static final String GROUP_SCORE_EVENT = "ScoreEvent";
 
 	public static final String SCORE_EVENT_MSG = "SEMsg";// 留言

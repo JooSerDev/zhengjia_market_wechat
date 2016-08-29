@@ -44,7 +44,7 @@
 
 				<div class="wish">
 					<div class="icon"></div>
-					<div class="text">${item.wishItem }</div>
+					<div class="text">想换: ${item.wishItem }</div>
 				</div>
 
 				<div class="like-view" id="likeBtn">

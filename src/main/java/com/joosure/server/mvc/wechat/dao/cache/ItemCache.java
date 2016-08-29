@@ -18,7 +18,7 @@ public class ItemCache {
 	private static List<ItemType> ItemTypes = new ArrayList<>();
 	private static Map<Integer, ItemType> ItemTypeMap = new HashMap<>();
 
-	static {
+	public static void inti() {
 		loadData();
 	}
 

@@ -11,7 +11,7 @@
 		</if>
 		<if test="userId!=null and userId!=0">
 			and userId = #{userId}
-		</if> 
+		</if>
 		<if test="score!=null and score!=0">
 			and score = #{score}
 		</if>
@@ -21,30 +21,45 @@
 		order by addTime desc
 		<if test="startRow!=null and startRow!=-1">
 			limit #{startRow},#{limitSize}
-		</if>  
+		</if>
 	</select>
-	
+
 	<!-- 获取用户总积分 -->
 	<select id="getUserScore" resultType="java.lang.Integer">
-		select score from user_user where userId=#{userId}
+		select score from user_user
+		where userId=#{userId}
 	</select>
-	
+
 	<!-- 积分操作 -->
 	<insert id="insertScore" parameterType="com.joosure.server.mvc.wechat.entity.pojo.Score">
-		insert into wx_user_score (eventKey, userId, score, addTime, extdInfo, memo)
-    	values (#{eventKey}, #{userId}, #{score}, now(), #{extdInfo}, #{memo})
+		insert into wx_user_score
+		(eventKey, userId, score, addTime, extdInfo, memo)
+		values (#{eventKey},
+		#{userId}, #{score}, now(), #{extdInfo}, #{memo})
 	</insert>
-	
+
 	<!-- 更新用户总积分 -->
-	<update id="updateUserScore" >
-		update user_user set score = #{score} where userId=#{userId}
+	<update id="updateUserScore">
+		update user_user set score =
+		#{score} where
+		userId=#{userId}
 	</update>
-	 
+
 	<select id="getScoreByCond" resultType="java.lang.Integer"
 		parameterType="com.joosure.server.mvc.wechat.entity.pojo.Score">
 		select sum(score) from wx_user_score where userId = #{userId}
 		<if test="eventKey!=null and eventKey!=''">
 			and eventKey=#{eventKey}
 		</if>
+	</select>
+
+	<select id="getSumScoreByCond" resultType="Integer"
+		parameterType="java.util.Map">
+		select ifnull(sum(score),0) from wx_user_score where userId =
+		#{userId}
+		<if test="eventKey!=null and eventKey!=''">
+			and eventKey=#{eventKey}
+		</if>
+		and addTime between #{startTime} and #{endTime}
 	</select>
 </mapper>

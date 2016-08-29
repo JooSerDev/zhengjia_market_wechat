@@ -1,6 +1,7 @@
 package com.joosure.server.mvc.wechat.dao.database;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -17,5 +18,7 @@ public interface ScoreDao {
 	int insertScore(Score record);
 
 	int updateUserScore(@Param("userId")int userId, @Param("score")int score);
+	
+	int getSumScoreByCond(Map<String,Object> cond);
 
 }

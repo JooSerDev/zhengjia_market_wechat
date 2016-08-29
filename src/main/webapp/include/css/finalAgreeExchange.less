@@ -1,0 +1,41 @@
+@import 'base.less';
+
+body {
+  background: @color-s2;
+}
+
+.contact-view {
+  margin:10px;
+  padding: 15px 10px;
+  .clearfix;
+  > .label {
+    .pull-left;
+    font-size: 14px;
+    color: #fff;
+    line-height: 20px;
+  }
+  > .phone {
+    font-size: 14px;
+    color: #ff8c31;
+    line-height: 20px;
+    .pull-right;
+  }
+}
+
+.btn-view {
+  margin: 5px;
+  .clearfix;
+  > .bv {
+    .pull-left;
+    box-sizing: border-box;
+    width: 50%;
+    padding: 5px;
+    > button {
+      background: #fff;
+      border: 0;
+      border-radius: 8px;
+      padding: 10px;
+      width: 100%;
+    }
+  }
+}

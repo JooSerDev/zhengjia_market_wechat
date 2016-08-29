@@ -22,7 +22,7 @@
 
 	<div class="icon"></div>
 
-	<div class="text">咦？你从哪里来，要到哪里去？</div>
+	<div class="text">授权过期啦!</div>
 
 	<div class="btn-view">
 		<a href="<%=reStr%>">返回首页</a>

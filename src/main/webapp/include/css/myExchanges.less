@@ -1,181 +1,202 @@
 @import 'base.less';
+
 .nav-bar {
-    width: 100%;
-    height: 50px;
-    background: #fff;
-    text-align: center;
-    >#ownerBtn,
-    #changerBtn {
-        background: @color-s3;
-        border: 0;
-        border-radius: 3px;
-        font-size: 15px;
-        line-height: 20px;
-        padding: 5px 15px;
-        color: #fff;
-        width: 95px;
-        margin-top: 10px;
-        &.active {
-            background: @color-s4;
-        }
+  width: 100%;
+  height: 50px;
+  background: #fff;
+  text-align: center;
+  > #ownerBtn,
+  #changerBtn {
+    background: @color-s3;
+    border: 0;
+    border-radius: 3px;
+    font-size: 15px;
+    line-height: 20px;
+    padding: 5px 15px;
+    color: #fff;
+    width: 95px;
+    margin-top: 10px;
+    &.active {
+      background: @color-s4;
     }
+  }
 }
 
 .exchanges {
-    .row;
-    padding: @view-card-margin-width*2 0;
-    /* 交换信息 */
-    >.exchange {
-        .view;
-        background: @color-fg;
-        margin-top: @view-card-margin-width*2;
-        margin-right: @view-card-margin-width;
-        margin-left: @view-card-margin-width;
-        border-radius: 5px;
-        &:first-child {
-            margin-top: 0;
-        }
-        /*我的物品*/
-        >.my-item-bar {
-            .clearfix;
-            position: relative;
-            min-height: 60px;
-            >.desc {
-                font-size: @text-size-tag;
-                color: @color-text-desc;
-                line-height: 20px;
-                margin-right: 60px;
-            }
-            >.img {
-                width: 60px;
-                height: 60px;
-                position: absolute;
-                right: 0;
-                top: 0;
-                >img {
-                    width: 60px;
-                    height: 60px;
-                    border-radius: 3px;
-                }
-            }
-        }
-        /*ta的物品*/
-        >.target-item-bar {
-            margin-right: @view-padding-width*-1;
-            margin-left: @view-padding-width*-1;
-            position: relative;
-            min-height: 135px;
-            margin-top: 15px;
-            >.exchange-icon {
-                position: absolute;
-                left: @view-padding-width;
-                top: -15px;
-                background: url('../images/logos.png');
-                background-size: 160px auto;
-                background-repeat: no-repeat;
-                background-position: -24px -136px;
-                margin: 3px;
-                height: 24px;
-                width: 24px;
-            }
-            >.desc {
-                background: @color-bg;
-                padding-top: 30px;
-                padding-bottom: 20px;
-                padding-left: @view-padding-width*2+90px;
-                padding-right: @view-padding-width;
-                font-size: @text-size-desc;
-                height: 40px;
-                >.text {
-                    overflow: hidden;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    -webkit-box-orient: vertical;
-                    line-height: 20px;
-                    height: 40px;
-                }
-            }
-            >.img {
-                width: 88px;
-                height: 88px;
-                border: 1px solid @color-fg;
-                border-radius: 5px;
-                position: absolute;
-                left: @view-padding-width;
-                top: 30px;
-                >img {
-                    width: 88px;
-                    height: 88px;
-                    border-radius: 5px;
-                }
-            }
-            >.target-user-view {
-                .clearfix;
-                padding-left: @view-padding-width*2+90px;
-                padding-right: @view-padding-width;
-                padding-top: 6px;
-                height: 30px;
-                >.img {
-                    .pull-left;
-                    height: -6px+@head-img-size-list ;
-                    width: -6px+@head-img-size-list ;
-                    >img {
-                        height: -6px+@head-img-size-list;
-                        width: -6px+@head-img-size-list;
-                        border-radius: (-6px+@head-img-size-list)/2;
-                    }
-                }
-                >.nickname {
-                    .pull-left;
-                    padding-left: 5px;
-                    line-height: -6px+@head-img-size-list;
-                    font-size: 12px;
-                }
-            }
-        }
-        >.foot-bar {
-            height: 30px;
-            .clearfix;
-            >.state-view {
-                .pull-left;
-                height: 30px;
-                >.state {
-                    border-top-left-radius: 5px;
-                    border-top-right-radius: 5px;
-                    height: 30px;
-                    background: @color-s1;
-                    color: #fff;
-                    margin: 0 2px;
-                    padding: 0 10px;
-                    font-size: 14px;
-                    line-height: 30px;
-                }
-                >.line {
-                    background: @color-s1;
-                    height: 4px;
-                    border-radius: 2px;
-                    margin-top: -4px;
-                }
-            }
-            >.time-view {
-                .pull-right;
-                height: 30px;
-                >.time {
-                    .pull-left;
-                    font-size: 12px;
-                    line-height: 30px;
-                }
-                >.icon {
-                    .pull-left;
-                    background: url('../images/logos.png');
-                    background-size: 160px auto;
-                    background-repeat: no-repeat;
-                    background-position: -0px -162px;
-                    margin: 7px 2px 6px 1px;
-                    height: 17px;
-                    width: 17px;
-                }
-            }
-        }
+  .row;
+  padding: @view-card-margin-width*2 0;
+  /* 交换信息 */
+  > .exchange {
+    .view;
+    background: @color-fg;
+    margin-top: @view-card-margin-width*2;
+    margin-right: @view-card-margin-width;
+    margin-left: @view-card-margin-width;
+    border-radius: 5px;
+    &:first-child {
+      margin-top: 0;
     }
+    /*我的物品*/
+    > .my-item-bar {
+      .clearfix;
+      position: relative;
+      min-height: 60px;
+      > .name {
+        font-size: @text-size-tag;
+        color: @color-text-desc;
+        line-height: 20px;
+        margin-right: 60px;
+        height: 20px;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        font-weight: bold;
+      }
+
+      > .desc {
+        font-size: @text-size-tag;
+        color: @color-text-desc;
+        line-height: 20px;
+        margin-right: 60px;
+        height: 40px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        word-break: break-all;
+      }
+      > .img {
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        > img {
+          width: 60px;
+          height: 60px;
+          border-radius: 3px;
+        }
+      }
+    }
+    /*ta的物品*/
+    > .target-item-bar {
+      margin-right: @view-padding-width*-1;
+      margin-left: @view-padding-width*-1;
+      position: relative;
+      min-height: 135px;
+      margin-top: 15px;
+      > .exchange-icon {
+        position: absolute;
+        left: @view-padding-width;
+        top: -15px;
+        background: url('../images/logos.png');
+        background-size: 160px auto;
+        background-repeat: no-repeat;
+        background-position: -24px -136px;
+        margin: 3px;
+        height: 24px;
+        width: 24px;
+      }
+      > .desc {
+        background: @color-bg;
+        padding-top: 30px;
+        padding-bottom: 20px;
+        padding-left: @view-padding-width*2+90px;
+        padding-right: @view-padding-width;
+        font-size: @text-size-desc;
+        height: 40px;
+        > .text {
+          font-size: 16px;
+          font-weight: bold;
+          line-height: 40px;
+          height: 40px;
+          word-wrap: break-word;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+      > .img {
+        width: 88px;
+        height: 88px;
+        border: 1px solid @color-fg;
+        border-radius: 5px;
+        position: absolute;
+        left: @view-padding-width;
+        top: 30px;
+        > img {
+          width: 88px;
+          height: 88px;
+          border-radius: 5px;
+        }
+      }
+      > .target-user-view {
+        .clearfix;
+        padding-left: @view-padding-width*2+90px;
+        padding-right: @view-padding-width;
+        padding-top: 6px;
+        height: 30px;
+        > .img {
+          .pull-left;
+          height: -6px+@head-img-size-list;
+          width: -6px+@head-img-size-list;
+          > img {
+            height: -6px+@head-img-size-list;
+            width: -6px+@head-img-size-list;
+            border-radius: (-6px+@head-img-size-list)/2;
+          }
+        }
+        > .nickname {
+          .pull-left;
+          padding-left: 5px;
+          line-height: -6px+@head-img-size-list;
+          font-size: 12px;
+        }
+      }
+    }
+    > .foot-bar {
+      height: 30px;
+      .clearfix;
+      > .state-view {
+        .pull-left;
+        height: 30px;
+        > .state {
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+          height: 30px;
+          background: @color-s1;
+          color: #fff;
+          margin: 0 2px;
+          padding: 0 10px;
+          font-size: 14px;
+          line-height: 30px;
+        }
+        > .line {
+          background: @color-s1;
+          height: 4px;
+          border-radius: 2px;
+          margin-top: -4px;
+        }
+      }
+      > .time-view {
+        .pull-right;
+        height: 30px;
+        > .time {
+          .pull-left;
+          font-size: 12px;
+          line-height: 30px;
+        }
+        > .icon {
+          .pull-left;
+          background: url('../images/logos.png');
+          background-size: 160px auto;
+          background-repeat: no-repeat;
+          background-position: -0px -162px;
+          margin: 7px 2px 6px 1px;
+          height: 17px;
+          width: 17px;
+        }
+      }
+    }
+  }
 }

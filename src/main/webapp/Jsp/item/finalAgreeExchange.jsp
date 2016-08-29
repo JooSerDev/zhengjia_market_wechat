@@ -1,13 +1,7 @@
-<%@page import="org.sword.wechat4j.oauth.OAuthManager"%>
-<%@page import="com.joosure.server.mvc.wechat.constant.WechatConstant"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + request.getContextPath()
-			+ WechatConstant.SCHEMA_MARKET + "/";
-	String homeURL = basePath + "redirecter?redirectURL=" + basePath + "home";
-	String reStr = OAuthManager.generateRedirectURI(homeURL, WechatConstant.SCOPE_SNSAPI_USERINFO, "");
 %>
 <!DOCTYPE html>
 <html>
@@ -15,27 +9,36 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <title>正佳分享集市</title>
-<link rel="stylesheet" href="<%=path%>/include/css/error.css">
+<link rel="stylesheet"
+	href="<%=path%>/include/css/finalAgreeExchange.css">
 </head>
 <body>
 	<div class="cloud"></div>
 
-	<div class="icon"></div>
-
-	<div class="text">oops! 链接迷路了!</div>
+	<div class="contact-view">
+		<div class="label">联系方式</div>
+		<div class="phone">******</div>
+	</div>
 
 	<div class="btn-view">
-		<a href="<%=reStr%>">返回首页</a>
+		<div class="bv">
+			<button onclick="evens.onSubmitClick(0)">拒绝</button>
+		</div>
+		<div class="bv">
+			<button onclick="evens.onSubmitClick(1)">同意</button>
+		</div>
 	</div>
+
+	<input type="hidden" id="ee" value="${ee}">
 
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 	<script>
 		var jsapiparam = {};
-		jsapiparam.appid = document.getElementById("appid").value;
-		jsapiparam.nonceStr = document.getElementById("nonceStr").value;
-		jsapiparam.timeStamp = document.getElementById("timeStamp").value;
-		jsapiparam.signature = document.getElementById("signature").value;
+		jsapiparam.appid = "";
+		jsapiparam.nonceStr = "";
+		jsapiparam.timeStamp = "";
+		jsapiparam.signature = "";
 
 		jsapiparam.isWxJsApiReady = false;
 
@@ -57,8 +60,28 @@
 			wx.hideOptionMenu();
 		});
 
-		$(function() {
+		var evens = {};
 
+		$(function() {
+			evens.onSubmitClick = function(flag) {
+				var ee = $("#ee").val();
+
+				$.ajax({
+					url : "agreeExchange",
+					data : {
+						ee : ee,
+						flag : flag
+					},
+					type : "POST",
+					success : function(data) {
+						if (data.errCode == "0") {
+							alert("exchange success");
+						} else {
+							alert("load fail");
+						}
+					}
+				});
+			}
 		});
 	</script>
 </body>

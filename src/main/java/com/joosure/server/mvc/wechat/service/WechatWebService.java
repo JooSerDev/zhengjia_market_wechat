@@ -31,6 +31,7 @@ import com.joosure.server.mvc.wechat.entity.domain.page.AddItemPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.AgreeExchangePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.BasePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ExchangePageInfo;
+import com.joosure.server.mvc.wechat.entity.domain.page.FinalAgreeExchangePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.HomePageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ItemDetailPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.ItemsPageInfo;
@@ -376,10 +377,15 @@ public class WechatWebService {
 
 						String toAgreeExchangePath = request.getScheme() + "://" + request.getServerName()
 								+ request.getContextPath() + WechatConstant.SCHEMA_MARKET + "/item/toAgreeExchange?e="
-								+ exchange.getExchangeId();
-						String toAgreeExchangeUrl = OAuthManager.generateRedirectURI(toAgreeExchangePath,
-								WechatConstant.SCOPE_SNSAPI_BASE, "");
-						info.setToAgreeExchangePath(toAgreeExchangeUrl);
+								+ exchange.getExchangeId() + "&eo=" + encodeOpenid;
+
+						System.out.println(toAgreeExchangePath);
+
+						// String toAgreeExchangeUrl =
+						// OAuthManager.generateRedirectURI(toAgreeExchangePath,
+						// WechatConstant.SCOPE_SNSAPI_BASE, "");
+
+						info.setToAgreeExchangePath(toAgreeExchangePath);
 
 						exchangeInfos.add(info);
 					}
@@ -533,11 +539,11 @@ public class WechatWebService {
 		}
 	}
 
-	public AgreeExchangePageInfo toAgreeExchangePage(int exchangeId, HttpServletRequest request)
+	public AgreeExchangePageInfo toAgreeExchangePage(int exchangeId, String eo)
 			throws OAuthException, ItemIllegalException {
 		AgreeExchangePageInfo pageInfo = new AgreeExchangePageInfo();
 
-		UserInfo userInfo = userService.getUserInfoBySnsbase(request);
+		UserInfo userInfo = userService.getUserInfoByEO(eo);
 		if (userInfo == null) {
 			throw new OAuthException();
 		}
@@ -565,6 +571,45 @@ public class WechatWebService {
 		} else {
 			throw new ItemIllegalException();
 		}
+
+		return pageInfo;
+	}
+
+	public FinalAgreeExchangePageInfo toFinalAgreeExchangePage(String encodeExchange, HttpServletRequest request)
+			throws ItemIllegalException {
+		FinalAgreeExchangePageInfo pageInfo = new FinalAgreeExchangePageInfo();
+
+		String decodeExchange = null;
+		try {
+			decodeExchange = EncryptUtil.decryptAES(encodeExchange, WechatConstant.ENCODE_KEY_OPENID);
+		} catch (Exception e) {
+			throw new ItemIllegalException("非法交换请求0001");
+		}
+
+		if (decodeExchange == null) {
+			throw new ItemIllegalException("非法交换请求0002");
+		}
+
+		String[] exchangeInfos = decodeExchange.split(";");
+		if (exchangeInfos.length != 6) {
+			throw new ItemIllegalException("非法交换请求0003");
+		}
+
+		String userOpenid = exchangeInfos[0];
+		String targetOpenid = exchangeInfos[1];
+
+		UserInfo ownerInfo = userService.getUserInfoByOpenid(userOpenid);
+		if (ownerInfo == null) {
+			throw new ItemIllegalException("非法交换请求0004");
+		}
+
+		UserInfo changerInfo = userService.getUserInfoByOpenid(targetOpenid);
+		if (changerInfo == null) {
+			throw new ItemIllegalException("非法交换请求0005");
+		}
+
+		pageInfo.setUserInfo(ownerInfo);
+		pageInfo.setChanger(changerInfo.getUser());
 
 		return pageInfo;
 	}

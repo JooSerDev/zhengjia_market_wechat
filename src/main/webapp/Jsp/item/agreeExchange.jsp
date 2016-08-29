@@ -19,6 +19,7 @@
 		<div class="cloud"></div>
 
 		<div class="my-item-view">
+			<div class="name">${userItem.name}</div>
 			<div class="text">${userItem.description}</div>
 			<div class="img">
 				<img src="${userItem.firstItemCenterImgUrl}">
@@ -29,12 +30,14 @@
 			<div class="img">
 				<img src="${otherItem.firstItemCenterImgUrl}">
 			</div>
+			<div class="name">${otherItem.name}</div>
 			<div class="text">${otherItem.description}</div>
 			<div class="changer-view">
 				<div class="line">
 					<div class="user">
 						<div class="label">
-							<c:if test="${isOwner !=  1}">被</c:if>申请人
+							<c:if test="${isOwner !=  1}">被</c:if>
+							申请人
 						</div>
 						<div class="headimg">
 							<img src="${other.headImgUrl}">
@@ -53,18 +56,15 @@
 			<div class="label">联系方式</div>
 			<div class="phone">
 				<c:if test="${exchange.exchangeState == 'exchanged' }">${other.mobile }</c:if>
-				<c:if test="${exchange.exchangeState != 'exchanged' }">********</c:if>
+				<c:if test="${exchange.exchangeState != 'exchanged' }">点击查看</c:if>
 			</div>
 		</div>
 
-		<c:if test="${isOwner ==  1 and exchange.exchangeState != 'exchanged'}">
+		<c:if
+			test="${isOwner ==  1 and exchange.exchangeState != 'exchanged'}">
 			<div class="btn-view">
-				<div class="bv">
-					<button onclick="evens.onSubmitClick(0)">拒绝</button>
-				</div>
-				<div class="bv">
-					<button onclick="evens.onSubmitClick(1)">同意</button>
-				</div>
+				<div class="gotoAgreePageBtn"
+					onclick="evens.toFinalAgreePageClick()">同意/拒绝交换</div>
 			</div>
 		</c:if>
 	</div>
@@ -116,25 +116,11 @@
 				Core.resizeContainer();
 			});
 
-			evens.onSubmitClick = function(flag) {
+			evens.toFinalAgreePageClick = function() {
 				var ee = $("#ee").val();
-
-				$.ajax({
-					url : "agreeExchange",
-					data : {
-						ee : ee,
-						flag : flag
-					},
-					type : "POST",
-					success : function(data) {
-						if (data.errCode == "0") {
-							alert("exchange success");
-						} else {
-							alert("load fail");
-						}
-					}
-				});
+				location.href = "toFinalAgreeExchange?ee=" + ee;
 			}
+
 		});
 	</script>
 </body>

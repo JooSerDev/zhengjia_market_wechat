@@ -490,6 +490,7 @@ textarea {
 .items > .item > .info > .img > img {
   width: 90px;
   height: 90px;
+  border-radius: 3px;
 }
 .items > .item > .state-view {
   float: left;

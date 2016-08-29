@@ -39,6 +39,7 @@
 	<template id="exchange_template">
 	<div class="exchange" onclick="evens.onExchangeClick('{toAgreeExchangePath}')">
 		<div class="my-item-bar">
+            <div class="name">{myName}</div>
 			<div class="desc">{myDesc}</div>
 			<div class="img">
 				<img src="{myItemImg}">

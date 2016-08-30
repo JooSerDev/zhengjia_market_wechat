@@ -64,37 +64,9 @@
 				<div class="comments"></div>
 				<div class="loading">加载中</div>
 			</div>
-
-			<div class="foot-bar">
-				<div class="btns">
-					<div class="col-33">
-						<div class="submitBtnView">
-							<a class="btn" href="javascript:void(0);" id="toComment">写评论</a>
-						</div>
-					</div>
-					<div class="col-66">
-						<c:if
-							test="${user.user.userId != owner.userId and item.lockStatus != 'exchanged'}">
-							<div class="submitBtnView">
-								<a class="btn" href="${toExchangeUrl}">我要交换</a>
-							</div>
-						</c:if>
-					</div>
-				</div>
-				<!-- 	<div class="ps-text">
-					<a id="onSendReport">违规内容，我要举报</a>
-				</div> -->
-			</div>
 		</div>
 	</div>
 
-	<div class="comment-post-view">
-		<div class="comment-input">
-			<textarea rows="8" placeholder="评论" id="itemComment" maxlength="500"></textarea>
-		</div>
-		<div class="post-btn" id="commentSubmitBtn">发表评论</div>
-		<div class="post-btn" id="commentCancelBtn">返回</div>
-	</div>
 
 	<template id="item_comment_template">
 	<div class="comment">
@@ -117,11 +89,6 @@
 	<input type="hidden" id="nonceStr" value="${jsapi.nonceStr}">
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
 	<input type="hidden" id="signature" value="${jsapi.signature}">
-
-	<input type="hidden" id="shareTitle" value="${share.title}">
-	<input type="hidden" id="shareImg" value="${share.imgUrl}">
-	<input type="hidden" id="shareLink" value="${share.link}">
-	<input type="hidden" id="shareDesc" value="${share.desc}">
 
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>

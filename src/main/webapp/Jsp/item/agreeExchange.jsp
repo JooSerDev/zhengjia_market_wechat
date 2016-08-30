@@ -25,7 +25,8 @@
 				<img src="${userItem.firstItemCenterImgUrl}">
 			</div>
 		</div>
-		<div class="other-item-view">
+		<div class="other-item-view"
+			onclick="evens.onOtherItemClick(${otherItem.itemId})">
 			<div class="change-icon"></div>
 			<div class="img">
 				<img src="${otherItem.firstItemCenterImgUrl}">
@@ -119,6 +120,11 @@
 			evens.toFinalAgreePageClick = function() {
 				var ee = $("#ee").val();
 				location.href = "toFinalAgreeExchange?ee=" + ee;
+			}
+			
+			evens.onOtherItemClick = function(ii){
+				var eo = Core.getQueryString("eo");
+				location.href = "itemInExchange?eo=" + eo+"&ii="+ii;
 			}
 
 		});

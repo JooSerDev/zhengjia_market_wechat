@@ -657,6 +657,15 @@ textarea {
   font-size: 16px;
   line-height: 25px;
 }
+.list-view > .arrow {
+  float: right;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAcCAYAAABoMT8aAAAAAXNSR0IArs4c6QAAAHRJREFUOBHtUtEKgDAI1H68+nLTUChL5nwIAoXhHLvT3Q5Ag4g2WVZPZQVzOmOOhCHS2UeaZAlGXZkxTQJy2Y+gdZM8hWlNXjSJnBgYtHDMTesubfDtz8YW/qlg7KvIiTsijt9txnTvzwONQLKS1MBXos/3B+p9LBP/4sRuAAAAAElFTkSuQmCC);
+  background-size: 8px 14px;
+  width: 8px;
+  height: 14px;
+  background-repeat: no-repeat;
+  margin: 5px 0 6px 0;
+}
 .add-item {
   padding: 20px 15px;
   margin: 10px;

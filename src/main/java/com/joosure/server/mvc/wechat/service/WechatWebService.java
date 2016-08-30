@@ -107,6 +107,10 @@ public class WechatWebService {
 		return redirecter;
 	}
 
+	public void sendReport(String eo, int itemId) {
+		
+	}
+
 	/**
 	 * 前往Home页面
 	 * 

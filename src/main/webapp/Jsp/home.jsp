@@ -57,7 +57,7 @@
 									<img src="${user.headImgUrl }">
 									<div class="like-bar">
 										<div class="icon"></div>
-										<div class="text">${user.itemNum }</div>
+										<div class="text">${user.likeNum }</div>
 									</div>
 								</div>
 								<div class="text">${user.nickname }</div>
@@ -168,15 +168,12 @@
 			timestamp : jsapiparam.timeStamp,
 			nonceStr : jsapiparam.nonceStr,
 			signature : jsapiparam.signature,
-			jsApiList : [ "hideOptionMenu","showMenuItems" ]
+			jsApiList : [ "hideOptionMenu" ]
 		});
 
 		wx.ready(function() {
 			jsapiparam.isWxJsApiReady = true;
-			//wx.hideOptionMenu();
-			wx.showMenuItems({
-			    menuList: ["menuItem:copyUrl"] 
-			});
+			wx.hideOptionMenu();
 		});
 
 		wx.error(function(res) {

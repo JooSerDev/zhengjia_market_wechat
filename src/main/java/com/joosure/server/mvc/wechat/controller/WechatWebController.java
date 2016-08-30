@@ -134,6 +134,38 @@ public class WechatWebController {
 	}
 
 	/**
+	 * 发送checkcode - ajax
+	 * 
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
+	@RequestMapping("/sendReport")
+	public void sendReport(HttpServletRequest request, HttpServletResponse response, Model model) {
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			String itemIdStr = request.getParameter("ii");
+
+			Integer itemId = null;
+			try {
+				itemId = Integer.parseInt(itemIdStr);
+			} catch (Exception e) {
+				throw new RequestParamsException();
+			}
+			
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			ar.setErrCode("9001");
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
+
+	/**
 	 * 首页
 	 * 
 	 * @param request
@@ -401,6 +433,35 @@ public class WechatWebController {
 			return errorPageRouter(e, "WechatWebController.items");
 		}
 		return "item/items";
+	}
+	
+	@RequestMapping("/item/itemInExchange")
+	public String itemDetailInExchange(HttpServletRequest request, HttpServletResponse response, Model model) {
+		try {
+			String itemIdStr = request.getParameter("ii");
+			int itemId = 0;
+			try {
+				itemId = Integer.parseInt(itemIdStr);
+			} catch (Exception e) {
+				throw new NumberFormatException();
+			}
+
+			String eo = request.getParameter("eo");
+
+			ItemDetailPageInfo pageInfo = wechatWebService.itemDetailPage(eo, itemId, request);
+			model.addAttribute("owner", pageInfo.getOwnerInfo());
+			model.addAttribute("user", pageInfo.getUserInfo());
+			model.addAttribute("item", pageInfo.getItem());
+			model.addAttribute("itemImgList", pageInfo.getItemImgs());
+			model.addAttribute("comments", pageInfo.getComments());
+			model.addAttribute("hasNextCommentPage", pageInfo.getHasNextCommentPage());
+			model.addAttribute("jsapi", pageInfo.getJsApiParam());
+
+			pageLogger(request, "/wechat/item/item", pageInfo);
+		} catch (Exception e) {
+			return errorPageRouter(e, "WechatWebController.itemDetail");
+		}
+		return "item/itemDetail4Exchange";
 	}
 
 	@RequestMapping("/item/item")

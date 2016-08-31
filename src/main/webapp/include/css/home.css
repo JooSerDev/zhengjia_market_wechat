@@ -530,12 +530,14 @@ textarea {
 .banner > img {
   width: 100%;
 }
+.bannerImg {
+  width: 100% !important;
+}
 .ranks > .header {
   height: 10px;
   background: #0050a3;
   width: 100%;
   border-radius: 10px;
-  margin-top: -5px;
 }
 .ranks > .rank {
   margin: 10px;
@@ -608,7 +610,6 @@ textarea {
 .ranks > .rank > .grid > .item > .card > .icon {
   background: #edf0f5;
   border-radius: 8px;
-  padding: 10px;
 }
 .ranks > .rank > .grid > .item > .card > .icon > img {
   width: 100%;

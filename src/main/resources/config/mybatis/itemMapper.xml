@@ -57,7 +57,8 @@
 	<select id="getItemsByOwnerIdPages" resultType="com.joosure.server.mvc.wechat.entity.pojo.Item">
 		select * from
 		item_item where status = 0 and ownerId = #{ownerId}
-		order by refreshTime desc limit
+		order by
+		refreshTime desc limit
 		#{startRow},#{limitSize};
 	</select>
 
@@ -183,5 +184,12 @@
 		where itemId = #{itemId} and
 		userId = #{userId};
 	</select>
+
+	<insert id="saveItemReport">
+		insert into wx_user_cpt
+		(userid,username,itemid,itemname,exchangeid,touserid,tousername,addtime,message,status,remark,modifytime)
+		values
+		(#{userid},#{username},#{itemid},#{itemname},#{exchangeid},#{touserid},#{tousername},#{addtime},#{message},#{status},#{remark},#{modifytime});
+	</insert>
 
 </mapper>

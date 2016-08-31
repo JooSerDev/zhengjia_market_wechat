@@ -9,6 +9,7 @@ import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemComment;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemLike;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemType;
+import com.joosure.server.mvc.wechat.entity.pojo.WxUserCpt;
 
 public interface ItemDao {
 
@@ -100,5 +101,7 @@ public interface ItemDao {
 	public void saveItemLike(ItemLike itemLike);
 
 	public ItemLike getItemLike(@Param("itemId") int itemId, @Param("userId") int userId);
+
+	public void saveItemReport(WxUserCpt wxUserCpt);
 
 }

@@ -7,14 +7,15 @@ import com.joosure.server.mvc.wechat.entity.pojo.Exchange;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemLike;
 import com.joosure.server.mvc.wechat.entity.pojo.PageViewLog;
+import com.joosure.server.mvc.wechat.entity.pojo.WxUserCpt;
 
 @SuppressWarnings("rawtypes")
 public class SqlBuilder {
 
 	static String[] Jobs = { "insert", "update" };
 	static String job = Jobs[0];
-	static String table = "sys_page_view_log";
-	static Class clazz = PageViewLog.class;
+	static String table = "wx_user_cpt";
+	static Class clazz = WxUserCpt.class;
 
 	public static void main(String[] args) {
 		StringBuffer sb = new StringBuffer(job);

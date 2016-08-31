@@ -146,6 +146,7 @@ public class WechatWebController {
 		try {
 			String eo = request.getParameter("eo");
 			String itemIdStr = request.getParameter("ii");
+			String msg = request.getParameter("msg");
 
 			Integer itemId = null;
 			try {
@@ -153,9 +154,10 @@ public class WechatWebController {
 			} catch (Exception e) {
 				throw new RequestParamsException();
 			}
-			
-			
-			
+
+			itemService.sendReport(eo, itemId, msg);
+			ar.setErrCode("0");
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			ar.setErrCode("9001");
@@ -434,7 +436,7 @@ public class WechatWebController {
 		}
 		return "item/items";
 	}
-	
+
 	@RequestMapping("/item/itemInExchange")
 	public String itemDetailInExchange(HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {

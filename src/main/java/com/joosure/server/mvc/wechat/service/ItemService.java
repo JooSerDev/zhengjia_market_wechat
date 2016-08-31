@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.sword.wechat4j.oauth.OAuthException;
-import org.sword.wechat4j.oauth.OAuthManager;
 
 import com.joosure.server.mvc.wechat.constant.CommonConstant;
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
@@ -29,6 +28,7 @@ import com.joosure.server.mvc.wechat.entity.pojo.ItemComment;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemLike;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemType;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
+import com.joosure.server.mvc.wechat.entity.pojo.WxUserCpt;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
 import com.joosure.server.mvc.wechat.exception.RequestParamsException;
 import com.joosure.server.mvc.wechat.exception.UserIllegalException;
@@ -278,6 +278,29 @@ public class ItemService {
 		scoreService.updateScoreByEvent(item.getOwnerId(), CommonConstant.SCORE_EVENT_ITEM_UP);
 	}
 
+	public void sendReport(String eo, int itemid, String msg) throws OAuthException {
+		UserInfo userinfo = null;
+		try {
+			userinfo = userService.getUserInfoByEO(eo);
+		} catch (OAuthException e) {
+			throw new OAuthException();
+		}
+
+		if (userinfo == null) {
+			throw new OAuthException();
+		}
+
+		WxUserCpt cpt = new WxUserCpt();
+		cpt.setItemid(itemid);
+		cpt.setMessage(msg);
+		cpt.setUserid(userinfo.getUser().getUserId());
+		cpt.setStatus(0);
+		cpt.setUsername(userinfo.getUser().getNickname());
+		cpt.setRemark("用户举报宝贝");
+		cpt.setAddtime(new Date());
+		itemDao.saveItemReport(cpt);
+	}
+
 	/**
 	 * 
 	 * @param eo
@@ -453,7 +476,8 @@ public class ItemService {
 
 					String toAgreeExchangePath = request.getScheme() + "://" + request.getServerName()
 							+ request.getContextPath() + WechatConstant.SCHEMA_MARKET + "/item/toAgreeExchange?e="
-							+ exchange.getExchangeId()+ "&eo=" + eo;;
+							+ exchange.getExchangeId() + "&eo=" + eo;
+					;
 
 					/* 未使用授权链接 */
 					// String toAgreeExchangeUrl =

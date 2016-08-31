@@ -202,7 +202,7 @@ Core.iScroll = {
 };
 
 Core.mySwiper = {
-	screenProportion : 1 / 2,
+	screenProportion : 380 / 750,
 	loadSwiper : function() {
 		var swiperDOM = $("#mySwiper");
 		var width = swiperDOM.width();
@@ -211,7 +211,8 @@ Core.mySwiper = {
 
 		mySwiper = new Swiper('#mySwiper', {
 			pagination : '.swiper-pagination',
-			paginationClickable : false
+			paginationClickable : false,
+			autoplay: 5000
 		});
 	}
 }

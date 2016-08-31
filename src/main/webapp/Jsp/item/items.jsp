@@ -21,7 +21,7 @@ String path = request.getContextPath();
             <input type="text" id="searchInput">
         </div>
         <div class="search-btn-view" id="screening-bar-tig">
-            <div class="text">全部分类</div>
+            <div class="text" id="search-bar-it-name">全部分类</div>
             <div class="icon"></div>
         </div>
         <div class="screening-bar">

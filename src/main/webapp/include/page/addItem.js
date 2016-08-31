@@ -41,24 +41,29 @@ $(function() {
 	}
 
 	evens.onCameraClick = function() {
-		if (jsapiparam.isWxJsApiReady && imgSize < 4) {
+		if (imgSize < 4) {
+			if (jsapiparam.isWxJsApiReady) {
 
-			wx.chooseImage({
-				count : 4, // 默认9
-				sizeType : [ 'original', 'compressed' ], // 可以指定是原图还是压缩图，默认二者都有
-				sourceType : [ 'album', 'camera' ], // 可以指定来源是相册还是相机，默认二者都有
-				success : function(res) {
-					var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-					if (localIds.length > 0) {
-						for (var i = 0; i < localIds.length; i++) {
-							localIdsList.push(localIds[i]);
-							imgSize++;
+				wx.chooseImage({
+					count : 4, // 默认9
+					sizeType : [ 'original', 'compressed' ], // 可以指定是原图还是压缩图，默认二者都有
+					sourceType : [ 'album', 'camera' ], // 可以指定来源是相册还是相机，默认二者都有
+					success : function(res) {
+						var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+						if (localIds.length > 0) {
+							for (var i = 0; i < localIds.length; i++) {
+								localIdsList.push(localIds[i]);
+								imgSize++;
+							}
+							uploadImages();
 						}
-						uploadImages();
 					}
-				}
-			});
+				});
+			}
+		} else {
+			alert("最多只能上传4张图片");
 		}
+
 	}
 
 	evens.onSubmitClick = function() {
@@ -109,9 +114,9 @@ $(function() {
 				type : "POST",
 				success : function(data) {
 					if (data.errCode == "0") {
-						alert(data.errMsg);
+						location.href = "../me?eo=" + eo;
 					} else {
-						alert("save fail");
+						alert("宝贝提交失败，请稍后再试");
 					}
 				}
 			});

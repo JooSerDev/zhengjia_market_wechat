@@ -82,20 +82,37 @@ $(function() {
 	});
 
 	$("#onSendReport").on("click", function() {
+		$("#container").hide();
+		$(".report-post-view").show();
+
+	});
+
+	$("#reportCancelBtn").on("click", function() {
+		$("#container").show();
+		$(".report-post-view").hide();
+	});
+
+	$("#reportSubmitBtn").on("click", function() {
 		var eo = Core.getQueryString("eo");
 		var ii = $("#ii").val();
+		var msg = $("#itemRepost").val();
 
 		$.ajax({
 			url : "../sendReport",
 			data : {
 				eo : eo,
-				ii : ii
+				ii : ii,
+				msg : msg
 			},
 			type : "POST",
 			success : function(data) {
 				if (data.errCode == "0") {
-					alert("comment success");
+					alert("投诉成功");
+					$("#container").show();
+					$(".report-post-view").hide();
 				} else {
+					$("#container").show();
+					$(".report-post-view").hide();
 				}
 			}
 		});

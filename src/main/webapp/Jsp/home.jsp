@@ -11,14 +11,40 @@
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <title>正佳分享市集</title>
 <link rel="stylesheet" href="<%=path%>/include/css/home.css">
+<link rel="stylesheet"
+	href="<%=path%>/include/swiper/swiper-3.3.1.min.css">
 </head>
 <body>
 	<div class="container" id="container">
-		<div class="banner">
+		<%-- <div class="banner">
 			<img src="<%=path%>/include/images/banner.png">
-		</div>
+		</div> --%>
 
-		<div class="cloud-up"></div>
+		<!-- swiper start -->
+		<div class="swiper-container" id="mySwiper">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">
+					<a href="http://www.baidu.com"> <img class="bannerImg"
+						src="<%=path%>/include/images/banner4.png">
+					</a>
+				</div>
+				<div class="swiper-slide">
+					<a href="http://www.163.com"> <img class="bannerImg"
+						src="<%=path%>/include/images/banner2.png">
+					</a>
+				</div>
+				<div class="swiper-slide">
+					<a href="http://www.qq.com"> <img class="bannerImg"
+						src="<%=path%>/include/images/banner3.png">
+					</a>
+				</div>
+			</div>
+			<div class="swiper-pagination"></div>
+		</div>
+		<!-- swiper end -->
+
+
+		<!-- <div class="cloud"></div> -->
 
 		<div class="ranks">
 			<div class="header"></div>
@@ -151,6 +177,7 @@
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
+	<script src="<%=path%>/include/swiper/swiper-3.3.1.jquery.min.js"></script>
 	<script src="<%=path%>/include/core/core.js"></script>
 
 	<script>
@@ -190,6 +217,8 @@
 			$(window).resize(function() {
 				Core.resizeContainer();
 			});
+			
+			Core.mySwiper.loadSwiper();
 			
 			evens.onItemClick = function(id) {
 				var eo = Core.getQueryString("eo");

@@ -81,9 +81,9 @@
 						</c:if>
 					</div>
 				</div>
-				<!-- 	<div class="ps-text">
-					<a id="onSendReport">违规内容，我要举报</a>
-				</div> -->
+				<div class="ps-text">
+					<a id="onSendReport" href="javascript:void(0);">违规内容，我要举报</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -94,6 +94,14 @@
 		</div>
 		<div class="post-btn" id="commentSubmitBtn">发表评论</div>
 		<div class="post-btn" id="commentCancelBtn">返回</div>
+	</div>
+
+	<div class="report-post-view">
+		<div class="comment-input">
+			<textarea rows="8" placeholder="投诉内容" id="itemRepost" maxlength="500"></textarea>
+		</div>
+		<div class="post-btn" id="reportSubmitBtn">提交投诉</div>
+		<div class="post-btn" id="reportCancelBtn">返回</div>
 	</div>
 
 	<template id="item_comment_template">

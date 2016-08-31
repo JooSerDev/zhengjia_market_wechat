@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta content="telephone=no" name="format-detection" />
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>正佳分享集市</title>
+<title>正佳分享市集</title>
 <link rel="stylesheet" href="<%=path%>/include/css/agreeExchange.css">
 </head>
 <body>

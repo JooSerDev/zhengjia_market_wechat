@@ -71,7 +71,7 @@ public class SystemFunctionService {
 			checkCode.setMobile(mobile);
 			checkCode.setTimestamp(System.currentTimeMillis());
 
-			String content = "[分享集市] 手机验证码是：" + checkCode.getCode();
+			String content = "[分享市集] 手机验证码是：" + checkCode.getCode();
 
 			// 此处发送短信
 			try {

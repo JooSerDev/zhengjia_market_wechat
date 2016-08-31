@@ -8,7 +8,7 @@
 <head lang="zh">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
-<title>正佳分享集市</title>
+<title>正佳分享市集</title>
 <link rel="stylesheet" href="<%=path%>/include/css/post.css">
 </head>
 <body>
@@ -33,7 +33,7 @@
 			<div class="nav-view" id="table_bar_market">
 				<div class="table_bar_btn">
 					<div class="logo-market"></div>
-					<div class="label">集市</div>
+					<div class="label">市集</div>
 				</div>
 			</div>
 			<div class="nav-view" id="table_bar_post">

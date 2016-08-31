@@ -10,7 +10,7 @@ String path = request.getContextPath();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,user-scalable=no"/>
     <meta name="format-detection" content="telephone=no">
-    <title>正佳分享集市</title>
+    <title>正佳分享市集</title>
     <link rel="stylesheet" href="<%=path%>/include/css/ta.css">
 </head>
 <body>

@@ -410,7 +410,7 @@ public class WechatWebService {
 	}
 
 	/**
-	 * 集市宝贝列表
+	 * 市集宝贝列表
 	 * 
 	 * @param encodeOpenid
 	 * @param request
@@ -458,7 +458,7 @@ public class WechatWebService {
 	}
 
 	/**
-	 * 宝贝详情（集市入口进入）
+	 * 宝贝详情（市集入口进入）
 	 * 
 	 * @param encodeOpenid
 	 * @param itemId

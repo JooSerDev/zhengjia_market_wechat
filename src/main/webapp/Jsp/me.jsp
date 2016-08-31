@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,user-scalable=no" />
 <meta name="format-detection" content="telephone=no">
-<title>正佳分享集市</title>
+<title>正佳分享市集</title>
 <link rel="stylesheet" href="<%=path%>/include/css/me.css">
 </head>
 <body>
@@ -46,11 +46,13 @@
 			<a href="item/myItems?eo=${eo}">
 				<div class="list-view">
 					<div class="label">我的宝贝</div>
+					<div class="arrow"></div>
 					<div class="text">${user.itemNum}</div>
 				</div>
 			</a> <a href="item/myExchanges?eo=${eo}">
 				<div class="list-view">
 					<div class="label">我的交换</div>
+					<div class="arrow"></div>
 					<div class="text">${user.exchangeNum }</div>
 				</div>
 			</a> <a href="item/addItem?eo=${eo}">
@@ -72,7 +74,7 @@
 				<div class="nav-view" id="table_bar_market">
 					<div class="table_bar_btn ">
 						<div class="logo-market"></div>
-						<div class="label">集市</div>
+						<div class="label">市集</div>
 					</div>
 				</div>
 				<div class="nav-view" id="table_bar_post">

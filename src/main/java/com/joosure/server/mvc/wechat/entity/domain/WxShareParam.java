@@ -2,7 +2,7 @@ package com.joosure.server.mvc.wechat.entity.domain;
 
 public class WxShareParam {
 
-	private final static String DEFAULT_TITLE = "正佳分享集市";
+	private final static String DEFAULT_TITLE = "正佳分享市集";
 
 	private String title = DEFAULT_TITLE;
 	private String desc;

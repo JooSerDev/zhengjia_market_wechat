@@ -33,7 +33,7 @@ public interface ItemDao {
 	public List<Item> getItemsRecommended();
 
 	/**
-	 * 集市宝贝列表分页查询
+	 * 市集宝贝列表分页查询
 	 * 
 	 * @param startRow
 	 * @param limitSize

@@ -602,6 +602,7 @@ textarea {
   padding: 15px 10px;
   border-radius: 8px;
   clear: both;
+  margin-bottom: 0;
 }
 .contact-view:after {
   clear: both;
@@ -624,7 +625,7 @@ textarea {
   float: right;
 }
 .btn-view {
-  margin: 5px;
+  margin: 10px 5px 0 5px;
   clear: both;
 }
 .btn-view:after {
@@ -657,4 +658,9 @@ textarea {
   box-sizing: border-box;
   color: #5ea4ec;
   font-size: 15px;
+}
+.ps-text {
+  font-size: 14px;
+  color: #fff;
+  text-align: center;
 }

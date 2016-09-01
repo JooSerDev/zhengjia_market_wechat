@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>正佳分享市集</title>
+<link rel="stylesheet" href="../css/error.css">
+</head>
+<body>
+	<div class="cloud"></div>
+
+	<div class="desc" style="margin-top: 20px;">● 同意后，如何完成交换？<br>	——您可拨打对方手机号并约定交换时间地点，我们推荐您来正佳现场进行交换（营业时间到xxxx服务台）</div>
+	
+	<div class="desc" style="margin-top: 10px;">● 到正佳现场交换有什么好处？<br>
+——正佳广场是一个舒适的公共场所，可确保交换过程的安全；我们会公正的核查交换物品是否属实，对不守时、不诚信的用户会进行积分扣减甚至封号处理；在我们见证下，成功交换的双方均可额外获得20积分赠送</div>
+
+	<div class="back-btn">
+		<a href="javascript:window.history.back();">返回</a>
+	</div>
+
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script>
+		var jsapiparam = {};
+		jsapiparam.appid = document.getElementById("appid").value;
+		jsapiparam.nonceStr = document.getElementById("nonceStr").value;
+		jsapiparam.timeStamp = document.getElementById("timeStamp").value;
+		jsapiparam.signature = document.getElementById("signature").value;
+
+		jsapiparam.isWxJsApiReady = false;
+
+		wx.config({
+			debug : false,
+			appId : jsapiparam.appid,
+			timestamp : jsapiparam.timeStamp,
+			nonceStr : jsapiparam.nonceStr,
+			signature : jsapiparam.signature,
+			jsApiList : [ "hideOptionMenu" ]
+		});
+
+		wx.ready(function() {
+			jsapiparam.isWxJsApiReady = true;
+			wx.hideOptionMenu();
+		});
+
+		wx.error(function(res) {
+			wx.hideOptionMenu();
+		});
+	</script>
+</body>
+</html>

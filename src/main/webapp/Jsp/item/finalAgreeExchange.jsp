@@ -15,17 +15,16 @@
 <body>
 	<div class="cloud"></div>
 
-	<div class="contact-view">
-		<div class="label">联系方式</div>
-		<div class="phone">******</div>
-	</div>
+	<p>新品亦或旧物，不以等价求公平</p>
+	<p>一次偶然的邂逅，可能带来一份美好的友谊</p>
+	<p>尊重人品、诚信交换</p>
 
 	<div class="btn-view">
 		<div class="bv">
-			<button onclick="evens.onSubmitClick(0)">拒绝</button>
+			<button onclick="evens.onSubmitClick(0)" class="s1">拒绝</button>
 		</div>
 		<div class="bv">
-			<button onclick="evens.onSubmitClick(1)">同意</button>
+			<button onclick="evens.onSubmitClick(1)" class="s2">同意</button>
 		</div>
 	</div>
 
@@ -75,9 +74,10 @@
 					type : "POST",
 					success : function(data) {
 						if (data.errCode == "0") {
-							alert("exchange success");
+							alert("交换成功");
+							window.history.back();
 						} else {
-							alert("load fail");
+							alert("交换失败，情稍候再试");
 						}
 					}
 				});

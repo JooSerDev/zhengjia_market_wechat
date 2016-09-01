@@ -1,81 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head lang="zh">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,user-scalable=no"/>
-    <title>正佳分享市集</title>
-    <link rel="stylesheet" href="../include/css/agreeExchange.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>正佳分享市集</title>
+<link rel="stylesheet" href="../include/css/agreeExchange.css">
 </head>
 <body>
-<div class="container" id="container">
-    <div class="cloud"></div>
+	<div class="container" id="container">
+		<div class="cloud"></div>
 
-    <div class="my-item-view">
-        <div class="name">${userItem.name}</div>
-        <div class="text">${userItem.description}</div>
-        <div class="img">
-            <img src="${userItem.firstItemCenterImgUrl}">
-        </div>
-    </div>
-    <div class="other-item-view">
-        <div class="change-icon"></div>
-        <div class="img">
-            <img src="${otherItem.firstItemCenterImgUrl}">
-        </div>
-        <div class="name">${otherItem.name}</div>
-        <div class="text">${otherItem.description}</div>
-        <div class="changer-view">
-            <div class="line">
-                <div class="user">
-                    <div class="label">申请人</div>
-                    <div class="headimg">
-                        <img src="${changer.headImgUrl}">
-                    </div>
-                    <div class="nickname">${changer.nickname}</div>
-                </div>
-            </div>
-            <div class="line">
-                <div class="icon"></div>
-                <div class="displayTime">${exchange.displayTime}</div>
-            </div>
-        </div>
-    </div>
-    <div class="contact-view">
+		<div class="my-item-view">
+			<div class="name">${userItem.name}</div>
+			<div class="text">${userItem.description}</div>
+			<div class="img">
+				<img src="${userItem.firstItemCenterImgUrl}">
+			</div>
+		</div>
+		<div class="other-item-view">
+			<div class="change-icon"></div>
+			<div class="img">
+				<img src="${otherItem.firstItemCenterImgUrl}">
+			</div>
+			<div class="name">${otherItem.name}</div>
+			<div class="text">${otherItem.description}</div>
+			<div class="changer-view">
+				<div class="line">
+					<div class="user">
+						<div class="label">申请人</div>
+						<div class="headimg">
+							<img src="${changer.headImgUrl}">
+						</div>
+						<div class="nickname">${changer.nickname}</div>
+					</div>
+				</div>
+				<div class="line">
+					<div class="icon"></div>
+					<div class="displayTime">${exchange.displayTime}</div>
+				</div>
+			</div>
+		</div>
 
-        <div class="label">联系方式</div>
-        <div class="phone">
-            点击查看
-        </div>
-    </div>
+		<p class="ps-text">交换请求有效期为10天，请尽快处理</p>
+		<p class="ps-text">在10分钟内处理（同意/拒绝）可获5积分</p>
 
-    <div class="btn-view">
-        <div class="gotoAgreePageBtn">同意/拒绝交换</div>
-    </div>
+		<div class="contact-view">
 
-    <!--<div class="btn-view">-->
-    <!--<div class="bv">-->
-    <!--<button onclick="evens.onSubmitClick(0)">拒绝</button>-->
-    <!--</div>-->
-    <!--<div class="bv">-->
-    <!--<button onclick="evens.onSubmitClick(1)">同意</button>-->
-    <!--</div>-->
-    <!--</div>-->
+			<div class="label">联系方式</div>
+			<div class="phone">点击查看</div>
+		</div>
 
-</div>
+		<div class="btn-view">
+			<div class="gotoAgreePageBtn">同意/拒绝交换</div>
+		</div>
+
+		<!--<div class="btn-view">-->
+		<!--<div class="bv">-->
+		<!--<button onclick="evens.onSubmitClick(0)">拒绝</button>-->
+		<!--</div>-->
+		<!--<div class="bv">-->
+		<!--<button onclick="evens.onSubmitClick(1)">同意</button>-->
+		<!--</div>-->
+		<!--</div>-->
+
+	</div>
 
 
-<script src="../include/jquery/jquery.min.js"></script>
-<script src="../include/core/core.js"></script>
+	<script src="../include/jquery/jquery.min.js"></script>
+	<script src="../include/core/core.js"></script>
 
-<script>
-    $(function () {
-        Core.resizeContainer();
+	<script>
+		$(function() {
+			Core.resizeContainer();
 
-        $(window).resize(function () {
-            Core.resizeContainer();
-        });
-    });
-</script>
+			$(window).resize(function() {
+				Core.resizeContainer();
+			});
+		});
+	</script>
 
 </body>
 </html>

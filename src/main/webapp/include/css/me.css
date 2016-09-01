@@ -677,3 +677,21 @@ textarea {
   color: #ffffff;
   text-align: center;
 }
+.score-view {
+  margin-top: 20px;
+  padding: 10px;
+}
+.score-view > .title {
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 15px;
+  text-align: center;
+}
+.score-view > .desc {
+  font-size: 16px;
+  color: #fff;
+  text-align: left;
+}
+.score-view > .desc > p {
+  line-height: 24px;
+}

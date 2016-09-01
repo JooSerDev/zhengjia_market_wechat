@@ -1,5 +1,6 @@
 package com.joosure.server.mvc.wechat.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
@@ -42,6 +43,8 @@ public class ItemService {
 	private UserService userService;
 	@Autowired
 	private ScoreService scoreService;
+	@Autowired
+	private SystemFunctionService systemFunctionService;
 
 	@Autowired
 	private ItemDao itemDao;
@@ -153,6 +156,14 @@ public class ItemService {
 
 		if (exchange.getCreateTime().getTime() + 10 * 60 * 1000 > now.getTime()) {
 			scoreService.updateScoreByEvent(ownerInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_RES_EXG);
+		}
+
+		String changerMobile = changerInfo.getUser().getMobile();
+		String smsMsgContent = "您在[正佳分享市集]中的交换请求被同意了";
+		try {
+			systemFunctionService.sendSMS(changerMobile, smsMsgContent);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -278,7 +289,7 @@ public class ItemService {
 		scoreService.updateScoreByEvent(item.getOwnerId(), CommonConstant.SCORE_EVENT_ITEM_UP);
 	}
 
-	public void sendReport(String eo, int itemid, String msg) throws OAuthException {
+	public void sendReport(String eo, int itemid, String msg) throws OAuthException, ItemIllegalException {
 		UserInfo userinfo = null;
 		try {
 			userinfo = userService.getUserInfoByEO(eo);
@@ -290,8 +301,14 @@ public class ItemService {
 			throw new OAuthException();
 		}
 
+		Item item = itemDao.getItemById(itemid);
+		if (item == null) {
+			throw new ItemIllegalException();
+		}
+
 		WxUserCpt cpt = new WxUserCpt();
 		cpt.setItemid(itemid);
+		cpt.setItemname(item.getName());
 		cpt.setMessage(msg);
 		cpt.setUserid(userinfo.getUser().getUserId());
 		cpt.setStatus(0);

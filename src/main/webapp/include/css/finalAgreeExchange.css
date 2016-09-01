@@ -424,6 +424,12 @@ textarea {
 body {
   background: #0050a3;
 }
+p {
+  font-size: 16px;
+  text-align: center;
+  padding: 15px 10px;
+  color: #fff;
+}
 .contact-view {
   margin: 10px;
   padding: 15px 10px;
@@ -473,4 +479,10 @@ body {
   border-radius: 8px;
   padding: 10px;
   width: 100%;
+}
+.btn-view > .bv > .s1 {
+  color: #e456a4;
+}
+.btn-view > .bv > .s2 {
+  color: #5ea4ec;
 }

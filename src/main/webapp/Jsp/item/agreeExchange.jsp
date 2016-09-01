@@ -36,10 +36,7 @@
 			<div class="changer-view">
 				<div class="line">
 					<div class="user">
-						<div class="label">
-							<c:if test="${isOwner !=  1}">被</c:if>
-							申请人
-						</div>
+						<div class="label">交换人</div>
 						<div class="headimg">
 							<img src="${other.headImgUrl}">
 						</div>
@@ -53,21 +50,46 @@
 			</div>
 		</div>
 
+		<c:if
+			test="${isOwner ==  1 and exchange.exchangeState == 'exchanging'}">
+			<p class="ps-text">交换请求有效期为10天，请尽快处理</p>
+			<p class="ps-text">在10分钟内处理（同意/拒绝）可获5积分</p>
+		</c:if>
+
 		<div class="contact-view">
-			<div class="label">联系方式</div>
+			<div class="label">当前交易状态</div>
+			<div class="phone">
+				<c:if
+					test="${exchange.exchangeState == 'exchanging' and isOwner ==  1}">等待处理</c:if>
+				<c:if
+					test="${exchange.exchangeState == 'exchanging' and isOwner ==  0}">等待对方处理</c:if>
+				<c:if test="${exchange.exchangeState == 'exchanged' }">已同意</c:if>
+				<c:if test="${exchange.exchangeState == 'cancel' }">已拒绝</c:if>
+			</div>
+		</div>
+
+		<div class="contact-view">
+			<div class="label">对方联系方式</div>
 			<div class="phone">
 				<c:if test="${exchange.exchangeState == 'exchanged' }">${other.mobile }</c:if>
-				<c:if test="${exchange.exchangeState != 'exchanged' }">点击查看</c:if>
+				<c:if test="${exchange.exchangeState != 'exchanged' }">同意交换才可显示</c:if>
 			</div>
 		</div>
 
 		<c:if
-			test="${isOwner ==  1 and exchange.exchangeState != 'exchanged'}">
+			test="${isOwner ==  1 and exchange.exchangeState == 'exchanging'}">
 			<div class="btn-view">
 				<div class="gotoAgreePageBtn"
 					onclick="evens.toFinalAgreePageClick()">同意/拒绝交换</div>
 			</div>
 		</c:if>
+
+		<c:if test="${exchange.exchangeState == 'exchanged' }">
+			<div class="btn-view">
+				<div class="gotoAgreePageBtn" onclick="evens.gotoDescTextPage()">点击了解如何与Ta交换？</div>
+			</div>
+		</c:if>
+
 	</div>
 
 	<input type="hidden" id="ee" value="${ee}">
@@ -121,7 +143,12 @@
 				var ee = $("#ee").val();
 				location.href = "toFinalAgreeExchange?ee=" + ee;
 			}
-			
+	evens.gotoDescTextPage = function() {
+	location.href = "../../include/core/agreement2.html";
+	}
+
+	gotoDescTextPage
+
 			evens.onOtherItemClick = function(ii){
 				var eo = Core.getQueryString("eo");
 				location.href = "itemInExchange?eo=" + eo+"&ii="+ii;

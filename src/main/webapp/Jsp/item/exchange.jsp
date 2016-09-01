@@ -58,7 +58,7 @@
 		</div>
 		<c:if test="${isHasItems > 0 }">
 			<div class="btn-view">
-				<button onclick="evens.onSubmitClick()">提交申请</button>
+				<button onclick="evens.onSubmitClick()">确认</button>
 			</div>
 		</c:if>
 		<c:if test="${isHasItems == 0 }">

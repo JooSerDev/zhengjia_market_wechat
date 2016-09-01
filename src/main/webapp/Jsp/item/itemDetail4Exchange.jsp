@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="<%=path%>/include/css/itemDetail.css">
 </head>
 <body>
-	<div class="container" id="container">
+	<div class="container" id="container" style="padding-bottom: 20px;">
 
 		<div class="main-view">
 

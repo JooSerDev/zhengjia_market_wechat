@@ -155,7 +155,7 @@ public class SystemFunctionService {
 	 * @return
 	 * @throws IOException
 	 */
-	private boolean sendSMS(String mobile, String content) throws IOException {
+	public boolean sendSMS(String mobile, String content) throws IOException {
 		BufferedReader reader = null;
 		HttpURLConnection connection = null;
 		try {

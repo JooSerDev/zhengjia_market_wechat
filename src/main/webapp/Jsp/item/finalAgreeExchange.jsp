@@ -21,10 +21,10 @@
 
 	<div class="btn-view">
 		<div class="bv">
-			<button onclick="evens.onSubmitClick(0)" class="s1">拒绝</button>
+			<button onclick="evens.onSubmitClick(0)" class="s1">拒绝交换</button>
 		</div>
 		<div class="bv">
-			<button onclick="evens.onSubmitClick(1)" class="s2">同意</button>
+			<button onclick="evens.onSubmitClick(1)" class="s2">同意交换</button>
 		</div>
 	</div>
 

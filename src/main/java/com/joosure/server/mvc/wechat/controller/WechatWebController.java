@@ -227,6 +227,7 @@ public class WechatWebController {
 
 			String redirectUrl = registeredValidAndRedirect(pageInfo.getUserInfo(), request);
 			if (redirectUrl != null) {
+				System.out.println("me.redirect to :: " + redirectUrl);
 				return redirectUrl;
 			}
 
@@ -560,6 +561,11 @@ public class WechatWebController {
 			model.addAttribute("isOwner", isOwner);
 			model.addAttribute("exchange", pageInfo.getExchangeInfo().getExchange());
 
+			String redirectUrl = registeredValidAndRedirect(pageInfo.getUserInfo(), request);
+			if (redirectUrl != null) {
+				return redirectUrl;
+			}
+
 			pageLogger(request, "/wechat/item/toAgreeExchange", pageInfo);
 		} catch (Exception e) {
 			return errorPageRouter(e, "WechatWebController.toAgreeExchange");
@@ -579,6 +585,11 @@ public class WechatWebController {
 			FinalAgreeExchangePageInfo pageInfo = wechatWebService.toFinalAgreeExchangePage(ee, request);
 			model.addAttribute("ee", ee);
 			model.addAttribute("changerInfo", pageInfo.getChanger());
+
+			String redirectUrl = registeredValidAndRedirect(pageInfo.getUserInfo(), request);
+			if (redirectUrl != null) {
+				return redirectUrl;
+			}
 
 			pageLogger(request, "/wechat/item/toFinalAgreeExchange", pageInfo);
 		} catch (Exception e) {
@@ -1023,7 +1034,7 @@ public class WechatWebController {
 		if (userInfo.getUser().getMobile() == null || userInfo.getUser().getMobile().trim().equals("")) {
 			String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 					+ request.getContextPath() + WechatConstant.SCHEMA_MARKET + "/";
-			return "redirect:" + basePath + "me/register";
+			return "redirect:" + basePath + "me/register?eo=" + userInfo.getEncodeOpenid();
 		}
 
 		return null;

@@ -38,7 +38,7 @@ var isRecommended = 0;
 var initItemTypeIncome = function() {
 	itemType = $("#itemTypeIncome").val();
 	if (itemType != "0") {
-		var itemTypeName = $("#itemType_" + it).html();
+		var itemTypeName = $("#itemType_" + itemType).html();
 		$("#search-bar-it-name").html(itemTypeName);
 		$("#itemType_" + itemType).addClass("active");
 	}
@@ -52,6 +52,13 @@ $(function() {
 	Core.myScroll.load();
 
 	Core.tableBar.init(1);
+	
+	$("#fab").on("click",function(){
+		var eo = Core.getQueryString("eo");
+		location.href = "item/addItem?eo="+eo;
+		
+		//item/addItem?eo=D690A8C3FE59A914BF1A023C847A394435739EE46ABC9DD396BC14F427BD34DE163B10D27987E3774FBD47FE4FD77DC9
+	});
 
 	$(".isRecommended").on("click", function() {
 		if (isRecommended == 0) {

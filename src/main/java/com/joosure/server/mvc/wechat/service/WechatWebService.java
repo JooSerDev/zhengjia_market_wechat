@@ -108,7 +108,7 @@ public class WechatWebService {
 	}
 
 	public void sendReport(String eo, int itemId) {
-		
+
 	}
 
 	/**
@@ -280,7 +280,7 @@ public class WechatWebService {
 			}
 
 		} catch (Exception e) {
-			throw new Exception("WechatWebService.addItemPage decode encodeOpenid exception," + e.getMessage());
+			throw new Exception("WechatWebService.registerPage decode encodeOpenid exception," + e.getMessage());
 		}
 
 		return pageInfo;

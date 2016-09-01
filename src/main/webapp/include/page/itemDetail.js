@@ -84,7 +84,11 @@ $(function() {
 	$("#onSendReport").on("click", function() {
 		$("#container").hide();
 		$(".report-post-view").show();
+	});
 
+	$("#onGotoHome").on("click", function() {
+		var url = $("#homeURL").val();
+		location.href = url;
 	});
 
 	$("#reportCancelBtn").on("click", function() {
@@ -138,7 +142,7 @@ $(function() {
 			type : "POST",
 			success : function(data) {
 				if (data.errCode == "0") {
-					alert("comment success");
+					alert("评论成功");
 					location.reload();
 				} else {
 					alert(data.errMsg);

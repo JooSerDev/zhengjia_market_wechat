@@ -1,8 +1,14 @@
+<%@page import="org.sword.wechat4j.oauth.OAuthManager"%>
+<%@page import="com.joosure.server.mvc.wechat.constant.WechatConstant"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + request.getContextPath()
+			+ WechatConstant.SCHEMA_MARKET + "/";
+	String homeURL = basePath + "redirecter?redirectURL=" + basePath + "home";
+	String reStr = OAuthManager.generateRedirectURI(homeURL, WechatConstant.SCOPE_SNSAPI_USERINFO, "");
 %>
 <!DOCTYPE html>
 <html>
@@ -65,6 +71,12 @@
 				<div class="loading">加载中</div>
 			</div>
 
+			<div>
+				<a
+					style="font-size: 12px; color: #fff; text-align: center; display: block;"
+					id="onSendReport" href="javascript:void(0);">违规内容，我要举报</a>
+			</div>
+
 			<div class="foot-bar">
 				<div class="btns">
 					<div class="col-33">
@@ -82,7 +94,7 @@
 					</div>
 				</div>
 				<div class="ps-text">
-					<a id="onSendReport" href="javascript:void(0);">违规内容，我要举报</a>
+					<a id="onGotoHome" href="javascript:void(0);">我要去首页</a>
 				</div>
 			</div>
 		</div>
@@ -120,6 +132,7 @@
 
 
 	<input type="hidden" id="ii" value="${item.itemId}">
+	<input type="hidden" id="homeURL" value="<%=reStr%>">
 
 	<input type="hidden" id="appid" value="${jsapi.appid}">
 	<input type="hidden" id="nonceStr" value="${jsapi.nonceStr}">

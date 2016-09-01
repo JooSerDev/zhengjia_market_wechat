@@ -114,6 +114,7 @@ $(function() {
 				type : "POST",
 				success : function(data) {
 					if (data.errCode == "0") {
+						alert("提交成功！待管理员审核成功后即可上架");
 						location.href = "../me?eo=" + eo;
 					} else {
 						alert("宝贝提交失败，请稍后再试");

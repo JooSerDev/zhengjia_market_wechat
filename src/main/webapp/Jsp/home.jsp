@@ -29,13 +29,8 @@
 					</a>
 				</div>
 				<div class="swiper-slide">
-					<a href="http://www.163.com"> <img class="bannerImg"
+					<a href="http://www.zhengjiasea.com/hyg/newHtml/index.html"> <img class="bannerImg"
 						src="<%=path%>/include/images/banner2.png">
-					</a>
-				</div>
-				<div class="swiper-slide">
-					<a href="http://www.qq.com"> <img class="bannerImg"
-						src="<%=path%>/include/images/banner3.png">
 					</a>
 				</div>
 			</div>

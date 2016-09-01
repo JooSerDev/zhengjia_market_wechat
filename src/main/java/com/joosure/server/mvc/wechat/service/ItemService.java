@@ -159,7 +159,7 @@ public class ItemService {
 		}
 
 		String changerMobile = changerInfo.getUser().getMobile();
-		String smsMsgContent = "您在[正佳分享市集]中的交换请求被同意了";
+		String smsMsgContent = "恭喜！您在[正佳分享市集]中的交换请求已被对方同意了，请进入[我]-[我的交换]中查看对方联系方式，感谢您的分享!";
 		try {
 			systemFunctionService.sendSMS(changerMobile, smsMsgContent);
 		} catch (IOException e) {
@@ -248,6 +248,15 @@ public class ItemService {
 		itemDao.updateItem(targetItem);
 		userDao.updateUser(user);
 		userDao.updateUser(targetUser);
+
+		String changerMobile = targetUser.getMobile();
+		String smsMsgContent = "有人在[正佳分享市集]@您了！神秘的Ta正在请求与您交换宝贝，请进入[我]-[我的交换]中查看对方给您分享了什么～";
+		try {
+			systemFunctionService.sendSMS(changerMobile, smsMsgContent);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	public void likeItem(int itemId, String eo) throws OAuthException, ItemIllegalException, UserIllegalException {

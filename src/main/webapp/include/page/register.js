@@ -68,6 +68,8 @@ $(function() {
 					}, 1000);
 					if (data.errCode == "0") {
 						alert("短信发送成功");
+					} else if (data.errCode == "9003") {
+						alert("该号码已经被注册");
 					} else {
 						alert("短信验证码发送失败");
 					}

@@ -212,7 +212,7 @@ var refreshLoadingBar = function() {
 	if (page.nextPage) {
 		$(".loading").html("加载中");
 	} else {
-		$(".loading").html("没有更多了");
+		$(".loading").html("没有更多评论了");
 	}
 }
 

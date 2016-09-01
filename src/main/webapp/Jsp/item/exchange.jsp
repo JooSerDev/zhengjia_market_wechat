@@ -140,7 +140,7 @@
                 type: "POST",
                 success: function (data) {
                     if (data.errCode == "0") {
-                        alert("交换成功");
+                        alert("已发出交换请求，请耐心等待对方回复");
                         location.href = "../market?eo=" + eo;
                     } else {
                         alert(data.errMsg);

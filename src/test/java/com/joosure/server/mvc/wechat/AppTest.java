@@ -14,10 +14,12 @@ public class AppTest {
 		// String redirectURL = "http://www.joosure.com/wechatTest/wechat/me";
 		// String[] urls = redirectURL.split("/");
 		// System.out.println(urls.length);
+		System.out.println(makeSNSAPIurl());
 	}
 
 	public static String makeSNSAPIurl() {
-		String url = "http://www.joosure.com/wechatTest/wechat/redirecter?redirectURL=http://www.joosure.com/wechatTest/wechat/home";
+		String host = "wxz.841206.com";
+		String url = "http://" + host + "/fxsj/wechat/redirecter?redirectURL=http://" + host + "/fxsj/wechat/home";
 		// 宝贝分享链接
 		// String url =
 		// "http://www.joosure.com/wechatTest/wechat/redirecter?redirectURL=http://www.joosure.com/wechatTest/wechat/item/item?ii=4";

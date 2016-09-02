@@ -158,6 +158,7 @@ public class UserService {
 		try {
 			openid = decodeEO(encodeOpenid);
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new OAuthException();
 		}
 		User user = userDao.getUserByOpenid(openid);

@@ -103,7 +103,7 @@ public class WechatWebService {
 			throw new OAuthException("0", e.getMessage());
 		}
 		redirecter.setRedirectURL(redirectURL);
-
+		System.out.println("redirecter url ::: " + redirecter.getRedirectURL());
 		return redirecter;
 	}
 

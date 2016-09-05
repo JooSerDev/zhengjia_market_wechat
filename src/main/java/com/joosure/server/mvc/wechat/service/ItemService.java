@@ -149,21 +149,23 @@ public class ItemService {
 
 			// 取消双方宝贝的其他交易
 			itemDao.updateExchanges4cancelOthersWhenAgreeExchange(exchangeId, userItemId, targetItemId);
+
+			String changerMobile = changerInfo.getUser().getMobile();
+			String smsMsgContent = "恭喜！您在[正佳分享市集]中的交换请求已被对方同意了，请进入[我]-[我的交换]中查看对方联系方式，感谢您的分享!";
+			try {
+				systemFunctionService.sendSMS(changerMobile, smsMsgContent);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		} else {
 			exchange.setExchangeState(Exchange.EXCHANGE_STATE_CANCEL);
+			exchange.setExchangeTime(now);
 			itemDao.updateExchange(exchange);
 		}
 
 		if (exchange.getCreateTime().getTime() + 10 * 60 * 1000 > now.getTime()) {
 			scoreService.updateScoreByEvent(ownerInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_RES_EXG);
-		}
-
-		String changerMobile = changerInfo.getUser().getMobile();
-		String smsMsgContent = "恭喜！您在[正佳分享市集]中的交换请求已被对方同意了，请进入[我]-[我的交换]中查看对方联系方式，感谢您的分享!";
-		try {
-			systemFunctionService.sendSMS(changerMobile, smsMsgContent);
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 
 	}

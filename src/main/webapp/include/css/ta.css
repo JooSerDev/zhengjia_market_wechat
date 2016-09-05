@@ -671,13 +671,17 @@ body {
   padding: 0 10px;
 }
 .itemList > .item > .itemType > .img {
-  width: 30px;
-  height: 30px;
+  width: auto;
+  height: 26px;
   float: left;
 }
 .itemList > .item > .itemType > .img > img {
-  width: 30px;
-  height: 30px;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 17px;
+  height: 17px;
+  margin: 4px 3px 5px 0px;
+  border-radius: 10px;
 }
 .itemList > .item > .itemType > .text {
   float: left;

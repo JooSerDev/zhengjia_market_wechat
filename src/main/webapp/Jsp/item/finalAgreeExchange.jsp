@@ -74,8 +74,12 @@
 					type : "POST",
 					success : function(data) {
 						if (data.errCode == "0") {
-							alert("交换成功");
-							window.history.back();
+							if (flag == 1) {
+								alert("交换成功");
+							} else {
+								alert("已拒绝");
+							}
+							window.location.href = document.referrer;
 						} else {
 							alert("交换失败，情稍候再试");
 						}

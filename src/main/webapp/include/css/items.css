@@ -911,6 +911,8 @@ textarea {
   float: left;
 }
 .items > .item > .itemType > .img > img {
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
   width: 17px;
   height: 17px;
   margin: 4px 3px 5px 0px;

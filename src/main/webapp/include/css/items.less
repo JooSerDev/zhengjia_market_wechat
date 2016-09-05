@@ -1,322 +1,324 @@
 @import 'base.less';
 @import 'tableBar.less';
-
 .search-bar {
-  .row;
-  padding: 10px 10px;
-  background: @color-fg;
-  z-index: 20;
-  > .search-input-view {
-    position: relative;
-    margin-right: 130px;
-    > input {
-      width: 100%;
-      border-radius: 3px;
-      height: 30px;
-      background-color: @color-bg;
-      border: 0;
-      padding-left: 30px;
-      font-size: 16px;
-    }
-    > .search-btn {
-      position: absolute;
-      left: 0;
-      top: 0;
-      height: 20px;
-      width: 20px;
-      background: url('../images/logos.png');
-      background-size: 160px auto;
-      background-repeat: no-repeat;
-      background-position: -61px -182px;
-      margin: 5px;
-    }
-  }
-  > .search-btn-view {
-    position: absolute;
-    right: @view-padding-width;
-    top: @view-padding-height;
-    height: 30px;
-    width: 100px;
-    .clearfix;
-    > .icon {
-      width: 24px;
-      height: 24px;
-      background: url('../images/logos.png');
-      background-size: 160px auto;
-      background-repeat: no-repeat;
-      background-position: -49px -136px;
-      margin: 3px;
-      .pull-right;
-    }
-    > .text {
-      line-height: 30px;
-      font-size: 16px;
-      text-align: right;
-      .pull-right;
-    }
-  }
-  > .screening-bar {
-    position: absolute;
-    top: 42px;
-    left: 0px;
-    box-sizing: border-box;
-    width: 100%;
-    background: #fff;
-    padding: 15px;
-    padding-top: 20px;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    display: none;
-    -webkit-box-shadow: 0 4px 4px 0 #494949;
-    box-shadow: 0 4px 4px 0 #494949;
-    > .grid {
-      margin: 0 -15px;
-      padding: 0 4px;
-      .clearfix;
-      > .item {
-        box-sizing: border-box;
-        .col-25;
-        padding: 2px 5px;
-        > .type-btn {
-          padding: 10px 4px;
-          border-radius: 4px;
-          background: @color-bg;
-          font-size: 12px;
-          line-height: 18px;
-          height: 18px;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          text-align: center;
-          &.active {
-            background: @color-s4;
-            color: #fff;
-          }
-        }
-      }
-    }
-    > .btn-view {
-      margin-top: 10px;
-      .clearfix;
-      > .isRecommended {
-        .pull-left;
+    .row;
+    padding: 10px 10px;
+    background: @color-fg;
+    z-index: 20;
+    > .search-input-view {
         position: relative;
-        height: 30px;
-        width: 45px;
-        border-radius: 15px;
-        background: @color-bg;
-        padding: 2px;
-        box-sizing: border-box;
-        &.active {
-          background: #44db5e;
-          > .ball {
-            margin-left: 14px;
-          }
+        margin-right: 130px;
+        > input {
+            width: 100%;
+            border-radius: 3px;
+            height: 30px;
+            background-color: @color-bg;
+            border: 0;
+            padding-left: 30px;
+            font-size: 16px;
         }
-        > .ball {
-          width: 26px;
-          height: 26px;
-          border-radius: 14px;
-          background: #fff;
+        > .search-btn {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 20px;
+            width: 20px;
+            background: url('../images/logos.png');
+            background-size: 160px auto;
+            background-repeat: no-repeat;
+            background-position: -61px -182px;
+            margin: 5px;
         }
-      }
-      > .text {
-        color: #ff8c31;
-        font-size: 14px;
-        line-height: 30px;
-        .pull-left;
-        margin-left: 10px;
-      }
-      > .ok-btn,
-      .cancel-btn {
-        .pull-right;
-        height: 32px;
-        width: 32px;
-        background: url('../images/logos.png');
-        background-size: 160px auto;
-        background-repeat: no-repeat;
-      }
-      > .ok-btn {
-        background-position: -34px -102px;
-        margin-left: 15px;
-      }
-      > .cancel-btn {
-        background-position: -0px -102px;
-      }
     }
-  }
+    > .search-btn-view {
+        position: absolute;
+        right: @view-padding-width;
+        top: @view-padding-height;
+        height: 30px;
+        width: 100px;
+        .clearfix;
+        > .icon {
+            width: 24px;
+            height: 24px;
+            background: url('../images/logos.png');
+            background-size: 160px auto;
+            background-repeat: no-repeat;
+            background-position: -49px -136px;
+            margin: 3px;
+            .pull-right;
+        }
+        > .text {
+            line-height: 30px;
+            font-size: 16px;
+            text-align: right;
+            .pull-right;
+        }
+    }
+    > .screening-bar {
+        position: absolute;
+        top: 42px;
+        left: 0px;
+        box-sizing: border-box;
+        width: 100%;
+        background: #fff;
+        padding: 15px;
+        padding-top: 20px;
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        display: none;
+        -webkit-box-shadow: 0 4px 4px 0 #494949;
+        box-shadow: 0 4px 4px 0 #494949;
+        > .grid {
+            margin: 0 -15px;
+            padding: 0 4px;
+            .clearfix;
+            > .item {
+                box-sizing: border-box;
+                .col-25;
+                padding: 2px 5px;
+                > .type-btn {
+                    padding: 10px 4px;
+                    border-radius: 4px;
+                    background: @color-bg;
+                    font-size: 12px;
+                    line-height: 18px;
+                    height: 18px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    text-align: center;
+                    &.active {
+                        background: @color-s4;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        > .btn-view {
+            margin-top: 10px;
+            .clearfix;
+            > .isRecommended {
+                .pull-left;
+                position: relative;
+                height: 30px;
+                width: 45px;
+                border-radius: 15px;
+                background: @color-bg;
+                padding: 2px;
+                box-sizing: border-box;
+                &.active {
+                    background: #44db5e;
+                    > .ball {
+                        margin-left: 14px;
+                    }
+                }
+                > .ball {
+                    width: 26px;
+                    height: 26px;
+                    border-radius: 14px;
+                    background: #fff;
+                }
+            }
+            > .text {
+                color: #ff8c31;
+                font-size: 14px;
+                line-height: 30px;
+                .pull-left;
+                margin-left: 10px;
+            }
+            > .ok-btn,
+            .cancel-btn {
+                .pull-right;
+                height: 32px;
+                width: 32px;
+                background: url('../images/logos.png');
+                background-size: 160px auto;
+                background-repeat: no-repeat;
+            }
+            > .ok-btn {
+                background-position: -34px -102px;
+                margin-left: 15px;
+            }
+            > .cancel-btn {
+                background-position: -0px -102px;
+            }
+        }
+    }
 }
+
 
 /* 宝贝列表 */
 
 .items {
-  .row;
-  padding-bottom: 20px;
-  /* 宝贝信息 */
-  > .item {
-    .view;
-    padding-bottom: 0;
-    background: @color-fg;
-    margin-top: @view-card-margin-width*2;
-    margin-right: @view-card-margin-width;
-    margin-left: @view-card-margin-width;
-    border-radius: 5px;
-    position: relative;
-    /* 头部 */
-    > .title {
-      position: relative;
-      .clearfix;
-      height: @head-img-size-list;
-      margin-bottom: 5px;
-      > .head-img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: @head-img-size-list;
-        height: @head-img-size-list;
-        border-radius: @head-img-size-list/2;
-        > img {
-          width: 100%;
-          border-radius: @head-img-size-list/2;
-        }
-      }
-      > .nickname {
-        margin-left: @head-img-size-list;
-        margin-right: 44px;
-        padding-left: 5px;
-        height: @head-img-size-list;
-        line-height: @head-img-size-list;
-        font-size: 14px;
-        font-weight: bold;
-        text-overflow: ellipsis;
-        overflow: hidden;
-      }
-      > .time {
-        display: none;
-        .pull-right;
-        height: @head-img-size-list;
-        line-height: @head-img-size-list;
-        font-size: 12px;
-      }
-      > .recommended {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin-top: @view-padding-height*-1;
-        margin-left: 10px;
-        .pull-right;
-        width: 34px;
-        height: 44px;
-        background: url('../images/logos.png');
-        background-size: 160px auto;
-        background-repeat: no-repeat;
-        background-position: -4px -337px;
-      }
-    }
-    /* 简介 */
-    > .description {
-      position: relative;
-      > .text {
+    .row;
+    padding-bottom: 20px;
+    /* 宝贝信息 */
+    > .item {
+        .view;
+        padding-bottom: 0;
+        background: @color-fg;
+        margin-top: @view-card-margin-width*2;
+        margin-right: @view-card-margin-width;
+        margin-left: @view-card-margin-width;
+        border-radius: 5px;
         position: relative;
-        line-height: 25px;
-        font-size: 14px;
-      }
-    }
-    /* 图片 */
-    > .imgs {
-      .clearfix;
-      margin-left: -5px;
-      margin-right: -5px;
-      > div {
-        .col-25;
-        > .img-view {
-          padding: 5px;
-          > img {
-            width: 100%;
+        /* 头部 */
+        > .title {
+            position: relative;
+            .clearfix;
+            height: @head-img-size-list;
+            margin-bottom: 5px;
+            > .head-img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: @head-img-size-list;
+                height: @head-img-size-list;
+                border-radius: @head-img-size-list/2;
+                > img {
+                    width: 100%;
+                    border-radius: @head-img-size-list/2;
+                }
+            }
+            > .nickname {
+                margin-left: @head-img-size-list;
+                margin-right: 44px;
+                padding-left: 5px;
+                height: @head-img-size-list;
+                line-height: @head-img-size-list;
+                font-size: 14px;
+                font-weight: bold;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+            > .time {
+                display: none;
+                .pull-right;
+                height: @head-img-size-list;
+                line-height: @head-img-size-list;
+                font-size: 12px;
+            }
+            > .recommended {
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin-top: @view-padding-height*-1;
+                margin-left: 10px;
+                .pull-right;
+                width: 34px;
+                height: 44px;
+                background: url('../images/logos.png');
+                background-size: 160px auto;
+                background-repeat: no-repeat;
+                background-position: -4px -337px;
+            }
+        }
+        /* 简介 */
+        > .description {
+            position: relative;
+            > .text {
+                position: relative;
+                line-height: 25px;
+                font-size: 14px;
+            }
+        }
+        /* 图片 */
+        > .imgs {
+            .clearfix;
+            margin-left: -5px;
+            margin-right: -5px;
+            > div {
+                .col-25;
+                > .img-view {
+                    padding: 5px;
+                    > img {
+                        width: 100%;
+                        border-radius: 3px;
+                    }
+                }
+            }
+        }
+        /* 他想换 */
+        > .wishBar {
+            position: relative;
+            margin-top: 10px;
+            background: @color-bg;
+            min-height: 30px;
+            margin-left: @view-padding-width*-1;
+            margin-right: @view-padding-width*-1;
+            .view;
+            .clearfix;
+            > .tag {
+                height: 24px;
+                width: 24px;
+                background: url('../images/logos.png');
+                background-size: 160px auto;
+                background-repeat: no-repeat;
+                background-position: -24px -136px;
+                margin: 3px;
+                .pull-left;
+            }
+            > .wishItem {
+                font-size: 16px;
+                line-height: 30px;
+                margin-left: 30px+@view-padding-width;
+                word-break: break-all;
+            }
+        }
+        > .foot-bar {
+            margin-top: 10px;
+            .clearfix;
+            > .text {
+                .pull-right;
+                font-size: @text-size-tag;
+                color: @color-text-tag;
+                margin-right: 25px;
+                line-height: 30px;
+            }
+            > .commentNumTag,
+            .likeNumTag {
+                .pull-right;
+                width: 20px;
+                height: 20px;
+                margin: 5px;
+                background: url('../images/logos.png');
+                background-size: 160px auto;
+                background-repeat: no-repeat;
+            }
+            > .commentNumTag {
+                background-position: -0px -179px;
+            }
+            > .likeNumTag {
+                background-position: -22px -179px;
+            }
+        }
+        > .itemType {
+            clear: both;
+            height: 26px;
+            min-width: 30px;
+            display: inline-block;
+            margin-bottom: -5-@view-padding-height;
             border-radius: 3px;
-          }
+            padding: 0 10px;
+            > .img {
+                width: auto;
+                height: 26px;
+                .pull-left;
+                > img {
+                    border-radius: 15px;
+                    background-color: rgba(0, 0, 0, 0.1);
+                    width: 17px;
+                    height: 17px;
+                    margin: 4px 3px 5px 0px;
+                    border-radius: 10px;
+                }
+            }
+            > .text {
+                .pull-left;
+                color: @color-text-white;
+                font-size: 12px;
+                line-height: 26px;
+            }
         }
-      }
     }
-    /* 他想换 */
-    > .wishBar {
-      position: relative;
-      margin-top: 10px;
-      background: @color-bg;
-      min-height: 30px;
-      margin-left: @view-padding-width*-1;
-      margin-right: @view-padding-width*-1;
-      .view;
-      .clearfix;
-      > .tag {
-        height: 24px;
-        width: 24px;
-        background: url('../images/logos.png');
-        background-size: 160px auto;
-        background-repeat: no-repeat;
-        background-position: -24px -136px;
-        margin: 3px;
-        .pull-left;
-      }
-      > .wishItem {
-        font-size: 16px;
-        line-height: 30px;
-        margin-left: 30px+@view-padding-width;
-        word-break: break-all;
-      }
-    }
-    > .foot-bar {
-      margin-top: 10px;
-      .clearfix;
-      > .text {
-        .pull-right;
-        font-size: @text-size-tag;
-        color: @color-text-tag;
-        margin-right: 25px;
-        line-height: 30px;
-      }
-      > .commentNumTag,
-      .likeNumTag {
-        .pull-right;
-        width: 20px;
-        height: 20px;
-        margin: 5px;
-        background: url('../images/logos.png');
-        background-size: 160px auto;
-        background-repeat: no-repeat;
-      }
-      > .commentNumTag {
-        background-position: -0px -179px;
-      }
-      > .likeNumTag {
-        background-position: -22px -179px;
-      }
-    }
-    > .itemType {
-      clear: both;
-      height: 26px;
-      min-width: 30px;
-      display: inline-block;
-      margin-bottom: -5-@view-padding-height;
-      border-radius: 3px;
-      padding: 0 10px;
-      > .img {
-        width: auto;
-        height: 26px;
-        .pull-left;
-        > img {
-          width: 17px;
-          height: 17px;
-          margin: 4px 3px 5px 0px;
-          border-radius: 10px;
-        }
-      }
-      > .text {
-        .pull-left;
-        color: @color-text-white;
-        font-size: 12px;
-        line-height: 26px;
-      }
-    }
-  }
 }

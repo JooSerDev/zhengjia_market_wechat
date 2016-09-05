@@ -52,12 +52,16 @@ $(function() {
 	Core.myScroll.load();
 
 	Core.tableBar.init(1);
-	
-	$("#fab").on("click",function(){
+
+	$("#fab").on("click", function() {
 		var eo = Core.getQueryString("eo");
-		location.href = "item/addItem?eo="+eo;
-		
-		//item/addItem?eo=D690A8C3FE59A914BF1A023C847A394435739EE46ABC9DD396BC14F427BD34DE163B10D27987E3774FBD47FE4FD77DC9
+		location.href = "item/addItem?eo=" + eo;
+
+		// item/addItem?eo=D690A8C3FE59A914BF1A023C847A394435739EE46ABC9DD396BC14F427BD34DE163B10D27987E3774FBD47FE4FD77DC9
+	});
+
+	$("#searchInput").on("click", function() {
+		$(".screening-bar").slideDown();
 	});
 
 	$(".isRecommended").on("click", function() {

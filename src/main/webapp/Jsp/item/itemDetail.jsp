@@ -85,12 +85,25 @@
 						</div>
 					</div>
 					<div class="col-66">
-						<c:if
-							test="${user.user.userId != owner.userId and item.lockStatus != 'exchanged'}">
-							<div class="submitBtnView">
-								<a class="btn" href="${toExchangeUrl}">我要交换</a>
-							</div>
-						</c:if>
+						<c:choose>
+							<c:when
+								test="${user.user.userId != owner.userId and item.lockStatus != 'exchanged'}">
+								<div class="submitBtnView">
+									<a class="btn" href="${toExchangeUrl}">我要交换</a>
+								</div>
+							</c:when>
+							<c:when
+								test="${user.user.userId == owner.userId and item.lockStatus != 'exchanged'}">
+								<div class="submitBtnView">
+									<a class="btn" href="javascript:void(0);" style="color: #aaa;">我要交换</a>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="submitBtnView">
+									<a class="btn" href="javascript:void(0);" style="color: #aaa;">宝贝已被交换</a>
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 				<div class="ps-text">

@@ -71,9 +71,10 @@
 					<div class="text">集赞达人大头贴</div>
 				</div>
 				<div class="grid">
-					<c:forEach items="${users }" var="user">
+					<c:forEach items="${users }" var="user" varStatus="status">
 						<div class="item">
 							<div class="card" onclick="evens.onUserClick('${user.openid}')">
+							<div class="crown${status.index}"></div>
 								<div class="headimg">
 									<img src="${user.headImgUrl }">
 									<div class="like-bar">

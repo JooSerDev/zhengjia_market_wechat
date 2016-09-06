@@ -606,6 +606,7 @@ textarea {
   background: #fff;
   border-radius: 8px;
   padding: 8px;
+  position: relative;
 }
 .ranks > .rank > .grid > .item > .card > .icon {
   background: #edf0f5;
@@ -613,6 +614,28 @@ textarea {
 }
 .ranks > .rank > .grid > .item > .card > .icon > img {
   width: 100%;
+}
+.ranks > .rank > .grid > .item > .card > .crown0,
+.ranks > .rank > .grid > .item > .card .crown1,
+.ranks > .rank > .grid > .item > .card .crown2 {
+  width: 30px;
+  height: 23px;
+  background: url('../images/logos.png');
+  background-size: 160px auto;
+  background-repeat: no-repeat;
+  position: absolute;
+  right: -7px;
+  top: -8px;
+  z-index: 99;
+}
+.ranks > .rank > .grid > .item > .card > .crown0 {
+  background-position: 0px -75px;
+}
+.ranks > .rank > .grid > .item > .card > .crown1 {
+  background-position: -30px -75px;
+}
+.ranks > .rank > .grid > .item > .card > .crown2 {
+  background-position: -60px -75px;
 }
 .ranks > .rank > .grid > .item > .card > .headimg {
   position: relative;

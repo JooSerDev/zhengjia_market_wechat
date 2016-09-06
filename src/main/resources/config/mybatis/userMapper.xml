@@ -36,7 +36,7 @@
 
 	<select id="getUsersOrderByItemNumTop8" resultType="com.joosure.server.mvc.wechat.entity.pojo.User">
 		select * from
-		user_user where state = 0 order by itemNum desc limit 8;
+		user_user where state = 0 order by likeNum desc limit 8;
 	</select>
 
 	<!-- 基本用户信息相关-结束 -->

@@ -20,8 +20,8 @@
 			<div class="list input-view">
 				<div class="item">
 					<div class="item-name-view">
-						<input type="text" class="input-block" placeholder="宝贝名称（最多20字）"
-							id="itemName" maxlength="20">
+						<input type="text" class="input-block" placeholder="宝贝名称（最多13字）"
+							id="itemName" maxlength="13">
 					</div>
 					<div class="selector-view">
 						<select id="itemType" class="selector">
@@ -41,7 +41,7 @@
 						maxlength="500"></textarea>
 				</div>
 				<div class="item">
-					<div class="temp-view" onclick="evens.onModelBtnClick()">描述模板</div>
+					<div class="temp-view" onclick="evens.onModelBtnClick()">不会写？点击套用模版</div>
 				</div>
 			</div>
 

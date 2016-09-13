@@ -129,20 +129,20 @@ $(function() {
 	}
 
 	evens.onItemClick = function(itemId) {
-		$(".regular-radio").attr("checked", false);
-		$(".regular-radio").removeClass("checked");
-		$("#radio_" + itemId).attr("checked", true);
-		$("#radio_" + itemId).addClass("checked");
-		modelId = itemId;
+//		$(".regular-radio").attr("checked", false);
+//		$(".regular-radio").removeClass("checked");
+//		$("#radio_" + itemId).attr("checked", true);
+//		$("#radio_" + itemId).addClass("checked");
+//		modelId = itemId;
 	}
 
 	evens.onModelSubmitClick = function() {
-		var temp = "";
-		if (modelId != 0) {
-			temp = $("#mo_text_" + modelId).html();
-		}
-		temp = $("#itemDesc").val() + temp;
-		$("#itemDesc").val(temp);
+//		var temp = "";
+//		if (modelId != 0) {
+//			temp = $("#mo_text_" + modelId).html();
+//		}
+//		temp = $("#itemDesc").val() + temp;
+//		$("#itemDesc").val(temp);
 		$("#modelContainer").hide();
 		$("#mainContainer").show();
 	}

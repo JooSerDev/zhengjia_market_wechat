@@ -12,10 +12,13 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.joosure.server.mvc.wechat.dao.database.SystemFunctionDao;
 import com.joosure.server.mvc.wechat.entity.domain.BaseResult;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.CheckCode;
+import com.joosure.server.mvc.wechat.service.db.ISystemFunctionDbService;
+import com.joosure.server.mvc.wechat.service.itf.ISystemFunctionService;
+import com.joosure.server.mvc.wechat.service.itf.ISystemLogStorageService;
+import com.joosure.server.mvc.wechat.service.itf.IUserService;
 import com.shawn.server.core.util.StringUtil;
 
 /**
@@ -25,16 +28,15 @@ import com.shawn.server.core.util.StringUtil;
  * @author shawn
  *
  */
-@Service
-public class SystemFunctionService {
+@Service("systemFunctionService")
+public class SystemFunctionService implements ISystemFunctionService {
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 	@Autowired
-	private SystemLogStorageService logService;
-
+	private ISystemLogStorageService logService;
 	@Autowired
-	private SystemFunctionDao systemFunctionDao;
+	private ISystemFunctionDbService systemFunctionDbService;
 
 	public static final String SMS_POST_URL = "http://www.jianzhou.sh.cn/JianzhouSMSWSServer/http/sendBatchMessage";
 
@@ -76,8 +78,8 @@ public class SystemFunctionService {
 			// 此处发送短信
 			try {
 				if (sendSMS(mobile, content)) {
-					systemFunctionDao.deleteCheckCodeByMobile(mobile);
-					systemFunctionDao.saveCheckCode(checkCode);
+					systemFunctionDbService.deleteCheckCodeByMobile(mobile);
+					systemFunctionDbService.saveCheckCode(checkCode);
 					result.setErrCode("0");
 					result.setErrMsg("发送成功");
 				} else {
@@ -113,9 +115,9 @@ public class SystemFunctionService {
 			long timestamp = System.currentTimeMillis();
 			timestamp = timestamp - timeout;
 
-			CheckCode checkCode = systemFunctionDao.getCheckCodeInTime(mobile, code, timestamp);
+			CheckCode checkCode = systemFunctionDbService.getCheckCodeInTime(mobile, code, timestamp);
 			if (checkCode != null) {
-				systemFunctionDao.deleteCheckCodeByMobile(mobile);
+				systemFunctionDbService.deleteCheckCodeByMobile(mobile);
 				result.setErrCode("0");
 			} else {
 				result.setErrCode("2002");

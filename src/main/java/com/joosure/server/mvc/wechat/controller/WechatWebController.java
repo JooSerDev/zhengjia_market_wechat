@@ -38,12 +38,15 @@ import com.joosure.server.mvc.wechat.entity.pojo.Item;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
 import com.joosure.server.mvc.wechat.exception.RequestParamsException;
 import com.joosure.server.mvc.wechat.exception.UserIllegalException;
-import com.joosure.server.mvc.wechat.service.ItemService;
-import com.joosure.server.mvc.wechat.service.SystemFunctionService;
-import com.joosure.server.mvc.wechat.service.SystemLogStorageService;
-import com.joosure.server.mvc.wechat.service.UserService;
-import com.joosure.server.mvc.wechat.service.WechatNativeService;
-import com.joosure.server.mvc.wechat.service.WechatWebService;
+import com.joosure.server.mvc.wechat.service.db.IItemDbService;
+import com.joosure.server.mvc.wechat.service.db.ISystemFunctionDbService;
+import com.joosure.server.mvc.wechat.service.db.IUserDbService;
+import com.joosure.server.mvc.wechat.service.itf.IItemService;
+import com.joosure.server.mvc.wechat.service.itf.ISystemFunctionService;
+import com.joosure.server.mvc.wechat.service.itf.ISystemLogStorageService;
+import com.joosure.server.mvc.wechat.service.itf.IUserService;
+import com.joosure.server.mvc.wechat.service.itf.IWechatNativeService;
+import com.joosure.server.mvc.wechat.service.itf.IWechatWebService;
 import com.shawn.server.core.http.RequestHandler;
 import com.shawn.server.core.http.ResponseHandler;
 import com.shawn.server.core.util.JsonUtil;
@@ -63,17 +66,23 @@ import com.shawn.server.core.util.StringUtil;
 public class WechatWebController {
 
 	@Autowired
-	private WechatWebService wechatWebService;
+	private IWechatWebService wechatWebService;
 	@Autowired
-	private WechatNativeService wechatNativeService;
+	private IWechatNativeService wechatNativeService;
 	@Autowired
-	private SystemLogStorageService logService;
+	private ISystemLogStorageService logService;
 	@Autowired
-	private ItemService itemService;
+	private IItemService itemService;
 	@Autowired
-	private SystemFunctionService systemFunctionService;
+	private ISystemFunctionService systemFunctionService;
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
+	@Autowired
+	private IItemDbService itemDbService;
+	@Autowired
+	private ISystemFunctionDbService systemFunctionDbService;
+	@Autowired
+	private IUserDbService userDbService;
 
 	/**
 	 * 多重跳转路由
@@ -114,7 +123,7 @@ public class WechatWebController {
 			if (StringUtil.isBlank(mobile) || StringUtil.isBlank(eo)) {
 				ar.setErrCode("9002");
 			} else {
-				if (userService.getUserByMobile(mobile) != null) {
+				if (userDbService.getUserByMobile(mobile) != null) {
 					ar.setErrCode("9003");
 					ar.setErrMsg("该号码已经被注册");
 				} else {

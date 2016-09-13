@@ -14,14 +14,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
+import com.joosure.server.mvc.wechat.service.itf.IObjectStorageService;
+import com.joosure.server.mvc.wechat.service.itf.ISystemLogStorageService;
 import com.shawn.server.core.util.ImageCropUtil;
 import com.shawn.server.core.util.StringUtil;
 
-@Service
-public class ObjectStorageService {
+@Service("objectStorageService")
+public class ObjectStorageService implements IObjectStorageService{
 
 	@Autowired
-	private SystemLogStorageService logService;
+	private ISystemLogStorageService logService;
 
 	public void putObject() {
 

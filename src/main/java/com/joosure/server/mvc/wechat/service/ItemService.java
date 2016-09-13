@@ -16,8 +16,6 @@ import com.joosure.server.mvc.wechat.constant.CommonConstant;
 import com.joosure.server.mvc.wechat.constant.StorageConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.cache.ItemCache;
-import com.joosure.server.mvc.wechat.dao.database.ItemDao;
-import com.joosure.server.mvc.wechat.dao.database.UserDao;
 import com.joosure.server.mvc.wechat.entity.domain.ItemCommentInfo;
 import com.joosure.server.mvc.wechat.entity.domain.ItemInfo;
 import com.joosure.server.mvc.wechat.entity.domain.MyExchangeInfo;
@@ -33,23 +31,34 @@ import com.joosure.server.mvc.wechat.entity.pojo.WxUserCpt;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
 import com.joosure.server.mvc.wechat.exception.RequestParamsException;
 import com.joosure.server.mvc.wechat.exception.UserIllegalException;
+import com.joosure.server.mvc.wechat.service.db.IItemDbService;
+import com.joosure.server.mvc.wechat.service.db.IScoreDbService;
+import com.joosure.server.mvc.wechat.service.db.ISystemFunctionDbService;
+import com.joosure.server.mvc.wechat.service.db.IUserDbService;
+import com.joosure.server.mvc.wechat.service.itf.IItemService;
+import com.joosure.server.mvc.wechat.service.itf.IScoreService;
+import com.joosure.server.mvc.wechat.service.itf.ISystemFunctionService;
+import com.joosure.server.mvc.wechat.service.itf.IUserService;
 import com.shawn.server.core.util.EncryptUtil;
 import com.shawn.server.core.util.StringUtil;
 
-@Service
-public class ItemService {
+@Service("itemService")
+public class ItemService implements IItemService{
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 	@Autowired
-	private ScoreService scoreService;
+	private IUserDbService userDbService;
 	@Autowired
-	private SystemFunctionService systemFunctionService;
-
+	private IScoreService scoreService;
 	@Autowired
-	private ItemDao itemDao;
+	private IScoreDbService scoreDbService;
 	@Autowired
-	private UserDao userDao;
+	private ISystemFunctionService systemFunctionService;
+	@Autowired
+	private ISystemFunctionDbService systemFunctionDbService;
+	@Autowired
+	private IItemDbService itemDbService;
 
 	/**
 	 * 同意交换
@@ -102,7 +111,7 @@ public class ItemService {
 			throw new ItemIllegalException("非法交换请求0005");
 		}
 
-		Exchange exchange = itemDao.getExchangeById(exchangeId);
+		Exchange exchange = itemDbService.getExchangeById(exchangeId);
 		if (exchange == null) {
 			throw new ItemIllegalException("非法交换请求0007");
 		}
@@ -115,12 +124,12 @@ public class ItemService {
 			throw new ItemIllegalException("交换已完成");
 		}
 
-		Item Oitem = itemDao.getItemById(userItemId);
+		Item Oitem = itemDbService.getItemById(userItemId);
 		if (Oitem == null) {
 			throw new ItemIllegalException("非法交换请求0009");
 		}
 
-		Item Citem = itemDao.getItemById(targetItemId);
+		Item Citem = itemDbService.getItemById(targetItemId);
 		if (Citem == null) {
 			throw new ItemIllegalException("非法交换请求0009");
 		}
@@ -141,14 +150,14 @@ public class ItemService {
 			Oitem.setLockStatus(Item.LOCK_EXCHANGED);
 			Citem.setLockStatus(Item.LOCK_EXCHANGED);
 
-			itemDao.updateItem(Oitem);
-			itemDao.updateItem(Citem);
-			itemDao.updateExchange(exchange);
+			itemDbService.updateItem(Oitem);
+			itemDbService.updateItem(Citem);
+			itemDbService.updateExchange(exchange);
 
 			scoreService.updateScoreByEvent(changerInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_AGR_EXG);
 
 			// 取消双方宝贝的其他交易
-			itemDao.updateExchanges4cancelOthersWhenAgreeExchange(exchangeId, userItemId, targetItemId);
+			itemDbService.updateExchanges4cancelOthersWhenAgreeExchange(exchangeId, userItemId, targetItemId);
 
 			String changerMobile = changerInfo.getUser().getMobile();
 			String smsMsgContent = "恭喜！您在[正佳分享市集]中的交换请求已被对方同意了，请进入[我]-[我的交换]中查看对方联系方式，感谢您的分享!";
@@ -161,7 +170,7 @@ public class ItemService {
 		} else {
 			exchange.setExchangeState(Exchange.EXCHANGE_STATE_CANCEL);
 			exchange.setExchangeTime(now);
-			itemDao.updateExchange(exchange);
+			itemDbService.updateExchange(exchange);
 		}
 
 		if (exchange.getCreateTime().getTime() + 10 * 60 * 1000 > now.getTime()) {
@@ -194,7 +203,7 @@ public class ItemService {
 			throw new OAuthException();
 		}
 
-		Item myItem = itemDao.getItemById(myItemId);
+		Item myItem = itemDbService.getItemById(myItemId);
 		if (myItem == null) {
 			throw new ItemIllegalException("my item = null");
 		} else if (myItem.getStatus() == 1 || myItem.getApprovalStatus().equals(Item.STATUS_NO)
@@ -202,7 +211,7 @@ public class ItemService {
 			throw new ItemIllegalException("我的宝贝已经锁定");
 		}
 
-		Item targetItem = itemDao.getItemById(targetItemId);
+		Item targetItem = itemDbService.getItemById(targetItemId);
 		if (targetItem == null) {
 			throw new ItemIllegalException("target item = null");
 		} else if (targetItem.getStatus() == 1 || targetItem.getApprovalStatus().equals(Item.STATUS_NO)
@@ -219,7 +228,7 @@ public class ItemService {
 			throw new UserIllegalException("owner item No owner exception");
 		}
 
-		Exchange exchange = itemDao.getExchangeByBothSideItemId(targetItemId, myItemId);
+		Exchange exchange = itemDbService.getExchangeByBothSideItemId(targetItemId, myItemId);
 		if (exchange != null) {
 			throw new ItemIllegalException("这个交换已经存在了");
 		}
@@ -245,11 +254,11 @@ public class ItemService {
 		User user = userInfo.getUser();
 		user.setExchangeNum(user.getExchangeNum() + 1);
 
-		itemDao.saveExchange(exchange);
-		itemDao.updateItem(myItem);
-		itemDao.updateItem(targetItem);
-		userDao.updateUser(user);
-		userDao.updateUser(targetUser);
+		itemDbService.saveExchange(exchange);
+		itemDbService.updateItem(myItem);
+		itemDbService.updateItem(targetItem);
+		userDbService.updateUser(user);
+		userDbService.updateUser(targetUser);
 
 		String changerMobile = targetUser.getMobile();
 		String smsMsgContent = "有人在[正佳分享市集]@您了！神秘的Ta正在请求与您交换宝贝，请进入[我]-[我的交换]中查看对方给您分享了什么～";
@@ -273,12 +282,12 @@ public class ItemService {
 			throw new OAuthException();
 		}
 
-		Item item = itemDao.getItemById(itemId);
+		Item item = itemDbService.getItemById(itemId);
 		if (item == null) {
 			throw new ItemIllegalException("宝贝不存在");
 		}
 
-		ItemLike itemLike = itemDao.getItemLike(item.getItemId(), userInfo.getUser().getUserId());
+		ItemLike itemLike = itemDbService.getItemLike(item.getItemId(), userInfo.getUser().getUserId());
 		if (itemLike != null) {
 			throw new UserIllegalException("你已经点过赞了");
 		}
@@ -289,12 +298,12 @@ public class ItemService {
 
 		item.setLikeNum(item.getLikeNum() + 1);
 
-		User user = userService.getUserById(item.getOwnerId());
+		User user = userDbService.getUserById(item.getOwnerId());
 		user.setLikeNum(user.getLikeNum() + 1);
 
-		itemDao.saveItemLike(itemLike);
-		itemDao.updateItem(item);
-		userDao.updateUser(user);
+		itemDbService.saveItemLike(itemLike);
+		itemDbService.updateItem(item);
+		userDbService.updateUser(user);
 
 		scoreService.updateScoreByEvent(userInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_USER_UP);
 		scoreService.updateScoreByEvent(item.getOwnerId(), CommonConstant.SCORE_EVENT_ITEM_UP);
@@ -312,7 +321,7 @@ public class ItemService {
 			throw new OAuthException();
 		}
 
-		Item item = itemDao.getItemById(itemid);
+		Item item = itemDbService.getItemById(itemid);
 		if (item == null) {
 			throw new ItemIllegalException();
 		}
@@ -326,7 +335,7 @@ public class ItemService {
 		cpt.setUsername(userinfo.getUser().getNickname());
 		cpt.setRemark("用户举报宝贝");
 		cpt.setAddtime(new Date());
-		itemDao.saveItemReport(cpt);
+		itemDbService.saveItemReport(cpt);
 	}
 
 	/**
@@ -353,7 +362,7 @@ public class ItemService {
 			throw new RequestParamsException("itemId is null");
 		}
 
-		Item item = itemDao.getItemById(itemId);
+		Item item = itemDbService.getItemById(itemId);
 		if (item == null) {
 			throw new RequestParamsException("item is null");
 		}
@@ -368,8 +377,8 @@ public class ItemService {
 
 		item.setMarkNum(item.getMarkNum() + 1);
 
-		itemDao.updateItem(item);
-		itemDao.saveItemComment(ic);
+		itemDbService.updateItem(item);
+		itemDbService.saveItemComment(ic);
 		scoreService.updateScoreByEvent(userInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_MSG);
 	}
 
@@ -438,11 +447,11 @@ public class ItemService {
 			item.setLockStatus(Item.LOCK_NORMAL);
 			item.setApprovalStatus(Item.STATUS_WAIT);
 
-			itemDao.saveItem(item);
+			itemDbService.saveItem(item);
 
 			User user = userInfo.getUser();
 			user.setItemNum(user.getItemNum() + 1);
-			userDao.updateUser(user);
+			userDbService.updateUser(user);
 
 			return true;
 		}
@@ -471,10 +480,10 @@ public class ItemService {
 		Pages pages = new Pages(pageNum);
 		List<Exchange> exchanges = null;
 		if (isOwner.trim().equals("1")) {
-			exchanges = itemDao.getExchangesByUserIdInOwnerSidePages(userInfo.getUser().getUserId(), pages.getPageRow(),
+			exchanges = itemDbService.getExchangesByUserIdInOwnerSidePages(userInfo.getUser().getUserId(), pages.getPageRow(),
 					pages.getPageSize());
 		} else {
-			exchanges = itemDao.getExchangesByUserIdInChangerSidePages(userInfo.getUser().getUserId(),
+			exchanges = itemDbService.getExchangesByUserIdInChangerSidePages(userInfo.getUser().getUserId(),
 					pages.getPageRow(), pages.getPageSize());
 		}
 
@@ -484,13 +493,13 @@ public class ItemService {
 
 				int ownerId = exchange.getOwnerId();
 				int changerId = exchange.getChangerId();
-				User owner = userService.getUserById(ownerId);
-				User changer = userService.getUserById(changerId);
+				User owner = userDbService.getUserById(ownerId);
+				User changer = userDbService.getUserById(changerId);
 
 				int ownerItemId = exchange.getOwnerItemId();
 				int changerItemId = exchange.getChangerItemId();
-				Item ownerItem = itemDao.getItemById(ownerItemId);
-				Item changerItem = itemDao.getItemById(changerItemId);
+				Item ownerItem = itemDbService.getItemById(ownerItemId);
+				Item changerItem = itemDbService.getItemById(changerItemId);
 
 				MyExchangeInfo mei = new MyExchangeInfo();
 				mei.setExchange(exchange);
@@ -549,7 +558,7 @@ public class ItemService {
 		UserInfo userInfo = getUserInfoByEo(eo);
 		if (userInfo != null) {
 			Pages pages = new Pages(pageNum);
-			List<Item> items = itemDao.getItemsByOwnerIdPages(userInfo.getUser().getUserId(), pages.getPageRow(),
+			List<Item> items = itemDbService.getItemsByOwnerIdPages(userInfo.getUser().getUserId(), pages.getPageRow(),
 					pages.getPageSize());
 			return items;
 		}
@@ -572,7 +581,7 @@ public class ItemService {
 		}
 
 		Pages pages = new Pages(pageNum);
-		List<Item> items = itemDao.getMarketItemsPages(keyword, itemType, isRecommended, pages.getPageRow(),
+		List<Item> items = itemDbService.getMarketItemsPages(keyword, itemType, isRecommended, pages.getPageRow(),
 				pages.getPageSize());
 		if (items.size() > 0) {
 			for (Iterator<Item> iterator = items.iterator(); iterator.hasNext();) {
@@ -588,10 +597,6 @@ public class ItemService {
 		return itemInfos;
 	}
 
-	public List<Item> getItemsByOwnerId(int ownerId) {
-		return itemDao.getItemsByOwnerId(ownerId);
-	}
-
 	/**
 	 * 
 	 * @param pageNum
@@ -602,12 +607,12 @@ public class ItemService {
 		List<ItemCommentInfo> infos = new ArrayList<>();
 		if (pageNum > 0 && itemId > 0) {
 			Pages pages = new Pages(pageNum, WechatConstant.PAGE_SIZE_ITEM_COMMENT);
-			List<ItemComment> comments = itemDao.getItemCommentByItemIdPages(itemId, pages.getPageRow(),
+			List<ItemComment> comments = itemDbService.getItemCommentByItemIdPages(itemId, pages.getPageRow(),
 					pages.getPageSize());
 			if (comments.size() > 0) {
 				for (Iterator<ItemComment> iterator = comments.iterator(); iterator.hasNext();) {
 					ItemComment itemComment = iterator.next();
-					User fromUser = userService.getUserById(itemComment.getFromUserId());
+					User fromUser = userDbService.getUserById(itemComment.getFromUserId());
 
 					if (fromUser != null) {
 						ItemCommentInfo ici = new ItemCommentInfo();
@@ -653,11 +658,11 @@ public class ItemService {
 	 */
 	public List<ItemInfo> getItemsRecommended() {
 		List<ItemInfo> infos = new ArrayList<>();
-		List<Item> list = itemDao.getItemsRecommended();
+		List<Item> list = itemDbService.getItemsRecommended();
 		if (list.size() > 0) {
 			for (Iterator<Item> iterator = list.iterator(); iterator.hasNext();) {
 				Item item = iterator.next();
-				User user = userService.getUserById(item.getOwnerId());
+				User user = userDbService.getUserById(item.getOwnerId());
 				if (item != null && user != null) {
 					ItemInfo ii = new ItemInfo();
 					ii.setItem(item);

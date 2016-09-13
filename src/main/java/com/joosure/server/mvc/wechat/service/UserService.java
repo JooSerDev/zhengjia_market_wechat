@@ -11,24 +11,26 @@ import org.sword.wechat4j.oauth.OAuthException;
 
 import com.joosure.server.mvc.wechat.constant.CommonConstant;
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
-import com.joosure.server.mvc.wechat.dao.database.UserDao;
 import com.joosure.server.mvc.wechat.entity.domain.BaseResult;
 import com.joosure.server.mvc.wechat.entity.domain.UserInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
 import com.joosure.server.mvc.wechat.entity.pojo.UserWechatInfo;
+import com.joosure.server.mvc.wechat.service.db.IUserDbService;
+import com.joosure.server.mvc.wechat.service.itf.IScoreService;
+import com.joosure.server.mvc.wechat.service.itf.ISystemFunctionService;
+import com.joosure.server.mvc.wechat.service.itf.IUserService;
 import com.shawn.server.core.util.EncryptUtil;
 import com.shawn.server.core.util.StringUtil;
 import com.shawn.server.wechat.common.web.AuthUtil;
 
-@Service
-public class UserService {
+@Service("userService")
+public class UserService implements IUserService{
 	@Autowired
-	private SystemFunctionService systemFunctionService;
+	private ISystemFunctionService systemFunctionService;
 	@Autowired
-	private ScoreService scoreService;
-
+	private IScoreService scoreService;
 	@Autowired
-	private UserDao userDao;
+	private IUserDbService userDbService;
 
 	/**
 	 * 注册
@@ -41,16 +43,16 @@ public class UserService {
 	 */
 	public BaseResult register(String mobile, String code, String eo) throws Exception {
 		BaseResult result = new BaseResult("1001");
-		User user = getUserByMobile(mobile);
+		User user = userDbService.getUserByMobile(mobile);
 		if (user == null) {
 			String openid = decodeEO(eo);
-			user = userDao.getUserByOpenid(openid);
+			user = userDbService.getUserByOpenid(openid);
 			if (user != null) {
 				BaseResult baseResult = systemFunctionService.validCheckCode(mobile, code);
 				if (baseResult.getErrCode().equals("0")) {
 					user.setMobile(mobile);
 					user.setLastModifyTime(new Date());
-					userDao.updateUser(user);
+					userDbService.updateUser(user);
 					result.setErrCode("0");
 					result.setErrMsg("注册成功");
 					scoreService.updateScoreByEvent(user.getUserId(), CommonConstant.SCORE_EVENT_REGIST);
@@ -66,24 +68,6 @@ public class UserService {
 			result.setErrMsg("手机号码已经注册");
 		}
 		return result;
-	}
-
-	/**
-	 * 
-	 * @param mobile
-	 * @return
-	 */
-	public User getUserByMobile(String mobile) {
-		return userDao.getUserByMobile(mobile);
-	}
-
-	/**
-	 * 
-	 * @param userId
-	 * @return
-	 */
-	public User getUserById(int userId) {
-		return userDao.getUserById(userId);
 	}
 
 	/**
@@ -110,8 +94,8 @@ public class UserService {
 	 * @return
 	 */
 	public UserInfo getUserInfoByOpenid(String openid) {
-		User user = userDao.getUserByOpenid(openid);
-		UserWechatInfo userWechatInfo = userDao.getUserWechatInfoByOpenid(openid);
+		User user = userDbService.getUserByOpenid(openid);
+		UserWechatInfo userWechatInfo = userDbService.getUserWechatInfoByOpenid(openid);
 
 		UserInfo userInfo = null;
 		if (user != null && userWechatInfo != null) {
@@ -132,9 +116,9 @@ public class UserService {
 	public UserInfo getUserInfoById(int userId) {
 		UserInfo userInfo = null;
 
-		User user = userDao.getUserById(userId);
+		User user = userDbService.getUserById(userId);
 		if (user != null) {
-			UserWechatInfo userWechatInfo = userDao.getUserWechatInfoByOpenid(user.getOpenid());
+			UserWechatInfo userWechatInfo = userDbService.getUserWechatInfoByOpenid(user.getOpenid());
 			if (userWechatInfo != null) {
 				userInfo = new UserInfo();
 				userInfo.setUser(user);
@@ -161,8 +145,8 @@ public class UserService {
 			e.printStackTrace();
 			throw new OAuthException();
 		}
-		User user = userDao.getUserByOpenid(openid);
-		UserWechatInfo userWechatInfo = userDao.getUserWechatInfoByOpenid(openid);
+		User user = userDbService.getUserByOpenid(openid);
+		UserWechatInfo userWechatInfo = userDbService.getUserWechatInfoByOpenid(openid);
 
 		UserInfo userInfo = null;
 		if (user != null && userWechatInfo != null) {
@@ -186,10 +170,6 @@ public class UserService {
 		String openid = AuthUtil.getOpenidByCodeInSnsbase(authParams[0]);
 		UserInfo userInfo = getUserInfoByOpenid(openid);
 		return userInfo;
-	}
-
-	public List<User> getUsersOrderByItemNumTop8() {
-		return userDao.getUsersOrderByItemNumTop8();
 	}
 
 }

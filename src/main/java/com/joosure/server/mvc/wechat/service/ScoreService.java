@@ -14,20 +14,21 @@ import org.springframework.stereotype.Service;
 import com.joosure.server.mvc.wechat.constant.CommonConstant;
 import com.joosure.server.mvc.wechat.constant.ExceptionConstant;
 import com.joosure.server.mvc.wechat.dao.cache.DictsCache;
-import com.joosure.server.mvc.wechat.dao.database.ScoreDao;
-import com.joosure.server.mvc.wechat.dao.database.UserDao;
 import com.joosure.server.mvc.wechat.entity.pojo.Score;
 import com.joosure.server.mvc.wechat.entity.pojo.User;
+import com.joosure.server.mvc.wechat.service.db.IScoreDbService;
+import com.joosure.server.mvc.wechat.service.db.IUserDbService;
+import com.joosure.server.mvc.wechat.service.itf.IScoreService;
 
 @Service("scoreService")
-public class ScoreService {
+public class ScoreService implements IScoreService{
 
 	private Logger log = Logger.getLogger(ScoreService.class);
 
 	@Autowired
-	private ScoreDao scoreDao;
+	private IScoreDbService scoreDbService;
 	@Autowired
-	private UserDao userDao;
+	private IUserDbService userDbService;
 
 	/**
 	 * 获取用户积分列表记录
@@ -39,7 +40,7 @@ public class ScoreService {
 			int oId = cond.getoId();
 			String eventKey = cond.getEventKey();
 			int score = cond.getScore();
-			scoreList = scoreDao.getScoreList(oId, userId, eventKey, score, startRow, limitSize);
+			scoreList = scoreDbService.getScoreList(oId, userId, eventKey, score, startRow, limitSize);
 		}
 		return scoreList;
 	}
@@ -48,29 +49,22 @@ public class ScoreService {
 	 * 获取用户总积分
 	 */
 	public int getUserScore(int userId) {
-		return scoreDao.getUserScore(userId);
+		return scoreDbService.getUserScore(userId);
 	}
 
 	/**
 	 * 插入积分记录
 	 */
 	public int insertScoreRecored(Score record) {
-		int ret = scoreDao.insertScore(record);
+		int ret = scoreDbService.insertScore(record);
 		if (ret > 0) {
 			// 查用户总积分
-			int score = getUserScore(record.getUserId());
+			int score = scoreDbService.getUserScore(record.getUserId());
 			// 更新用户总积分
 			score += record.getScore();
-			ret = updateUserScore(record.getUserId(), score);
+			ret = scoreDbService.updateUserScore(record.getUserId(), score);
 		}
 		return ret;
-	}
-
-	/**
-	 * 更新用户积分
-	 */
-	public int updateUserScore(int userId, int score) {
-		return scoreDao.updateUserScore(userId, score);
 	}
 
 	/**
@@ -82,7 +76,7 @@ public class ScoreService {
 	 */
 	public int updateScoreByEvent(int userId, String eventKey) {
 		// 检查是否存在该用户：
-		User user = userDao.getUserById(userId);
+		User user = userDbService.getUserById(userId);
 		if (user == null) {
 			log.warn("进行积分操作时,检测用户id：" + userId + " 不存在");
 			return ExceptionConstant.userNotExistException;
@@ -101,7 +95,7 @@ public class ScoreService {
 				int oldScore = getUserScore(userId);
 				// 更新用户总积分
 				score += oldScore;
-				ret = updateUserScore(userId, score);
+				ret = scoreDbService.updateUserScore(userId, score);
 				if (ret != 1) {
 					log.warn("进行积分操作时,更新用户积分出错");
 					return ExceptionConstant.updateUserScoreException;
@@ -111,7 +105,7 @@ public class ScoreService {
 				record.setUserId(userId);
 				record.setEventKey(eventKey);
 				record.setScore(Integer.parseInt(eventScore));
-				ret = scoreDao.insertScore(record);
+				ret = scoreDbService.insertScore(record);
 				if (ret != 1) {
 					log.warn("进行积分操作时,插入用户积分出错");
 					return ExceptionConstant.insertScoreException;
@@ -142,7 +136,7 @@ public class ScoreService {
 			Date endTime = cal.getTime();// 结束时间
 			cond.put("startTime", startTime);
 			cond.put("endTime", endTime);
-			int sumScore = scoreDao.getSumScoreByCond(cond);
+			int sumScore = scoreDbService.getSumScoreByCond(cond);
 			if (sumScore > CommonConstant.DayMaxScore - 1) {// 这两个事件单日积分最多为5
 				log.warn("进行积分操作时,用户点赞或留言 单日数量达到最大值");
 				return ExceptionConstant.msgOrUpCountToMax;

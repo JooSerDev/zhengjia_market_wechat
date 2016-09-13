@@ -10,15 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.sword.wechat4j.token.TokenProxy;
 
+import com.joosure.server.mvc.wechat.service.itf.IObjectStorageService;
+import com.joosure.server.mvc.wechat.service.itf.ISystemLogStorageService;
+import com.joosure.server.mvc.wechat.service.itf.IWechatNativeService;
 import com.shawn.server.wechat.common.media.MediaFileUtil;
 
-@Service
-public class WechatNativeService {
+@Service("wechatNativeService")
+public class WechatNativeService implements IWechatNativeService{
 
 	@Autowired
-	private SystemLogStorageService logService;
+	private ISystemLogStorageService logService;
 	@Autowired
-	private ObjectStorageService objectStorageService;
+	private IObjectStorageService objectStorageService;
 
 	public String getAccessToken() {
 		System.out.println("get access token");

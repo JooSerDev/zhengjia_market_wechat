@@ -18,8 +18,6 @@ import org.sword.wechat4j.oauth.protocol.get_userinfo.GetUserinfoResponse;
 
 import com.joosure.server.mvc.wechat.constant.WechatConstant;
 import com.joosure.server.mvc.wechat.dao.cache.ItemCache;
-import com.joosure.server.mvc.wechat.dao.database.ItemDao;
-import com.joosure.server.mvc.wechat.dao.database.UserDao;
 import com.joosure.server.mvc.wechat.entity.domain.ExchangeInfo;
 import com.joosure.server.mvc.wechat.entity.domain.ItemInfo;
 import com.joosure.server.mvc.wechat.entity.domain.Pages;
@@ -49,25 +47,29 @@ import com.joosure.server.mvc.wechat.entity.pojo.UserWechatInfo;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
 import com.joosure.server.mvc.wechat.exception.RequestParamsException;
 import com.joosure.server.mvc.wechat.exception.UserIllegalException;
+import com.joosure.server.mvc.wechat.service.db.IItemDbService;
+import com.joosure.server.mvc.wechat.service.db.IUserDbService;
+import com.joosure.server.mvc.wechat.service.itf.IItemService;
+import com.joosure.server.mvc.wechat.service.itf.IObjectStorageService;
+import com.joosure.server.mvc.wechat.service.itf.IUserService;
+import com.joosure.server.mvc.wechat.service.itf.IWechatWebService;
 import com.shawn.server.core.util.EncryptUtil;
 import com.shawn.server.core.util.StringUtil;
 import com.shawn.server.wechat.common.web.AuthUtil;
 
-@Service
-public class WechatWebService {
+@Service("wechatWebService")
+public class WechatWebService implements IWechatWebService{
 
 	@Autowired
-	private ObjectStorageService objectStorageService;
+	private IObjectStorageService objectStorageService;
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 	@Autowired
-	private ItemService itemService;
-
+	private IItemService itemService;
 	@Autowired
-	private UserDao userDao;
+	private IUserDbService userDbService;
 	@Autowired
-	private ItemDao itemDao;
-
+	private IItemDbService itemDbService;
 	/**
 	 * 多重定向，用于得到用户身份
 	 * 
@@ -135,7 +137,7 @@ public class WechatWebService {
 		JsApiParam jsApiParam = JsApiManager.signature(url);
 		homePageInfo.setJsApiParam(jsApiParam);
 
-		List<User> userTop8 = userService.getUsersOrderByItemNumTop8();
+		List<User> userTop8 = userDbService.getUsersOrderByItemNumTop8();
 		homePageInfo.setTop8User(userTop8);
 
 		List<ItemInfo> itemTop15 = itemService.getItemsRecommended();
@@ -183,7 +185,7 @@ public class WechatWebService {
 		JsApiParam jsApiParam = JsApiManager.signature(url);
 		pageInfo.setJsApiParam(jsApiParam);
 
-		List<Item> items = itemService.getItemsByOwnerId(taInfo.getUser().getUserId());
+		List<Item> items = itemDbService.getItemsByOwnerId(taInfo.getUser().getUserId());
 		pageInfo.setItems(items);
 
 		return pageInfo;
@@ -345,7 +347,7 @@ public class WechatWebService {
 
 			myItemPageInfo.setJsApiParam(jsApiParam);
 			myItemPageInfo.setUserInfo(userInfo);
-			myItemPageInfo.setItems(itemDao.getItemsByOwnerIdPages(userInfo.getUser().getUserId(), pages.getPageRow(),
+			myItemPageInfo.setItems(itemDbService.getItemsByOwnerIdPages(userInfo.getUser().getUserId(), pages.getPageRow(),
 					pages.getPageSize()));
 
 			return myItemPageInfo;
@@ -373,7 +375,7 @@ public class WechatWebService {
 			MyExchangesPageInfo pageInfo = new MyExchangesPageInfo();
 
 			Pages pages = new Pages(1, WechatConstant.PAGE_SIZE_MY_ITEM);
-			List<Exchange> exchanges = itemDao.getExchangesByUserIdPages(userInfo.getUser().getUserId(),
+			List<Exchange> exchanges = itemDbService.getExchangesByUserIdPages(userInfo.getUser().getUserId(),
 					pages.getPageRow(), pages.getPageSize());
 
 			List<ExchangeInfo> exchangeInfos = new ArrayList<>();
@@ -381,8 +383,8 @@ public class WechatWebService {
 			if (exchanges != null && exchanges.size() > 0) {
 				for (int i = 0; i < exchanges.size(); i++) {
 					Exchange exchange = exchanges.get(i);
-					Item ownerItem = itemDao.getItemById(exchange.getOwnerItemId());
-					Item changerItem = itemDao.getItemById(exchange.getChangerItemId());
+					Item ownerItem = itemDbService.getItemById(exchange.getOwnerItemId());
+					Item changerItem = itemDbService.getItemById(exchange.getChangerItemId());
 
 					if (ownerItem != null && changerItem != null) {
 						ExchangeInfo info = new ExchangeInfo();
@@ -486,7 +488,7 @@ public class WechatWebService {
 			throw new OAuthException();
 		}
 
-		Item item = itemDao.getItemById(itemId);
+		Item item = itemDbService.getItemById(itemId);
 		if (item != null) {
 			if (item.getStatus() == 1) {
 				// 宝贝被下线
@@ -511,7 +513,7 @@ public class WechatWebService {
 
 			// 第一页评论
 			Pages pages = new Pages(1, WechatConstant.PAGE_SIZE_ITEM_COMMENT);
-			List<ItemComment> comments = itemDao.getItemCommentByItemIdPages(itemId, pages.getPageRow(),
+			List<ItemComment> comments = itemDbService.getItemCommentByItemIdPages(itemId, pages.getPageRow(),
 					pages.getPageSize());
 			int hasNextCommentPage = 0;
 			if (comments.size() == 10) {
@@ -563,13 +565,13 @@ public class WechatWebService {
 			throw new OAuthException();
 		}
 
-		Exchange exchange = itemDao.getExchangeById(exchangeId);
+		Exchange exchange = itemDbService.getExchangeById(exchangeId);
 		if (exchange == null) {
 			throw new ItemIllegalException();
 		}
 
-		Item ownerItem = itemDao.getItemById(exchange.getOwnerItemId());
-		Item changerItem = itemDao.getItemById(exchange.getChangerItemId());
+		Item ownerItem = itemDbService.getItemById(exchange.getOwnerItemId());
+		Item changerItem = itemDbService.getItemById(exchange.getChangerItemId());
 		UserInfo ownerInfo = userService.getUserInfoById(exchange.getOwnerId());
 		UserInfo changerInfo = userService.getUserInfoById(exchange.getChangerId());
 
@@ -645,14 +647,14 @@ public class WechatWebService {
 			throw new OAuthException();
 		}
 
-		Item targetItem = itemDao.getItemById(targetItemId);
+		Item targetItem = itemDbService.getItemById(targetItemId);
 		if (targetItem == null) {
 			throw new ItemIllegalException();
 		}
 
-		User targetUser = userService.getUserById(targetItem.getOwnerId());
+		User targetUser = userDbService.getUserById(targetItem.getOwnerId());
 
-		List<Item> items = itemDao.getExchangeableItemsByOwnerId(userInfo.getUser().getUserId());
+		List<Item> items = itemDbService.getExchangeableItemsByOwnerId(userInfo.getUser().getUserId());
 
 		ExchangePageInfo pageInfo = new ExchangePageInfo();
 		pageInfo.setItems(items);
@@ -702,8 +704,8 @@ public class WechatWebService {
 	private UserInfo createOrUpdateUserByWechatAuth(HttpServletRequest request) throws OAuthException {
 		String[] authParams = AuthUtil.getCodeAndState(request);
 		GetUserinfoResponse getUserinfoResponse = AuthUtil.getUserinfoByCodeInSnsinfo(authParams[0]);
-		User user = userDao.getUserByOpenid(getUserinfoResponse.getOpenid());
-		UserWechatInfo userWechatInfo = userDao.getUserWechatInfoByOpenid(getUserinfoResponse.getOpenid());
+		User user = userDbService.getUserByOpenid(getUserinfoResponse.getOpenid());
+		UserWechatInfo userWechatInfo = userDbService.getUserWechatInfoByOpenid(getUserinfoResponse.getOpenid());
 
 		// 若用户不存在（首次进入），则保存新用户。否则，若未自行修改昵称同时微信昵称修改了，则更新用户信息。
 		if (user == null) {
@@ -714,7 +716,7 @@ public class WechatWebService {
 					&& !user.getNickname().equals(getUserinfoResponse.getNickname())) {
 				user.setNickname(getUserinfoResponse.getNickname());
 				user.setLastModifyTime(new Date());
-				userDao.updateUser(user);
+				userDbService.updateUser(user);
 			}
 		}
 
@@ -723,12 +725,12 @@ public class WechatWebService {
 			Date nowDate = new Date();
 			userWechatInfo.setCreateTime(nowDate);
 			userWechatInfo.setLastUpdateTime(nowDate);
-			userDao.saveUserWechatInfo(userWechatInfo);
+			userDbService.saveUserWechatInfo(userWechatInfo);
 		} else {
 			userWechatInfo = new UserWechatInfo(getUserinfoResponse);
 			Date nowDate = new Date();
 			userWechatInfo.setLastUpdateTime(nowDate);
-			userDao.updateUserWechatInfo(userWechatInfo);
+			userDbService.updateUserWechatInfo(userWechatInfo);
 		}
 		UserInfo userInfo = new UserInfo();
 		userInfo.setUser(user);
@@ -764,7 +766,7 @@ public class WechatWebService {
 		user.setCreateTime(nowDate);
 		user.setLastModifyTime(nowDate);
 
-		userDao.saveUser(user);
+		userDbService.saveUser(user);
 		return user;
 	}
 

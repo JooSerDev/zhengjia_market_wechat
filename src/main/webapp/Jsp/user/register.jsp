@@ -35,7 +35,7 @@
 		</div>
 
 		<div class="h6">
-			<input type="checkbox" checked="checked" id="agreement">同意<a
+			<input type="checkbox" checked="checked" id="agreement" onclick="onAgreementClick()">同意<a
 				href="<%=path%>/include/core/agreement.html">个人信息隐私说明</a>
 		</div>
 

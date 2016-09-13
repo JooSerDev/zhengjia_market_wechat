@@ -185,6 +185,7 @@ public class WechatWebController {
 			model.addAttribute("items", homePageInfo.getTop15Item());
 			model.addAttribute("eo", homePageInfo.getUserInfo().getEncodeOpenid());
 			model.addAttribute("types", homePageInfo.getTop8Type());
+			model.addAttribute("share", homePageInfo.getWxShareParam());
 
 			pageLogger(request, "/wechat/home", homePageInfo);
 		} catch (Exception e) {

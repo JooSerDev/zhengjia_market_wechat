@@ -29,8 +29,8 @@
 					</a>
 				</div>
 				<div class="swiper-slide">
-					<a href="http://www.zhengjiasea.com/hyg/newHtml/index.html"> <img class="bannerImg"
-						src="<%=path%>/include/images/banner2.png">
+					<a href="http://www.zhengjiasea.com/hyg/newHtml/index.html"> <img
+						class="bannerImg" src="<%=path%>/include/images/banner2.png">
 					</a>
 				</div>
 			</div>
@@ -74,7 +74,7 @@
 					<c:forEach items="${users }" var="user" varStatus="status">
 						<div class="item">
 							<div class="card" onclick="evens.onUserClick('${user.openid}')">
-							<div class="crown${status.index}"></div>
+								<div class="crown${status.index}"></div>
 								<div class="headimg">
 									<img src="${user.headImgUrl }">
 									<div class="like-bar">
@@ -170,6 +170,12 @@
 	<input type="hidden" id="nonceStr" value="${jsapi.nonceStr}">
 	<input type="hidden" id="timeStamp" value="${jsapi.timeStamp}">
 	<input type="hidden" id="signature" value="${jsapi.signature}">
+
+	<input type="hidden" id="shareTitle" value="${share.title}">
+	<input type="hidden" id="shareImg" value="${share.imgUrl}">
+	<input type="hidden" id="shareLink" value="${share.link}">
+	<input type="hidden" id="shareDesc" value="${share.desc}">
+
 	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 
 	<script src="<%=path%>/include/jquery/jquery.min.js"></script>
@@ -182,6 +188,12 @@
 		jsapiparam.nonceStr = document.getElementById("nonceStr").value;
 		jsapiparam.timeStamp = document.getElementById("timeStamp").value;
 		jsapiparam.signature = document.getElementById("signature").value;
+		
+		var shareparam = {};
+		shareparam.shareTitle = document.getElementById("shareTitle").value;
+		shareparam.shareImg = document.getElementById("shareImg").value;
+		shareparam.shareLink = document.getElementById("shareLink").value;
+		shareparam.shareDesc = document.getElementById("shareDesc").value;
 
 		jsapiparam.isWxJsApiReady = false;
 
@@ -191,12 +203,42 @@
 			timestamp : jsapiparam.timeStamp,
 			nonceStr : jsapiparam.nonceStr,
 			signature : jsapiparam.signature,
-			jsApiList : [ "hideOptionMenu" ]
+			jsApiList : [ "hideOptionMenu" , "showMenuItems", "onMenuShareTimeline",
+			  			"onMenuShareAppMessage"]
 		});
 
 		wx.ready(function() {
 			jsapiparam.isWxJsApiReady = true;
 			wx.hideOptionMenu();
+			
+			// 设置显示的菜单
+			wx.showMenuItems({
+				menuList : [ "menuItem:profile", "menuItem:addContact",
+						"menuItem:share:appMessage", "menuItem:share:timeline" ]
+			});
+
+			// 分享到朋友圈
+			wx.onMenuShareTimeline({
+				title : shareparam.shareDesc,
+				link : shareparam.shareLink,
+				imgUrl : shareparam.shareImg,
+				success : function() {
+				},
+				cancel : function() {
+				}
+			});
+
+			// 分享到微信朋友
+			wx.onMenuShareAppMessage({
+				title : shareparam.shareTitle,
+				desc : shareparam.shareDesc,
+				link : shareparam.shareLink,
+				imgUrl : shareparam.shareImg,
+				success : function() {
+				},
+				cancel : function() {
+				}
+			});
 		});
 
 		wx.error(function(res) {

@@ -46,7 +46,12 @@
 
 	<script>
 		$(function() {
-			alert($("#agreement").val());
+			var agreement = $("#agreement").val();
+			alert(agreement);
+			if (agreement != "on") {
+				alert("请同意相关协议");
+				return;
+			}
 		});
 	</script>
 

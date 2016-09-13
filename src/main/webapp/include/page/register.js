@@ -28,6 +28,16 @@ var evens = {};
 var countdownInterval;
 var countdown = 0;
 
+var agreement = true;
+
+function onAgreementClick() {
+	if (agreement) {
+		agreement = false;
+	} else {
+		agreement = true;
+	}
+}
+
 $(function() {
 
 	evens.ev1 = null;
@@ -95,9 +105,7 @@ $(function() {
 			}
 		}
 
-		var agreement = $("#agreement").val();
-
-		if (agreement != "on") {
+		if (!agreement) {
 			alert("请同意相关协议");
 			return;
 		}

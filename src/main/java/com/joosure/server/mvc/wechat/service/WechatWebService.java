@@ -144,6 +144,17 @@ public class WechatWebService {
 		List<ItemType> itemTypeHot = itemService.getHotItemType();
 		homePageInfo.setTop8Type(itemTypeHot);
 
+		// 宝贝分享
+		String toRedirecterPath = request.getScheme() + "://" + request.getServerName() + request.getContextPath()
+				+ WechatConstant.SCHEMA_MARKET + "/redirecter?redirectURL=" + request.getScheme() + "://"
+				+ request.getServerName() + request.getContextPath() + WechatConstant.SCHEMA_MARKET + "home";
+		String shareLink = OAuthManager.generateRedirectURI(toRedirecterPath, WechatConstant.SCOPE_SNSAPI_USERINFO, "");
+		WxShareParam wxShareParam = new WxShareParam();
+		wxShareParam.setDesc("正佳分享市集");
+		// wxShareParam.setImgUrl(item.getFirstItemCenterImgUrl());
+		wxShareParam.setLink(shareLink);
+		homePageInfo.setWxShareParam(wxShareParam);
+
 		return homePageInfo;
 	}
 

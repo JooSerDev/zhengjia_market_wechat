@@ -486,3 +486,96 @@ p {
 .btn-view > .bv > .s2 {
   color: #5ea4ec;
 }
+#locationView > .show-view {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 5px;
+  font-size: 15px;
+  text-align: center;
+}
+#locationView > .select-view {
+  padding: 0 5px;
+  margin-top: 15px;
+  background-color: #fff;
+}
+#locationView > .select-view > .item {
+  position: relative;
+  padding: 8px;
+}
+#locationView > .select-view > .item.header {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+#locationView > .select-view > .item.foot {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border: 0;
+}
+#locationView > .select-view > .item > .text {
+  margin-right: 30px;
+  line-height: 30px;
+  font-size: 14px;
+}
+#locationView > .select-view > .item > .checkbox {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  bottom: 0;
+  margin: auto 0;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  vertical-align: middle;
+}
+#locationView > .btn-view {
+  margin-top: 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  background: #fff;
+  border-radius: 8px;
+  color: #e4007e;
+  height: auto;
+  line-height: 35px;
+  text-align: center;
+  font-size: 15px;
+}
+.regular-radio {
+  display: none;
+}
+.regular-radio + label {
+  -webkit-appearance: none;
+  background-color: #fafafa;
+  border: 1px solid #5ea4ec;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+  padding: 11px;
+  border-radius: 50px;
+  display: inline-block;
+  position: relative;
+}
+.regular-radio + label:active {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+.regular-radio.checked + label,
+.regular-radio :checked + label {
+  background-color: #e9ecee;
+  color: #99a1a7;
+  border: 1px solid #5ea4ec;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1), inset 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.regular-radio.checked + label:after,
+.regular-radio :checked + label:after {
+  content: ' ';
+  width: 16px;
+  height: 16px;
+  border-radius: 50px;
+  position: absolute;
+  top: 3px;
+  background: #5ea4ec;
+  text-shadow: 0px;
+  left: 3px;
+  font-size: 32px;
+}
+.regular-radio.checked + label:active,
+.regular-radio :checked + label:active {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+}

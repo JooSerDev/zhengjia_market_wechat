@@ -67,7 +67,7 @@
 
 		<div id="modelContainer" style="display: none;">
 			<div class="list input-view show-view">
-				<div class="item textItem">选择你喜欢的模版</div>
+				<div class="item textItem">示范范文</div>
 			</div>
 
 			<div class="list modelList">

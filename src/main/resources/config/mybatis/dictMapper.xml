@@ -13,4 +13,57 @@
 			and paramId = #{paramId}
 		</if>
 	</select>
+	
+	<insert id="insertDict" parameterType="com.joosure.server.mvc.wechat.entity.pojo.Dict">
+		insert into sys_conf_param
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			paramgroup,
+			paramid,
+			paramname,
+			paramvalue,
+			paramdesc,
+			addtime,
+			status,
+			updatetime,
+			memo,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{paramGroup},
+			#{paramId},
+			#{paramName},
+			#{paramvalue},
+			#{paramDesc},
+			now(),
+			1,
+			now(),
+			#{memo},
+		</trim>
+	</insert>
+	
+	<update id="updateByPrimaryKeySelective" parameterType="com.joosure.server.mvc.wechat.entity.pojo.Dict">
+		update sys_conf_param
+		<set>
+			<if test="paramName != null">
+				paramname = #{paramName},
+			</if>
+			<if test="paramvalue != null">
+				paramvalue = #{paramvalue},
+			</if>
+			<if test="paramDesc != null">
+				paramdesc = #{paramDesc},
+			</if>
+			<if test="addTime != null">
+				addtime = #{addTime},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			updatetime=now(),
+			<if test="memo != null">
+				memo = #{memo},
+			</if>
+		</set>
+		where paramgroup = #{paramGroup}
+		and paramid = #{paramId}
+	</update>
 </mapper>

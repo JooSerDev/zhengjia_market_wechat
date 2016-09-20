@@ -22,11 +22,11 @@
 			<artifactId>common-mvc-wechat</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>com.shawn</groupId>
 			<artifactId>server-core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>com.shawn</groupId>

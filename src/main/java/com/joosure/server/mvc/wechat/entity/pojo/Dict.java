@@ -13,6 +13,9 @@ public class Dict {
 	private int status;
 	private Date updateTime;
 	private String memo;
+	
+	public static final Long Expires = 7200L;
+	public static final Long Redundance = 200*1000L;
 
 	public String getParamId() {
 		return paramId;

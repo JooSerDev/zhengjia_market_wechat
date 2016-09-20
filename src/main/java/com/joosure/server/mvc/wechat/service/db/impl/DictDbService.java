@@ -16,13 +16,21 @@ public class DictDbService implements IDictDbService{
 	private DictDao dictDao;
 
 	@Override
-	public List<Dict> getScoreEventMap(String string) {
-		return dictDao.getScoreEventMap(string);
-	}
-
-	@Override
 	public List<Dict> getAllDict(Dict cond) {
 		return dictDao.getAllDict(cond);
 	}
+
+
+	@Override
+	public int updateDict(Dict dict) {
+		return dictDao.updateDict(dict);
+	}
+
+
+	@Override
+	public int insertDict(Dict cond) {
+		return dictDao.insertDict(cond);
+	}
+	
 
 }

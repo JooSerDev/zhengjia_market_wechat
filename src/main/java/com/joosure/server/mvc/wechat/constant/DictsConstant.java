@@ -1,17 +1,9 @@
 package com.joosure.server.mvc.wechat.constant;
 
-/**
- * 
- * @author Ted
- * 
- */
-public class CommonConstant {
-
+public class DictsConstant {
 	/**
-	 * 每日最大阈值
+	 * 积分奖惩字典组
 	 */
-	public static final int DayMaxScore = 5;// 单日某个操作累计积分 阈值
-
 	public static final String GROUP_SCORE_EVENT = "ScoreEvent";
 	public static final String SCORE_EVENT_MSG = "SEMsg";// 留言
 	public static final String SCORE_EVENT_USER_UP = "SEUserUp";// 用户点赞行为
@@ -26,35 +18,28 @@ public class CommonConstant {
 	public static final String SCORE_EVENT_CLEAR_CMT = "SEClearCmt";// 清除评论
 	public static final String SCORE_EVENT_ItemInfoNotReal = "SEItemInfoNotReal";// 宝贝信息不实
 	public static final String SCORE_EVENT_UserNotReach = "SEUserNotReach";// 用户爽约为
-
-	public static final String OWN = "owner";
-	public static final String TARGET = "target";
 	
 	/**
-	 * 用户重置密码所使用的默认密码
+	 * 微信 token 字典组
 	 */
-	public static final String PASSWORD = "88888888";//默认密码 重置后所使用的密码
-
-	public static final int INT_0 = 0;
-
-	public static final int STATUS_1 = 1;
-
-	/**
-	 * 当前登陆用户 key
-	 */
-	public static final String CurrentSysUser = "CurrentSysUser";
-	
+	public static final String GROUP_WXTOKEN = "WXToken";
+	public static final String WXTOKEN_AccessToken = "accessToken";
+	public static final String WXTOKEN_Ticket = "ticket";//jsApiTicket
 	
 	/**
-	 * 用户消息类型-收到交易请求
+	 * 微信 配置 字典组
 	 */
-	public static final String UserMsgType_Req = "UserMsgTypeOfRequest";
+	public static final String GROUP_WXCONFIG = "WXConfig";
+	public static final String WXCONFIG_Appid = "appid";
+	public static final String WXCONFIG_Secret = "secret";
+	public static final String WXCONFIG_Token = "token";
+	
 	/**
-	 * 用户消息类型-收到交易响应
+	 * 防刷参数
 	 */
-	public static final String UserMsgType_Rep = "UserMsgTypeOfResponse";
-	/**
-	 * 用户消息类型-物品被审核
-	 */
-	public static final String UserMsgType_Apr = "UserMsgTypeOfApproval";
+	public static final String GROUP_CLICKFARMING = "ClickFarming";
+	public static final String CF_ChgItemTimes = "CFChgItemTimes";//置换物品次数
+	public static final String CF_ExgReqTimes = "CFExgReqTimes";//交易请求次数
+	
+	
 }

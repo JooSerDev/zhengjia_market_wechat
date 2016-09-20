@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.joosure.server.mvc.wechat.dao.database.ItemDao;
 import com.joosure.server.mvc.wechat.entity.pojo.ItemType;
+import com.joosure.server.mvc.wechat.service.db.IItemDbService;
 import com.shawn.server.core.util.SpringUtil;
 
 public class ItemCache {
@@ -30,7 +30,7 @@ public class ItemCache {
 
 		@Override
 		public void run() {
-			ItemDao itemDao = SpringUtil.getBean(ItemDao.class);
+			IItemDbService itemDao = SpringUtil.getBean("itemDbService");
 			ItemCache.ItemTypes = itemDao.getItemTypes();
 			resetItemTypeMap(ItemTypes);
 			timer.schedule(new LoadDataTask(), 5 * 60 * 1000);

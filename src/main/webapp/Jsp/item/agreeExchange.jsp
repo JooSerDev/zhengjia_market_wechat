@@ -75,6 +75,13 @@
 				<c:if test="${exchange.exchangeState != 'exchanged' }">同意交换才可显示</c:if>
 			</div>
 		</div>
+		
+		<div class="contact-view">
+			<div class="label">期望交换地点</div>
+			<div class="phone">
+				${exchange.exchangeLocation }
+			</div>
+		</div>
 
 		<c:if
 			test="${isOwner ==  1 and exchange.exchangeState == 'exchanging'}">

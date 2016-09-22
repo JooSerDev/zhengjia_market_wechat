@@ -110,9 +110,9 @@
 	<insert id="saveExchange" keyColumn="exchangeId" keyProperty="exchangeId"
 		useGeneratedKeys="true">
 		insert into item_exchange
-		(ownerItemId,ownerItemName,ownerId,changerItemId,changerItemName,changerId,state,exchangeFinishStatus,exchangeState,createTime,exchangeTime,exchangeFinishTime)
+		(ownerItemId,ownerItemName,ownerId,changerItemId,changerItemName,changerId,state,exchangeFinishStatus,exchangeState,createTime,exchangeTime,exchangeFinishTime,exchangeLocation)
 		values
-		(#{ownerItemId},#{ownerItemName},#{ownerId},#{changerItemId},#{changerItemName},#{changerId},#{state},#{exchangeFinishStatus},#{exchangeState},#{createTime},#{exchangeTime},#{exchangeFinishTime});
+		(#{ownerItemId},#{ownerItemName},#{ownerId},#{changerItemId},#{changerItemName},#{changerId},#{state},#{exchangeFinishStatus},#{exchangeState},#{createTime},#{exchangeTime},#{exchangeFinishTime},#{exchangeLocation});
 	</insert>
 
 	<update id="updateExchange">
@@ -125,7 +125,7 @@
 		#{changerId}, state= #{state}, exchangeFinishStatus=
 		#{exchangeFinishStatus}, exchangeState= #{exchangeState},
 		exchangeTime= #{exchangeTime}, exchangeFinishTime=
-		#{exchangeFinishTime} where exchangeId= #{exchangeId};
+		#{exchangeFinishTime},exchangeLocation=#{exchangeLocation} where exchangeId= #{exchangeId};
 	</update>
 
 	<update id="updateExchanges4cancelOthersWhenAgreeExchange">

@@ -608,6 +608,34 @@ public class WechatWebController {
 		return "item/finalAgreeExchange";
 	}
 
+	@RequestMapping("/item/exchangeLocation")
+	public void exchangeLocation(HttpServletRequest request, HttpServletResponse response, Model model) {
+		AjaxResult ar = new AjaxResult();
+		try {
+			String ee = request.getParameter("ee");
+			if (StringUtil.isBlank(ee)) {
+				throw new RequestParamsException("非法交换请求");
+			}
+
+			String location = request.getParameter("location");
+
+			itemService.exchangeLocation(ee, location);
+			ar.setErrCode("0");
+
+		} catch (Exception e) {
+			if (e instanceof RequestParamsException) {
+				ar.setErrCode("1002");
+				ar.setErrMsg("服务器内部错误");
+			} else {
+				ar.setErrCode("1001");
+			}
+			e.printStackTrace();
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
+
 	@RequestMapping("/item/agreeExchange")
 	public void agreeExchange(HttpServletRequest request, HttpServletResponse response, Model model) {
 		AjaxResult ar = new AjaxResult();

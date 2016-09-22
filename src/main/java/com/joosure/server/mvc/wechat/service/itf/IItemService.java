@@ -16,7 +16,7 @@ import com.joosure.server.mvc.wechat.exception.RequestParamsException;
 import com.joosure.server.mvc.wechat.exception.UserIllegalException;
 
 public interface IItemService {
-	
+
 	/*******************************/
 	/**
 	 * 同意交换
@@ -24,7 +24,9 @@ public interface IItemService {
 	 * @param encodeExchange
 	 * @throws ItemIllegalException
 	 */
-	void agreeExchange(String encodeExchange, String flag) throws ItemIllegalException ;
+	void agreeExchange(String encodeExchange, String flag) throws ItemIllegalException;
+
+	void exchangeLocation(String encodeExchange, String location) throws ItemIllegalException;
 
 	/**
 	 * 发起交换请求
@@ -37,11 +39,11 @@ public interface IItemService {
 	 * @throws UserIllegalException
 	 */
 	void executeExchange(String eo, int myItemId, int targetItemId)
-			throws OAuthException, ItemIllegalException, UserIllegalException ;
+			throws OAuthException, ItemIllegalException, UserIllegalException;
 
-	void likeItem(int itemId, String eo) throws OAuthException, ItemIllegalException, UserIllegalException ;
+	void likeItem(int itemId, String eo) throws OAuthException, ItemIllegalException, UserIllegalException;
 
-	void sendReport(String eo, int itemid, String msg) throws OAuthException, ItemIllegalException ;
+	void sendReport(String eo, int itemid, String msg) throws OAuthException, ItemIllegalException;
 
 	/**
 	 * 
@@ -51,8 +53,7 @@ public interface IItemService {
 	 * @throws OAuthException
 	 * @throws RequestParamsException
 	 */
-	void saveItemComment(String eo, Integer itemId, String content)
-			throws OAuthException, RequestParamsException ;
+	void saveItemComment(String eo, Integer itemId, String content) throws OAuthException, RequestParamsException;
 
 	/**
 	 * 保存新宝贝
@@ -66,7 +67,7 @@ public interface IItemService {
 	 * @throws Exception
 	 */
 	boolean saveItem(String eo, String itemName, String itemDesc, int itemType, String imgs, String wishItem)
-			throws Exception ;
+			throws Exception;
 
 	List<MyExchangeInfo> loadMyExchanges(String eo, int pageNum, String isOwner, HttpServletRequest request)
 			throws OAuthException, RequestParamsException;
@@ -82,7 +83,7 @@ public interface IItemService {
 	List<Item> loadMyItems(String eo, int pageNum) throws Exception;
 
 	List<ItemInfo> loadItems(String eo, int pageNum, String keyword, int itemType, int isRecommended)
-			throws OAuthException ;
+			throws OAuthException;
 
 	/**
 	 * 
@@ -92,13 +93,12 @@ public interface IItemService {
 	 */
 	List<ItemCommentInfo> loatComments(int pageNum, int itemId);
 
-
 	/**
 	 * 获得推荐前15的宝贝
 	 * 
 	 * @return
 	 */
-	List<ItemInfo> getItemsRecommended() ;
+	List<ItemInfo> getItemsRecommended();
 
 	/**
 	 * 热门社区

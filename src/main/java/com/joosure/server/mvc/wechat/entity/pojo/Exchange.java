@@ -25,6 +25,16 @@ public class Exchange {
 	private String changerItemName;
 	private Integer changerId;
 
+	private String exchangeLocation;// zhengjia | other
+
+	public String getExchangeLocation() {
+		return exchangeLocation;
+	}
+
+	public void setExchangeLocation(String exchangeLocation) {
+		this.exchangeLocation = exchangeLocation;
+	}
+
 	private Integer state; // 0-normal 1-offline
 	private String exchangeFinishStatus;// 正佳人员见证完成交换状态
 	private String exchangeState; // 交易情况

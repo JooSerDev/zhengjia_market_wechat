@@ -43,7 +43,7 @@ import com.shawn.server.core.util.EncryptUtil;
 import com.shawn.server.core.util.StringUtil;
 
 @Service("itemService")
-public class ItemService implements IItemService{
+public class ItemService implements IItemService {
 
 	@Autowired
 	private IUserService userService;
@@ -59,6 +59,51 @@ public class ItemService implements IItemService{
 	private ISystemFunctionDbService systemFunctionDbService;
 	@Autowired
 	private IItemDbService itemDbService;
+
+	public void exchangeLocation(String encodeExchange, String location) throws ItemIllegalException {
+		String decodeExchange = null;
+		try {
+			decodeExchange = EncryptUtil.decryptAES(encodeExchange, WechatConstant.ENCODE_KEY_OPENID);
+		} catch (Exception e) {
+			throw new ItemIllegalException("非法交换请求0001");
+		}
+
+		if (decodeExchange == null) {
+			throw new ItemIllegalException("非法交换请求0002");
+		}
+
+		String[] exchangeInfos = decodeExchange.split(";");
+		if (exchangeInfos.length != 6) {
+			throw new ItemIllegalException("非法交换请求0003");
+		}
+
+		String userOpenid = exchangeInfos[0];
+		String targetOpenid = exchangeInfos[1];
+		String userItemIdStr = exchangeInfos[2];
+		String targetItemIdStr = exchangeInfos[3];
+		String exchangeIdStr = exchangeInfos[4];
+
+		int userItemId = 0;
+		int targetItemId = 0;
+		int exchangeId = 0;
+
+		try {
+			userItemId = Integer.parseInt(userItemIdStr);
+			targetItemId = Integer.parseInt(targetItemIdStr);
+			exchangeId = Integer.parseInt(exchangeIdStr);
+		} catch (Exception e) {
+			throw new ItemIllegalException("非法交换请求0006");
+		}
+
+		Exchange exchange = itemDbService.getExchangeById(exchangeId);
+		if (exchange == null) {
+			throw new ItemIllegalException("非法交换请求0007");
+		}
+
+		exchange.setExchangeLocation(location);
+		itemDbService.updateExchange(exchange);
+
+	}
 
 	/**
 	 * 同意交换
@@ -166,7 +211,7 @@ public class ItemService implements IItemService{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 		} else {
 			exchange.setExchangeState(Exchange.EXCHANGE_STATE_CANCEL);
 			exchange.setExchangeTime(now);
@@ -480,8 +525,8 @@ public class ItemService implements IItemService{
 		Pages pages = new Pages(pageNum);
 		List<Exchange> exchanges = null;
 		if (isOwner.trim().equals("1")) {
-			exchanges = itemDbService.getExchangesByUserIdInOwnerSidePages(userInfo.getUser().getUserId(), pages.getPageRow(),
-					pages.getPageSize());
+			exchanges = itemDbService.getExchangesByUserIdInOwnerSidePages(userInfo.getUser().getUserId(),
+					pages.getPageRow(), pages.getPageSize());
 		} else {
 			exchanges = itemDbService.getExchangesByUserIdInChangerSidePages(userInfo.getUser().getUserId(),
 					pages.getPageRow(), pages.getPageSize());

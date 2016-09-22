@@ -49,11 +49,9 @@
 				</div>
 			</div>
 		</div>
-		
-		<div class="btn-view" onclick="evens.onLocationClick()">
-			确定
-		</div>
-		
+
+		<div class="btn-view" onclick="evens.onLocationClick()">确定</div>
+
 	</div>
 
 	<input type="hidden" id="ee" value="${ee}">
@@ -98,11 +96,34 @@
 				$("#radio_" + itemId).addClass("checked");
 				modelId = itemId;
 			}
-			
-			evens.onLocationClick = function(){
-				
+
+			evens.onLocationClick = function() {
+				var location = "";
+				if (modelId == 1) {
+					location = "zhengjia";
+				} else {
+					location = "other";
+				}
+
+				var ee = $("#ee").val();
+
+				$.ajax({
+					url : "exchangeLocation",
+					data : {
+						ee : ee,
+						location : location
+					},
+					type : "POST",
+					success : function(data) {
+						if (data.errCode == "0") {
+							window.location.href = document.referrer;
+						} else {
+							alert("地点选择失败，情稍候再试");
+						}
+					}
+				});
 			}
-			
+
 			evens.onSubmitClick = function(flag) {
 				var ee = $("#ee").val();
 
@@ -120,6 +141,8 @@
 							} else {
 								alert("已拒绝");
 							}
+							$("#locationView").show();
+							$("#agreeView").hide();
 							window.location.href = document.referrer;
 						} else {
 							alert("交换失败，情稍候再试");

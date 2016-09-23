@@ -798,6 +798,7 @@ public class WechatWebController {
 
 			List<Item> items = itemService.loadMyItems(eo, pageNum);
 			ar.putData("myItems", items);
+			ar.putData("nextPage", items.size() == Pages.DEFAULT_PAGE_SIZE ? 1 : 0);
 			ar.setErrCode("0");
 		} catch (Exception e) {
 			if (e instanceof NumberFormatException) {

@@ -163,24 +163,26 @@
 				location.href = "itemInExchange?eo=" + eo+"&ii="+ii;
 			}
 			evens.rePublish = function(){
-				var ee = $("#ee").val();
-				var isOwner = $("#isOwner").val();
-				
-				$.ajax({
-					url : "rePublish",
-					data : {
-						ee : ee,
-						isOwner : isOwner
-					},
-					type : "POST",
-					success : function(data) {
-						if (data.errCode == "0") {
-							alert("重新提交成功");
-						} else {
-							alert("重新提交失败，情稍候再试");
+				if(confirm("确认重新发布宝贝吗？")){
+					var ee = $("#ee").val();
+					var isOwner = $("#isOwner").val();
+					
+					$.ajax({
+						url : "rePublish",
+						data : {
+							ee : ee,
+							isOwner : isOwner
+						},
+						type : "POST",
+						success : function(data) {
+							if (data.errCode == "0") {
+								alert("重新提交成功");
+							} else {
+								alert("重新提交失败，情稍候再试");
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 
 		});

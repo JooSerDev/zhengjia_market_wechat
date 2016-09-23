@@ -138,12 +138,11 @@
 						if (data.errCode == "0") {
 							if (flag == 1) {
 								alert("交换成功");
+								$("#locationView").show();
+								$("#agreeView").hide();
 							} else {
 								alert("已拒绝");
 							}
-							$("#locationView").show();
-							$("#agreeView").hide();
-							// 							window.location.href = document.referrer;
 						} else {
 							alert("交换失败，情稍候再试");
 						}

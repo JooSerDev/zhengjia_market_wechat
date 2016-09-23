@@ -269,12 +269,8 @@
 				location.href = "item/item?ii=" + id + "&eo=" + eo;
 			}
 			
-			Core.myMsg.initMsg(null, Core.getQueryString("eo"));
-			if(Core.myMsg.total != null && Core.myMsg.total >0){
-				$("#msgCircle").show();
-			}else{
-				$("#msgCircle").hide();
-			}
+			Core.myMsg.initMsg(null, Core.getQueryString("eo"),"msgCircle");
+
 			
 			evens.onUserClick = function(id){
 				var eo = Core.getQueryString("eo");

@@ -95,7 +95,7 @@ String path = request.getContextPath();
 						<div>我
 							<div id="msgCircle" style="background: red; 
 							width:6px;height:6px;border-radius: 50%;
-							position:absolute;top:13%;top:37%;display:none"></div>
+							position:absolute;top:13%;right:37%;display:none"></div>
 						</div>
 					</div>
             </div>

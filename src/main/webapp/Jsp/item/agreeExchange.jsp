@@ -176,9 +176,9 @@
 						type : "POST",
 						success : function(data) {
 							if (data.errCode == "0") {
-								alert("重新提交成功");
+								alert("重新提交成功，请等待管理员审核");
 							} else {
-								alert("重新提交失败，情稍候再试");
+								alert("重新提交失败，请稍候再试");
 							}
 						}
 					});

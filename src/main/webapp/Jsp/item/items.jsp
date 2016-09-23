@@ -91,7 +91,13 @@ String path = request.getContextPath();
         <div class="nav-view" id="table_bar_me">
             <div class="table_bar_btn">
                 <div class="logo-me"></div>
-                <div class="label">我</div>
+                <div class="label" style="position:relative">
+						<div>我
+							<div id="msgCircle" style="background: red; 
+							width:6px;height:6px;border-radius: 50%;
+							position:absolute;top:13%;top:37%;display:none"></div>
+						</div>
+					</div>
             </div>
         </div>
     </div>
@@ -156,6 +162,10 @@ String path = request.getContextPath();
 <script src="<%=path%>/include/core/core.js"></script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="<%=path%>/include/page/items.js"></script>
-
+<script >
+	$(function(){
+		Core.myMsg.initMsg(null, Core.getQueryString("eo"),"msgCircle");
+	});
+</script>
 </body>
 </html>

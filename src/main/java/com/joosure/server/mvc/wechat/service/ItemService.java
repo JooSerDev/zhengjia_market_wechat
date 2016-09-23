@@ -35,6 +35,7 @@ import com.joosure.server.mvc.wechat.service.db.IItemDbService;
 import com.joosure.server.mvc.wechat.service.db.IScoreDbService;
 import com.joosure.server.mvc.wechat.service.db.ISystemFunctionDbService;
 import com.joosure.server.mvc.wechat.service.db.IUserDbService;
+import com.joosure.server.mvc.wechat.service.db.IWxUserMsgDbService;
 import com.joosure.server.mvc.wechat.service.itf.IItemService;
 import com.joosure.server.mvc.wechat.service.itf.IScoreService;
 import com.joosure.server.mvc.wechat.service.itf.ISystemFunctionService;
@@ -60,6 +61,9 @@ public class ItemService implements IItemService {
 	@Autowired
 	private IItemDbService itemDbService;
 
+	@Autowired
+	private IWxUserMsgDbService wxUserMsgDbService;
+	
 	public void exchangeLocation(String encodeExchange, String location) throws ItemIllegalException {
 		String decodeExchange = null;
 		try {
@@ -211,13 +215,18 @@ public class ItemService implements IItemService {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
+			
 		} else {
 			exchange.setExchangeState(Exchange.EXCHANGE_STATE_CANCEL);
 			exchange.setExchangeTime(now);
 			itemDbService.updateExchange(exchange);
+			
+			
 		}
-
+		
+		// modify by Ted 20160923  同意交换后通知到对方未读消息 TODO
+		wxUserMsgDbService.receiveWxUserMsg(CommonConstant.UserMsgType_Rep, changerInfo.getUser().getUserId());
+		
 		if (exchange.getCreateTime().getTime() + 10 * 60 * 1000 > now.getTime()) {
 			scoreService.updateScoreByEvent(ownerInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_RES_EXG);
 		}
@@ -263,8 +272,11 @@ public class ItemService implements IItemService {
 				|| targetItem.getLockStatus().equals(Item.LOCK_EXCHANGED)) {
 			throw new ItemIllegalException("对方的宝贝已经锁定");
 		}
-
-		if (myItem.getOwnerId() != userInfo.getUser().getUserId()) {
+		//modify by Ted 20160923 change to use equals
+//		if (myItem.getOwnerId().equals(userInfo.getUser().getUserId())) {
+		System.out.println("myItem.ownerId:"+myItem.getOwnerId());
+		System.out.println("userInfo.getUser().getUserId():"+userInfo.getUser().getUserId());
+		if (myItem.getOwnerId().intValue() != userInfo.getUser().getUserId().intValue()) {
 			throw new UserIllegalException("is not my item");
 		}
 
@@ -312,7 +324,10 @@ public class ItemService implements IItemService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		// modify by Ted 20160923  发出交换请求  TODO,对方收到消息
+		wxUserMsgDbService.receiveWxUserMsg(CommonConstant.UserMsgType_Req, targetUser.getUserId());
+		
 	}
 
 	public void likeItem(int itemId, String eo) throws OAuthException, ItemIllegalException, UserIllegalException {

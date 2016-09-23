@@ -160,7 +160,13 @@
 			<div class="nav-view" id="table_bar_me">
 				<div class="table_bar_btn">
 					<div class="logo-me"></div>
-					<div class="label">我</div>
+					<div class="label" style="position:relative">
+						<div>我
+							<div id="msgCircle" style="background: red; 
+							width:6px;height:6px;border-radius: 50%;
+							position:absolute;top:13%;right:37%;display:none"></div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -261,6 +267,13 @@
 			evens.onItemClick = function(id) {
 				var eo = Core.getQueryString("eo");
 				location.href = "item/item?ii=" + id + "&eo=" + eo;
+			}
+			
+			Core.myMsg.initMsg(null, Core.getQueryString("eo"));
+			if(Core.myMsg.total != null && Core.myMsg.total >0){
+				$("#msgCircle").show();
+			}else{
+				$("#msgCircle").hide();
 			}
 			
 			evens.onUserClick = function(id){

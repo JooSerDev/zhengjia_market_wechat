@@ -79,7 +79,8 @@
 		<div class="contact-view">
 			<div class="label">期望交换地点</div>
 			<div class="phone">
-				${exchange.exchangeLocation }
+				<c:if test="${exchange.exchangeLocation == 'zhengjia' }">到正佳广场交换</c:if>
+				<c:if test="${exchange.exchangeLocation == 'other' }">自选地点交换</c:if>
 			</div>
 		</div>
 
@@ -153,9 +154,6 @@
 	evens.gotoDescTextPage = function() {
 	location.href = "../../include/core/agreement2.html";
 	}
-
-	gotoDescTextPage
-
 			evens.onOtherItemClick = function(ii){
 				var eo = Core.getQueryString("eo");
 				location.href = "itemInExchange?eo=" + eo+"&ii="+ii;

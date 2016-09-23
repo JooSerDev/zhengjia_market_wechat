@@ -300,6 +300,62 @@ Date.prototype.format = function(format) {
 	return format;
 }
 
+/**
+ * 获取未读消息
+ */
+Core.myMsg = {
+	total:0,
+	userId:0,
+	msgId:0,
+	msgType:[],
+	msgCount:[],
+	initMsg:function(url,eo,divId){
+		var reqUrl="/fxsj/wechat/user/msg?eo="+eo;
+		$.get(reqUrl,function(data){
+			if(data.errCode=="0"){
+				var userMsg = data.data.userMsg;
+				Core.myMsg.total = userMsg.total;
+				Core.myMsg.userId = userMsg.userid;
+				Core.myMsg.msgId = userMsg.msgid;
+				Core.myMsg.msgType = userMsg.msgtype.split(",");
+				Core.myMsg.msgCount = userMsg.msgcount.split(",");
+				if(userMsg!=null && userMsg.total>0){
+					$("#"+divId).show();
+				}else{
+					$("#"+divId).hide();
+				}
+			}
+		});
+	},
+	readOneMsg:function(url,eo,msgType){
+		
+	},
+	readSameMsg:function(url,eo,msgType){//阅读一个类型的消息
+		var reqUrl="/fxsj/wechat/user/readSameMsg?eo="+eo+"&msgType="+msgType;
+		$.get(reqUrl,function(data){
+			if(data.errCode=="0"){
+				return;
+			}
+		});
+	},
+	readAllMsg:function(url,eo,divId){//一次阅读所有消息
+		var reqUrl="/fxsj/wechat/user/readAllMsg?eo="+eo;
+		$.get(reqUrl,function(data){
+			if(data.errCode=="0"){
+				$("#"+divId).hide();
+			}
+		});
+	},
+	receiveMsg:function(url,eo,msgType){//收到消息
+		var reqUrl="/fxsj/wechat/user/receiveMsgs?eo="+eo+"&msgType="+msgType;
+		$.get(reqUrl,function(data){
+			if(data.errCode=="0"){
+				return;
+			}
+		});
+	}
+}
+
 // document.addEventListener('touchmove', function(e) {
 // e.preventDefault();
 // }, false);

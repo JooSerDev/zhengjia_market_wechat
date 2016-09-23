@@ -45,8 +45,15 @@
 			<div class="nav-view" id="table_bar_me">
 				<div class="table_bar_btn">
 					<div class="logo-me"></div>
-					<div class="label">我</div>
+					<div class="label" style="position:relative">
+						<div>我
+							<div id="msgCircle" style="background: red; 
+							width:6px;height:6px;border-radius: 50%;
+							position:absolute;top:13%;top:37%;display:none"></div>
+						</div>
+					</div>
 				</div>
+				
 			</div>
 		</div>
 
@@ -92,6 +99,7 @@
 
 		$(function() {
 			Core.tableBar.init(2);
+			Core.myMsg.initMsg(null, Core.getQueryString("eo"),"msgCircle");
 		});
 	</script>
 </body>

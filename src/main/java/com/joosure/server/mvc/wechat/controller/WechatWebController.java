@@ -35,12 +35,14 @@ import com.joosure.server.mvc.wechat.entity.domain.page.MyItemsPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.PostPageInfo;
 import com.joosure.server.mvc.wechat.entity.domain.page.TaPageInfo;
 import com.joosure.server.mvc.wechat.entity.pojo.Item;
+import com.joosure.server.mvc.wechat.entity.pojo.WxUserMsg;
 import com.joosure.server.mvc.wechat.exception.ItemIllegalException;
 import com.joosure.server.mvc.wechat.exception.RequestParamsException;
 import com.joosure.server.mvc.wechat.exception.UserIllegalException;
 import com.joosure.server.mvc.wechat.service.db.IItemDbService;
 import com.joosure.server.mvc.wechat.service.db.ISystemFunctionDbService;
 import com.joosure.server.mvc.wechat.service.db.IUserDbService;
+import com.joosure.server.mvc.wechat.service.db.IWxUserMsgDbService;
 import com.joosure.server.mvc.wechat.service.itf.IItemService;
 import com.joosure.server.mvc.wechat.service.itf.ISystemFunctionService;
 import com.joosure.server.mvc.wechat.service.itf.ISystemLogStorageService;
@@ -83,6 +85,8 @@ public class WechatWebController {
 	private ISystemFunctionDbService systemFunctionDbService;
 	@Autowired
 	private IUserDbService userDbService;
+	@Autowired
+	private  IWxUserMsgDbService wxUserMsgDbService;
 
 	/**
 	 * 多重跳转路由
@@ -556,7 +560,8 @@ public class WechatWebController {
 			int isOwner = 0;
 
 			model.addAttribute("ee", pageInfo.getExchangeInfo().getEncodeExchange());
-			if (pageInfo.getUserInfo().getUser().getUserId() == pageInfo.getExchangeInfo().getOwner().getUserId()) {
+			//modify by Ted 20160923 change to use equals
+			if (pageInfo.getUserInfo().getUser().getUserId().intValue() == pageInfo.getExchangeInfo().getOwner().getUserId().intValue()) {
 				model.addAttribute("userItem", pageInfo.getExchangeInfo().getOwnerItem());
 				model.addAttribute("otherItem", pageInfo.getExchangeInfo().getChangerItem());
 				model.addAttribute("other", pageInfo.getExchangeInfo().getChanger());
@@ -1077,5 +1082,113 @@ public class WechatWebController {
 
 		return null;
 	}
+	
+	/**
+	 * 阅读统一类型的消息
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/user/readSameMsg")
+	public void readMsgs(HttpServletRequest request, HttpServletResponse response){
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			String msgType = request.getParameter("msgType");
+			UserInfo user = userService.getUserInfoByEO(eo);
+			wxUserMsgDbService.readSameTypeMsg(msgType, user.getUser().getUserId());
+			ar.setErrCode(0 + "");
+			ar.setErrMsg("阅读同类消息成功");
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			ar.setErrCode("1001");
+			ar.setErrMsg("信息不完整");
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
+	
+	/**
+	 * 阅读 所有 消息
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/user/readAllMsg")
+	public void readAllMsgs(HttpServletRequest request, HttpServletResponse response){
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			UserInfo user = userService.getUserInfoByEO(eo);
+			wxUserMsgDbService.readAllMsgs(user.getUser().getUserId());
+			ar.setErrCode(0 + "");
+			ar.setErrMsg("清除消息成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			ar.setErrCode("1001");
+			ar.setErrMsg("信息不完整");
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
+	
+	/**
+	 * 收到一条 消息
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/user/receiveMsg")
+	public void receiveMsg(HttpServletRequest request, HttpServletResponse response){
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			String msgType = request.getParameter("msgType");
+			UserInfo user = userService.getUserInfoByEO(eo);
+			wxUserMsgDbService.receiveWxUserMsg(msgType, user.getUser().getUserId());
+			ar.setErrCode(0 + "");
+			ar.setErrMsg("收到消息成功");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			ar.setErrCode("1001");
+			ar.setErrMsg("信息不完整");
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
+
+	/**
+	 * 获取用户消息记录
+	 * @param request
+	 * @param response
+	 */
+	@RequestMapping("/user/msg")
+	public void getUserMsg(HttpServletRequest request,HttpServletResponse response){
+		AjaxResult ar = new AjaxResult();
+		try {
+			String eo = request.getParameter("eo");
+			UserInfo user = userService.getUserInfoByEO(eo);
+			if(user!=null && user.getUser()!=null){
+				WxUserMsg wxUserMsg = new WxUserMsg();
+				wxUserMsg.setUserid(user.getUser().getUserId());
+				WxUserMsg msg = wxUserMsgDbService.getWxUserMsg(wxUserMsg);
+				if(msg!=null){
+					System.out.println(msg.getTotal());
+				}
+				ar.setErrCode(0 + "");
+				ar.setErrMsg("获取所有消息成功");
+				ar.putData("userMsg", msg);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			ar.setErrCode("1001");
+			ar.setErrMsg("信息不完整");
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
+	}
 }

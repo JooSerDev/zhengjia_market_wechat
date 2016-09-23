@@ -31,7 +31,7 @@
 		</div>
 	</div>
 
-	<div id="locationView">
+	<div id="locationView" style="display:none;">
 		<div class="show-view">请选择期望交换地点：</div>
 		<div class="select-view">
 			<div class="item header" onclick="evens.onItemClick(1)">
@@ -143,7 +143,7 @@
 							}
 							$("#locationView").show();
 							$("#agreeView").hide();
-							window.location.href = document.referrer;
+// 							window.location.href = document.referrer;
 						} else {
 							alert("交换失败，情稍候再试");
 						}

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.joosure.server.mvc.wechat.dao.database.WxUserMsgDao">
+	<resultMap id="BaseResultMap"
+		type="com.joosure.server.mvc.wechat.entity.pojo.WxUserMsg">
+		<id column="msgId" property="msgid" jdbcType="INTEGER" />
+		<result column="userId" property="userid" jdbcType="INTEGER" />
+		<result column="userName" property="username" jdbcType="VARCHAR" />
+		<result column="msgType" property="msgtype" jdbcType="VARCHAR" />
+		<result column="msgCount" property="msgcount" jdbcType="VARCHAR" />
+		<result column="total" property="total" jdbcType="INTEGER" />
+		<result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="readTime" property="readtime" jdbcType="TIMESTAMP" />
+		<result column="readFlag" property="readflag" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		msgId, userId, userName, msgType, msgCount, total,
+		createTime, readTime,
+		readFlag,
+		remark
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from wx_user_msg
+		where msgId = #{msgid}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		wx_user_msg
+		where msgId = #{msgid,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="msgid"
+		parameterType="com.joosure.server.mvc.wechat.entity.pojo.WxUserMsg">
+		insert into wx_user_msg (userId, userName, msgType,
+		msgCount, total, createTime,
+		readTime, readFlag, remark
+		)
+		values
+		(#{userid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},
+		#{msgtype,jdbcType=VARCHAR},
+		#{msgcount,jdbcType=VARCHAR},
+		#{total,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
+		#{readtime,jdbcType=TIMESTAMP}, #{readflag,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" useGeneratedKeys="true"
+		keyProperty="msgid" parameterType="com.joosure.server.mvc.wechat.entity.pojo.WxUserMsg">
+		insert into wx_user_msg
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			userId,
+			userName,
+			msgType,
+			msgCount,
+			total,
+			createTime,
+			readTime,
+			readFlag,
+			remark,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{userid,jdbcType=INTEGER},
+			#{username,jdbcType=VARCHAR},
+			'UserMsgTypeOfRequest,UserMsgTypeOfResponse,UserMsgTypeOfApproval',
+			#{msgcount,jdbcType=VARCHAR},
+			#{total,jdbcType=INTEGER},
+			now(),
+			#{readtime,jdbcType=TIMESTAMP},
+			0,
+			#{remark,jdbcType=VARCHAR},
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.joosure.server.mvc.wechat.entity.pojo.WxUserMsg">
+		update wx_user_msg
+		<set>
+			<if test="userid != null">
+				userId = #{userid,jdbcType=INTEGER},
+			</if>
+			<if test="username != null">
+				userName = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="msgtype != null">
+				msgType = #{msgtype,jdbcType=VARCHAR},
+			</if>
+			<if test="msgcount != null">
+				msgCount = #{msgcount,jdbcType=VARCHAR},
+			</if>
+			<if test="total != null">
+				total = #{total,jdbcType=INTEGER},
+			</if>
+			<if test="createtime != null">
+				createTime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="readtime != null">
+				readTime = #{readtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="readflag != null">
+				readFlag = #{readflag,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where msgId = #{msgid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.joosure.server.mvc.wechat.entity.pojo.WxUserMsg">
+		update wx_user_msg
+		set userId = #{userid,jdbcType=INTEGER},
+		userName =
+		#{username,jdbcType=VARCHAR},
+		msgType = #{msgtype,jdbcType=VARCHAR},
+		msgCount = #{msgcount,jdbcType=VARCHAR},
+		total =
+		#{total,jdbcType=INTEGER},
+		createTime =
+		#{createtime,jdbcType=TIMESTAMP},
+		readTime =
+		#{readtime,jdbcType=TIMESTAMP},
+		readFlag =
+		#{readflag,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR}
+		where
+		msgId = #{msgid,jdbcType=INTEGER}
+	</update>
+
+	<!-- ***************************** -->
+	<select id="getById" resultMap="BaseResultMap"
+		parameterType="com.joosure.server.mvc.wechat.entity.pojo.WxUserMsg">
+		select
+		<include refid="Base_Column_List" />
+		from wx_user_msg
+		where 1=1
+		<if test="msgid != null">
+			and msgID = #{msgid}
+		</if>
+		<if test="userid != null">
+			and userId = #{userid}
+		</if>
+	</select>
+
+	<delete id="deleteById" parameterType="com.joosure.server.mvc.wechat.entity.pojo.WxUserMsg">
+		delete from
+		wx_user_msg
+		where 1=1
+		<if test="msgid != null">
+			and msgID = #{msgid}
+		</if>
+		<if test="userid != null">
+			and userId = #{userid}
+		</if>
+	</delete>
+</mapper>

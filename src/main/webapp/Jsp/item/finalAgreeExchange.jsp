@@ -31,14 +31,14 @@
 		</div>
 	</div>
 
-	<div id="locationView" style="display:none;">
+	<div id="locationView" style="display: none;">
 		<div class="show-view">请选择期望交换地点：</div>
 		<div class="select-view">
 			<div class="item header" onclick="evens.onItemClick(1)">
 				<div class="text" id="mo_text_1">［到正佳广场交换］正佳广场是一个舒适的公共场所，可确保交换过程的安全；您可在营业时间到xxxx服务台，我们将竭诚协助您完成交换</div>
 				<div class="checkbox">
 					<input type="radio" id="radio_1" name="radio-1-set"
-						class="regular-radio" /><label for="radio_1">
+						class="regular-radio checked" checked="checked"/><label for="radio_1">
 				</div>
 			</div>
 			<div class="item foot" onclick="evens.onItemClick(2)">
@@ -98,10 +98,10 @@
 			}
 
 			evens.onLocationClick = function() {
-				var location = "";
+				var location = "zhengjia";
 				if (modelId == 1) {
 					location = "zhengjia";
-				} else {
+				} else if (modelId == 2) {
 					location = "other";
 				}
 
@@ -143,7 +143,7 @@
 							}
 							$("#locationView").show();
 							$("#agreeView").hide();
-// 							window.location.href = document.referrer;
+							// 							window.location.href = document.referrer;
 						} else {
 							alert("交换失败，情稍候再试");
 						}

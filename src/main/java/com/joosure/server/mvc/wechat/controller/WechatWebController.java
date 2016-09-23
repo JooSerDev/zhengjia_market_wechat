@@ -86,7 +86,7 @@ public class WechatWebController {
 	@Autowired
 	private IUserDbService userDbService;
 	@Autowired
-	private  IWxUserMsgDbService wxUserMsgDbService;
+	private IWxUserMsgDbService wxUserMsgDbService;
 
 	/**
 	 * 多重跳转路由
@@ -560,8 +560,9 @@ public class WechatWebController {
 			int isOwner = 0;
 
 			model.addAttribute("ee", pageInfo.getExchangeInfo().getEncodeExchange());
-			//modify by Ted 20160923 change to use equals
-			if (pageInfo.getUserInfo().getUser().getUserId().intValue() == pageInfo.getExchangeInfo().getOwner().getUserId().intValue()) {
+			// modify by Ted 20160923 change to use equals
+			if (pageInfo.getUserInfo().getUser().getUserId().intValue() == pageInfo.getExchangeInfo().getOwner()
+					.getUserId().intValue()) {
 				model.addAttribute("userItem", pageInfo.getExchangeInfo().getOwnerItem());
 				model.addAttribute("otherItem", pageInfo.getExchangeInfo().getChangerItem());
 				model.addAttribute("other", pageInfo.getExchangeInfo().getChanger());
@@ -611,6 +612,35 @@ public class WechatWebController {
 			return errorPageRouter(e, "WechatWebController.toFinalAgreeExchange");
 		}
 		return "item/finalAgreeExchange";
+	}
+
+	@RequestMapping("/item/rePublish")
+	public void rePublish(HttpServletRequest request, HttpServletResponse response, Model model) {
+		AjaxResult ar = new AjaxResult();
+		try {
+			String ee = request.getParameter("ee");
+			if (StringUtil.isBlank(ee)) {
+				throw new RequestParamsException("非法交换请求");
+			}
+
+			String isOwnerStr = request.getParameter("isOwner");
+			int isOwner = Integer.parseInt(isOwnerStr);
+
+			itemService.rePublish(ee, isOwner);
+			ar.setErrCode("0");
+
+		} catch (Exception e) {
+			if (e instanceof RequestParamsException) {
+				ar.setErrCode("1002");
+				ar.setErrMsg("服务器内部错误");
+			} else {
+				ar.setErrCode("1001");
+			}
+			e.printStackTrace();
+		}
+
+		String json = JsonUtil.Object2JsonStr(ar);
+		ResponseHandler.output(response, json);
 	}
 
 	@RequestMapping("/item/exchangeLocation")
@@ -1082,14 +1112,15 @@ public class WechatWebController {
 
 		return null;
 	}
-	
+
 	/**
 	 * 阅读统一类型的消息
+	 * 
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping("/user/readSameMsg")
-	public void readMsgs(HttpServletRequest request, HttpServletResponse response){
+	public void readMsgs(HttpServletRequest request, HttpServletResponse response) {
 		AjaxResult ar = new AjaxResult();
 		try {
 			String eo = request.getParameter("eo");
@@ -1108,14 +1139,15 @@ public class WechatWebController {
 		String json = JsonUtil.Object2JsonStr(ar);
 		ResponseHandler.output(response, json);
 	}
-	
+
 	/**
 	 * 阅读 所有 消息
+	 * 
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping("/user/readAllMsg")
-	public void readAllMsgs(HttpServletRequest request, HttpServletResponse response){
+	public void readAllMsgs(HttpServletRequest request, HttpServletResponse response) {
 		AjaxResult ar = new AjaxResult();
 		try {
 			String eo = request.getParameter("eo");
@@ -1133,14 +1165,15 @@ public class WechatWebController {
 		String json = JsonUtil.Object2JsonStr(ar);
 		ResponseHandler.output(response, json);
 	}
-	
+
 	/**
 	 * 收到一条 消息
+	 * 
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping("/user/receiveMsg")
-	public void receiveMsg(HttpServletRequest request, HttpServletResponse response){
+	public void receiveMsg(HttpServletRequest request, HttpServletResponse response) {
 		AjaxResult ar = new AjaxResult();
 		try {
 			String eo = request.getParameter("eo");
@@ -1162,20 +1195,21 @@ public class WechatWebController {
 
 	/**
 	 * 获取用户消息记录
+	 * 
 	 * @param request
 	 * @param response
 	 */
 	@RequestMapping("/user/msg")
-	public void getUserMsg(HttpServletRequest request,HttpServletResponse response){
+	public void getUserMsg(HttpServletRequest request, HttpServletResponse response) {
 		AjaxResult ar = new AjaxResult();
 		try {
 			String eo = request.getParameter("eo");
 			UserInfo user = userService.getUserInfoByEO(eo);
-			if(user!=null && user.getUser()!=null){
+			if (user != null && user.getUser() != null) {
 				WxUserMsg wxUserMsg = new WxUserMsg();
 				wxUserMsg.setUserid(user.getUser().getUserId());
 				WxUserMsg msg = wxUserMsgDbService.getWxUserMsg(wxUserMsg);
-				if(msg!=null){
+				if (msg != null) {
 					System.out.println(msg.getTotal());
 				}
 				ar.setErrCode(0 + "");

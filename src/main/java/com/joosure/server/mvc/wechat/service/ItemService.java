@@ -63,7 +63,79 @@ public class ItemService implements IItemService {
 
 	@Autowired
 	private IWxUserMsgDbService wxUserMsgDbService;
-	
+
+	public void rePublish(String encodeExchange, int isOwner) throws ItemIllegalException {
+		String decodeExchange = null;
+		try {
+			decodeExchange = EncryptUtil.decryptAES(encodeExchange, WechatConstant.ENCODE_KEY_OPENID);
+		} catch (Exception e) {
+			throw new ItemIllegalException("非法交换请求0001");
+		}
+
+		if (decodeExchange == null) {
+			throw new ItemIllegalException("非法交换请求0002");
+		}
+
+		String[] exchangeInfos = decodeExchange.split(";");
+		if (exchangeInfos.length != 6) {
+			throw new ItemIllegalException("非法交换请求0003");
+		}
+
+		String userItemIdStr = exchangeInfos[2];
+		String targetItemIdStr = exchangeInfos[3];
+
+		int userItemId = 0;
+		int targetItemId = 0;
+
+		try {
+			userItemId = Integer.parseInt(userItemIdStr);
+			targetItemId = Integer.parseInt(targetItemIdStr);
+		} catch (Exception e) {
+			throw new ItemIllegalException("非法交换请求0006");
+		}
+
+		Item oitem = null;
+		if (isOwner == 1) {
+			oitem = itemDbService.getItemById(userItemId);
+		} else {
+			oitem = itemDbService.getItemById(targetItemId);
+		}
+
+		if (oitem != null) {
+
+			Date nowDate = new Date();
+
+			Item item = new Item();
+			item.setName(oitem.getName());
+			item.setDescription(oitem.getDescription());
+			item.setItemType(oitem.getItemType());
+			item.setWishItem(oitem.getWishItem());
+			item.setItemImgNum(oitem.getItemImgNum());
+			item.setItemImgUrls(oitem.getItemImgUrls());
+			item.setItemCenterImgUrls(oitem.getItemCenterImgUrls());
+			item.setOwnerId(oitem.getOwnerId());
+			item.setOwnerNickname(oitem.getOwnerNickname());
+			item.setCreateTime(nowDate);
+
+			// 初始化数据
+			item.setIsRecommended(0);
+			item.setLikeNum(0);
+			item.setUnlikeNum(0);
+			item.setMarkNum(0);
+			item.setStatus(0);
+			item.setLastModifyTime(nowDate);
+			item.setRefreshTime(nowDate);
+			item.setLockStatus(Item.LOCK_NORMAL);
+			item.setApprovalStatus(Item.STATUS_WAIT);
+
+			itemDbService.saveItem(item);
+
+		} else {
+			throw new ItemIllegalException("非法交换请求0006");
+		}
+
+	}
+
 	public void exchangeLocation(String encodeExchange, String location) throws ItemIllegalException {
 		String decodeExchange = null;
 		try {
@@ -81,19 +153,11 @@ public class ItemService implements IItemService {
 			throw new ItemIllegalException("非法交换请求0003");
 		}
 
-		String userOpenid = exchangeInfos[0];
-		String targetOpenid = exchangeInfos[1];
-		String userItemIdStr = exchangeInfos[2];
-		String targetItemIdStr = exchangeInfos[3];
 		String exchangeIdStr = exchangeInfos[4];
 
-		int userItemId = 0;
-		int targetItemId = 0;
 		int exchangeId = 0;
 
 		try {
-			userItemId = Integer.parseInt(userItemIdStr);
-			targetItemId = Integer.parseInt(targetItemIdStr);
 			exchangeId = Integer.parseInt(exchangeIdStr);
 		} catch (Exception e) {
 			throw new ItemIllegalException("非法交换请求0006");
@@ -215,18 +279,17 @@ public class ItemService implements IItemService {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
+
 		} else {
 			exchange.setExchangeState(Exchange.EXCHANGE_STATE_CANCEL);
 			exchange.setExchangeTime(now);
 			itemDbService.updateExchange(exchange);
-			
-			
+
 		}
-		
-		// modify by Ted 20160923  同意交换后通知到对方未读消息 TODO
+
+		// modify by Ted 20160923 同意交换后通知到对方未读消息 TODO
 		wxUserMsgDbService.receiveWxUserMsg(CommonConstant.UserMsgType_Rep, changerInfo.getUser().getUserId());
-		
+
 		if (exchange.getCreateTime().getTime() + 10 * 60 * 1000 > now.getTime()) {
 			scoreService.updateScoreByEvent(ownerInfo.getUser().getUserId(), CommonConstant.SCORE_EVENT_RES_EXG);
 		}
@@ -272,10 +335,10 @@ public class ItemService implements IItemService {
 				|| targetItem.getLockStatus().equals(Item.LOCK_EXCHANGED)) {
 			throw new ItemIllegalException("对方的宝贝已经锁定");
 		}
-		//modify by Ted 20160923 change to use equals
-//		if (myItem.getOwnerId().equals(userInfo.getUser().getUserId())) {
-		System.out.println("myItem.ownerId:"+myItem.getOwnerId());
-		System.out.println("userInfo.getUser().getUserId():"+userInfo.getUser().getUserId());
+		// modify by Ted 20160923 change to use equals
+		// if (myItem.getOwnerId().equals(userInfo.getUser().getUserId())) {
+		System.out.println("myItem.ownerId:" + myItem.getOwnerId());
+		System.out.println("userInfo.getUser().getUserId():" + userInfo.getUser().getUserId());
 		if (myItem.getOwnerId().intValue() != userInfo.getUser().getUserId().intValue()) {
 			throw new UserIllegalException("is not my item");
 		}
@@ -324,10 +387,10 @@ public class ItemService implements IItemService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		// modify by Ted 20160923  发出交换请求  TODO,对方收到消息
+
+		// modify by Ted 20160923 发出交换请求 TODO,对方收到消息
 		wxUserMsgDbService.receiveWxUserMsg(CommonConstant.UserMsgType_Req, targetUser.getUserId());
-		
+
 	}
 
 	public void likeItem(int itemId, String eo) throws OAuthException, ItemIllegalException, UserIllegalException {

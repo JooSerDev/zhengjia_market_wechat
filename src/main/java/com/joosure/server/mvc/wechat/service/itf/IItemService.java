@@ -28,6 +28,8 @@ public interface IItemService {
 
 	void exchangeLocation(String encodeExchange, String location) throws ItemIllegalException;
 
+	void rePublish(String encodeExchange, int isOwner) throws ItemIllegalException;
+
 	/**
 	 * 发起交换请求
 	 * 

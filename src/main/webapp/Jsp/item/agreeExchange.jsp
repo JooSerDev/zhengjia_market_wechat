@@ -75,7 +75,7 @@
 				<c:if test="${exchange.exchangeState != 'exchanged' }">同意交换才可显示</c:if>
 			</div>
 		</div>
-		
+
 		<div class="contact-view">
 			<div class="label">期望交换地点</div>
 			<div class="phone">
@@ -96,11 +96,15 @@
 			<div class="btn-view">
 				<div class="gotoAgreePageBtn" onclick="evens.gotoDescTextPage()">点击了解如何与Ta交换？</div>
 			</div>
+			<div class="btn-view">
+				<div class="gotoAgreePageBtn" onclick="evens.rePublish()">交易失败？重新发布我的宝贝</div>
+			</div>
 		</c:if>
 
 	</div>
 
 	<input type="hidden" id="ee" value="${ee}">
+	<input type="hidden" id="isOwner" value="${isOwner }">
 
 	<input type="hidden" id="appid" value="${jsapi.appid}">
 	<input type="hidden" id="nonceStr" value="${jsapi.nonceStr}">
@@ -151,12 +155,32 @@
 				var ee = $("#ee").val();
 				location.href = "toFinalAgreeExchange?ee=" + ee;
 			}
-	evens.gotoDescTextPage = function() {
-	location.href = "../../include/core/agreement2.html";
-	}
+			evens.gotoDescTextPage = function() {
+				location.href = "../../include/core/agreement2.html";
+			}
 			evens.onOtherItemClick = function(ii){
 				var eo = Core.getQueryString("eo");
 				location.href = "itemInExchange?eo=" + eo+"&ii="+ii;
+			}
+			evens.rePublish = function(){
+				var ee = $("#ee").val();
+				var isOwner = $("#isOwner").val();
+				
+				$.ajax({
+					url : "rePublish",
+					data : {
+						ee : ee,
+						isOwner : isOwner
+					},
+					type : "POST",
+					success : function(data) {
+						if (data.errCode == "0") {
+							alert("重新提交成功");
+						} else {
+							alert("重新提交失败，情稍候再试");
+						}
+					}
+				});
 			}
 
 		});

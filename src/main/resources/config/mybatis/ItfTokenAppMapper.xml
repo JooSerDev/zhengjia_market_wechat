@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.joosure.server.mvc.wechat.dao.database.ItfTokenDao">
+
+	<sql id="qryTokenAppByPageSql">
+		where 1=1
+		<if test="appId != null and appId != ''">
+			and appId = #{appId}
+		</if>
+		<if test="applyName != null and applyName != ''">
+			and applyName = #{applyName}
+		</if>
+		<if test="status != null and status != ''">
+			and status = #{status}
+		</if>
+		<if test="startTime != null">
+			and applyTime &gt;= #{startTime}
+		</if>
+		<if test="endTime != null">
+			and applyTime &lt;= #{endTime}
+		</if>
+	</sql>
+
+	<sql id="limitSql">
+		limit #{offset},#{limit}
+	</sql>
+	
+	<select id="getTokenAppByPage" parameterType="com.joosure.server.mvc.wechat.entity.pojo.ItfTokenApp"
+		resultType="com.joosure.server.mvc.wechat.entity.pojo.ItfTokenApp">
+		select * from itf_token_app
+		<include refid="qryTokenAppByPageSql" />
+		order by updateTime desc
+		<include refid="limitSql" />	
+	</select>
+	
+	<select id="getTokenAppCountByPage" resultType="java.lang.Integer"
+		parameterType="com.joosure.server.mvc.wechat.entity.pojo.ItfTokenApp">
+		select count(1) from itf_token_app
+		<include refid="qryTokenAppByPageSql" />
+	</select>
+	
+	<insert id="insertTokenApp" parameterType="com.joosure.server.mvc.wechat.entity.pojo.ItfTokenApp">
+		insert into itf_token_app
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			appId, applyName, oprId, oprLoginId, applyTime,
+			updateTime, invalidTime, status, remark,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{appId}, #{applyName}, #{oprId}, #{oprLoginId}, now(),
+			now(), #{invalidTime}, 'normal', #{remark},
+		</trim>
+	</insert>
+	
+	<update id="updateTokenApp" parameterType="com.joosure.server.mvc.wechat.entity.pojo.ItfTokenApp">
+		update itf_token_app
+		<set>
+			<if test="applyName != null">
+				applyName = #{applyName},
+			</if>
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="remark != null">
+				remark = #{remark},
+			</if>
+			updatetime=now(),
+		</set>
+		where appId = #{appId}
+	</update>
+	
+	<sql id="qryTokenAppLogByPageSql">
+		where 1=1
+		<if test="appId !=null and appId != ''">
+			and appId = #{appId}
+		</if>
+		<if test="applyName != null and applyName !=''">
+			and applyName = #{applyName}
+		</if>
+		<if test="startTime != null">
+			and accessTime &gt; #{startTime}
+		</if>
+		<if test="endTime != null">
+			and accessTime &lt; #{endTime}
+		</if>
+	</sql>
+	
+	<select id="getTokenAppLogByPage" parameterType="com.joosure.server.mvc.wechat.entity.pojo.ItfTokenLog"
+		resultType="com.joosure.server.mvc.wechat.entity.pojo.ItfTokenLog">
+		select * from itf_token_log
+		<include refid="qryTokenAppLogByPageSql" />
+		order by accessTime desc
+		<include refid="limitSql" />
+	</select>
+	
+	<select id="getTokenAppLogCountByPage" resultType="java.lang.Integer"
+		parameterType="com.joosure.server.mvc.wechat.entity.pojo.ItfTokenLog">
+		select count(1) from itf_token_log
+		<include refid="qryTokenAppLogByPageSql" />
+	</select>
+	
+	<insert id="insertTokenAppLog" parameterType="com.joosure.server.mvc.wechat.entity.pojo.ItfTokenLog">
+		insert into itf_token_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			appId, applyName, accessTime, token, flag, expireTime, ip
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			#{appId}, #{applyName}, #{accessTime}, 
+			#{token}, #{flag}, #{expireTime}, #{ip},
+		</trim>
+	</insert>
+</mapper>

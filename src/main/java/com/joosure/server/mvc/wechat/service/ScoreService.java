@@ -83,16 +83,19 @@ public class ScoreService implements IScoreService{
 		}
 		int ret = 0;
 		Map<String, String> scoreEvents = DictsCache.getScoreEvent();
+		log.info("scoreEvents:"+scoreEvents.size());
 		if (scoreEvents != null) {
 			ret = specialEventKey(userId, eventKey);// 特殊操作特殊处理
 			if (ret != 0) {
 				return ret;
 			}
 			String eventScore = scoreEvents.get(eventKey);
+			log.info("eventScore:"+eventScore);
 			if (eventScore != null && !"".equals(eventScore)) {
 				int score = Integer.parseInt(eventScore);
 				// 获取原积分
 				int oldScore = getUserScore(userId);
+				log.info("oldScore:"+oldScore);
 				// 更新用户总积分
 				score += oldScore;
 				ret = scoreDbService.updateUserScore(userId, score);

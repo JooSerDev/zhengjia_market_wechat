@@ -6,7 +6,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.sword.wechat4j.token.AccessToken;
 import org.sword.wechat4j.token.Ticket;
 import org.sword.wechat4j.token.TicketType;
 import org.sword.wechat4j.token.Token;
@@ -31,6 +30,9 @@ public class TicketDbService extends CustomerServer{
 		Dict cond = new Dict();
 		cond.setParamGroup(DictsConstant.GROUP_WXTOKEN);
 		cond.setParamId(DictsConstant.WXTOKEN_Ticket);
+		if(dictDbService == null){
+			dictDbService = SpringUtil.getBean("dictDbService");
+		}
 		List<Dict> data = dictDbService.getAllDict(cond);
 		if(data != null && data.size() > 0){
 			//存在则检查是否过期，如果未过期则直接返回，否则重新获取，更新，返回

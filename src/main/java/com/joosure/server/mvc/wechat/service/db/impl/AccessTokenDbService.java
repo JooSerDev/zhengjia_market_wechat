@@ -29,6 +29,9 @@ public class AccessTokenDbService extends CustomerServer{
 		Dict cond = new Dict();
 		cond.setParamGroup(DictsConstant.GROUP_WXTOKEN);
 		cond.setParamId(DictsConstant.WXTOKEN_AccessToken);
+		if(dictDbService == null){
+			dictDbService = SpringUtil.getBean("dictDbService");
+		}
 		List<Dict> data = dictDbService.getAllDict(cond);
 		if(data != null && data.size() > 0){
 			//存在则检查是否过期，如果未过期则直接返回，否则重新获取，更新，返回

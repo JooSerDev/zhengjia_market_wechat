@@ -149,7 +149,7 @@ public class WechatWebService implements IWechatWebService{
 		// 宝贝分享
 		String toRedirecterPath = request.getScheme() + "://" + request.getServerName() + request.getContextPath()
 				+ WechatConstant.SCHEMA_MARKET + "/redirecter?redirectURL=" + request.getScheme() + "://"
-				+ request.getServerName() + request.getContextPath() + WechatConstant.SCHEMA_MARKET + "home";
+				+ request.getServerName() + request.getContextPath() + WechatConstant.SCHEMA_MARKET + "/home";
 		String shareLink = OAuthManager.generateRedirectURI(toRedirecterPath, WechatConstant.SCOPE_SNSAPI_USERINFO, "");
 		WxShareParam wxShareParam = new WxShareParam();
 		wxShareParam.setDesc("正佳分享市集");

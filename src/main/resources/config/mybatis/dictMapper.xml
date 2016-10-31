@@ -40,7 +40,7 @@
 		</trim>
 	</insert>
 	
-	<update id="updateByPrimaryKeySelective" parameterType="com.joosure.server.mvc.wechat.entity.pojo.Dict">
+	<update id="updateDict" parameterType="com.joosure.server.mvc.wechat.entity.pojo.Dict">
 		update sys_conf_param
 		<set>
 			<if test="paramName != null">
